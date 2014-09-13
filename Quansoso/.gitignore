@@ -1,0 +1,6 @@
+.DS_Store
+*.DS_Store
+Quansoso.xcodeproj/xcuserdata/
+Quansoso.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcuserstate
+
