@@ -1,0 +1,10 @@
+Products/*
+Build/*
+Pods/*
+build/*
+DerivedData/*
+BuildProductsPath/*
+taesdksample.xcodeproj/project.xcworkspace
+taesdksample.xcodeproj/xcuserdata
+taesdksample.xcworkspace/xcuserdata
+*.xcworkspace/*
