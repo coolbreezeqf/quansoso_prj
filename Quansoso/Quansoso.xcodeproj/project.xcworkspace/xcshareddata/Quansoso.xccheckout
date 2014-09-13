@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5533B07A-CE5D-42A1-B60D-14F68C1936B5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Quansoso</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9E8F05010429FB35EB73B7CFBCD38467FD33CD25</key>
+		<string>https://github.com/quansoso/quansoso_prj.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Quansoso/Quansoso.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9E8F05010429FB35EB73B7CFBCD38467FD33CD25</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/quansoso/quansoso_prj.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9E8F05010429FB35EB73B7CFBCD38467FD33CD25</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9E8F05010429FB35EB73B7CFBCD38467FD33CD25</string>
+			<key>IDESourceControlWCCName</key>
+			<string>quansoso_prj</string>
+		</dict>
+	</array>
+</dict>
+</plist>
