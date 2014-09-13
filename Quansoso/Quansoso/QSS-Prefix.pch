@@ -1,0 +1,15 @@
+//
+//  Qss-Prefix.pch
+//  Quansoso
+//
+//  Created by  striveliu on 14-9-13.
+//  Copyright (c) 2014年 taobao. All rights reserved.
+//
+
+#ifndef Quansoso_Qss_Prefix_pch
+#define Quansoso_Qss_Prefix_pch
+#import "QSS_Public.h"
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif
