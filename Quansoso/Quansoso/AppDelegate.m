@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <TAESDK/TaeSDK.h>
 
 @interface AppDelegate ()
 
@@ -18,9 +19,20 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor blackColor];
+    [self initTBSDK];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)initTBSDK
+{
+    [[TaeSDK sharedInstance] asyncInit:^{
+        MLOG(@"TBSDK--初始化成功");
+        
+    } failedCallback:^(NSError *error) {
+        MLOG(@"TBSDK--初始化失败");
+    }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

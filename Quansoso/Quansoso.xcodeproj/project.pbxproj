@@ -12,6 +12,11 @@
 		FF8A929A19C433B80010439B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8A929919C433B80010439B /* Images.xcassets */; };
 		FF8A929D19C433B80010439B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF8A929B19C433B80010439B /* LaunchScreen.xib */; };
 		FF8A92A919C433B80010439B /* QuansosoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A92A819C433B80010439B /* QuansosoTests.m */; };
+		FFEF4ED219C57695009E6E84 /* sdk.png in Resources */ = {isa = PBXBuildFile; fileRef = FFEF4ECF19C57695009E6E84 /* sdk.png */; };
+		FFEF4ED319C57695009E6E84 /* TAESDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFEF4ED019C57695009E6E84 /* TAESDK.framework */; };
+		FFEF4ED419C57695009E6E84 /* yw_1222.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FFEF4ED119C57695009E6E84 /* yw_1222.jpg */; };
+		FFEF4ED719C576B5009E6E84 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FFEF4ED519C576B5009E6E84 /* AlipaySDK.bundle */; };
+		FFEF4ED819C576B5009E6E84 /* Tae.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FFEF4ED619C576B5009E6E84 /* Tae.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +42,11 @@
 		FF8A92A819C433B80010439B /* QuansosoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuansosoTests.m; sourceTree = "<group>"; };
 		FF8A92B219C434370010439B /* QSS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QSS-Prefix.pch"; sourceTree = "<group>"; };
 		FF8A92B419C435AD0010439B /* QSS_Public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSS_Public.h; sourceTree = "<group>"; };
+		FFEF4ECF19C57695009E6E84 /* sdk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk.png; sourceTree = "<group>"; };
+		FFEF4ED019C57695009E6E84 /* TAESDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TAESDK.framework; sourceTree = "<group>"; };
+		FFEF4ED119C57695009E6E84 /* yw_1222.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yw_1222.jpg; sourceTree = "<group>"; };
+		FFEF4ED519C576B5009E6E84 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AlipaySDK.bundle; path = TAESDK.framework/AlipaySDK.bundle; sourceTree = "<group>"; };
+		FFEF4ED619C576B5009E6E84 /* Tae.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Tae.bundle; path = TAESDK.framework/Tae.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFEF4ED319C57695009E6E84 /* TAESDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +71,7 @@
 		FF8A928619C433B80010439B = {
 			isa = PBXGroup;
 			children = (
+				FFEF4ECE19C57695009E6E84 /* TBSDK */,
 				FF8A929119C433B80010439B /* Quansoso */,
 				FF8A92A519C433B80010439B /* QuansosoTests */,
 				FF8A929019C433B80010439B /* Products */,
@@ -113,6 +125,18 @@
 				FF8A92A719C433B80010439B /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FFEF4ECE19C57695009E6E84 /* TBSDK */ = {
+			isa = PBXGroup;
+			children = (
+				FFEF4ED519C576B5009E6E84 /* AlipaySDK.bundle */,
+				FFEF4ED619C576B5009E6E84 /* Tae.bundle */,
+				FFEF4ECF19C57695009E6E84 /* sdk.png */,
+				FFEF4ED019C57695009E6E84 /* TAESDK.framework */,
+				FFEF4ED119C57695009E6E84 /* yw_1222.jpg */,
+			);
+			path = TBSDK;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +219,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFEF4ED819C576B5009E6E84 /* Tae.bundle in Resources */,
+				FFEF4ED719C576B5009E6E84 /* AlipaySDK.bundle in Resources */,
+				FFEF4ED419C57695009E6E84 /* yw_1222.jpg in Resources */,
+				FFEF4ED219C57695009E6E84 /* sdk.png in Resources */,
 				FF8A929D19C433B80010439B /* LaunchScreen.xib in Resources */,
 				FF8A929A19C433B80010439B /* Images.xcassets in Resources */,
 			);
@@ -329,6 +357,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TBSDK",
+				);
 				GCC_PREFIX_HEADER = "Quansoso/QSS-Prefix.pch";
 				INFOPLIST_FILE = Quansoso/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -340,6 +372,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TBSDK",
+				);
 				GCC_PREFIX_HEADER = "Quansoso/QSS-Prefix.pch";
 				INFOPLIST_FILE = Quansoso/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -400,6 +436,7 @@
 				FF8A92AE19C433B80010439B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FF8A92AF19C433B80010439B /* Build configuration list for PBXNativeTarget "QuansosoTests" */ = {
 			isa = XCConfigurationList;
@@ -408,6 +445,7 @@
 				FF8A92B119C433B80010439B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
