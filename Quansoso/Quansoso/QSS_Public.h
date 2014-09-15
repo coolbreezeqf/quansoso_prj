@@ -9,6 +9,9 @@
 #ifndef Quansoso_QSS_Public_h
 #define Quansoso_QSS_Public_h
 
+#define RGBCOLOR(r,g,b) [UIColor colorWithRed:r/256.0 green:g/256.0 blue:b/256.0 alpha:1]
+#define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:r/256.0 green:g/256.0 blue:b/256.0 alpha:a]
+
 #define kSystemVersion [[[UIDevice currentDevice] systemVersion] floatValue]
 #define kSofterViewsion  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
 
