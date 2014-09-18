@@ -20,4 +20,8 @@
                  title:(NSString *)aTitle
                 target:(id)aTarget
                 action:(SEL)aSelector;
+
+- (void)pushView:(UIView*)aView;
+
+- (void)popView:(UIView*)aView isRemove:(BOOL)aIsRemove;
 @end

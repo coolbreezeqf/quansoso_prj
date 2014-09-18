@@ -90,7 +90,7 @@
     
 }
 
-+ (void)viewDissmissAnimationToRight:(UIView*)aToView
++ (void)viewDissmissAnimationToRight:(UIView*)aToView isRemove:(BOOL)aIsRemove
 {
     CGRect endRect = CGRectMake(CGRectGetWidth(aToView.frame),
                                 0,
@@ -102,7 +102,10 @@
         navRoot.view.transform = CGAffineTransformIdentity;
         aToView.frame = endRect;
     } completion:^(BOOL finished) {
-        [aToView removeFromSuperview];
+        if(aIsRemove)
+        {
+            [aToView removeFromSuperview];
+        }
     }];
 }
 

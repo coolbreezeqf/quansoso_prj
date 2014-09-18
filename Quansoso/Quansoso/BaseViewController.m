@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "ViewInteraction.h"
 
 @interface BaseViewController ()
 
@@ -132,13 +133,23 @@
     {
         [button setBackgroundImage:aImg forState:UIControlStateNormal];
     }
-    CGRect viewFrame = CGRectMake(320-100/2, 0, 59, 44);
+    CGRect viewFrame = CGRectMake(kMainScreenWidth-100/2, 0, 59, 44);
     UIView *view = [[UIView alloc]initWithFrame:viewFrame];
     [view addSubview:button];
     if(self.navigationController && self.navigationItem)
     {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:view];
     }
+}
+
+- (void)pushView:(UIView*)aView
+{
+    [ViewInteraction viewPresentAnimationFromRight:self.view toView:aView];
+}
+
+- (void)popView:(UIView*)aView isRemove:(BOOL)aIsRemove
+{
+    [ViewInteraction viewDissmissAnimationToRight:aView isRemove:aIsRemove];
 }
 
 - (void)didReceiveMemoryWarning

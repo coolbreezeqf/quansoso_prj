@@ -16,7 +16,7 @@
 + (void)viewPresentAnimationFromRight:(UIView*)aFromView
                                toView:(UIView*)aToView;
 
-+ (void)viewDissmissAnimationToRight:(UIView*)aToView;
++ (void)viewDissmissAnimationToRight:(UIView*)aToView isRemove:(BOOL)aIsRemove;
 
 + (void)viewPresentAnimationFromLeft:(UIView*)aFromView
                               toView:(UIView*)aToView;
