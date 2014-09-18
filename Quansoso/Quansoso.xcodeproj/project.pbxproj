@@ -13,6 +13,9 @@
 		B02E0BC519CA8FEE009A0306 /* CarzyList.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BC419CA8FEE009A0306 /* CarzyList.m */; };
 		B02E0BCA19CA8FFC009A0306 /* Merchant.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BC719CA8FFC009A0306 /* Merchant.m */; };
 		B02E0BCB19CA8FFC009A0306 /* MerchantCard.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BC919CA8FFC009A0306 /* MerchantCard.m */; };
+		B02E0BD219CADAAB009A0306 /* Result.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCD19CADAAB009A0306 /* Result.m */; };
+		B02E0BD319CADAAB009A0306 /* ResultCard.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCF19CADAAB009A0306 /* ResultCard.m */; };
+		B02E0BD419CADAAB009A0306 /* SearchInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BD119CADAAB009A0306 /* SearchInfo.m */; };
 		FF8A929519C433B80010439B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A929419C433B80010439B /* main.m */; };
 		FF8A929A19C433B80010439B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8A929919C433B80010439B /* Images.xcassets */; };
 		FF8A92A919C433B80010439B /* QuansosoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A92A819C433B80010439B /* QuansosoTests.m */; };
@@ -104,6 +107,12 @@
 		B02E0BC719CA8FFC009A0306 /* Merchant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Merchant.m; sourceTree = "<group>"; };
 		B02E0BC819CA8FFC009A0306 /* MerchantCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MerchantCard.h; sourceTree = "<group>"; };
 		B02E0BC919CA8FFC009A0306 /* MerchantCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MerchantCard.m; sourceTree = "<group>"; };
+		B02E0BCC19CADAAB009A0306 /* Result.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Result.h; sourceTree = "<group>"; };
+		B02E0BCD19CADAAB009A0306 /* Result.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Result.m; sourceTree = "<group>"; };
+		B02E0BCE19CADAAB009A0306 /* ResultCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultCard.h; sourceTree = "<group>"; };
+		B02E0BCF19CADAAB009A0306 /* ResultCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultCard.m; sourceTree = "<group>"; };
+		B02E0BD019CADAAB009A0306 /* SearchInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInfo.h; sourceTree = "<group>"; };
+		B02E0BD119CADAAB009A0306 /* SearchInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInfo.m; sourceTree = "<group>"; };
 		FF8A928F19C433B80010439B /* Quansoso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quansoso.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8A929319C433B80010439B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF8A929419C433B80010439B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -260,10 +269,16 @@
 		B02E0BB819CA842C009A0306 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B02E0BD019CADAAB009A0306 /* SearchInfo.h */,
+				B02E0BD119CADAAB009A0306 /* SearchInfo.m */,
 				B02E0BBE19CA8FDD009A0306 /* TimeLimitCarzy.h */,
 				B02E0BBF19CA8FDD009A0306 /* TimeLimitCarzy.m */,
 				B02E0BC319CA8FEE009A0306 /* CarzyList.h */,
 				B02E0BC419CA8FEE009A0306 /* CarzyList.m */,
+				B02E0BCC19CADAAB009A0306 /* Result.h */,
+				B02E0BCD19CADAAB009A0306 /* Result.m */,
+				B02E0BCE19CADAAB009A0306 /* ResultCard.h */,
+				B02E0BCF19CADAAB009A0306 /* ResultCard.m */,
 				B02E0BC819CA8FFC009A0306 /* MerchantCard.h */,
 				B02E0BC919CA8FFC009A0306 /* MerchantCard.m */,
 				B02E0BC619CA8FFC009A0306 /* Merchant.h */,
@@ -692,6 +707,7 @@
 				FFBA9EB719C6812500D9CBA2 /* DataCenterDeal.mm in Sources */,
 				FFBA9E9C19C680C800D9CBA2 /* UIImageView+AFNetworking.m in Sources */,
 				FFE85F4319CAC84400A216BB /* UIImage+ImageEffects.m in Sources */,
+				B02E0BD419CADAAB009A0306 /* SearchInfo.m in Sources */,
 				FFBA9EB919C6812500D9CBA2 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				FFBA9E9B19C680C800D9CBA2 /* NetManager.m in Sources */,
 				FFBA9EE019C688F200D9CBA2 /* SDWebImageCompat.m in Sources */,
@@ -706,6 +722,7 @@
 				FFBA9EE619C688F200D9CBA2 /* UIButton+WebCache.m in Sources */,
 				FFE85F3819CABCB300A216BB /* AppDelegate.m in Sources */,
 				B02E0BCA19CA8FFC009A0306 /* Merchant.m in Sources */,
+				B02E0BD319CADAAB009A0306 /* ResultCard.m in Sources */,
 				FFBA9E9719C680C800D9CBA2 /* AFPropertyListRequestOperation.m in Sources */,
 				FFE85F1B19CABAF100A216BB /* ViewInteraction.m in Sources */,
 				FFBA9E9519C680C800D9CBA2 /* AFJSONRequestOperation.m in Sources */,
@@ -725,6 +742,7 @@
 				FFBA9EAB19C6811400D9CBA2 /* ThreadSafeMutableDictionary.m in Sources */,
 				FFBA9EB819C6812500D9CBA2 /* DataOC.mm in Sources */,
 				FFBA9EBA19C6812500D9CBA2 /* UIScrollView+SVPullToRefresh.m in Sources */,
+				B02E0BD219CADAAB009A0306 /* Result.m in Sources */,
 				FFBA9E9619C680C800D9CBA2 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				B02E0BC019CA8FDD009A0306 /* Card.m in Sources */,
 				B02E0BC519CA8FEE009A0306 /* CarzyList.m in Sources */,
