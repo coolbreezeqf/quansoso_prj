@@ -40,7 +40,9 @@
         [fbkvo observe:leftView keyPath:@"categoryType" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
             MLOG(@"%@", change);
             int cateType = [change[@"new"] intValue];
-            [ViewInteraction viewDissmissAnimationToLeft:leftView isRemove:NO];
+            [ViewInteraction viewDissmissAnimationToLeft:leftView isRemove:NO completeBlock:^(BOOL isComplete) {
+                
+            }];
             switch (cateType) {
                 case 0:
                 {

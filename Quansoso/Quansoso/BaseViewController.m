@@ -147,9 +147,11 @@
     [ViewInteraction viewPresentAnimationFromRight:self.view toView:aView];
 }
 
-- (void)popView:(UIView*)aView isRemove:(BOOL)aIsRemove
+- (void)popView:(UIView*)aView completeBlock:(void(^)(BOOL isComplete))aCompleteblock
 {
-    [ViewInteraction viewDissmissAnimationToRight:aView isRemove:aIsRemove];
+    [ViewInteraction viewDissmissAnimationToRight:aView isRemove:NO completeBlock:^(BOOL isComplete) {
+        aCompleteblock(isComplete);
+    }];
 }
 
 - (void)didReceiveMemoryWarning

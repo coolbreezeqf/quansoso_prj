@@ -13,6 +13,14 @@
 #import "UIImage+ImageEffects.h"
 
 @implementation ViewInteraction
+
++ (void)viewPushViewcontroller:(UIViewController*)aViewcontroller
+{
+    AppDelegate *del = [UIApplication sharedApplication].delegate;
+    UINavigationController *currentNav = del.rootNav;
+    [currentNav pushViewController:aViewcontroller animated:YES];
+}
+
 + (void)viewPresentAnimationFromBottom:(UIView*)aFromView
                                 toView:(UIView*)aToView
 {
@@ -44,6 +52,7 @@
 }
 
 + (void)viewDissmissAnimationToBottom:(UIView*)aToView
+                        completeBlock:(void(^)(BOOL isComplete))aCompleteblock
 {
     CGRect endRect = CGRectMake(0,
                                 CGRectGetHeight(aToView.frame),
@@ -55,7 +64,7 @@
         navRoot.view.transform = CGAffineTransformIdentity;
         aToView.frame = endRect;
     } completion:^(BOOL finished) {
-        [aToView removeFromSuperview];
+        aCompleteblock(finished);
     }];
 }
 
@@ -90,7 +99,9 @@
     
 }
 
-+ (void)viewDissmissAnimationToRight:(UIView*)aToView isRemove:(BOOL)aIsRemove
++ (void)viewDissmissAnimationToRight:(UIView*)aToView
+                            isRemove:(BOOL)aIsRemove
+                       completeBlock:(void(^)(BOOL isComplete))aCompleteblock
 {
     CGRect endRect = CGRectMake(CGRectGetWidth(aToView.frame),
                                 0,
@@ -106,6 +117,7 @@
         {
             [aToView removeFromSuperview];
         }
+        aCompleteblock(finished);
     }];
 }
 
@@ -142,7 +154,9 @@
     
 }
 
-+ (void)viewDissmissAnimationToLeft:(UIView*)aToView isRemove:(BOOL)aIsRemove
++ (void)viewDissmissAnimationToLeft:(UIView*)aToView
+                           isRemove:(BOOL)aIsRemove
+                      completeBlock:(void(^)(BOOL isComplete))aCompleteblock
 {
     CGRect endRect = CGRectMake(-CGRectGetWidth(aToView.frame),
                                 0,
@@ -158,6 +172,7 @@
         {
             [aToView removeFromSuperview];
         }
+        aCompleteblock(finished);
     }];
 }
 

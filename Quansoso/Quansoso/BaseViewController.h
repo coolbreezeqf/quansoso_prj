@@ -23,5 +23,5 @@
 
 - (void)pushView:(UIView*)aView;
 
-- (void)popView:(UIView*)aView isRemove:(BOOL)aIsRemove;
+- (void)popView:(UIView*)aView completeBlock:(void(^)(BOOL isComplete))aCompleteblock;
 @end
