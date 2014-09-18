@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B02E0BC019CA8FDD009A0306 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BBA19CA8FDD009A0306 /* Card.m */; };
+		B02E0BC119CA8FDD009A0306 /* CardCarzy.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BBC19CA8FDD009A0306 /* CardCarzy.m */; };
+		B02E0BC219CA8FDD009A0306 /* TimeLimitCarzy.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BBF19CA8FDD009A0306 /* TimeLimitCarzy.m */; };
+		B02E0BC519CA8FEE009A0306 /* CarzyList.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BC419CA8FEE009A0306 /* CarzyList.m */; };
+		B02E0BCA19CA8FFC009A0306 /* Merchant.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BC719CA8FFC009A0306 /* Merchant.m */; };
+		B02E0BCB19CA8FFC009A0306 /* MerchantCard.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BC919CA8FFC009A0306 /* MerchantCard.m */; };
 		FF8A929519C433B80010439B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A929419C433B80010439B /* main.m */; };
 		FF8A929819C433B80010439B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A929719C433B80010439B /* AppDelegate.m */; };
 		FF8A929A19C433B80010439B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8A929919C433B80010439B /* Images.xcassets */; };
@@ -70,6 +76,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B02E0BB919CA8FDD009A0306 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Card.h; sourceTree = "<group>"; };
+		B02E0BBA19CA8FDD009A0306 /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Card.m; sourceTree = "<group>"; };
+		B02E0BBB19CA8FDD009A0306 /* CardCarzy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCarzy.h; sourceTree = "<group>"; };
+		B02E0BBC19CA8FDD009A0306 /* CardCarzy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCarzy.m; sourceTree = "<group>"; };
+		B02E0BBD19CA8FDD009A0306 /* DataModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModels.h; sourceTree = "<group>"; };
+		B02E0BBE19CA8FDD009A0306 /* TimeLimitCarzy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeLimitCarzy.h; sourceTree = "<group>"; };
+		B02E0BBF19CA8FDD009A0306 /* TimeLimitCarzy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeLimitCarzy.m; sourceTree = "<group>"; };
+		B02E0BC319CA8FEE009A0306 /* CarzyList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarzyList.h; sourceTree = "<group>"; };
+		B02E0BC419CA8FEE009A0306 /* CarzyList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarzyList.m; sourceTree = "<group>"; };
+		B02E0BC619CA8FFC009A0306 /* Merchant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Merchant.h; sourceTree = "<group>"; };
+		B02E0BC719CA8FFC009A0306 /* Merchant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Merchant.m; sourceTree = "<group>"; };
+		B02E0BC819CA8FFC009A0306 /* MerchantCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MerchantCard.h; sourceTree = "<group>"; };
+		B02E0BC919CA8FFC009A0306 /* MerchantCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MerchantCard.m; sourceTree = "<group>"; };
 		FF8A928F19C433B80010439B /* Quansoso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quansoso.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8A929319C433B80010439B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF8A929419C433B80010439B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -191,6 +210,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B02E0BB819CA842C009A0306 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B02E0BBE19CA8FDD009A0306 /* TimeLimitCarzy.h */,
+				B02E0BBF19CA8FDD009A0306 /* TimeLimitCarzy.m */,
+				B02E0BC319CA8FEE009A0306 /* CarzyList.h */,
+				B02E0BC419CA8FEE009A0306 /* CarzyList.m */,
+				B02E0BC819CA8FFC009A0306 /* MerchantCard.h */,
+				B02E0BC919CA8FFC009A0306 /* MerchantCard.m */,
+				B02E0BC619CA8FFC009A0306 /* Merchant.h */,
+				B02E0BC719CA8FFC009A0306 /* Merchant.m */,
+				B02E0BB919CA8FDD009A0306 /* Card.h */,
+				B02E0BBA19CA8FDD009A0306 /* Card.m */,
+				B02E0BBB19CA8FDD009A0306 /* CardCarzy.h */,
+				B02E0BBC19CA8FDD009A0306 /* CardCarzy.m */,
+				B02E0BBD19CA8FDD009A0306 /* DataModels.h */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		FF8A928619C433B80010439B = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +252,7 @@
 		FF8A929119C433B80010439B /* Quansoso */ = {
 			isa = PBXGroup;
 			children = (
+				B02E0BB819CA842C009A0306 /* Model */,
 				FFBA9E7819C680BE00D9CBA2 /* ThirdParty */,
 				FF8A929619C433B80010439B /* AppDelegate.h */,
 				FF8A929719C433B80010439B /* AppDelegate.m */,
@@ -530,11 +570,14 @@
 				FFBA9E9419C680C800D9CBA2 /* AFImageRequestOperation.m in Sources */,
 				FFBA9EEB19C688F200D9CBA2 /* UIImageView+WebCache.m in Sources */,
 				FFBA9EE619C688F200D9CBA2 /* UIButton+WebCache.m in Sources */,
+				B02E0BCA19CA8FFC009A0306 /* Merchant.m in Sources */,
 				FFBA9E9719C680C800D9CBA2 /* AFPropertyListRequestOperation.m in Sources */,
 				FFBA9E9519C680C800D9CBA2 /* AFJSONRequestOperation.m in Sources */,
+				B02E0BCB19CA8FFC009A0306 /* MerchantCard.m in Sources */,
 				FFBA9E9819C680C800D9CBA2 /* AFURLConnectionOperation.m in Sources */,
 				FF8A929819C433B80010439B /* AppDelegate.m in Sources */,
 				FFBA9E9A19C680C800D9CBA2 /* MyHttpClient.m in Sources */,
+				B02E0BC119CA8FDD009A0306 /* CardCarzy.m in Sources */,
 				FFBA9E9919C680C800D9CBA2 /* AFXMLRequestOperation.m in Sources */,
 				FFBA9EE319C688F200D9CBA2 /* SDWebImageDownloaderOperation.m in Sources */,
 				FF8A929519C433B80010439B /* main.m in Sources */,
@@ -542,10 +585,13 @@
 				FFBA9EE519C688F200D9CBA2 /* SDWebImagePrefetcher.m in Sources */,
 				FFBA9EE419C688F200D9CBA2 /* SDWebImageManager.m in Sources */,
 				FFBA9EDE19C688F200D9CBA2 /* NSData+ImageContentType.m in Sources */,
+				B02E0BC219CA8FDD009A0306 /* TimeLimitCarzy.m in Sources */,
 				FFBA9EAB19C6811400D9CBA2 /* ThreadSafeMutableDictionary.m in Sources */,
 				FFBA9EB819C6812500D9CBA2 /* DataOC.mm in Sources */,
 				FFBA9EBA19C6812500D9CBA2 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				FFBA9E9619C680C800D9CBA2 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				B02E0BC019CA8FDD009A0306 /* Card.m in Sources */,
+				B02E0BC519CA8FEE009A0306 /* CarzyList.m in Sources */,
 				FFBA9EA019C680E100D9CBA2 /* JSONKit.m in Sources */,
 				FFBA9EEC19C688F200D9CBA2 /* UIView+WebCacheOperation.m in Sources */,
 				FFBA9EEA19C688F200D9CBA2 /* UIImageView+HighlightedWebCache.m in Sources */,
