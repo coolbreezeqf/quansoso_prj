@@ -9,6 +9,9 @@
 #ifndef Quansoso_QSS_Public_h
 #define Quansoso_QSS_Public_h
 
+#define kMainScreenHeight [UIScreen mainScreen].bounds.size.height
+#define kMainScreenWidth  [UIScreen mainScreen].bounds.size.width
+
 #define RGBCOLOR(r,g,b) [UIColor colorWithRed:r/256.0 green:g/256.0 blue:b/256.0 alpha:1]
 #define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:r/256.0 green:g/256.0 blue:b/256.0 alpha:a]
 
@@ -22,6 +25,8 @@
 #define MLOG(...)
 #define NSLog(...) {}
 #endif
+
+#define kClearColor [UIColor clearColor]
 
 #define kFont10 [UIFont systemFontOfSize:10]
 #define kFont11 [UIFont systemFontOfSize:11]

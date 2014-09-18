@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <TAESDK/TaeSDK.h>
+#import "QSRootViewController.h"
 
 @interface AppDelegate ()
 
@@ -19,8 +20,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor blackColor];
+    self.rootvc = [[QSRootViewController alloc] initWithNibName:nil bundle:nil];
     
+    self.rootNav = [[UINavigationController alloc] initWithRootViewController:self.rootvc];
+    self.window.backgroundColor = [UIColor blackColor];
+    self.window.rootViewController = self.rootNav;
     [self initTBSDK];
     [self.window makeKeyAndVisible];
     return YES;

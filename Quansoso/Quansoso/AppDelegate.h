@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class QSRootViewController;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
-
+@property (strong, nonatomic) QSRootViewController *rootvc;
+@property (strong, nonatomic) UINavigationController *rootNav;
 @end
 
