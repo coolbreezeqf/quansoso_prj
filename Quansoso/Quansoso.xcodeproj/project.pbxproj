@@ -62,6 +62,9 @@
 		FFE85F3419CABBAE00A216BB /* FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F3119CABBAE00A216BB /* FBKVOController.m */; };
 		FFE85F3519CABBAE00A216BB /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F3319CABBAE00A216BB /* NSData+Base64.m */; };
 		FFE85F3819CABCB300A216BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F3719CABCB300A216BB /* AppDelegate.m */; };
+		FFE85F3A19CAC22300A216BB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F3919CAC22300A216BB /* QuartzCore.framework */; };
+		FFE85F3C19CAC22C00A216BB /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F3B19CAC22C00A216BB /* Accelerate.framework */; };
+		FFE85F4319CAC84400A216BB /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F4219CAC84400A216BB /* UIImage+ImageEffects.m */; };
 		FFEF4ED219C57695009E6E84 /* sdk.png in Resources */ = {isa = PBXBuildFile; fileRef = FFEF4ECF19C57695009E6E84 /* sdk.png */; };
 		FFEF4ED319C57695009E6E84 /* TAESDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFEF4ED019C57695009E6E84 /* TAESDK.framework */; };
 		FFEF4ED419C57695009E6E84 /* yw_1222.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FFEF4ED119C57695009E6E84 /* yw_1222.jpg */; };
@@ -202,6 +205,10 @@
 		FFE85F3319CABBAE00A216BB /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		FFE85F3619CABCB300A216BB /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FFE85F3719CABCB300A216BB /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FFE85F3919CAC22300A216BB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FFE85F3B19CAC22C00A216BB /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		FFE85F4119CAC84400A216BB /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		FFE85F4219CAC84400A216BB /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		FFEF4ECF19C57695009E6E84 /* sdk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk.png; sourceTree = "<group>"; };
 		FFEF4ED019C57695009E6E84 /* TAESDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TAESDK.framework; sourceTree = "<group>"; };
 		FFEF4ED119C57695009E6E84 /* yw_1222.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yw_1222.jpg; sourceTree = "<group>"; };
@@ -220,6 +227,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE85F3C19CAC22C00A216BB /* Accelerate.framework in Frameworks */,
+				FFE85F3A19CAC22300A216BB /* QuartzCore.framework in Frameworks */,
 				FFEF4EE419C588E7009E6E84 /* CFNetwork.framework in Frameworks */,
 				FFEF4EE219C588C7009E6E84 /* libz.dylib in Frameworks */,
 				FFEF4EE019C588B1009E6E84 /* CoreLocation.framework in Frameworks */,
@@ -303,6 +312,8 @@
 				FF8A929419C433B80010439B /* main.m */,
 				FF8A92B219C434370010439B /* QSS-Prefix.pch */,
 				FF8A92B419C435AD0010439B /* QSS_Public.h */,
+				FFE85F3B19CAC22C00A216BB /* Accelerate.framework */,
+				FFE85F3919CAC22300A216BB /* QuartzCore.framework */,
 				FFEF4EE319C588E7009E6E84 /* CFNetwork.framework */,
 				FFEF4EE119C588C7009E6E84 /* libz.dylib */,
 				FFEF4EDF19C588B1009E6E84 /* CoreLocation.framework */,
@@ -333,6 +344,7 @@
 		FFBA9E7819C680BE00D9CBA2 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				FFE85F4019CAC84400A216BB /* UIImageEffects */,
 				FFE85F2F19CABBAE00A216BB /* FBKVOController */,
 				FFBA9EBB19C688F200D9CBA2 /* SDWebImage */,
 				FFBA9EAC19C6812500D9CBA2 /* SVPullToRefresh */,
@@ -545,6 +557,15 @@
 			path = FBKVOController;
 			sourceTree = "<group>";
 		};
+		FFE85F4019CAC84400A216BB /* UIImageEffects */ = {
+			isa = PBXGroup;
+			children = (
+				FFE85F4119CAC84400A216BB /* UIImage+ImageEffects.h */,
+				FFE85F4219CAC84400A216BB /* UIImage+ImageEffects.m */,
+			);
+			path = UIImageEffects;
+			sourceTree = "<group>";
+		};
 		FFEF4ECE19C57695009E6E84 /* TBSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -668,6 +689,7 @@
 				FFBA9EAA19C6811400D9CBA2 /* ThreadSafeMutableArry.m in Sources */,
 				FFBA9EB719C6812500D9CBA2 /* DataCenterDeal.mm in Sources */,
 				FFBA9E9C19C680C800D9CBA2 /* UIImageView+AFNetworking.m in Sources */,
+				FFE85F4319CAC84400A216BB /* UIImage+ImageEffects.m in Sources */,
 				FFBA9EB919C6812500D9CBA2 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				FFBA9E9B19C680C800D9CBA2 /* NetManager.m in Sources */,
 				FFBA9EE019C688F200D9CBA2 /* SDWebImageCompat.m in Sources */,

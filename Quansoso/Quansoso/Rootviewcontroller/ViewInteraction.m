@@ -8,6 +8,9 @@
 
 #import "ViewInteraction.h"
 #import "AppDelegate.h"
+#import <QuartzCore/QuartzCore.h>
+#import <Accelerate/Accelerate.h>
+#import "UIImage+ImageEffects.h"
 
 @implementation ViewInteraction
 + (void)viewPresentAnimationFromBottom:(UIView*)aFromView
@@ -109,6 +112,9 @@
     
     AppDelegate *del = [UIApplication sharedApplication].delegate;
     UIWindow *window = del.window;
+    UIImage *bgImg = [ViewInteraction screenshotMH:window];
+    bgImg = [bgImg applyDarkEffect];
+    aToView.backgroundColor = [UIColor colorWithPatternImage:bgImg];
     CGRect endRect = CGRectMake(0, 0, window.width, window.height);
     CGRect startRect = CGRectMake(-CGRectGetWidth(aFromView.frame),
                                   0,
@@ -139,7 +145,7 @@
                                 0,
                                 CGRectGetWidth(aToView.bounds),
                                 CGRectGetHeight(aToView.bounds));
-    //AppDelegate *del = [UIApplication sharedApplication].delegate;
+
    // UINavigationController *navRoot = (UINavigationController *)del.window.rootViewController;
     [UIView animateWithDuration:0.2 animations:^{
         //navRoot.view.transform = CGAffineTransformIdentity;
@@ -150,6 +156,23 @@
             [aToView removeFromSuperview];
         }
     }];
+}
+
++ (UIImage *)screenshotMH:(UIView *)aView
+{
+    UIImage *img = nil;
+    if(aView)
+    {
+        UIGraphicsBeginImageContextWithOptions(aView.bounds.size, NO, [UIScreen mainScreen].scale);
+        if ([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
+            [aView drawViewHierarchyInRect:aView.bounds afterScreenUpdates:YES];
+        } else {
+            [aView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        }
+        img = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    return img;
 }
 
 @end
