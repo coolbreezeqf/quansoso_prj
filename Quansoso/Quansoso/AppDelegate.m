@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <TAESDK/TaeSDK.h>
+#import <TAESDK/TAESDK.h>
 #import "QSRootViewController.h"
 
 @interface AppDelegate ()

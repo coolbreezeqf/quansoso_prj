@@ -15,7 +15,6 @@
 		B02E0BCB19CA8FFC009A0306 /* MerchantCard.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BC919CA8FFC009A0306 /* MerchantCard.m */; };
 		FF8A929519C433B80010439B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A929419C433B80010439B /* main.m */; };
 		FF8A929A19C433B80010439B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8A929919C433B80010439B /* Images.xcassets */; };
-		FF8A929D19C433B80010439B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF8A929B19C433B80010439B /* LaunchScreen.xib */; };
 		FF8A92A919C433B80010439B /* QuansosoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A92A819C433B80010439B /* QuansosoTests.m */; };
 		FFBA9E9219C680C800D9CBA2 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBA9E7B19C680C800D9CBA2 /* AFHTTPClient.m */; };
 		FFBA9E9319C680C800D9CBA2 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBA9E7D19C680C800D9CBA2 /* AFHTTPRequestOperation.m */; };
@@ -65,11 +64,14 @@
 		FFE85F3A19CAC22300A216BB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F3919CAC22300A216BB /* QuartzCore.framework */; };
 		FFE85F3C19CAC22C00A216BB /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F3B19CAC22C00A216BB /* Accelerate.framework */; };
 		FFE85F4319CAC84400A216BB /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F4219CAC84400A216BB /* UIImage+ImageEffects.m */; };
-		FFEF4ED219C57695009E6E84 /* sdk.png in Resources */ = {isa = PBXBuildFile; fileRef = FFEF4ECF19C57695009E6E84 /* sdk.png */; };
-		FFEF4ED319C57695009E6E84 /* TAESDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFEF4ED019C57695009E6E84 /* TAESDK.framework */; };
-		FFEF4ED419C57695009E6E84 /* yw_1222.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FFEF4ED119C57695009E6E84 /* yw_1222.jpg */; };
-		FFEF4ED719C576B5009E6E84 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FFEF4ED519C576B5009E6E84 /* AlipaySDK.bundle */; };
-		FFEF4ED819C576B5009E6E84 /* Tae.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FFEF4ED619C576B5009E6E84 /* Tae.bundle */; };
+		FFE85F4619CACDEF00A216BB /* sdk.png in Resources */ = {isa = PBXBuildFile; fileRef = FFE85F4419CACDEF00A216BB /* sdk.png */; };
+		FFE85F4719CACDEF00A216BB /* yw_1222.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FFE85F4519CACDEF00A216BB /* yw_1222.jpg */; };
+		FFE85F4C19CACEBD00A216BB /* Tae.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FFE85F4B19CACEBD00A216BB /* Tae.bundle */; };
+		FFE85F4E19CACEC200A216BB /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FFE85F4D19CACEC200A216BB /* AlipaySDK.bundle */; };
+		FFE85F5219CACF9300A216BB /* TAESDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F5119CACF9200A216BB /* TAESDK.framework */; };
+		FFE85F5419CAD2A200A216BB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F5319CAD2A200A216BB /* CoreGraphics.framework */; };
+		FFE85F5619CAD2B800A216BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F5519CAD2B800A216BB /* Foundation.framework */; };
+		FFE85F5819CAD2BE00A216BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F5719CAD2BE00A216BB /* UIKit.framework */; };
 		FFEF4EDA19C58882009E6E84 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFEF4ED919C58882009E6E84 /* Security.framework */; };
 		FFEF4EDC19C58896009E6E84 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFEF4EDB19C58896009E6E84 /* CoreTelephony.framework */; };
 		FFEF4EDE19C588A2009E6E84 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFEF4EDD19C588A2009E6E84 /* SystemConfiguration.framework */; };
@@ -209,11 +211,14 @@
 		FFE85F3B19CAC22C00A216BB /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		FFE85F4119CAC84400A216BB /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		FFE85F4219CAC84400A216BB /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
-		FFEF4ECF19C57695009E6E84 /* sdk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sdk.png; sourceTree = "<group>"; };
-		FFEF4ED019C57695009E6E84 /* TAESDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TAESDK.framework; sourceTree = "<group>"; };
-		FFEF4ED119C57695009E6E84 /* yw_1222.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yw_1222.jpg; sourceTree = "<group>"; };
-		FFEF4ED519C576B5009E6E84 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AlipaySDK.bundle; path = TAESDK.framework/AlipaySDK.bundle; sourceTree = "<group>"; };
-		FFEF4ED619C576B5009E6E84 /* Tae.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Tae.bundle; path = TAESDK.framework/Tae.bundle; sourceTree = "<group>"; };
+		FFE85F4419CACDEF00A216BB /* sdk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sdk.png; path = Quansoso/sdk.png; sourceTree = "<group>"; };
+		FFE85F4519CACDEF00A216BB /* yw_1222.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = yw_1222.jpg; path = Quansoso/yw_1222.jpg; sourceTree = "<group>"; };
+		FFE85F4B19CACEBD00A216BB /* Tae.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Tae.bundle; sourceTree = "<group>"; };
+		FFE85F4D19CACEC200A216BB /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		FFE85F5119CACF9200A216BB /* TAESDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TAESDK.framework; path = Quansoso/TAESDK.framework; sourceTree = "<group>"; };
+		FFE85F5319CAD2A200A216BB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FFE85F5519CAD2B800A216BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FFE85F5719CAD2BE00A216BB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FFEF4ED919C58882009E6E84 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FFEF4EDB19C58896009E6E84 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		FFEF4EDD19C588A2009E6E84 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -227,7 +232,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE85F5819CAD2BE00A216BB /* UIKit.framework in Frameworks */,
+				FFE85F5619CAD2B800A216BB /* Foundation.framework in Frameworks */,
+				FFE85F5419CAD2A200A216BB /* CoreGraphics.framework in Frameworks */,
 				FFE85F3C19CAC22C00A216BB /* Accelerate.framework in Frameworks */,
+				FFE85F5219CACF9300A216BB /* TAESDK.framework in Frameworks */,
 				FFE85F3A19CAC22300A216BB /* QuartzCore.framework in Frameworks */,
 				FFEF4EE419C588E7009E6E84 /* CFNetwork.framework in Frameworks */,
 				FFEF4EE219C588C7009E6E84 /* libz.dylib in Frameworks */,
@@ -235,7 +244,6 @@
 				FFEF4EDE19C588A2009E6E84 /* SystemConfiguration.framework in Frameworks */,
 				FFEF4EDC19C58896009E6E84 /* CoreTelephony.framework in Frameworks */,
 				FFEF4EDA19C58882009E6E84 /* Security.framework in Frameworks */,
-				FFEF4ED319C57695009E6E84 /* TAESDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +280,14 @@
 		FF8A928619C433B80010439B = {
 			isa = PBXGroup;
 			children = (
-				FFEF4ECE19C57695009E6E84 /* TBSDK */,
+				FFE85F5719CAD2BE00A216BB /* UIKit.framework */,
+				FFE85F5519CAD2B800A216BB /* Foundation.framework */,
+				FFE85F5319CAD2A200A216BB /* CoreGraphics.framework */,
+				FFE85F5119CACF9200A216BB /* TAESDK.framework */,
+				FFE85F4D19CACEC200A216BB /* AlipaySDK.bundle */,
+				FFE85F4B19CACEBD00A216BB /* Tae.bundle */,
+				FFE85F4419CACDEF00A216BB /* sdk.png */,
+				FFE85F4519CACDEF00A216BB /* yw_1222.jpg */,
 				FF8A929119C433B80010439B /* Quansoso */,
 				FF8A92A519C433B80010439B /* QuansosoTests */,
 				FF8A929019C433B80010439B /* Products */,
@@ -566,18 +581,6 @@
 			path = UIImageEffects;
 			sourceTree = "<group>";
 		};
-		FFEF4ECE19C57695009E6E84 /* TBSDK */ = {
-			isa = PBXGroup;
-			children = (
-				FFEF4ED519C576B5009E6E84 /* AlipaySDK.bundle */,
-				FFEF4ED619C576B5009E6E84 /* Tae.bundle */,
-				FFEF4ECF19C57695009E6E84 /* sdk.png */,
-				FFEF4ED019C57695009E6E84 /* TAESDK.framework */,
-				FFEF4ED119C57695009E6E84 /* yw_1222.jpg */,
-			);
-			path = TBSDK;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -658,12 +661,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFEF4ED819C576B5009E6E84 /* Tae.bundle in Resources */,
-				FFEF4ED719C576B5009E6E84 /* AlipaySDK.bundle in Resources */,
-				FFEF4ED419C57695009E6E84 /* yw_1222.jpg in Resources */,
-				FFEF4ED219C57695009E6E84 /* sdk.png in Resources */,
-				FF8A929D19C433B80010439B /* LaunchScreen.xib in Resources */,
+				FFE85F4E19CACEC200A216BB /* AlipaySDK.bundle in Resources */,
 				FF8A929A19C433B80010439B /* Images.xcassets in Resources */,
+				FFE85F4719CACDEF00A216BB /* yw_1222.jpg in Resources */,
+				FFE85F4C19CACEBD00A216BB /* Tae.bundle in Resources */,
+				FFE85F4619CACDEF00A216BB /* sdk.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -855,6 +857,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TBSDK",
+					"$(PROJECT_DIR)/Quansoso/TBSDK",
+					"$(PROJECT_DIR)/Quansoso",
 				);
 				GCC_PREFIX_HEADER = "Quansoso/QSS-Prefix.pch";
 				INFOPLIST_FILE = Quansoso/Info.plist;
@@ -877,6 +881,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TBSDK",
+					"$(PROJECT_DIR)/Quansoso/TBSDK",
+					"$(PROJECT_DIR)/Quansoso",
 				);
 				GCC_PREFIX_HEADER = "Quansoso/QSS-Prefix.pch";
 				INFOPLIST_FILE = Quansoso/Info.plist;
