@@ -44,11 +44,18 @@
 
 - (void)removeOperationKey:(NSString *)aKey
 {
-    [mutaDict removeObjectForKey:aKey];
+    if(aKey)
+    {
+        [mutaDict removeObjectForKey:aKey];
+    }
 }
 - (id)objectForKey:(NSString *)aKey
 {
-    return [mutaDict objectForKey:aKey];
+    if(aKey)
+    {
+        return [mutaDict objectForKey:aKey];
+    }
+    return nil;
 }
 - (void)removeAllOperation
 {
@@ -76,7 +83,10 @@
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     NetManager *net = [NetManager shareInstance];
-    [net addOperationAndKey:aKey operation:operation];
+    if(aKey)
+    {
+        [net addOperationAndKey:aKey operation:operation];
+    }
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject){
         //请求成功
         [net removeOperationKey:aKey];
