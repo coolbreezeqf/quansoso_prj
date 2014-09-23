@@ -10,4 +10,5 @@
 
 @interface QSSearchView : UIView
 
+- (void)searchContent:(NSString *)content;
 @end

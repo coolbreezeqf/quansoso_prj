@@ -8,8 +8,10 @@
 
 #import "QSRootViewController.h"
 #import "ViewInteraction.h"
-@interface QSRootViewController ()
-
+@interface QSRootViewController (){
+	BOOL haveSearchBar;
+}
+@property (nonatomic,strong) UISearchBar *searchBar;
 @end
 
 @implementation QSRootViewController
@@ -109,14 +111,54 @@
 #pragma mark searchView
 - (void)showSearchView
 {
-    if(!searchView)
-    {
+    if(!searchView){
         searchView = [[QSSearchView alloc] initWithFrame:self.view.bounds];
-        [self.view addSubview:searchView];
+		[self.view addSubview:searchView];
     }
+	[self showSearchBar];
     [self.view bringSubviewToFront:firstview];
 }
 
+- (void)showSearchBar{
+	UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(searchContent)];
+	rightItem.tintColor = [UIColor whiteColor];
+	rightItem.width = 44;
+	self.navigationItem.rightBarButtonItem = rightItem;
+	
+	if (!_searchBar) {
+		UIView *leftBarView = self.navigationItem.leftBarButtonItem.customView;
+		UIBarButtonItem *rightBarButton = self.navigationItem.rightBarButtonItem;
+		_searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBarView.width,0, kMainScreenWidth - leftBarView.width - rightBarButton.width , 44)];
+		_searchBar.backgroundColor = [UIColor clearColor];
+		_searchBar.delegate = self;
+		[_searchBar setPlaceholder:@"输入要搜索的内容"];
+		[_searchBar setTintColor:[UIColor blackColor]];
+	}
+	haveSearchBar = YES;
+	[self.navigationController.navigationBar addSubview:_searchBar];
+}
+
+- (void)hideSearchBar{
+	[_searchBar removeFromSuperview];
+	self.navigationItem.rightBarButtonItem = nil;
+	haveSearchBar = NO;
+}
+
+- (void)searchContent{
+	[searchView searchContent:_searchBar.text];
+	[_searchBar resignFirstResponder];
+}
+
+#pragma mark touch event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+	[_searchBar resignFirstResponder]; //点击空白部分 取消_searchBar的第一响应者
+}
+
+#pragma mark UISearchBar delegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+	[searchView searchContent:_searchBar.text];
+	[_searchBar resignFirstResponder];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -7,8 +7,29 @@
 //
 
 #import "QSSearchView.h"
+#import "QSSearchResultView.h"
+
+@interface QSSearchView ()
+
+@property (nonatomic,strong) QSSearchResultView *resultView;
+@end
 
 @implementation QSSearchView
+
+- (instancetype)initWithFrame:(CGRect)frame{
+	if (self = [super initWithFrame:frame]) {
+		
+	}
+	return self;
+}
+
+- (void)decorateView{
+	
+}
+
+- (void)searchContent:(NSString *)content{
+	
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

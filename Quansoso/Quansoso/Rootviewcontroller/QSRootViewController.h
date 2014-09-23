@@ -14,7 +14,7 @@
 #import "QSSearchView.h"
 #import "QSSettingView.h"
 
-@interface QSRootViewController : BaseViewController
+@interface QSRootViewController : BaseViewController<UISearchBarDelegate>
 {
     FBKVOController *fbkvo;
     QSRootLeftView *leftView;
