@@ -8,6 +8,11 @@
 
 #import "QSSearchResultView.h"
 
+@interface QSSearchResultView()
+
+
+@end
+
 @implementation QSSearchResultView
 
 - (instancetype)initWithFrame:(CGRect)frame andResult:(NSArray *)resultArray{

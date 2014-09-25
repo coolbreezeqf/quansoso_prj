@@ -133,6 +133,7 @@
 		_searchBar.delegate = self;
 		[_searchBar setPlaceholder:@"输入要搜索的内容"];
 		[_searchBar setTintColor:[UIColor blackColor]];
+		[_searchBar becomeFirstResponder];
 	}
 	haveSearchBar = YES;
 	[self.navigationController.navigationBar addSubview:_searchBar];
