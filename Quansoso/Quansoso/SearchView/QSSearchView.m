@@ -40,12 +40,12 @@
 		_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		__weak QSSearchView *weakSelf = self;
 		[_tableView addInfiniteScrollingWithActionHandler:^{
-			[weakSelf.tableView.infiniteScrollingView performSelector:@selector(stopAnimating) withObject:nil afterDelay:2];
+//			[weakSelf.tableView.infiniteScrollingView performSelector:@selector(stopAnimating) withObject:nil afterDelay:2];
 			[weakSelf addSearchData];
 		}];
 		[_tableView addPullToRefreshWithActionHandler:^{
 			[weakSelf refreshData];
-			[weakSelf.tableView.pullToRefreshView performSelector:@selector(stopAnimating) withObject:nil afterDelay:2];
+//			[weakSelf.tableView.pullToRefreshView performSelector:@selector(stopAnimating) withObject:nil afterDelay:2];
 		}];
 		[self addSubview:_tableView];
 		[self addSubview:self.activityView];
@@ -54,27 +54,56 @@
 }
 
 - (void)addSearchData{
-	NSDictionary *dic = @{@"pageSize":@(pageSize),
-						  @"keywords":currentText,
-						  @"currentPage":@(currentPage + 1)};
-	__weak QSSearchView *weakSelf = self;
-	[QSSearchNetManager searchContent:dic success:^(NSDictionary *successDict) {
-		[weakSelf searchEndAddContentUse:successDict];
-	} failure:^{
+	int64_t delayInSeconds = 2.0;
+	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+		//开始更新
+		[_tableView beginUpdates];
 		
-	}];
+		//请求并添加数据
+		NSDictionary *dic = @{@"pageSize":@(pageSize),
+							  @"keywords":currentText,
+							  @"currentPage":@(currentPage + 1)};
+		__weak QSSearchView *weakSelf = self;
+		[QSSearchNetManager searchContent:dic success:^(NSDictionary *successDict) {
+			[weakSelf searchEndAddContentUse:successDict];
+		} failure:^{
+			
+		}];
+	
+		//结束更新
+		[_tableView endUpdates];
+		
+		//停止菊花
+		[_tableView.infiniteScrollingView stopAnimating];
+	});
+
 }
 
 - (void)refreshData{
-	NSDictionary *dic = @{@"pageSize":@(pageSize),
-						  @"keywords":currentText,
-						  @"currentPage":@1};
-	__weak QSSearchView *weakSelf = self;
-	[QSSearchNetManager searchContent:dic success:^(NSDictionary *successDict) {
-		[weakSelf searchEndAddContentUse:successDict];
-	} failure:^{
+	int64_t delayInSeconds = 2.0;
+	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+		//开始更新
+		[_tableView beginUpdates];
 		
-	}];
+		//请求并更新数据
+		NSDictionary *dic = @{@"pageSize":@(pageSize),
+							  @"keywords":currentText,
+							  @"currentPage":@1};
+		__weak QSSearchView *weakSelf = self;
+		[QSSearchNetManager searchContent:dic success:^(NSDictionary *successDict) {
+			[weakSelf searchEndAddContentUse:successDict];
+		} failure:^{
+			
+		}];
+		//结束更新
+		[_tableView endUpdates];
+		
+		//停止菊花
+		[_tableView.pullToRefreshView stopAnimating];
+	});
+	
 }
 
 - (void)searchContent:(NSString *)content{
