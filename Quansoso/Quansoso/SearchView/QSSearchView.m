@@ -57,8 +57,6 @@
 	int64_t delayInSeconds = 2.0;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		//开始更新
-		[_tableView beginUpdates];
 		
 		//请求并添加数据
 		NSDictionary *dic = @{@"pageSize":@(pageSize),
@@ -70,10 +68,6 @@
 		} failure:^{
 			
 		}];
-	
-		//结束更新
-		[_tableView endUpdates];
-		
 		//停止菊花
 		[_tableView.infiniteScrollingView stopAnimating];
 	});
@@ -84,9 +78,7 @@
 	int64_t delayInSeconds = 2.0;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		//开始更新
-		[_tableView beginUpdates];
-		
+
 		//请求并更新数据
 		NSDictionary *dic = @{@"pageSize":@(pageSize),
 							  @"keywords":currentText,
@@ -97,8 +89,7 @@
 		} failure:^{
 			
 		}];
-		//结束更新
-		[_tableView endUpdates];
+		
 		
 		//停止菊花
 		[_tableView.pullToRefreshView stopAnimating];
@@ -123,17 +114,33 @@
 }
 
 - (void)searchEndAddContentUse:(NSDictionary* )result{
+	
+	
 	totalPage = [[result objectForKey:@"totalPage"] integerValue];
 	totalCount = [[result objectForKey:@"totalCount"] integerValue];
 	currentPage = [[result objectForKey:@"currentPage"] integerValue];
 	if (currentPage == 1) {
 		[_searchResult removeAllObjects];
 	}
+	NSInteger lastIndex = _searchResult.count;
 	NSArray *arr = [result objectForKey:@"results"];
 	if (arr) {
 		[_searchResult addObjectsFromArray:arr];
 	}
-	[_tableView reloadData];
+	if (currentPage == 1) {	//下拉刷新时 用插入会有问题
+		[_tableView reloadData];
+		return ;
+	}
+	NSMutableArray *insertArr = [[NSMutableArray alloc] initWithCapacity:42];
+	for (int i = 0; i < arr.count; i++) {
+		[insertArr addObject:[NSIndexPath indexPathForRow:lastIndex + i inSection:0]];
+	}
+	//开始更新
+	[_tableView beginUpdates];
+	[_tableView insertRowsAtIndexPaths:insertArr withRowAnimation:UITableViewRowAnimationFade];
+	//结束更新
+	[_tableView endUpdates];
+	
 }
 
 - (UILabel *)tipLabel{
