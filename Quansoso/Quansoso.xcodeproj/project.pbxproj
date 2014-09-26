@@ -18,11 +18,9 @@
 		B02E0BD219CADAAB009A0306 /* Result.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCD19CADAAB009A0306 /* Result.m */; };
 		B02E0BD319CADAAB009A0306 /* ResultCard.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCF19CADAAB009A0306 /* ResultCard.m */; };
 		B02E0BD419CADAAB009A0306 /* SearchInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BD119CADAAB009A0306 /* SearchInfo.m */; };
-		FF2CA17919CBDCAC00B9E4E8 /* TAESDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF2CA17819CBDCAC00B9E4E8 /* TAESDK.framework */; };
 		FF8A929519C433B80010439B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A929419C433B80010439B /* main.m */; };
 		FF8A929A19C433B80010439B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8A929919C433B80010439B /* Images.xcassets */; };
 		FF8A92A919C433B80010439B /* QuansosoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A92A819C433B80010439B /* QuansosoTests.m */; };
-		FF96E33E19D18F970025881E /* yw_1222.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FF96E33D19D18F970025881E /* yw_1222.jpg */; };
 		FFBA9E9219C680C800D9CBA2 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBA9E7B19C680C800D9CBA2 /* AFHTTPClient.m */; };
 		FFBA9E9319C680C800D9CBA2 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBA9E7D19C680C800D9CBA2 /* AFHTTPRequestOperation.m */; };
 		FFBA9E9419C680C800D9CBA2 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBA9E7F19C680C800D9CBA2 /* AFImageRequestOperation.m */; };
@@ -57,7 +55,6 @@
 		FFBA9EEA19C688F200D9CBA2 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBA9ED819C688F200D9CBA2 /* UIImageView+HighlightedWebCache.m */; };
 		FFBA9EEB19C688F200D9CBA2 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBA9EDA19C688F200D9CBA2 /* UIImageView+WebCache.m */; };
 		FFBA9EEC19C688F200D9CBA2 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBA9EDC19C688F200D9CBA2 /* UIView+WebCacheOperation.m */; };
-		FFDF8F5D19D3F25800C97B5B /* CloudPushSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFDF8F5C19D3F25800C97B5B /* CloudPushSDK.framework */; };
 		FFE85F1919CABAF100A216BB /* QSRootLeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F1419CABAF100A216BB /* QSRootLeftView.m */; };
 		FFE85F1A19CABAF100A216BB /* QSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F1619CABAF100A216BB /* QSRootViewController.m */; };
 		FFE85F1B19CABAF100A216BB /* ViewInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F1819CABAF100A216BB /* ViewInteraction.m */; };
@@ -67,10 +64,16 @@
 		FFE85F2D19CABB9300A216BB /* QSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F2719CABB9300A216BB /* QSSearchView.m */; };
 		FFE85F2E19CABB9300A216BB /* QSSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F2A19CABB9300A216BB /* QSSettingView.m */; };
 		FFE85F3419CABBAE00A216BB /* FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F3119CABBAE00A216BB /* FBKVOController.m */; };
+		FFE85F3519CABBAE00A216BB /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F3319CABBAE00A216BB /* NSData+Base64.m */; };
 		FFE85F3819CABCB300A216BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F3719CABCB300A216BB /* AppDelegate.m */; };
 		FFE85F3A19CAC22300A216BB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F3919CAC22300A216BB /* QuartzCore.framework */; };
 		FFE85F3C19CAC22C00A216BB /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F3B19CAC22C00A216BB /* Accelerate.framework */; };
 		FFE85F4319CAC84400A216BB /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F4219CAC84400A216BB /* UIImage+ImageEffects.m */; };
+		FFE85F4619CACDEF00A216BB /* sdk.png in Resources */ = {isa = PBXBuildFile; fileRef = FFE85F4419CACDEF00A216BB /* sdk.png */; };
+		FFE85F4719CACDEF00A216BB /* yw_1222.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FFE85F4519CACDEF00A216BB /* yw_1222.jpg */; };
+		FFE85F4C19CACEBD00A216BB /* Tae.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FFE85F4B19CACEBD00A216BB /* Tae.bundle */; };
+		FFE85F4E19CACEC200A216BB /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FFE85F4D19CACEC200A216BB /* AlipaySDK.bundle */; };
+		FFE85F5219CACF9300A216BB /* TAESDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F5119CACF9200A216BB /* TAESDK.framework */; };
 		FFE85F5419CAD2A200A216BB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F5319CAD2A200A216BB /* CoreGraphics.framework */; };
 		FFE85F5619CAD2B800A216BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F5519CAD2B800A216BB /* Foundation.framework */; };
 		FFE85F5819CAD2BE00A216BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE85F5719CAD2BE00A216BB /* UIKit.framework */; };
@@ -116,9 +119,6 @@
 		B02E0BCF19CADAAB009A0306 /* ResultCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultCard.m; sourceTree = "<group>"; };
 		B02E0BD019CADAAB009A0306 /* SearchInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInfo.h; sourceTree = "<group>"; };
 		B02E0BD119CADAAB009A0306 /* SearchInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInfo.m; sourceTree = "<group>"; };
-		FF2CA17819CBDCAC00B9E4E8 /* TAESDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TAESDK.framework; path = Quansoso/TBSDKLIB/TAESDK.framework; sourceTree = "<group>"; };
-		FF2CA17A19CBDCBF00B9E4E8 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AlipaySDK.bundle; path = Quansoso/TBSDKLIB/TAESDK.framework/AlipaySDK.bundle; sourceTree = "<group>"; };
-		FF2CA17B19CBDCBF00B9E4E8 /* Tae.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Tae.bundle; path = Quansoso/TBSDKLIB/TAESDK.framework/Tae.bundle; sourceTree = "<group>"; };
 		FF8A928F19C433B80010439B /* Quansoso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quansoso.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8A929319C433B80010439B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF8A929419C433B80010439B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -129,7 +129,6 @@
 		FF8A92A819C433B80010439B /* QuansosoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuansosoTests.m; sourceTree = "<group>"; };
 		FF8A92B219C434370010439B /* QSS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QSS-Prefix.pch"; sourceTree = "<group>"; };
 		FF8A92B419C435AD0010439B /* QSS_Public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSS_Public.h; sourceTree = "<group>"; };
-		FF96E33D19D18F970025881E /* yw_1222.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = yw_1222.jpg; path = Quansoso/yw_1222.jpg; sourceTree = "<group>"; };
 		FFBA9E7A19C680C800D9CBA2 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		FFBA9E7B19C680C800D9CBA2 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		FFBA9E7C19C680C800D9CBA2 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -201,7 +200,6 @@
 		FFBA9EDA19C688F200D9CBA2 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		FFBA9EDB19C688F200D9CBA2 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		FFBA9EDC19C688F200D9CBA2 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
-		FFDF8F5C19D3F25800C97B5B /* CloudPushSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudPushSDK.framework; path = Quansoso/TBSDKLIB/CloudPushSDK.framework; sourceTree = "<group>"; };
 		FFE85F1319CABAF100A216BB /* QSRootLeftView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSRootLeftView.h; sourceTree = "<group>"; };
 		FFE85F1419CABAF100A216BB /* QSRootLeftView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSRootLeftView.m; sourceTree = "<group>"; };
 		FFE85F1519CABAF100A216BB /* QSRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSRootViewController.h; sourceTree = "<group>"; };
@@ -220,12 +218,19 @@
 		FFE85F2A19CABB9300A216BB /* QSSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSettingView.m; sourceTree = "<group>"; };
 		FFE85F3019CABBAE00A216BB /* FBKVOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBKVOController.h; sourceTree = "<group>"; };
 		FFE85F3119CABBAE00A216BB /* FBKVOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBKVOController.m; sourceTree = "<group>"; };
+		FFE85F3219CABBAE00A216BB /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		FFE85F3319CABBAE00A216BB /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		FFE85F3619CABCB300A216BB /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FFE85F3719CABCB300A216BB /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		FFE85F3919CAC22300A216BB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FFE85F3B19CAC22C00A216BB /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		FFE85F4119CAC84400A216BB /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		FFE85F4219CAC84400A216BB /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		FFE85F4419CACDEF00A216BB /* sdk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sdk.png; path = Quansoso/sdk.png; sourceTree = "<group>"; };
+		FFE85F4519CACDEF00A216BB /* yw_1222.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = yw_1222.jpg; path = Quansoso/yw_1222.jpg; sourceTree = "<group>"; };
+		FFE85F4B19CACEBD00A216BB /* Tae.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Tae.bundle; sourceTree = "<group>"; };
+		FFE85F4D19CACEC200A216BB /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		FFE85F5119CACF9200A216BB /* TAESDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TAESDK.framework; path = Quansoso/TAESDK.framework; sourceTree = "<group>"; };
 		FFE85F5319CAD2A200A216BB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FFE85F5519CAD2B800A216BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FFE85F5719CAD2BE00A216BB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -242,12 +247,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFDF8F5D19D3F25800C97B5B /* CloudPushSDK.framework in Frameworks */,
-				FF2CA17919CBDCAC00B9E4E8 /* TAESDK.framework in Frameworks */,
 				FFE85F5819CAD2BE00A216BB /* UIKit.framework in Frameworks */,
 				FFE85F5619CAD2B800A216BB /* Foundation.framework in Frameworks */,
 				FFE85F5419CAD2A200A216BB /* CoreGraphics.framework in Frameworks */,
 				FFE85F3C19CAC22C00A216BB /* Accelerate.framework in Frameworks */,
+				FFE85F5219CACF9300A216BB /* TAESDK.framework in Frameworks */,
 				FFE85F3A19CAC22300A216BB /* QuartzCore.framework in Frameworks */,
 				FFEF4EE419C588E7009E6E84 /* CFNetwork.framework in Frameworks */,
 				FFEF4EE219C588C7009E6E84 /* libz.dylib in Frameworks */,
@@ -297,14 +301,14 @@
 		FF8A928619C433B80010439B = {
 			isa = PBXGroup;
 			children = (
-				FFDF8F5C19D3F25800C97B5B /* CloudPushSDK.framework */,
-				FF96E33D19D18F970025881E /* yw_1222.jpg */,
-				FF2CA17A19CBDCBF00B9E4E8 /* AlipaySDK.bundle */,
-				FF2CA17B19CBDCBF00B9E4E8 /* Tae.bundle */,
-				FF2CA17819CBDCAC00B9E4E8 /* TAESDK.framework */,
 				FFE85F5719CAD2BE00A216BB /* UIKit.framework */,
 				FFE85F5519CAD2B800A216BB /* Foundation.framework */,
 				FFE85F5319CAD2A200A216BB /* CoreGraphics.framework */,
+				FFE85F5119CACF9200A216BB /* TAESDK.framework */,
+				FFE85F4D19CACEC200A216BB /* AlipaySDK.bundle */,
+				FFE85F4B19CACEBD00A216BB /* Tae.bundle */,
+				FFE85F4419CACDEF00A216BB /* sdk.png */,
+				FFE85F4519CACDEF00A216BB /* yw_1222.jpg */,
 				FF8A929119C433B80010439B /* Quansoso */,
 				FF8A92A519C433B80010439B /* QuansosoTests */,
 				FF8A929019C433B80010439B /* Products */,
@@ -587,6 +591,8 @@
 			children = (
 				FFE85F3019CABBAE00A216BB /* FBKVOController.h */,
 				FFE85F3119CABBAE00A216BB /* FBKVOController.m */,
+				FFE85F3219CABBAE00A216BB /* NSData+Base64.h */,
+				FFE85F3319CABBAE00A216BB /* NSData+Base64.m */,
 			);
 			path = FBKVOController;
 			sourceTree = "<group>";
@@ -680,8 +686,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE85F4E19CACEC200A216BB /* AlipaySDK.bundle in Resources */,
 				FF8A929A19C433B80010439B /* Images.xcassets in Resources */,
-				FF96E33E19D18F970025881E /* yw_1222.jpg in Resources */,
+				FFE85F4719CACDEF00A216BB /* yw_1222.jpg in Resources */,
+				FFE85F4C19CACEBD00A216BB /* Tae.bundle in Resources */,
+				FFE85F4619CACDEF00A216BB /* sdk.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -740,6 +749,7 @@
 				FFBA9EE419C688F200D9CBA2 /* SDWebImageManager.m in Sources */,
 				FFBA9EDE19C688F200D9CBA2 /* NSData+ImageContentType.m in Sources */,
 				B02E0BC219CA8FDD009A0306 /* TimeLimitCarzy.m in Sources */,
+				FFE85F3519CABBAE00A216BB /* NSData+Base64.m in Sources */,
 				FFBA9EAB19C6811400D9CBA2 /* ThreadSafeMutableDictionary.m in Sources */,
 				FFBA9EB819C6812500D9CBA2 /* DataOC.mm in Sources */,
 				FFBA9EBA19C6812500D9CBA2 /* UIScrollView+SVPullToRefresh.m in Sources */,
@@ -876,16 +886,16 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/TBSDK",
+					"$(PROJECT_DIR)/Quansoso/TBSDK",
 					"$(PROJECT_DIR)/Quansoso",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Quansoso/TBSDKLIB",
 				);
 				GCC_PREFIX_HEADER = "Quansoso/QSS-Prefix.pch";
 				INFOPLIST_FILE = Quansoso/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 armv64";
 			};
 			name = Debug;
 		};
@@ -900,16 +910,16 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/TBSDK",
+					"$(PROJECT_DIR)/Quansoso/TBSDK",
 					"$(PROJECT_DIR)/Quansoso",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Quansoso/TBSDKLIB",
 				);
 				GCC_PREFIX_HEADER = "Quansoso/QSS-Prefix.pch";
 				INFOPLIST_FILE = Quansoso/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 armv64";
 			};
 			name = Release;
 		};

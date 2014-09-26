@@ -8,12 +8,10 @@
 
 #import "QSRootViewController.h"
 #import "ViewInteraction.h"
-
 @interface QSRootViewController (){
 	BOOL haveSearchBar;
 }
 @property (nonatomic,strong) UISearchBar *searchBar;
-
 @end
 
 @implementation QSRootViewController
@@ -30,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor redColor];
     [self setLeftButton:nil title:@"left" target:self action:@selector(leftButtonItem)];
 }
 
@@ -77,11 +75,6 @@
     [ViewInteraction viewPresentAnimationFromLeft:self.view toView:leftView];
 }
 
-- (void)setSearcheViewNavBar
-{
-    
-}
-
 #pragma mark Default  firstView
 - (void)showFirstView
 {
@@ -123,7 +116,6 @@
 		[self.view addSubview:searchView];
     }
 	[self showSearchBar];
-
     [self.view bringSubviewToFront:firstview];
 }
 

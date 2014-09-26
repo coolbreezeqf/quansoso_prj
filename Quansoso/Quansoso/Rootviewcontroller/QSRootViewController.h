@@ -17,7 +17,6 @@
 @interface QSRootViewController : BaseViewController<UISearchBarDelegate>
 {
     FBKVOController *fbkvo;
-    FBKVOController *searchviewKvo;
     QSRootLeftView *leftView;
     QSFirstView *firstview;
     QSCrazyQGView *crazyQGView;

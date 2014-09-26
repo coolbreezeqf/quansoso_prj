@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @interface QSSearchView : UIView<UITableViewDataSource,UITableViewDelegate>{
 }
 
@@ -16,5 +15,4 @@
 @property (nonatomic,strong) UITableView *tableView;
 
 - (void)searchContent:(NSString *)content;
-
 @end

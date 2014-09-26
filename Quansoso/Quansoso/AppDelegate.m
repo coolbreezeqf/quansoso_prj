@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <TAESDK/TAESDK.h>
 #import "QSRootViewController.h"
 
 @interface AppDelegate ()
@@ -37,10 +38,6 @@
     } failedCallback:^(NSError *error) {
         MLOG(@"TBSDK--初始化失败");
     }];
-}
-- (void)viewPushViewController:(UIViewController *)aViewController
-{
-    [self.rootNav.navigationController pushViewController:aViewController animated:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
