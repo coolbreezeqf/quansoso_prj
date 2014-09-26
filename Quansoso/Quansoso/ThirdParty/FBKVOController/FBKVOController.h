@@ -71,6 +71,8 @@ typedef void (^FBKVONotificationBlock)(id observer, id object, NSDictionary *cha
  */
 - (void)observe:(id)object keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options action:(SEL)action;
 
+
++ (void)layzeObserValue:(id)aObserver byObserver:(id)aByOberser keyPath:(NSString*)aKeyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block;
 /**
  @abstract Registers observer for key-value change notification.
  @param object The object to observe.

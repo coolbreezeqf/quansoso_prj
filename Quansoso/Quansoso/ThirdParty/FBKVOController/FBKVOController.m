@@ -360,6 +360,14 @@ static NSString *describe_options(NSKeyValueObservingOptions options)
   return [[self alloc] initWithObserver:observer];
 }
 
++ (void)layzeObserValue:(id)aObserver byObserver:(id)aByOberser keyPath:(NSString*)aKeyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block
+{
+    FBKVOController *obser = [[self alloc] initWithObserver:aObserver];
+    [obser observe:aByOberser keyPath:aKeyPath options:options block:^(id observer, id object, NSDictionary *change) {
+        block(observer,object,change);
+    }];
+}
+
 - (instancetype)initWithObserver:(id)observer retainObserved:(BOOL)retainObserved
 {
   self = [super init];
