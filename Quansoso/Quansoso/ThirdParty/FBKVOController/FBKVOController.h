@@ -31,6 +31,8 @@ typedef void (^FBKVONotificationBlock)(id observer, id object, NSDictionary *cha
  */
 + (instancetype)controllerWithObserver:(id)observer;
 
+
++ (void)lazyeObserValue:(id)aObserver byObserver:(id)aByOberser keyPath:(NSString*)aKeyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block;
 /**
  @abstract The designated initializer.
  @param observer The object notified on key-value change. The specified observer must support weak references.
