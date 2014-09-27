@@ -21,7 +21,7 @@
 
 - (void)createTableview
 {
-    _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.width*2/3, self.height) style:UITableViewStylePlain];
+    _tableview = [[UITableView alloc] initWithFrame:CGRectMake(self.width-(self.width*2/3), 0, self.width*2/3, self.height) style:UITableViewStylePlain];
     _tableview.delegate = self;
     _tableview.dataSource = self;
     _tableview.backgroundColor = [UIColor whiteColor];

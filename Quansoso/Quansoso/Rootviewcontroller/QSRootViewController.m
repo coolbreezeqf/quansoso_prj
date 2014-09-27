@@ -29,11 +29,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor redColor];
-    [self setLeftButton:nil title:@"left" target:self action:@selector(leftButtonItem)];
+    [self setRightButton:nil title:@"left" target:self action:@selector(rightButtonItem)];
 }
 
 #pragma mark left button
-- (void)leftButtonItem
+- (void)rightButtonItem
 {
     if(!leftView)
     {
@@ -72,7 +72,7 @@
         }];
         leftView.backgroundColor = kClearColor;
     }
-    [ViewInteraction viewPresentAnimationFromLeft:self.view toView:leftView];
+    [ViewInteraction viewPresentAnimationFromRight:self.view toView:leftView Animation:NO];
 }
 
 #pragma mark Default  firstView

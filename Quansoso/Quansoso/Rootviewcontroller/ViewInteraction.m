@@ -70,7 +70,8 @@
 
 
 + (void)viewPresentAnimationFromRight:(UIView*)aFromView
-                                toView:(UIView*)aToView
+                               toView:(UIView*)aToView
+                            Animation:(BOOL)aIsAnimation
 {
     
     AppDelegate *del = [UIApplication sharedApplication].delegate;
@@ -86,7 +87,10 @@
     
     [window addSubview:aToView];
     [UIView animateWithDuration:0.2 animations:^{
-        window.rootViewController.view.transform = CGAffineTransformScale(window.rootViewController.view.transform, 0.8, 0.8);
+        if(aIsAnimation)
+        {
+            window.rootViewController.view.transform = CGAffineTransformScale(window.rootViewController.view.transform, 0.8, 0.8);
+        }
         
         aToView.frame = CGRectMake(0,0,
                                    CGRectGetWidth(endRect),
