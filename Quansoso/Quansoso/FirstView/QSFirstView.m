@@ -12,13 +12,6 @@
 int btnCount;
 @implementation QSFirstView
 
-<<<<<<< HEAD
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-=======
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -107,9 +100,7 @@ int btnCount;
         }];
     }
     
->>>>>>> 首页 和 我的优惠券
 }
-*/
 
 #pragma mark tableView delegate datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

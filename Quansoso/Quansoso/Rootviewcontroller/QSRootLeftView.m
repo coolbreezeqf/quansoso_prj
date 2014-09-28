@@ -23,9 +23,6 @@ CGFloat cellHeight;
 
 - (void)createTableview
 {
-<<<<<<< HEAD
-    _tableview = [[UITableView alloc] initWithFrame:CGRectMake(self.width-(self.width*2/3), 0, self.width*2/3, self.height) style:UITableViewStylePlain];
-=======
     tableViewArray = @[@"首页", @"我的优惠券", @"我关注的品牌", @"分享app", @"", @"设置"];
     cellHeight = 44;
     
@@ -40,7 +37,6 @@ CGFloat cellHeight;
     [_topView addSubview:lineView];
     
     _tableview = [[UITableView alloc] initWithFrame:CGRectMake(self.width*1/3, 0, self.width*2/3, self.height) style:UITableViewStylePlain];
->>>>>>> 首页 和 我的优惠券
     _tableview.delegate = self;
     _tableview.dataSource = self;
     _tableview.backgroundColor = [UIColor whiteColor];

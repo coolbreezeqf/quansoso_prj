@@ -140,5 +140,8 @@ NSNumber *iNum = [NSNumber numberWithLongLong:i];\
 [dict setObject:iNum forKey:key]; \
 }while(0)
 
+#define ViewBottom(view) view.frame.origin.y+view.frame.size.height
+
+
 
 #endif

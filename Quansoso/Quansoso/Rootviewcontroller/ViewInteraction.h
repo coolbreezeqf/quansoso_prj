@@ -16,8 +16,7 @@
                         completeBlock:(void(^)(BOOL isComplete))aCompleteblock;
 
 + (void)viewPresentAnimationFromRight:(UIView*)aFromView
-                               toView:(UIView*)aToView
-                            Animation:(BOOL)aIsAnimation;
+                               toView:(UIView*)aToView;
 
 + (void)viewDissmissAnimationToRight:(UIView*)aToView
                             isRemove:(BOOL)aIsRemove

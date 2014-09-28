@@ -28,11 +28,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-<<<<<<< HEAD
-    self.view.backgroundColor = [UIColor redColor];
-    [self setRightButton:nil title:@"left" target:self action:@selector(rightButtonItem)];
-}
-=======
 //    self.view.backgroundColor = [UIColor redColor];
     [self setRightButton:nil title:@"right" target:self action:@selector(leftButtonItem)];
 //    [self setRightButton:nil title:@"个人" target:self action:@selector(rightButtonItem)];
@@ -46,10 +41,9 @@
 //    QSUserCenterViewController *userCenterVC = [[QSUserCenterViewController alloc] init];
 //    [self.navigationController pushViewController:userCenterVC animated:YES];
 //}
->>>>>>> 首页 和 我的优惠券
 
 #pragma mark left button
-- (void)rightButtonItem
+- (void)leftButtonItem
 {
     if(!leftView)
     {
@@ -103,11 +97,7 @@
         }];
         leftView.backgroundColor = kClearColor;
     }
-<<<<<<< HEAD
-    [ViewInteraction viewPresentAnimationFromRight:self.view toView:leftView Animation:NO];
-=======
     [ViewInteraction viewPresentAnimationFromRight:self.view toView:leftView];
->>>>>>> 首页 和 我的优惠券
 }
 
 #pragma mark Default  firstView

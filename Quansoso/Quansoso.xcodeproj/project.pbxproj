@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB219E2919D7E864001395AC /* QSRootLeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2619D7E864001395AC /* QSRootLeftView.m */; };
+		AB219E2A19D7E864001395AC /* QSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2819D7E864001395AC /* QSRootViewController.m */; };
+		AB219E2E19D7E874001395AC /* QSFirstView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2D19D7E874001395AC /* QSFirstView.m */; };
 		AB6D320719D674320016B8CF /* QSCouponView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6D320619D674320016B8CF /* QSCouponView.m */; };
 		ABC7F6C819D6553D00D6B34C /* QSCouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */; };
 		B0031A2A19D1B05E00446DA6 /* QSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0031A2919D1B05E00446DA6 /* QSSearchViewController.m */; };
@@ -61,12 +64,9 @@
 		FFD1243219D6491D003B969F /* TAESDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD1243019D6491D003B969F /* TAESDK.framework */; };
 		FFD1243519D64937003B969F /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FFD1243319D64937003B969F /* AlipaySDK.bundle */; };
 		FFD1243619D64937003B969F /* Tae.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FFD1243419D64937003B969F /* Tae.bundle */; };
-		FFE85F1919CABAF100A216BB /* QSRootLeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F1419CABAF100A216BB /* QSRootLeftView.m */; };
-		FFE85F1A19CABAF100A216BB /* QSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F1619CABAF100A216BB /* QSRootViewController.m */; };
 		FFE85F1B19CABAF100A216BB /* ViewInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F1819CABAF100A216BB /* ViewInteraction.m */; };
 		FFE85F1E19CABB1300A216BB /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F1D19CABB1300A216BB /* BaseViewController.m */; };
 		FFE85F2B19CABB9300A216BB /* QSCrazyQGView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F2119CABB9300A216BB /* QSCrazyQGView.m */; };
-		FFE85F2C19CABB9300A216BB /* QSFirstView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F2419CABB9300A216BB /* QSFirstView.m */; };
 		FFE85F2D19CABB9300A216BB /* QSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F2719CABB9300A216BB /* QSSearchView.m */; };
 		FFE85F2E19CABB9300A216BB /* QSSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F2A19CABB9300A216BB /* QSSettingView.m */; };
 		FFE85F3419CABBAE00A216BB /* FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F3119CABBAE00A216BB /* FBKVOController.m */; };
@@ -98,6 +98,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB219E2619D7E864001395AC /* QSRootLeftView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSRootLeftView.m; sourceTree = "<group>"; };
+		AB219E2719D7E864001395AC /* QSRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSRootViewController.h; sourceTree = "<group>"; };
+		AB219E2819D7E864001395AC /* QSRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSRootViewController.m; sourceTree = "<group>"; };
+		AB219E2C19D7E874001395AC /* QSFirstView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSFirstView.h; sourceTree = "<group>"; };
+		AB219E2D19D7E874001395AC /* QSFirstView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSFirstView.m; sourceTree = "<group>"; };
 		AB6D320519D674320016B8CF /* QSCouponView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSCouponView.h; path = QSCouponView/QSCouponView.h; sourceTree = "<group>"; };
 		AB6D320619D674320016B8CF /* QSCouponView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSCouponView.m; path = QSCouponView/QSCouponView.m; sourceTree = "<group>"; };
 		ABC7F6C319D6553D00D6B34C /* QSCouponTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCouponTableViewCell.h; sourceTree = "<group>"; };
@@ -211,17 +216,12 @@
 		FFD1243319D64937003B969F /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AlipaySDK.bundle; path = Quansoso/TBSDKLIB/TAESDK.framework/AlipaySDK.bundle; sourceTree = "<group>"; };
 		FFD1243419D64937003B969F /* Tae.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Tae.bundle; path = Quansoso/TBSDKLIB/TAESDK.framework/Tae.bundle; sourceTree = "<group>"; };
 		FFE85F1319CABAF100A216BB /* QSRootLeftView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSRootLeftView.h; sourceTree = "<group>"; };
-		FFE85F1419CABAF100A216BB /* QSRootLeftView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSRootLeftView.m; sourceTree = "<group>"; };
-		FFE85F1519CABAF100A216BB /* QSRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSRootViewController.h; sourceTree = "<group>"; };
-		FFE85F1619CABAF100A216BB /* QSRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSRootViewController.m; sourceTree = "<group>"; };
 		FFE85F1719CABAF100A216BB /* ViewInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewInteraction.h; sourceTree = "<group>"; };
 		FFE85F1819CABAF100A216BB /* ViewInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewInteraction.m; sourceTree = "<group>"; };
 		FFE85F1C19CABB1300A216BB /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		FFE85F1D19CABB1300A216BB /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		FFE85F2019CABB9300A216BB /* QSCrazyQGView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCrazyQGView.h; sourceTree = "<group>"; };
 		FFE85F2119CABB9300A216BB /* QSCrazyQGView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSCrazyQGView.m; sourceTree = "<group>"; };
-		FFE85F2319CABB9300A216BB /* QSFirstView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSFirstView.h; sourceTree = "<group>"; };
-		FFE85F2419CABB9300A216BB /* QSFirstView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSFirstView.m; sourceTree = "<group>"; };
 		FFE85F2619CABB9300A216BB /* QSSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchView.h; sourceTree = "<group>"; };
 		FFE85F2719CABB9300A216BB /* QSSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchView.m; sourceTree = "<group>"; };
 		FFE85F2919CABB9300A216BB /* QSSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSettingView.h; sourceTree = "<group>"; };
@@ -279,6 +279,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB219E2B19D7E874001395AC /* FirstView */ = {
+			isa = PBXGroup;
+			children = (
+				AB219E2C19D7E874001395AC /* QSFirstView.h */,
+				AB219E2D19D7E874001395AC /* QSFirstView.m */,
+			);
+			path = FirstView;
+			sourceTree = "<group>";
+		};
 		AB6D320419D674130016B8CF /* QSCouponView */ = {
 			isa = PBXGroup;
 			children = (
@@ -549,10 +558,10 @@
 		FFE85F1119CABAD300A216BB /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				AB219E2B19D7E874001395AC /* FirstView */,
 				AB6D320419D674130016B8CF /* QSCouponView */,
 				ABC7F6C219D6553D00D6B34C /* Tableviewcell */,
 				FFE85F1F19CABB9300A216BB /* CrazyQGView */,
-				FFE85F2219CABB9300A216BB /* FirstView */,
 				FFE85F2519CABB9300A216BB /* SearchView */,
 				FFE85F2819CABB9300A216BB /* SettingView */,
 				FFE85F1219CABAF100A216BB /* Rootviewcontroller */,
@@ -563,10 +572,10 @@
 		FFE85F1219CABAF100A216BB /* Rootviewcontroller */ = {
 			isa = PBXGroup;
 			children = (
+				AB219E2619D7E864001395AC /* QSRootLeftView.m */,
+				AB219E2719D7E864001395AC /* QSRootViewController.h */,
+				AB219E2819D7E864001395AC /* QSRootViewController.m */,
 				FFE85F1319CABAF100A216BB /* QSRootLeftView.h */,
-				FFE85F1419CABAF100A216BB /* QSRootLeftView.m */,
-				FFE85F1519CABAF100A216BB /* QSRootViewController.h */,
-				FFE85F1619CABAF100A216BB /* QSRootViewController.m */,
 				FFE85F1719CABAF100A216BB /* ViewInteraction.h */,
 				FFE85F1819CABAF100A216BB /* ViewInteraction.m */,
 			);
@@ -580,15 +589,6 @@
 				FFE85F2119CABB9300A216BB /* QSCrazyQGView.m */,
 			);
 			path = CrazyQGView;
-			sourceTree = "<group>";
-		};
-		FFE85F2219CABB9300A216BB /* FirstView */ = {
-			isa = PBXGroup;
-			children = (
-				FFE85F2319CABB9300A216BB /* QSFirstView.h */,
-				FFE85F2419CABB9300A216BB /* QSFirstView.m */,
-			);
-			path = FirstView;
 			sourceTree = "<group>";
 		};
 		FFE85F2519CABB9300A216BB /* SearchView */ = {
@@ -737,7 +737,6 @@
 				FFE85F2D19CABB9300A216BB /* QSSearchView.m in Sources */,
 				FFBA9EE119C688F200D9CBA2 /* SDWebImageDecoder.m in Sources */,
 				FFBA9E9319C680C800D9CBA2 /* AFHTTPRequestOperation.m in Sources */,
-				FFE85F1919CABAF100A216BB /* QSRootLeftView.m in Sources */,
 				FFBA9EDD19C688F200D9CBA2 /* MKAnnotationView+WebCache.m in Sources */,
 				FFBA9EAA19C6811400D9CBA2 /* ThreadSafeMutableArry.m in Sources */,
 				FFBA9EB719C6812500D9CBA2 /* DataCenterDeal.mm in Sources */,
@@ -753,8 +752,8 @@
 				FFE85F2B19CABB9300A216BB /* QSCrazyQGView.m in Sources */,
 				FFBA9EE719C688F200D9CBA2 /* UIImage+GIF.m in Sources */,
 				FFBA9EE219C688F200D9CBA2 /* SDWebImageDownloader.m in Sources */,
-				FFE85F2C19CABB9300A216BB /* QSFirstView.m in Sources */,
 				FFBA9E9419C680C800D9CBA2 /* AFImageRequestOperation.m in Sources */,
+				AB219E2919D7E864001395AC /* QSRootLeftView.m in Sources */,
 				FFBA9EEB19C688F200D9CBA2 /* UIImageView+WebCache.m in Sources */,
 				FFBA9EE619C688F200D9CBA2 /* UIButton+WebCache.m in Sources */,
 				FFE85F3819CABCB300A216BB /* AppDelegate.m in Sources */,
@@ -769,6 +768,7 @@
 				B02E0BC119CA8FDD009A0306 /* CardCarzy.m in Sources */,
 				FFBA9E9919C680C800D9CBA2 /* AFXMLRequestOperation.m in Sources */,
 				FFBA9EE319C688F200D9CBA2 /* SDWebImageDownloaderOperation.m in Sources */,
+				AB219E2A19D7E864001395AC /* QSRootViewController.m in Sources */,
 				FF8A929519C433B80010439B /* main.m in Sources */,
 				FFBA9EA419C6810100D9CBA2 /* UIViewAdditions.m in Sources */,
 				FFBA9EE519C688F200D9CBA2 /* SDWebImagePrefetcher.m in Sources */,
@@ -785,9 +785,9 @@
 				B0031A2A19D1B05E00446DA6 /* QSSearchViewController.m in Sources */,
 				FFBA9E9619C680C800D9CBA2 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				B02E0BC019CA8FDD009A0306 /* Card.m in Sources */,
+				AB219E2E19D7E874001395AC /* QSFirstView.m in Sources */,
 				B02E0BC519CA8FEE009A0306 /* CarzyList.m in Sources */,
 				FFBA9EA019C680E100D9CBA2 /* JSONKit.m in Sources */,
-				FFE85F1A19CABAF100A216BB /* QSRootViewController.m in Sources */,
 				FFE85F2E19CABB9300A216BB /* QSSettingView.m in Sources */,
 				FFE85F3419CABBAE00A216BB /* FBKVOController.m in Sources */,
 				FFBA9EEC19C688F200D9CBA2 /* UIView+WebCacheOperation.m in Sources */,
