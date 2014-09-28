@@ -13,6 +13,10 @@
 #import "QSCrazyQGView.h"
 #import "QSSearchView.h"
 #import "QSSettingView.h"
+<<<<<<< HEAD
+=======
+#import "QSCouponView.h"
+>>>>>>> 首页 和 我的优惠券
 
 @interface QSRootViewController : BaseViewController<UISearchBarDelegate>
 {
@@ -22,5 +26,6 @@
     QSCrazyQGView *crazyQGView;
     QSSearchView *searchView;
     QSSettingView *settingView;
+    QSCouponView *couponView;
 }
 @end

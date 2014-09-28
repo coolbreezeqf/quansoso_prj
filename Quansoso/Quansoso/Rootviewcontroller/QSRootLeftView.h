@@ -14,6 +14,7 @@
 #define kSettingPage 3
 
 @interface QSRootLeftView : UIView<UITableViewDataSource, UITableViewDelegate>
+@property(nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UITableView *tableview;
 @property (nonatomic, assign) int categoryType;
 @end

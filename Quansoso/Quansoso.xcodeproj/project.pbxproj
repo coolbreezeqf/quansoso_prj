@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB6D320719D674320016B8CF /* QSCouponView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6D320619D674320016B8CF /* QSCouponView.m */; };
+		ABC7F6C819D6553D00D6B34C /* QSCouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */; };
 		B0031A2A19D1B05E00446DA6 /* QSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0031A2919D1B05E00446DA6 /* QSSearchViewController.m */; };
 		B0031A2D19D1B6CB00446DA6 /* QSSearchNetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B0031A2C19D1B6CB00446DA6 /* QSSearchNetManager.m */; };
 		B02E0BC019CA8FDD009A0306 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BBA19CA8FDD009A0306 /* Card.m */; };
@@ -96,6 +98,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB6D320519D674320016B8CF /* QSCouponView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSCouponView.h; path = QSCouponView/QSCouponView.h; sourceTree = "<group>"; };
+		AB6D320619D674320016B8CF /* QSCouponView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSCouponView.m; path = QSCouponView/QSCouponView.m; sourceTree = "<group>"; };
+		ABC7F6C319D6553D00D6B34C /* QSCouponTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCouponTableViewCell.h; sourceTree = "<group>"; };
+		ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSCouponTableViewCell.m; sourceTree = "<group>"; };
 		B0031A2819D1B05E00446DA6 /* QSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchViewController.h; sourceTree = "<group>"; };
 		B0031A2919D1B05E00446DA6 /* QSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchViewController.m; sourceTree = "<group>"; };
 		B0031A2B19D1B6CB00446DA6 /* QSSearchNetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchNetManager.h; sourceTree = "<group>"; };
@@ -273,6 +279,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB6D320419D674130016B8CF /* QSCouponView */ = {
+			isa = PBXGroup;
+			children = (
+				AB6D320519D674320016B8CF /* QSCouponView.h */,
+				AB6D320619D674320016B8CF /* QSCouponView.m */,
+			);
+			name = QSCouponView;
+			sourceTree = "<group>";
+		};
+		ABC7F6C219D6553D00D6B34C /* Tableviewcell */ = {
+			isa = PBXGroup;
+			children = (
+				ABC7F6C319D6553D00D6B34C /* QSCouponTableViewCell.h */,
+				ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */,
+			);
+			path = Tableviewcell;
+			sourceTree = "<group>";
+		};
 		B02E0BB819CA842C009A0306 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -525,6 +549,8 @@
 		FFE85F1119CABAD300A216BB /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				AB6D320419D674130016B8CF /* QSCouponView */,
+				ABC7F6C219D6553D00D6B34C /* Tableviewcell */,
 				FFE85F1F19CABB9300A216BB /* CrazyQGView */,
 				FFE85F2219CABB9300A216BB /* FirstView */,
 				FFE85F2519CABB9300A216BB /* SearchView */,
@@ -748,11 +774,13 @@
 				FFBA9EE519C688F200D9CBA2 /* SDWebImagePrefetcher.m in Sources */,
 				FFBA9EE419C688F200D9CBA2 /* SDWebImageManager.m in Sources */,
 				FFBA9EDE19C688F200D9CBA2 /* NSData+ImageContentType.m in Sources */,
+				ABC7F6C819D6553D00D6B34C /* QSCouponTableViewCell.m in Sources */,
 				B02E0BC219CA8FDD009A0306 /* TimeLimitCarzy.m in Sources */,
 				FFE85F3519CABBAE00A216BB /* NSData+Base64.m in Sources */,
 				FFBA9EAB19C6811400D9CBA2 /* ThreadSafeMutableDictionary.m in Sources */,
 				FFBA9EB819C6812500D9CBA2 /* DataOC.mm in Sources */,
 				FFBA9EBA19C6812500D9CBA2 /* UIScrollView+SVPullToRefresh.m in Sources */,
+				AB6D320719D674320016B8CF /* QSCouponView.m in Sources */,
 				B02E0BD219CADAAB009A0306 /* Result.m in Sources */,
 				B0031A2A19D1B05E00446DA6 /* QSSearchViewController.m in Sources */,
 				FFBA9E9619C680C800D9CBA2 /* AFNetworkActivityIndicatorManager.m in Sources */,

@@ -28,9 +28,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+<<<<<<< HEAD
     self.view.backgroundColor = [UIColor redColor];
     [self setRightButton:nil title:@"left" target:self action:@selector(rightButtonItem)];
 }
+=======
+//    self.view.backgroundColor = [UIColor redColor];
+    [self setRightButton:nil title:@"right" target:self action:@selector(leftButtonItem)];
+//    [self setRightButton:nil title:@"个人" target:self action:@selector(rightButtonItem)];
+    [self showFirstView];
+    self.title = @"首页";
+}
+
+//#pragma mark right button
+//- (void)rightButtonItem
+//{
+//    QSUserCenterViewController *userCenterVC = [[QSUserCenterViewController alloc] init];
+//    [self.navigationController pushViewController:userCenterVC animated:YES];
+//}
+>>>>>>> 首页 和 我的优惠券
 
 #pragma mark left button
 - (void)rightButtonItem
@@ -42,28 +58,43 @@
         [fbkvo observe:leftView keyPath:@"categoryType" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
             MLOG(@"%@", change);
             int cateType = [change[@"new"] intValue];
-            [ViewInteraction viewDissmissAnimationToLeft:leftView isRemove:NO completeBlock:^(BOOL isComplete) {
+            [ViewInteraction viewDissmissAnimationToRight:leftView isRemove:NO completeBlock:^(BOOL isComplete) {
                 
             }];
             switch (cateType) {
                 case 0:
                 {
                     [weakself showFirstView];
+                    self.title = @"首页";
                 }
                 break;
                 case 1:
                 {
-                    [weakself showCrazyQGView];
+                    [weakself showCouponView];
+                    self.title = @"我的优惠券";
                 }
                 break;
                 case 2:
                 {
                     [weakself showSearchView];
+                    self.title = @"我关注的品牌";
                 }
                 break;
                 case 3:
                 {
                     [weakself showSettingView];
+                    self.title = @"分享app";
+                }
+                break;
+                case 4:
+                {
+                    
+                }
+                break;
+                case 5:
+                {
+                    [weakself showSettingView];
+                    self.title = @"设置";
                 }
                 break;
                 default:
@@ -72,7 +103,11 @@
         }];
         leftView.backgroundColor = kClearColor;
     }
+<<<<<<< HEAD
     [ViewInteraction viewPresentAnimationFromRight:self.view toView:leftView Animation:NO];
+=======
+    [ViewInteraction viewPresentAnimationFromRight:self.view toView:leftView];
+>>>>>>> 首页 和 我的优惠券
 }
 
 #pragma mark Default  firstView
@@ -106,6 +141,17 @@
         [self.view addSubview:crazyQGView];
     }
     [self.view bringSubviewToFront:firstview];
+}
+
+#pragma mark couponView
+- (void)showCouponView
+{
+    if(!couponView)
+    {
+        couponView = [[QSCouponView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:couponView];
+    }
+    [self.view bringSubviewToFront:couponView];
 }
 
 #pragma mark searchView

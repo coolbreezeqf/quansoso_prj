@@ -76,6 +76,9 @@
     
     AppDelegate *del = [UIApplication sharedApplication].delegate;
     UIWindow *window = del.window;
+    UIImage *bgImg = [ViewInteraction screenshotMH:window];
+    bgImg = [bgImg applyDarkEffect];
+    aToView.backgroundColor = [UIColor colorWithPatternImage:bgImg];
     CGRect endRect = CGRectMake(0, 0, window.width, window.height);
     CGRect startRect = CGRectMake(CGRectGetWidth(aFromView.frame),
                                   0,
@@ -87,10 +90,14 @@
     
     [window addSubview:aToView];
     [UIView animateWithDuration:0.2 animations:^{
+<<<<<<< HEAD
         if(aIsAnimation)
         {
             window.rootViewController.view.transform = CGAffineTransformScale(window.rootViewController.view.transform, 0.8, 0.8);
         }
+=======
+//        window.rootViewController.view.transform = CGAffineTransformScale(window.rootViewController.view.transform, 0.8, 0.8);
+>>>>>>> 首页 和 我的优惠券
         
         aToView.frame = CGRectMake(0,0,
                                    CGRectGetWidth(endRect),
