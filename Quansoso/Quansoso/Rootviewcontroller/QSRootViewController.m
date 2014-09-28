@@ -151,7 +151,6 @@
         searchView = [[QSSearchView alloc] initWithFrame:self.view.bounds];
 		[self.view addSubview:searchView];
     }
-	[self showSearchBar];
     [self.view bringSubviewToFront:firstview];
 }
 

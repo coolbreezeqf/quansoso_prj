@@ -1,18 +1,18 @@
 //
-//  QSSearchViewController.m
+//  QSMerchantDetailsViewController.m
 //  Quansoso
 //
-//  Created by qf on 14/9/23.
+//  Created by qf on 14/9/27.
 //  Copyright (c) 2014年 taobao. All rights reserved.
 //
 
-#import "QSSearchViewController.h"
+#import "QSMerchantDetailsViewController.h"
 
-@interface QSSearchViewController ()
+@interface QSMerchantDetailsViewController ()
 
 @end
 
-@implementation QSSearchViewController
+@implementation QSMerchantDetailsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

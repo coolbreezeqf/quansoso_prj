@@ -144,7 +144,7 @@
 
 - (void)pushView:(UIView*)aView
 {
-    [ViewInteraction viewPresentAnimationFromRight:self.view toView:aView Animation:NO];
+    [ViewInteraction viewPresentAnimationFromRight:self.view toView:aView];
 }
 
 - (void)popView:(UIView*)aView completeBlock:(void(^)(BOOL isComplete))aCompleteblock

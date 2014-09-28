@@ -11,8 +11,6 @@
 @interface QSSearchView : UIView<UITableViewDataSource,UITableViewDelegate>{
 }
 
-@property (nonatomic,strong) NSMutableArray *searchResult;		//of SearchInfo
-@property (nonatomic,strong) UITableView *tableView;
 
 - (void)searchContent:(NSString *)content;
 @end

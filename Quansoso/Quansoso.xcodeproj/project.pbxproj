@@ -12,8 +12,6 @@
 		AB219E2E19D7E874001395AC /* QSFirstView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2D19D7E874001395AC /* QSFirstView.m */; };
 		AB6D320719D674320016B8CF /* QSCouponView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6D320619D674320016B8CF /* QSCouponView.m */; };
 		ABC7F6C819D6553D00D6B34C /* QSCouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */; };
-		B0031A2A19D1B05E00446DA6 /* QSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0031A2919D1B05E00446DA6 /* QSSearchViewController.m */; };
-		B0031A2D19D1B6CB00446DA6 /* QSSearchNetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B0031A2C19D1B6CB00446DA6 /* QSSearchNetManager.m */; };
 		B02E0BC019CA8FDD009A0306 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BBA19CA8FDD009A0306 /* Card.m */; };
 		B02E0BC119CA8FDD009A0306 /* CardCarzy.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BBC19CA8FDD009A0306 /* CardCarzy.m */; };
 		B02E0BC219CA8FDD009A0306 /* TimeLimitCarzy.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BBF19CA8FDD009A0306 /* TimeLimitCarzy.m */; };
@@ -23,6 +21,12 @@
 		B02E0BD219CADAAB009A0306 /* Result.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCD19CADAAB009A0306 /* Result.m */; };
 		B02E0BD319CADAAB009A0306 /* ResultCard.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCF19CADAAB009A0306 /* ResultCard.m */; };
 		B02E0BD419CADAAB009A0306 /* SearchInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BD119CADAAB009A0306 /* SearchInfo.m */; };
+		B08A5FD719D826DD008077E7 /* QSSearchHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FD219D826DD008077E7 /* QSSearchHistoryView.m */; };
+		B08A5FD819D826DD008077E7 /* QSSearchNetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FD419D826DD008077E7 /* QSSearchNetManager.m */; };
+		B08A5FD919D826DD008077E7 /* QSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FD619D826DD008077E7 /* QSSearchViewController.m */; };
+		B08A5FDD19D826E7008077E7 /* QSMerchantDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FDC19D826E7008077E7 /* QSMerchantDetailsViewController.m */; };
+		B08A5FE319D8271E008077E7 /* QSSearchResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FE019D8271E008077E7 /* QSSearchResultView.m */; };
+		B08A5FE419D8271E008077E7 /* QSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FE219D8271E008077E7 /* QSSearchView.m */; };
 		FF8A929519C433B80010439B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A929419C433B80010439B /* main.m */; };
 		FF8A929A19C433B80010439B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8A929919C433B80010439B /* Images.xcassets */; };
 		FF8A92A919C433B80010439B /* QuansosoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A92A819C433B80010439B /* QuansosoTests.m */; };
@@ -67,7 +71,6 @@
 		FFE85F1B19CABAF100A216BB /* ViewInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F1819CABAF100A216BB /* ViewInteraction.m */; };
 		FFE85F1E19CABB1300A216BB /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F1D19CABB1300A216BB /* BaseViewController.m */; };
 		FFE85F2B19CABB9300A216BB /* QSCrazyQGView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F2119CABB9300A216BB /* QSCrazyQGView.m */; };
-		FFE85F2D19CABB9300A216BB /* QSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F2719CABB9300A216BB /* QSSearchView.m */; };
 		FFE85F2E19CABB9300A216BB /* QSSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F2A19CABB9300A216BB /* QSSettingView.m */; };
 		FFE85F3419CABBAE00A216BB /* FBKVOController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F3119CABBAE00A216BB /* FBKVOController.m */; };
 		FFE85F3519CABBAE00A216BB /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE85F3319CABBAE00A216BB /* NSData+Base64.m */; };
@@ -107,10 +110,6 @@
 		AB6D320619D674320016B8CF /* QSCouponView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSCouponView.m; path = QSCouponView/QSCouponView.m; sourceTree = "<group>"; };
 		ABC7F6C319D6553D00D6B34C /* QSCouponTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCouponTableViewCell.h; sourceTree = "<group>"; };
 		ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSCouponTableViewCell.m; sourceTree = "<group>"; };
-		B0031A2819D1B05E00446DA6 /* QSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchViewController.h; sourceTree = "<group>"; };
-		B0031A2919D1B05E00446DA6 /* QSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchViewController.m; sourceTree = "<group>"; };
-		B0031A2B19D1B6CB00446DA6 /* QSSearchNetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchNetManager.h; sourceTree = "<group>"; };
-		B0031A2C19D1B6CB00446DA6 /* QSSearchNetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchNetManager.m; sourceTree = "<group>"; };
 		B02E0BB919CA8FDD009A0306 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Card.h; sourceTree = "<group>"; };
 		B02E0BBA19CA8FDD009A0306 /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Card.m; sourceTree = "<group>"; };
 		B02E0BBB19CA8FDD009A0306 /* CardCarzy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCarzy.h; sourceTree = "<group>"; };
@@ -130,6 +129,18 @@
 		B02E0BCF19CADAAB009A0306 /* ResultCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultCard.m; sourceTree = "<group>"; };
 		B02E0BD019CADAAB009A0306 /* SearchInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInfo.h; sourceTree = "<group>"; };
 		B02E0BD119CADAAB009A0306 /* SearchInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInfo.m; sourceTree = "<group>"; };
+		B08A5FD119D826DD008077E7 /* QSSearchHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchHistoryView.h; sourceTree = "<group>"; };
+		B08A5FD219D826DD008077E7 /* QSSearchHistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchHistoryView.m; sourceTree = "<group>"; };
+		B08A5FD319D826DD008077E7 /* QSSearchNetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchNetManager.h; sourceTree = "<group>"; };
+		B08A5FD419D826DD008077E7 /* QSSearchNetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchNetManager.m; sourceTree = "<group>"; };
+		B08A5FD519D826DD008077E7 /* QSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchViewController.h; sourceTree = "<group>"; };
+		B08A5FD619D826DD008077E7 /* QSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchViewController.m; sourceTree = "<group>"; };
+		B08A5FDB19D826E7008077E7 /* QSMerchantDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSMerchantDetailsViewController.h; sourceTree = "<group>"; };
+		B08A5FDC19D826E7008077E7 /* QSMerchantDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSMerchantDetailsViewController.m; sourceTree = "<group>"; };
+		B08A5FDF19D8271E008077E7 /* QSSearchResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchResultView.h; sourceTree = "<group>"; };
+		B08A5FE019D8271E008077E7 /* QSSearchResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchResultView.m; sourceTree = "<group>"; };
+		B08A5FE119D8271E008077E7 /* QSSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchView.h; sourceTree = "<group>"; };
+		B08A5FE219D8271E008077E7 /* QSSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchView.m; sourceTree = "<group>"; };
 		FF8A928F19C433B80010439B /* Quansoso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quansoso.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8A929319C433B80010439B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF8A929419C433B80010439B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -222,8 +233,6 @@
 		FFE85F1D19CABB1300A216BB /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		FFE85F2019CABB9300A216BB /* QSCrazyQGView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCrazyQGView.h; sourceTree = "<group>"; };
 		FFE85F2119CABB9300A216BB /* QSCrazyQGView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSCrazyQGView.m; sourceTree = "<group>"; };
-		FFE85F2619CABB9300A216BB /* QSSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchView.h; sourceTree = "<group>"; };
-		FFE85F2719CABB9300A216BB /* QSSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchView.m; sourceTree = "<group>"; };
 		FFE85F2919CABB9300A216BB /* QSSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSettingView.h; sourceTree = "<group>"; };
 		FFE85F2A19CABB9300A216BB /* QSSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSettingView.m; sourceTree = "<group>"; };
 		FFE85F3019CABBAE00A216BB /* FBKVOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBKVOController.h; sourceTree = "<group>"; };
@@ -330,6 +339,47 @@
 				B02E0BBD19CA8FDD009A0306 /* DataModels.h */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		B08A5FCF19D826DD008077E7 /* SearchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B08A5FD019D826DD008077E7 /* QSSearchHistory */,
+				B08A5FD319D826DD008077E7 /* QSSearchNetManager.h */,
+				B08A5FD419D826DD008077E7 /* QSSearchNetManager.m */,
+				B08A5FD519D826DD008077E7 /* QSSearchViewController.h */,
+				B08A5FD619D826DD008077E7 /* QSSearchViewController.m */,
+			);
+			path = SearchViewController;
+			sourceTree = "<group>";
+		};
+		B08A5FD019D826DD008077E7 /* QSSearchHistory */ = {
+			isa = PBXGroup;
+			children = (
+				B08A5FD119D826DD008077E7 /* QSSearchHistoryView.h */,
+				B08A5FD219D826DD008077E7 /* QSSearchHistoryView.m */,
+			);
+			path = QSSearchHistory;
+			sourceTree = "<group>";
+		};
+		B08A5FDA19D826E7008077E7 /* MerchantDetails */ = {
+			isa = PBXGroup;
+			children = (
+				B08A5FDB19D826E7008077E7 /* QSMerchantDetailsViewController.h */,
+				B08A5FDC19D826E7008077E7 /* QSMerchantDetailsViewController.m */,
+			);
+			path = MerchantDetails;
+			sourceTree = "<group>";
+		};
+		B08A5FDE19D8271E008077E7 /* SearchView */ = {
+			isa = PBXGroup;
+			children = (
+				B08A5FDF19D8271E008077E7 /* QSSearchResultView.h */,
+				B08A5FE019D8271E008077E7 /* QSSearchResultView.m */,
+				B08A5FE119D8271E008077E7 /* QSSearchView.h */,
+				B08A5FE219D8271E008077E7 /* QSSearchView.m */,
+			);
+			path = SearchView;
 			sourceTree = "<group>";
 		};
 		FF8A928619C433B80010439B = {
@@ -558,11 +608,13 @@
 		FFE85F1119CABAD300A216BB /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				B08A5FDE19D8271E008077E7 /* SearchView */,
+				B08A5FDA19D826E7008077E7 /* MerchantDetails */,
+				B08A5FCF19D826DD008077E7 /* SearchViewController */,
 				AB219E2B19D7E874001395AC /* FirstView */,
 				AB6D320419D674130016B8CF /* QSCouponView */,
 				ABC7F6C219D6553D00D6B34C /* Tableviewcell */,
 				FFE85F1F19CABB9300A216BB /* CrazyQGView */,
-				FFE85F2519CABB9300A216BB /* SearchView */,
 				FFE85F2819CABB9300A216BB /* SettingView */,
 				FFE85F1219CABAF100A216BB /* Rootviewcontroller */,
 			);
@@ -589,19 +641,6 @@
 				FFE85F2119CABB9300A216BB /* QSCrazyQGView.m */,
 			);
 			path = CrazyQGView;
-			sourceTree = "<group>";
-		};
-		FFE85F2519CABB9300A216BB /* SearchView */ = {
-			isa = PBXGroup;
-			children = (
-				FFE85F2619CABB9300A216BB /* QSSearchView.h */,
-				FFE85F2719CABB9300A216BB /* QSSearchView.m */,
-				B0031A2819D1B05E00446DA6 /* QSSearchViewController.h */,
-				B0031A2919D1B05E00446DA6 /* QSSearchViewController.m */,
-				B0031A2B19D1B6CB00446DA6 /* QSSearchNetManager.h */,
-				B0031A2C19D1B6CB00446DA6 /* QSSearchNetManager.m */,
-			);
-			path = SearchView;
 			sourceTree = "<group>";
 		};
 		FFE85F2819CABB9300A216BB /* SettingView */ = {
@@ -734,7 +773,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFE85F2D19CABB9300A216BB /* QSSearchView.m in Sources */,
 				FFBA9EE119C688F200D9CBA2 /* SDWebImageDecoder.m in Sources */,
 				FFBA9E9319C680C800D9CBA2 /* AFHTTPRequestOperation.m in Sources */,
 				FFBA9EDD19C688F200D9CBA2 /* MKAnnotationView+WebCache.m in Sources */,
@@ -742,13 +780,14 @@
 				FFBA9EB719C6812500D9CBA2 /* DataCenterDeal.mm in Sources */,
 				FFBA9E9C19C680C800D9CBA2 /* UIImageView+AFNetworking.m in Sources */,
 				FFE85F4319CAC84400A216BB /* UIImage+ImageEffects.m in Sources */,
+				B08A5FE419D8271E008077E7 /* QSSearchView.m in Sources */,
 				B02E0BD419CADAAB009A0306 /* SearchInfo.m in Sources */,
 				FFBA9EB919C6812500D9CBA2 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				FFBA9E9B19C680C800D9CBA2 /* NetManager.m in Sources */,
 				FFBA9EE019C688F200D9CBA2 /* SDWebImageCompat.m in Sources */,
-				B0031A2D19D1B6CB00446DA6 /* QSSearchNetManager.m in Sources */,
 				FFBA9EDF19C688F200D9CBA2 /* SDImageCache.m in Sources */,
 				FFBA9EE819C688F200D9CBA2 /* UIImage+MultiFormat.m in Sources */,
+				B08A5FD819D826DD008077E7 /* QSSearchNetManager.m in Sources */,
 				FFE85F2B19CABB9300A216BB /* QSCrazyQGView.m in Sources */,
 				FFBA9EE719C688F200D9CBA2 /* UIImage+GIF.m in Sources */,
 				FFBA9EE219C688F200D9CBA2 /* SDWebImageDownloader.m in Sources */,
@@ -767,9 +806,12 @@
 				FFBA9E9A19C680C800D9CBA2 /* MyHttpClient.m in Sources */,
 				B02E0BC119CA8FDD009A0306 /* CardCarzy.m in Sources */,
 				FFBA9E9919C680C800D9CBA2 /* AFXMLRequestOperation.m in Sources */,
+				B08A5FD719D826DD008077E7 /* QSSearchHistoryView.m in Sources */,
 				FFBA9EE319C688F200D9CBA2 /* SDWebImageDownloaderOperation.m in Sources */,
+				B08A5FDD19D826E7008077E7 /* QSMerchantDetailsViewController.m in Sources */,
 				AB219E2A19D7E864001395AC /* QSRootViewController.m in Sources */,
 				FF8A929519C433B80010439B /* main.m in Sources */,
+				B08A5FD919D826DD008077E7 /* QSSearchViewController.m in Sources */,
 				FFBA9EA419C6810100D9CBA2 /* UIViewAdditions.m in Sources */,
 				FFBA9EE519C688F200D9CBA2 /* SDWebImagePrefetcher.m in Sources */,
 				FFBA9EE419C688F200D9CBA2 /* SDWebImageManager.m in Sources */,
@@ -781,8 +823,8 @@
 				FFBA9EB819C6812500D9CBA2 /* DataOC.mm in Sources */,
 				FFBA9EBA19C6812500D9CBA2 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				AB6D320719D674320016B8CF /* QSCouponView.m in Sources */,
+				B08A5FE319D8271E008077E7 /* QSSearchResultView.m in Sources */,
 				B02E0BD219CADAAB009A0306 /* Result.m in Sources */,
-				B0031A2A19D1B05E00446DA6 /* QSSearchViewController.m in Sources */,
 				FFBA9E9619C680C800D9CBA2 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				B02E0BC019CA8FDD009A0306 /* Card.m in Sources */,
 				AB219E2E19D7E874001395AC /* QSFirstView.m in Sources */,
