@@ -17,5 +17,7 @@
 @property(nonatomic, strong) UIView *headView;
 @property(nonatomic, strong) UITableView *showQuanTableView;
 
+@property(nonatomic, strong) UITapGestureRecognizer *tapSearchGestureRecognizer;
+
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

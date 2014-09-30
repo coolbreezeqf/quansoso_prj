@@ -8,6 +8,16 @@
 
 #import "QSRootViewController.h"
 #import "ViewInteraction.h"
+
+typedef NS_ENUM(NSInteger, cateType) {
+    cateTypeIndex = 0,
+    cateTypeCoupon,
+    cateTypeBrand,
+    cateTypeShare,
+    cateTypeNull,
+    cateTypeSetting
+};
+
 @interface QSRootViewController (){
 	BOOL haveSearchBar;
 }
@@ -56,36 +66,36 @@
                 
             }];
             switch (cateType) {
-                case 0:
+                case cateTypeIndex:
                 {
                     [weakself showFirstView];
                     self.title = @"首页";
                 }
                 break;
-                case 1:
+                case cateTypeCoupon:
                 {
                     [weakself showCouponView];
                     self.title = @"我的优惠券";
                 }
                 break;
-                case 2:
+                case cateTypeBrand:
                 {
                     [weakself showSearchView];
                     self.title = @"我关注的品牌";
                 }
                 break;
-                case 3:
+                case cateTypeShare:
                 {
                     [weakself showSettingView];
                     self.title = @"分享app";
                 }
                 break;
-                case 4:
+                case cateTypeNull:
                 {
                     
                 }
                 break;
-                case 5:
+                case cateTypeSetting:
                 {
                     [weakself showSettingView];
                     self.title = @"设置";

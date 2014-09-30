@@ -8,6 +8,8 @@
 
 #import "QSFirstView.h"
 #import "SVPullToRefresh.h"
+#import "ViewInteraction.h"
+#import "QSSearchViewController.h"
 
 int btnCount;
 @implementation QSFirstView
@@ -20,19 +22,28 @@ int btnCount;
     
     self.headView = [[UIView alloc] init];
     
+    self.tapSearchGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToSearchVC)];
+    
+    UITapGestureRecognizer *tapSGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToSearchVC)];
     self.imagebrand = [[UIImageView alloc] initWithFrame:CGRectMake(50, 20, kMainScreenWidth-100, 100)];
     self.imagebrand.backgroundColor = [UIColor blueColor];
+    self.imagebrand.userInteractionEnabled = YES;
     [self.headView addSubview:self.imagebrand];
     
     self.viewSearch = [[UIView alloc] initWithFrame:CGRectMake(30, ViewBottom(_imagebrand)+20, kMainScreenWidth-60, 40)];
     self.viewSearch.backgroundColor = [UIColor blueColor];
+    self.viewSearch.userInteractionEnabled = YES;
     [self.headView addSubview:self.viewSearch];
     
-    CGRect frameRect = _viewSearch.frame;
-    UIView *frameView = [[UIView alloc] initWithFrame:frameRect] ;
-    frameView.layer.borderWidth = 1;
-    frameView.layer.borderColor = [[UIColor blackColor] CGColor];
-    [self.headView addSubview:frameView];
+    [self.imagebrand addGestureRecognizer:tapSGR];
+    [self.viewSearch addGestureRecognizer:self.tapSearchGestureRecognizer];
+
+    
+//    CGRect frameRect = _viewSearch.frame;
+//    UIView *frameView = [[UIView alloc] initWithFrame:frameRect] ;
+//    frameView.layer.borderWidth = 1;
+//    frameView.layer.borderColor = [[UIColor blackColor] CGColor];
+//    [self.headView addSubview:frameView];
     
     self.labelDaily = [[UILabel alloc]
                            initWithFrame:CGRectMake(10, ViewBottom(_viewSearch)+10, 90, 20)];
@@ -43,10 +54,11 @@ int btnCount;
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, ViewBottom(self.labelDaily)+5, kMainScreenWidth, 80)];
     self.scrollView.contentSize = CGSizeMake(2*kMainScreenWidth, 80);
-    CGFloat interval = 2*(kMainScreenWidth-240)/7;
+    self.scrollView.pagingEnabled = YES;
+    CGFloat interval = (kMainScreenWidth-240)/4;
     for (int i=0; i<6; i++)
     {
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval+(interval+80)*i, 0, 80, 80)];
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval+(interval+80)*i+interval*(i/3), 0, 80, 80)];
         btn.tag = 10+i;
         [btn addTarget:self action:@selector(touchQuanButton:) forControlEvents:UIControlEventTouchUpInside];
         btn.backgroundColor = [UIColor blueColor];
@@ -54,7 +66,6 @@ int btnCount;
         [self.scrollView addSubview:btn];
     }
     [self.headView addSubview:self.scrollView];
-    
     self.labelPrivilege = [[UILabel alloc] initWithFrame:CGRectMake(10, ViewBottom(self.scrollView)+5, 90, 20)];
     self.labelPrivilege.text = @"我关注的商家";
     self.labelPrivilege.font = kFont12;
@@ -75,6 +86,13 @@ int btnCount;
     [self addTableViewTrag];
     
     return self;
+}
+
+#pragma mark 跳转到搜索页面
+- (void)pushToSearchVC
+{
+    QSSearchViewController *searchVC = [[QSSearchViewController alloc] init];
+    [ViewInteraction viewPushViewcontroller:searchVC];
 }
 
 #pragma mark 增加上拉下拉

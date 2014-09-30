@@ -28,7 +28,7 @@ CGFloat cellHeight;
     
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width*2/3, self.width*1/2)];
     
-    UIImageView *headImg = [[UIImageView alloc] initWithFrame:CGRectMake(self.width*1/3-25, ViewBottom(_topView)/2-25, 50, 50)];
+    UIImageView *headImg = [[UIImageView alloc] initWithFrame:CGRectMake(self.width*1/3-40, ViewBottom(_topView)/2-40, 80, 80)];
     headImg.backgroundColor = [UIColor blueColor];
     [_topView addSubview:headImg];
     

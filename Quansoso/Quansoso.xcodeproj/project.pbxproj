@@ -624,10 +624,10 @@
 		FFE85F1219CABAF100A216BB /* Rootviewcontroller */ = {
 			isa = PBXGroup;
 			children = (
-				AB219E2619D7E864001395AC /* QSRootLeftView.m */,
 				AB219E2719D7E864001395AC /* QSRootViewController.h */,
 				AB219E2819D7E864001395AC /* QSRootViewController.m */,
 				FFE85F1319CABAF100A216BB /* QSRootLeftView.h */,
+				AB219E2619D7E864001395AC /* QSRootLeftView.m */,
 				FFE85F1719CABAF100A216BB /* ViewInteraction.h */,
 				FFE85F1819CABAF100A216BB /* ViewInteraction.m */,
 			);
