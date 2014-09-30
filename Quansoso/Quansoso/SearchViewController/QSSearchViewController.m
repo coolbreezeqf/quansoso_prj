@@ -8,27 +8,28 @@
 
 #import "QSSearchViewController.h"
 #import "SVPullToRefresh.h"
-#import "QSSearchHistoryView.h"
 @interface QSSearchViewController (){
 	NSInteger currentPage;
 	NSInteger totalPage;
 	NSInteger pageSize;
 	NSInteger totalCount;
 	NSString *currentText;
-	
+	float keyboardHeight;
 }
 
 @property (nonatomic,strong) UISearchBar *searchBar;
 @property (nonatomic,strong) UIActivityIndicatorView *activityView;
 @property (nonatomic,strong) UILabel *tipLabel;
-@property (nonatomic,strong) QSSearchHistoryView *historyTable;
+@property (nonatomic,strong) UILabel *historyTip;
+@property (nonatomic,strong) UITableView *historyTable;
+@property (nonatomic,strong) NSMutableArray *historyArr; //of  NSString
 @end
 
 @implementation QSSearchViewController
 
 - (void)showSearchBar{
 	UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(searchContent)];
-//	rightItem.tintColor = [UIColor whiteColor];
+	//	rightItem.tintColor = [UIColor whiteColor];
 	rightItem.width = 44;
 	self.navigationItem.rightBarButtonItem = rightItem;
 	self.navigationItem.backBarButtonItem.title = @"";
@@ -39,10 +40,9 @@
 		_searchBar.backgroundColor = [UIColor clearColor];
 		_searchBar.delegate = self;
 		_searchBar.Placeholder = @"搜索品牌/优惠";
-		_searchBar.keyboardType = UIKeyboardTypeDefault;
+		//		_searchBar.keyboardType = UIKeyboardTypeDefault;
 		[_searchBar setTintColor:[UIColor blackColor]];
 		[_searchBar becomeFirstResponder];
-//		[self showHistoryTable];
 	}
 	[self.navigationController.navigationBar addSubview:_searchBar];
 }
@@ -54,10 +54,22 @@
 
 - (void)showHistoryTable{
 	MLOG(@"show historyTable");
+	if(!_historyTable){
+		_historyTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - keyboardHeight) style:UITableViewStylePlain];
+		_historyTable.tag = 1;
+		_historyTable.delegate = self;
+		_historyTable.dataSource = self;
+		_historyTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+		_historyTable.backgroundColor = [UIColor whiteColor];
+		[self.view addSubview:_historyTable];
+	}
+	[self.view bringSubviewToFront:_historyTable];
 }
 
 - (void)hideHistoryTable{
 	MLOG(@"hide historyTable");
+	[self.view sendSubviewToBack:_historyTable];
+	[self.view bringSubviewToFront:_tableView];
 }
 
 
@@ -65,7 +77,7 @@
 	int64_t delayInSeconds = 2.0;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-
+		
 		//请求并添加数据
 		NSDictionary *dic = @{@"pageSize":@(pageSize),
 							  @"keywords":currentText,
@@ -87,7 +99,7 @@
 	int64_t delayInSeconds = 2.0;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-
+		
 		//请求并更新数据
 		NSDictionary *dic = @{@"pageSize":@(pageSize),
 							  @"keywords":currentText,
@@ -98,11 +110,19 @@
 		} failure:^{
 			
 		}];
-
+		
 		//停止菊花
 		[_tableView.pullToRefreshView stopAnimating];
 	});
 	
+}
+
+- (void)refreshHistoryData{
+	[self.historyArr insertObject:_searchBar.text atIndex:0];
+	[_historyTable beginUpdates];
+	NSArray *arr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
+	[_historyTable insertRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationNone];
+	[_historyTable endUpdates];
 }
 
 - (void)searchContent{
@@ -116,10 +136,12 @@
 		[weakSelf searchEndAddContentUse:successDict];
 		[_activityView stopAnimating];
 	}
-	failure:^{
+							  failure:^{
 								  
-	}];
+							  }];
 	[_searchBar resignFirstResponder];
+	[self.view sendSubviewToBack:_historyTable];
+	[self refreshHistoryData];
 }
 
 - (void)searchEndAddContentUse:(NSDictionary* )result{
@@ -149,6 +171,14 @@
 	[_tableView endUpdates];
 }
 
+
+
+- (void)clearHistory{
+	[self.historyArr removeAllObjects];
+	[_historyTable reloadData];
+}
+
+#pragma mark - property lazy init
 - (UILabel *)tipLabel{
 	if (!_tipLabel) {
 		_tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
@@ -160,37 +190,13 @@
 	return _tipLabel;
 }
 
-#pragma mark - tableview delegate and datasource
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-	if (currentPage == 0) {
-		self.tipLabel.text = @"提示可以搜索的内容";
-		[self.view addSubview:_tipLabel];
-	}else if(_searchResult.count == 0){
-		self.tipLabel.text = @"您想要的品牌还未入住券搜搜哦，\n请点击下方‘反馈’按钮，\n我们将尽快收录该品牌...";
-		[self.tipLabel setNumberOfLines:3];
-		if (![_tipLabel superview]) {
-			[self.view addSubview:_tipLabel];
-		}
-	}else{ // _searchResult != nil and count>0
-		[self.tipLabel removeFromSuperview];
+- (NSMutableArray *)historyArr{
+	if (!_historyArr) {
+		NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+		[ud synchronize];
+		_historyArr = [ud mutableArrayValueForKey:@"SearchHistoryArr"];
 	}
-	return _searchResult.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SearchResultCell"];
-	if (!cell) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchResultCell"];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	}
-	cell.textLabel.text = [[_searchResult objectAtIndex:indexPath.row] objectForKey:@"name"];
-	return cell;
-	
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-	[_searchBar resignFirstResponder];
-	[self hideHistoryTable];
+	return _historyArr;
 }
 
 - (UIActivityIndicatorView *)activityView{
@@ -201,6 +207,109 @@
 	}
 	return _activityView;
 }
+#pragma mark - tableview delegate and datasource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+	if (tableView.tag == 0) { //tableview
+		if (currentPage == 0) {
+			self.tipLabel.text = @"提示可以搜索的内容";
+			[self.tableView addSubview:_tipLabel];
+		}else if(_searchResult.count == 0){
+			self.tipLabel.text = @"您想要的品牌还未入住券搜搜哦，\n请点击下方‘反馈’按钮，\n我们将尽快收录该品牌...";
+			[self.tipLabel setNumberOfLines:3];
+			if (![_tipLabel superview]) {
+				[self.tableView addSubview:_tipLabel];
+			}
+		}else{ // _searchResult != nil and count>0
+			[self.tipLabel removeFromSuperview];
+		}
+		return _searchResult.count;
+	}
+	else {				//historytable
+		
+		if (self.historyArr.count == 0) {
+			_historyTip = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 200)];
+			[_historyTip setNumberOfLines:4];
+			_historyTip.textColor = [UIColor lightGrayColor];
+			_historyTip.text = @"还没有搜索记录";
+			_historyTip.font = kFont13;
+			_historyTip.textAlignment = NSTextAlignmentCenter;
+			[_historyTable addSubview:_historyTip];
+		}else{
+			if (_historyTip) {
+				[_historyTip removeFromSuperview];
+			}
+		}
+		return _historyArr.count;
+	}
+	
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+	if (tableView.tag == 0) {
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SearchResultCell"];
+		if (!cell) {
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchResultCell"];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		}
+		cell.textLabel.text = [[_searchResult objectAtIndex:indexPath.row] objectForKey:@"name"];
+		return cell;
+	}
+	else{
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SearchHistoryCell"];
+		if (!cell) {
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchHistoryCell"];
+		}
+		cell.textLabel.text = [_historyArr objectAtIndex:indexPath.row];
+		return cell;
+	}
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+	if (tableView.tag == 0) {
+		[_searchBar resignFirstResponder];
+		[self hideHistoryTable];
+	}
+	else{
+		_searchBar.text = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+		[self searchContent];
+	}
+	
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+	if (tableView.tag == 1 && self.historyArr.count != 0) {
+		return 30;
+	}
+	else{
+		return 0;
+	}
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+	if (tableView.tag == 1 && self.historyArr.count != 0) {
+		UIView *clearView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 30)];
+		clearView.backgroundColor = [UIColor whiteColor];
+		UIButton *bt = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
+		bt.center = clearView.center;
+		[clearView addSubview:bt];
+		[bt setTitle:@"清空历史纪录"  forState:UIControlStateNormal];
+		bt.backgroundColor = [UIColor clearColor];
+		//		bt.titleLabel.textColor = [UIColor blueColor];
+		[bt setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+		bt.titleLabel.textAlignment = NSTextAlignmentCenter;
+		[bt addTarget:self action:@selector(clearHistory) forControlEvents:UIControlEventTouchDown];
+		return clearView;
+	}
+	return nil;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+	if (tableView.tag == 1) {
+		return @"历史记录";
+	}
+	return nil;
+}
+
 
 
 #pragma mark touch event
@@ -229,7 +338,14 @@
 	[self showHistoryTable];
 	return YES;
 }
-
+#pragma mark keyboard
+- (void)keyboardWillShow:(NSNotification *)notification{
+	NSDictionary *info = [notification userInfo];
+	//获取高度
+	NSValue *value = [info objectForKey:@"UIKeyboardBoundsUserInfoKey"];
+	CGSize hightSize = [value CGRectValue].size;
+	_historyTable.frame = CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - hightSize.height - 64);
+}
 #pragma -
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -238,8 +354,9 @@
 	pageSize = 5;
 	totalPage = NSIntegerMax;
 	_searchResult = [[NSMutableArray alloc] initWithCapacity:42];
-	_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 64) style:UITableViewStylePlain];
+	_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight) style:UITableViewStylePlain];
 	
+	_tableView.tag = 0;
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
 	_tableView.backgroundColor = [UIColor whiteColor];
@@ -257,28 +374,40 @@
 	}];
 	[self.view addSubview:_tableView];
 	[self.view addSubview:self.activityView];
+	
+	//初始化键盘通知
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+	
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
 	[self hideSearchBar];
+	//	NSSet *set = [NSSet setWithArray:_historyArr];
+	NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+	[ud synchronize];
+	NSInteger savaNum = 15;
+	if(_historyArr.count > savaNum){
+		[_historyArr removeObjectsInRange:NSMakeRange(savaNum, _historyArr.count-savaNum)];
+	}
+	[ud setValue:_historyArr forKey:@"SearchHistoryArr"];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
 	[self showSearchBar];
 }
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
