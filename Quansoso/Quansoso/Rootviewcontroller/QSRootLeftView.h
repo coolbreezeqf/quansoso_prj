@@ -17,4 +17,5 @@
 @property(nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UITableView *tableview;
 @property (nonatomic, assign) int categoryType;
+@property(nonatomic, strong) UIImageView *headImgView;
 @end

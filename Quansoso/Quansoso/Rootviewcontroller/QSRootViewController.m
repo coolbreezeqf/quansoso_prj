@@ -8,6 +8,8 @@
 
 #import "QSRootViewController.h"
 #import "ViewInteraction.h"
+#import "UIImageView+WebCache.h"
+#import <TAESDK/TAESDK.h>
 
 typedef NS_ENUM(NSInteger, cateType) {
     cateTypeIndex = 0,
@@ -37,22 +39,50 @@ typedef NS_ENUM(NSInteger, cateType) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-//    self.view.backgroundColor = [UIColor redColor];
+    [self setLeftButton:nil title:@"登出" target:self action:@selector(logout)];
     [self setRightButton:nil title:@"right" target:self action:@selector(leftButtonItem)];
-//    [self setRightButton:nil title:@"个人" target:self action:@selector(rightButtonItem)];
     [self showFirstView];
     self.title = @"首页";
 }
 
-//#pragma mark right button
-//- (void)rightButtonItem
-//{
-//    QSUserCenterViewController *userCenterVC = [[QSUserCenterViewController alloc] init];
-//    [self.navigationController pushViewController:userCenterVC animated:YES];
-//}
+#pragma mark 淘宝的系列操作
+#pragma mark 淘宝login
+- (void)checkLogin
+{
+    if(![[TaeSession sharedInstance] isLogin]){
+        [[TaeSDK sharedInstance] showLogin:self.navigationController  successCallback:^(TaeSession *session) {
+            
+            NSString *tip=[NSString stringWithFormat:@"登录的用户信息:%@,登录时间:%@",[session getUser],[session getLoginTime]];
+            NSLog(@"%@", tip);
+//            [self alert:tip];
+        } failedCallback:^(NSError *error) {
+            
+            NSString *tip=[NSString stringWithFormat:@"登录失败:%@",error];
+            NSLog(@"%@", tip);
+//            [self alert:tip];
+            
+        }];
+    }else{
+        TaeSession *session=[TaeSession sharedInstance];
+        NSString *tip=[NSString stringWithFormat:@"登录的用户信息:%@,登录时间:%@",[session getUser],[session getLoginTime]];
+        NSLog(@"%@", tip);
+//        [self alert:tip];
+    }
+}
 
-#pragma mark left button
+#pragma mark 登出
+- (void)logout
+{
+    [[TaeSDK sharedInstance] logout];
+}
+
+#pragma mark 重置SDK
+- (void)resetSDK
+{
+    [TaeTest resetTaeSDKDemo];
+}
+
+#pragma mark right button
 - (void)leftButtonItem
 {
     if(!leftView)
@@ -74,8 +104,21 @@ typedef NS_ENUM(NSInteger, cateType) {
                 break;
                 case cateTypeCoupon:
                 {
-                    [weakself showCouponView];
-                    self.title = @"我的优惠券";
+                    if ([[TaeSession sharedInstance] isLogin])
+                    {
+                        [weakself showCouponView];
+                        self.title = @"我的优惠券";
+                    }
+                    else
+                    {
+                        [[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
+                            [weakself showCouponView];
+                            self.title = @"我的优惠券";
+                            [self updateUI];
+                        } failedCallback:^(NSError *error) {
+                            
+                        }];
+                    }
                 }
                 break;
                 case cateTypeBrand:
@@ -108,6 +151,12 @@ typedef NS_ENUM(NSInteger, cateType) {
         leftView.backgroundColor = kClearColor;
     }
     [ViewInteraction viewPresentAnimationFromRight:self.view toView:leftView];
+}
+
+#pragma mark 登陆刷新UI
+- (void)updateUI
+{
+    [leftView.headImgView sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]];
 }
 
 #pragma mark Default  firstView

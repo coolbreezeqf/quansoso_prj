@@ -18,7 +18,8 @@ int btnCount;
 {
     self = [super initWithFrame:frame];
     self.backgroundColor = [UIColor whiteColor];
-    btnCount = 10;
+//    btnCount = 10;
+    btnCount = 1;
     
     self.headView = [[UIView alloc] init];
     
@@ -128,7 +129,6 @@ int btnCount;
         return btnCount/3;
     }
     return btnCount/3+1;
-    return 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -138,31 +138,48 @@ int btnCount;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-    CGRect frame = cell.frame;
-    frame.size.width = kMainScreenWidth;
-    cell.frame = frame;
-    int j = btnCount-3*indexPath.row;
-    for (int i=0; i<(j>=3?3:j%3); i++)
+    if (btnCount == 1)
     {
-        int temInterval = (kMainScreenWidth-240)/4;
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(temInterval+(temInterval+80)*i, 5, 80, 80)];
-        btn.tag = 100+indexPath.row*3+i;
-        if (i+indexPath.row*3 != btnCount-1)
-        {
-            [btn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
-            btn.backgroundColor = [UIColor blueColor];
-        }
-        else
-        {
-            [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
-            btn.backgroundColor = [UIColor blackColor];
-        }
-        
+        float temInterval = (kMainScreenWidth-240)/4;
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        UILabel *interestLabel = [[UILabel alloc] initWithFrame:CGRectMake(temInterval, 5, 160+temInterval, 80)];
+        interestLabel.text = @"你想要实时了解品牌最优惠信息吗？赶快关注您喜欢的品牌吧!";
+        interestLabel.numberOfLines = 0;
+        [cell addSubview:interestLabel];
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(160+temInterval*3, 5, 80, 80)];
+        [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
+        btn.backgroundColor = [UIColor blackColor];
         [cell addSubview:btn];
+        return cell;
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
+    else
+    {
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        CGRect frame = cell.frame;
+        frame.size.width = kMainScreenWidth;
+        cell.frame = frame;
+        int j = btnCount-3*indexPath.row;
+        for (int i=0; i<(j>=3?3:j%3); i++)
+        {
+            float temInterval = (kMainScreenWidth-240)/4;
+            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(temInterval+(temInterval+80)*i, 5, 80, 80)];
+            btn.tag = 100+indexPath.row*3+i;
+            if (i+indexPath.row*3 != btnCount-1)
+            {
+                [btn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
+                btn.backgroundColor = [UIColor blueColor];
+            }
+            else
+            {
+                [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
+                btn.backgroundColor = [UIColor blackColor];
+            }
+            
+            [cell addSubview:btn];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }
 }
 
 
