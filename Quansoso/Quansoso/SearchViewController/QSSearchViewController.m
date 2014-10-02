@@ -8,6 +8,7 @@
 
 #import "QSSearchViewController.h"
 #import "SVPullToRefresh.h"
+#import "SearchInfo.h"
 @interface QSSearchViewController (){
 	NSInteger currentPage;
 	NSInteger totalPage;
@@ -23,20 +24,18 @@
 @property (nonatomic,strong) UILabel *historyTip;
 @property (nonatomic,strong) UITableView *historyTable;
 @property (nonatomic,strong) NSMutableArray *historyArr; //of  NSString
+@property (nonatomic,strong) UIButton *feedback;	//反馈按钮
 @end
 
 @implementation QSSearchViewController
 
 - (void)showSearchBar{
-	UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(searchContent)];
-	//	rightItem.tintColor = [UIColor whiteColor];
-	rightItem.width = 44;
-	self.navigationItem.rightBarButtonItem = rightItem;
-	self.navigationItem.backBarButtonItem.title = @"";
+	[self setRightButton:nil title:@"搜索" target:self action:@selector(searchContent)];
+
 	if (!_searchBar) {
 		UIView *leftBarView = self.navigationItem.leftBarButtonItem.customView;
-		UIBarButtonItem *rightBarButton = self.navigationItem.rightBarButtonItem;
-		_searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBarView.width + 20,0, kMainScreenWidth - leftBarView.width - rightBarButton.width -15, 44)];
+		UIView *rightBarView = self.navigationItem.rightBarButtonItem.customView;
+		_searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBarView.width ,0, kMainScreenWidth - leftBarView.width - rightBarView.width , 44)];
 		_searchBar.backgroundColor = [UIColor clearColor];
 		_searchBar.delegate = self;
 		_searchBar.Placeholder = @"搜索品牌/优惠";
@@ -53,13 +52,11 @@
 }
 
 - (void)showHistoryTable{
-	MLOG(@"show historyTable");
 	if(!_historyTable){
 		_historyTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - keyboardHeight) style:UITableViewStylePlain];
 		_historyTable.tag = 1;
 		_historyTable.delegate = self;
 		_historyTable.dataSource = self;
-		_historyTable.separatorStyle = UITableViewCellSeparatorStyleNone;
 		_historyTable.backgroundColor = [UIColor whiteColor];
 		[self.view addSubview:_historyTable];
 	}
@@ -67,7 +64,6 @@
 }
 
 - (void)hideHistoryTable{
-	MLOG(@"hide historyTable");
 	[self.view sendSubviewToBack:_historyTable];
 	[self.view bringSubviewToFront:_tableView];
 }
@@ -171,11 +167,17 @@
 	[_tableView endUpdates];
 }
 
-
-
 - (void)clearHistory{
 	[self.historyArr removeAllObjects];
 	[_historyTable reloadData];
+}
+
+- (void)userFeedback{
+	MLOG(@"userFeedBack");
+}
+
+- (void)back{
+	[self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - property lazy init
@@ -192,11 +194,20 @@
 
 - (NSMutableArray *)historyArr{
 	if (!_historyArr) {
-		NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-		[ud synchronize];
-		_historyArr = [ud mutableArrayValueForKey:@"SearchHistoryArr"];
+		_historyArr = [QSDataSevice sharedQSDataSevice].searchHistoryArr;
 	}
 	return _historyArr;
+}
+
+- (UIButton *)feedback{
+	if (!_feedback) {
+		_feedback = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+		[_feedback setTitle:@"反馈" forState:UIControlStateNormal];
+		_feedback.center = CGPointMake(self.tipLabel.center.x, self.tipLabel.center.y + 40);
+		_feedback.backgroundColor = [UIColor redColor];
+		[_feedback addTarget:self action:@selector(userFeedback) forControlEvents:UIControlEventTouchDown];
+	}
+	return _feedback;
 }
 
 - (UIActivityIndicatorView *)activityView{
@@ -211,16 +222,20 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 	if (tableView.tag == 0) { //tableview
 		if (currentPage == 0) {
-			self.tipLabel.text = @"提示可以搜索的内容";
+			self.tipLabel.text = @"";
 			[self.tableView addSubview:_tipLabel];
-		}else if(_searchResult.count == 0){
+		}else if(_searchResult.count == 0){  //histroy为空时 将tiplabel和反馈按钮添加上去
 			self.tipLabel.text = @"您想要的品牌还未入住券搜搜哦，\n请点击下方‘反馈’按钮，\n我们将尽快收录该品牌...";
 			[self.tipLabel setNumberOfLines:3];
 			if (![_tipLabel superview]) {
 				[self.tableView addSubview:_tipLabel];
 			}
+			if (![self.feedback superview]) {
+				[self.tableView addSubview:_feedback];
+			}
 		}else{ // _searchResult != nil and count>0
 			[self.tipLabel removeFromSuperview];
+			[self.feedback removeFromSuperview];
 		}
 		return _searchResult.count;
 	}
@@ -234,7 +249,10 @@
 			_historyTip.font = kFont13;
 			_historyTip.textAlignment = NSTextAlignmentCenter;
 			[_historyTable addSubview:_historyTip];
+			_historyTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+			
 		}else{
+			_historyTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 			if (_historyTip) {
 				[_historyTip removeFromSuperview];
 			}
@@ -338,7 +356,7 @@
 	[self showHistoryTable];
 	return YES;
 }
-#pragma mark keyboard
+#pragma mark - keyboard
 - (void)keyboardWillShow:(NSNotification *)notification{
 	NSDictionary *info = [notification userInfo];
 	//获取高度
@@ -346,7 +364,7 @@
 	CGSize hightSize = [value CGRectValue].size;
 	_historyTable.frame = CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - hightSize.height - 64);
 }
-#pragma -
+#pragma mark -
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -377,19 +395,22 @@
 	
 	//初始化键盘通知
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-	
+	[self setLeftButton:[UIImage imageNamed:@"back"] title:@"" target:self action:@selector(back)];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
 	[self hideSearchBar];
-	//	NSSet *set = [NSSet setWithArray:_historyArr];
-	NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-	[ud synchronize];
-	NSInteger savaNum = 15;
-	if(_historyArr.count > savaNum){
-		[_historyArr removeObjectsInRange:NSMakeRange(savaNum, _historyArr.count-savaNum)];
-	}
-	[ud setValue:_historyArr forKey:@"SearchHistoryArr"];
+	dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	dispatch_async(queue, ^{
+		NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+		[ud synchronize];
+		NSInteger savaNum = 15;
+		if(_historyArr.count > savaNum){
+			[_historyArr removeObjectsInRange:NSMakeRange(savaNum, _historyArr.count-savaNum)];
+		}
+		[ud setValue:_historyArr forKey:@"SearchHistoryArr"];
+	});
+	
 }
 
 - (void)viewWillAppear:(BOOL)animated{
