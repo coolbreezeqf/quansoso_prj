@@ -1,14 +1,14 @@
 //
-//  QSSettingView.h
+//  QSAttentionBrandView.h
 //  Quansoso
 //
-//  Created by  striveliu on 14-9-18.
+//  Created by Johnny's on 14-10-3.
 //  Copyright (c) 2014年 taobao. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface QSSettingView : UIView
+@interface QSAttentionBrandView : UIView
 
 
 - (instancetype)initWithFrame:(CGRect)frame;

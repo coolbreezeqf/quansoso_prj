@@ -129,13 +129,13 @@ typedef NS_ENUM(NSInteger, cateType) {
                 break;
                 case cateTypeBrand:
                 {
-                    [weakself showSearchView];
+                    [weakself showAttentionBrandView];
                     self.title = @"我关注的品牌";
                 }
                 break;
                 case cateTypeShare:
                 {
-                    [weakself showSettingView];
+                    [weakself showShareAppView];
                     self.title = @"分享app";
                 }
                 break;
@@ -207,6 +207,28 @@ typedef NS_ENUM(NSInteger, cateType) {
         [self.view addSubview:couponView];
     }
     [self.view bringSubviewToFront:couponView];
+}
+
+#pragma mark showShareAppView
+- (void)showShareAppView
+{
+    if (!shareAppView)
+    {
+        shareAppView = [[QSShareAppView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:shareAppView];
+    }
+    [self.view bringSubviewToFront:shareAppView];
+}
+
+#pragma mark showAttentionBrandView
+- (void)showAttentionBrandView
+{
+    if (!attentionBrandView)
+    {
+        attentionBrandView = [[QSAttentionBrandView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:attentionBrandView];
+    }
+    [self.view bringSubviewToFront:attentionBrandView];
 }
 
 #pragma mark searchView

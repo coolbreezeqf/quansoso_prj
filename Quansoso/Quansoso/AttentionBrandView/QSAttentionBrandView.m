@@ -1,15 +1,14 @@
 //
-//  QSSettingView.m
+//  QSAttentionBrandView.m
 //  Quansoso
 //
-//  Created by  striveliu on 14-9-18.
+//  Created by Johnny's on 14-10-3.
 //  Copyright (c) 2014年 taobao. All rights reserved.
 //
 
-#import "QSSettingView.h"
+#import "QSAttentionBrandView.h"
 
-@implementation QSSettingView
-
+@implementation QSAttentionBrandView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -18,6 +17,7 @@
     
     return self;
 }
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
