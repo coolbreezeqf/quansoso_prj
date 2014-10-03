@@ -20,8 +20,25 @@ CGFloat cellHeight;
     if(self = [super initWithFrame:frame])
     {
         [self createTableview];
+        self.userInteractionEnabled = YES;
+        UISwipeGestureRecognizer *swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc]
+                                                        initWithTarget:self action:@selector(useBlock:)];
+        [self addGestureRecognizer:swipeGestureRecognizer];
     }
     return self;
+}
+
+- (void)useBlock:(UISwipeGestureRecognizer *)aGestureRecongnizer
+{
+    if (aGestureRecongnizer.direction == UISwipeGestureRecognizerDirectionRight)
+    {
+        _fadeBlock();
+    }
+}
+
+- (void)useFadeBlock:(void (^)(void))aBlock
+{
+    _fadeBlock = aBlock;
 }
 
 - (void)createTableview

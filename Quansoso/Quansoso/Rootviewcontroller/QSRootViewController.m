@@ -88,6 +88,11 @@ typedef NS_ENUM(NSInteger, cateType) {
     if(!leftView)
     {
         leftView = [[QSRootLeftView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kMainScreenHeight)];
+        [leftView useFadeBlock:^{
+            [ViewInteraction viewDissmissAnimationToRight:leftView isRemove:NO completeBlock:^(BOOL isComplete) {
+                
+            }];
+        }];
         __weak QSRootViewController *weakself = self;
         [fbkvo observe:leftView keyPath:@"categoryType" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
             MLOG(@"%@", change);
@@ -108,6 +113,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                     {
                         [weakself showCouponView];
                         self.title = @"我的优惠券";
+                        MLOG(@"%@", [[TaeSession sharedInstance] getUser]);
                     }
                     else
                     {
