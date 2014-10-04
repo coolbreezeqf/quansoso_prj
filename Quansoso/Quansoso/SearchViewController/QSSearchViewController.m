@@ -9,8 +9,12 @@
 #import "QSSearchViewController.h"
 #import "SVPullToRefresh.h"
 #import "SearchInfo.h"
+#import "CAlertLabel.h"
+#import "Result.h"
+#import "QSMerchantTableViewCell.h"
+#import "QSMerchantDetailsViewController.h"
 @interface QSSearchViewController (){
-	NSInteger currentPage;
+	NSInteger currentPage;  //init in viewDidLoad
 	NSInteger totalPage;
 	NSInteger pageSize;
 	NSInteger totalCount;
@@ -25,6 +29,7 @@
 @property (nonatomic,strong) UITableView *historyTable;
 @property (nonatomic,strong) NSMutableArray *historyArr; //of  NSString
 @property (nonatomic,strong) UIButton *feedback;	//反馈按钮
+@property (nonatomic,strong) SearchInfo *searchInfo;
 @end
 
 @implementation QSSearchViewController
@@ -35,7 +40,11 @@
 	if (!_searchBar) {
 		UIView *leftBarView = self.navigationItem.leftBarButtonItem.customView;
 		UIView *rightBarView = self.navigationItem.rightBarButtonItem.customView;
-		_searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBarView.width ,0, kMainScreenWidth - leftBarView.width - rightBarView.width , 44)];
+		if(kMainScreenWidth != 320){
+			_searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBarView.right+15+5 ,0, kMainScreenWidth - leftBarView.right - (rightBarView.width+15+5)-10 , 44)];
+		}else{
+			_searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBarView.width ,0, kMainScreenWidth - leftBarView.width - rightBarView.width , 44)];
+		}
 		_searchBar.backgroundColor = [UIColor clearColor];
 		_searchBar.delegate = self;
 		_searchBar.Placeholder = @"搜索品牌/优惠";
@@ -124,6 +133,11 @@
 - (void)searchContent{
 	[_activityView startAnimating];
 	currentText = _searchBar.text;
+	if ([currentText isEqualToString:@""]) {
+		CAlertLabel *al = [CAlertLabel alertLabelWithAdjustFrameForText:@"输入你要搜索的品牌"];
+		[al showAlertLabel];
+		return ;
+	}
 	NSDictionary *dic = @{@"keywords":currentText,
 						  @"pageSize":@(pageSize),
 						  @"currentPage":@1};
@@ -141,23 +155,23 @@
 }
 
 - (void)searchEndAddContentUse:(NSDictionary* )result{
-	totalPage = [[result objectForKey:@"totalPage"] integerValue];
-	totalCount = [[result objectForKey:@"totalCount"] integerValue];
-	currentPage = [[result objectForKey:@"currentPage"] integerValue];
+	_searchInfo = [SearchInfo modelObjectWithDictionary:result];
+	totalPage = _searchInfo.totalPage;
+	totalCount = _searchInfo.totalCount;
+	currentPage = _searchInfo.currentPage;
 	if (currentPage == 1) { // currentPage = 1 说明进行了新的请求 清空数组
 		[_searchResult removeAllObjects];
 	}
 	NSInteger lastIndex = _searchResult.count;
-	NSArray *arr = [result objectForKey:@"results"];
-	if (arr) {
-		[_searchResult addObjectsFromArray:arr];
+	if (_searchInfo.results) {
+		[_searchResult addObjectsFromArray:_searchInfo.results];
 	}
 	if (currentPage == 1) {	//下拉刷新时 用插入会有问题
 		[_tableView reloadData];
 		return ;
 	}
 	NSMutableArray *insertArr = [[NSMutableArray alloc] initWithCapacity:42];
-	for (int i = 0; i < arr.count; i++) {
+	for (int i = 0; i < _searchInfo.results.count; i++) {
 		[insertArr addObject:[NSIndexPath indexPathForRow:lastIndex + i inSection:0]];
 	}
 	//开始更新
@@ -233,9 +247,11 @@
 			if (![self.feedback superview]) {
 				[self.tableView addSubview:_feedback];
 			}
+			_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		}else{ // _searchResult != nil and count>0
 			[self.tipLabel removeFromSuperview];
 			[self.feedback removeFromSuperview];
+			_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 		}
 		return _searchResult.count;
 	}
@@ -264,12 +280,25 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 	if (tableView.tag == 0) {
-		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SearchResultCell"];
+		QSMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MerchantCell"];
 		if (!cell) {
-			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchResultCell"];
+//			cell = [[QSMerchantTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchResultCell"];
+			cell = [[QSMerchantTableViewCell alloc] initWithFrame:CGRectNull];
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
-		cell.textLabel.text = [[_searchResult objectAtIndex:indexPath.row] objectForKey:@"name"];
+		Result *result = [_searchResult objectAtIndex:indexPath.row];
+//		cell.textLabel.text = result.name;
+////		UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 95, 45)];
+////		[imageView setImageWithURL:[NSURL URLWithString:result.picUrl] placeholderImage:[UIImage imageNamed:@"MerchantDefault"]];
+////		[cell.imageView addSubview:imageView];
+//		[cell.imageView setImageWithURL:[NSURL URLWithString:result.picUrl] placeholderImage:[UIImage imageNamed:@"MerchantDefault"]];
+//		//		[cell.imageView setFrame:CGRectMake(5, 0, 95, 45)]; // 没有用
+
+		cell.titleLb.text = result.name;
+		CGRect rect = cell.titleLb.frame;
+		rect.size.width = kMainScreenWidth - cell.iconImageView.right;
+		[cell.titleLb setFrame:rect];
+		[cell.iconImageView setImageWithURL:[NSURL URLWithString:result.picUrl]];
 		return cell;
 	}
 	else{
@@ -286,12 +315,21 @@
 	if (tableView.tag == 0) {
 		[_searchBar resignFirstResponder];
 		[self hideHistoryTable];
+		QSMerchantDetailsViewController *mdvc = [[QSMerchantDetailsViewController alloc] initWithMerchant:[_searchResult objectAtIndex:indexPath.row]];
+		[self.navigationController pushViewController:mdvc animated:YES];
 	}
 	else{
 		_searchBar.text = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
 		[self searchContent];
 	}
 	
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+	if (tableView.tag == 0) {
+		return 90;
+	}
+	return 44;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -369,7 +407,7 @@
 	[super viewDidLoad];
 	// Do any additional setup after loading the view.
 	currentPage = 0;
-	pageSize = 5;
+	pageSize = (kMainScreenHeight - 44) / 90 ;
 	totalPage = NSIntegerMax;
 	_searchResult = [[NSMutableArray alloc] initWithCapacity:42];
 	_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight) style:UITableViewStylePlain];
@@ -378,7 +416,7 @@
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
 	_tableView.backgroundColor = [UIColor whiteColor];
-	_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//	_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	
 	
 	__weak QSSearchViewController *weakSelf = self;
@@ -400,17 +438,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
 	[self hideSearchBar];
-	dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	dispatch_async(queue, ^{
-		NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-		[ud synchronize];
-		NSInteger savaNum = 15;
-		if(_historyArr.count > savaNum){
-			[_historyArr removeObjectsInRange:NSMakeRange(savaNum, _historyArr.count-savaNum)];
-		}
-		[ud setValue:_historyArr forKey:@"SearchHistoryArr"];
-	});
-	
 }
 
 - (void)viewWillAppear:(BOOL)animated{

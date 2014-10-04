@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QSSettingView : UIView
+@interface QSSettingView : UIView <UITableViewDataSource,UITableViewDelegate>
+
+@property (nonatomic,strong) UITableView *tableView;
 
 @end

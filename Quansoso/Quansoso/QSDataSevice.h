@@ -14,5 +14,6 @@
 @property (nonatomic,strong) NSMutableArray *searchHistoryArr;
 
 + (QSDataSevice *)sharedQSDataSevice;
+- (void)saveData;
 
 @end

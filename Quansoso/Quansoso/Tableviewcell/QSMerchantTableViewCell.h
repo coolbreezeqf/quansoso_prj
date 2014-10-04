@@ -2,17 +2,14 @@
 //  QSMerchantTableViewCell.h
 //  Quansoso
 //
-//  Created by qf on 14/10/2.
+//  Created by qf on 14/10/3.
 //  Copyright (c) 2014年 taobao. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-
-
-/*
-	商家cell用在searchVC中
- */
 @interface QSMerchantTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLb;
 
 @end

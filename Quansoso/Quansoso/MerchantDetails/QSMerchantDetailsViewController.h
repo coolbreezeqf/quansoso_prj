@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface QSMerchantDetailsViewController : UIViewController
-
+#import "Result.h"
+@interface QSMerchantDetailsViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate>
+- (instancetype)initWithMerchant:(Result *)merchant;
 @end

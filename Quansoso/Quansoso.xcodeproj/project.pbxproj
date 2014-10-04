@@ -27,8 +27,11 @@
 		B08A5FDD19D826E7008077E7 /* QSMerchantDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FDC19D826E7008077E7 /* QSMerchantDetailsViewController.m */; };
 		B08A5FE319D8271E008077E7 /* QSSearchResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FE019D8271E008077E7 /* QSSearchResultView.m */; };
 		B08A5FE419D8271E008077E7 /* QSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FE219D8271E008077E7 /* QSSearchView.m */; };
-		B08A5FE719DD6E18008077E7 /* QSMerchantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FE619DD6E18008077E7 /* QSMerchantTableViewCell.m */; };
 		B08A5FEA19DD7772008077E7 /* QSDataSevice.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FE919DD7772008077E7 /* QSDataSevice.m */; };
+		B08A5FEE19DD8025008077E7 /* CAlertLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FED19DD8025008077E7 /* CAlertLabel.m */; };
+		B08A5FF819DE78FE008077E7 /* QSMerchantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */; };
+		B08A5FF919DE78FE008077E7 /* MerchantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B08A5FF719DE78FE008077E7 /* MerchantCell.xib */; };
+		B08A5FFE19DFE61A008077E7 /* UILabel+dynamicSizeMe.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */; };
 		FF8A929519C433B80010439B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A929419C433B80010439B /* main.m */; };
 		FF8A929A19C433B80010439B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8A929919C433B80010439B /* Images.xcassets */; };
 		FF8A92A919C433B80010439B /* QuansosoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A92A819C433B80010439B /* QuansosoTests.m */; };
@@ -143,11 +146,16 @@
 		B08A5FE019D8271E008077E7 /* QSSearchResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchResultView.m; sourceTree = "<group>"; };
 		B08A5FE119D8271E008077E7 /* QSSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchView.h; sourceTree = "<group>"; };
 		B08A5FE219D8271E008077E7 /* QSSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchView.m; sourceTree = "<group>"; };
-		B08A5FE519DD6E18008077E7 /* QSMerchantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSMerchantTableViewCell.h; sourceTree = "<group>"; };
-		B08A5FE619DD6E18008077E7 /* QSMerchantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSMerchantTableViewCell.m; sourceTree = "<group>"; };
 		B08A5FE819DD7772008077E7 /* QSDataSevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSDataSevice.h; sourceTree = "<group>"; };
 		B08A5FE919DD7772008077E7 /* QSDataSevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSDataSevice.m; sourceTree = "<group>"; };
 		B08A5FEB19DD7853008077E7 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
+		B08A5FEC19DD8025008077E7 /* CAlertLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAlertLabel.h; sourceTree = "<group>"; };
+		B08A5FED19DD8025008077E7 /* CAlertLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAlertLabel.m; sourceTree = "<group>"; };
+		B08A5FF519DE78FE008077E7 /* QSMerchantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSMerchantTableViewCell.h; sourceTree = "<group>"; };
+		B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSMerchantTableViewCell.m; sourceTree = "<group>"; };
+		B08A5FF719DE78FE008077E7 /* MerchantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MerchantCell.xib; sourceTree = "<group>"; };
+		B08A5FFC19DFE61A008077E7 /* UILabel+dynamicSizeMe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+dynamicSizeMe.h"; sourceTree = "<group>"; };
+		B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+dynamicSizeMe.m"; sourceTree = "<group>"; };
 		FF8A928F19C433B80010439B /* Quansoso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quansoso.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8A929319C433B80010439B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF8A929419C433B80010439B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -318,8 +326,9 @@
 			children = (
 				ABC7F6C319D6553D00D6B34C /* QSCouponTableViewCell.h */,
 				ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */,
-				B08A5FE519DD6E18008077E7 /* QSMerchantTableViewCell.h */,
-				B08A5FE619DD6E18008077E7 /* QSMerchantTableViewCell.m */,
+				B08A5FF519DE78FE008077E7 /* QSMerchantTableViewCell.h */,
+				B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */,
+				B08A5FF719DE78FE008077E7 /* MerchantCell.xib */,
 			);
 			path = Tableviewcell;
 			sourceTree = "<group>";
@@ -361,6 +370,8 @@
 				B08A5FD419D826DD008077E7 /* QSSearchNetManager.m */,
 				B08A5FD519D826DD008077E7 /* QSSearchViewController.h */,
 				B08A5FD619D826DD008077E7 /* QSSearchViewController.m */,
+				B08A5FEC19DD8025008077E7 /* CAlertLabel.h */,
+				B08A5FED19DD8025008077E7 /* CAlertLabel.m */,
 			);
 			path = SearchViewController;
 			sourceTree = "<group>";
@@ -392,6 +403,15 @@
 				B08A5FE219D8271E008077E7 /* QSSearchView.m */,
 			);
 			path = SearchView;
+			sourceTree = "<group>";
+		};
+		B08A5FFB19DFE61A008077E7 /* UILabel+dynamicSizeMe */ = {
+			isa = PBXGroup;
+			children = (
+				B08A5FFC19DFE61A008077E7 /* UILabel+dynamicSizeMe.h */,
+				B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */,
+			);
+			path = "UILabel+dynamicSizeMe";
 			sourceTree = "<group>";
 		};
 		FF8A928619C433B80010439B = {
@@ -476,6 +496,7 @@
 		FFBA9E7819C680BE00D9CBA2 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				B08A5FFB19DFE61A008077E7 /* UILabel+dynamicSizeMe */,
 				FFE85F4019CAC84400A216BB /* UIImageEffects */,
 				FFE85F2F19CABBAE00A216BB /* FBKVOController */,
 				FFBA9EBB19C688F200D9CBA2 /* SDWebImage */,
@@ -764,6 +785,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B08A5FF919DE78FE008077E7 /* MerchantCell.xib in Resources */,
 				FFD1243619D64937003B969F /* Tae.bundle in Resources */,
 				FFD1243519D64937003B969F /* AlipaySDK.bundle in Resources */,
 				FF8A929A19C433B80010439B /* Images.xcassets in Resources */,
@@ -798,7 +820,6 @@
 				FFBA9E9B19C680C800D9CBA2 /* NetManager.m in Sources */,
 				FFBA9EE019C688F200D9CBA2 /* SDWebImageCompat.m in Sources */,
 				FFBA9EDF19C688F200D9CBA2 /* SDImageCache.m in Sources */,
-				B08A5FE719DD6E18008077E7 /* QSMerchantTableViewCell.m in Sources */,
 				FFBA9EE819C688F200D9CBA2 /* UIImage+MultiFormat.m in Sources */,
 				B08A5FD819D826DD008077E7 /* QSSearchNetManager.m in Sources */,
 				FFE85F2B19CABB9300A216BB /* QSCrazyQGView.m in Sources */,
@@ -821,6 +842,7 @@
 				B08A5FEA19DD7772008077E7 /* QSDataSevice.m in Sources */,
 				FFBA9E9919C680C800D9CBA2 /* AFXMLRequestOperation.m in Sources */,
 				B08A5FD719D826DD008077E7 /* QSSearchHistoryView.m in Sources */,
+				B08A5FF819DE78FE008077E7 /* QSMerchantTableViewCell.m in Sources */,
 				FFBA9EE319C688F200D9CBA2 /* SDWebImageDownloaderOperation.m in Sources */,
 				B08A5FDD19D826E7008077E7 /* QSMerchantDetailsViewController.m in Sources */,
 				AB219E2A19D7E864001395AC /* QSRootViewController.m in Sources */,
@@ -832,6 +854,7 @@
 				FFBA9EDE19C688F200D9CBA2 /* NSData+ImageContentType.m in Sources */,
 				ABC7F6C819D6553D00D6B34C /* QSCouponTableViewCell.m in Sources */,
 				B02E0BC219CA8FDD009A0306 /* TimeLimitCarzy.m in Sources */,
+				B08A5FEE19DD8025008077E7 /* CAlertLabel.m in Sources */,
 				FFE85F3519CABBAE00A216BB /* NSData+Base64.m in Sources */,
 				FFBA9EAB19C6811400D9CBA2 /* ThreadSafeMutableDictionary.m in Sources */,
 				FFBA9EB819C6812500D9CBA2 /* DataOC.mm in Sources */,
@@ -844,6 +867,7 @@
 				AB219E2E19D7E874001395AC /* QSFirstView.m in Sources */,
 				B02E0BC519CA8FEE009A0306 /* CarzyList.m in Sources */,
 				FFBA9EA019C680E100D9CBA2 /* JSONKit.m in Sources */,
+				B08A5FFE19DFE61A008077E7 /* UILabel+dynamicSizeMe.m in Sources */,
 				FFE85F2E19CABB9300A216BB /* QSSettingView.m in Sources */,
 				FFE85F3419CABBAE00A216BB /* FBKVOController.m in Sources */,
 				FFBA9EEC19C688F200D9CBA2 /* UIView+WebCacheOperation.m in Sources */,
