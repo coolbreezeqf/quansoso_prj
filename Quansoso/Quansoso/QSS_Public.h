@@ -141,7 +141,7 @@ NSNumber *iNum = [NSNumber numberWithLongLong:i];\
 }while(0)
 
 #define ViewBottom(view) view.frame.origin.y+view.frame.size.height
-
+#define RGBCOLOR(r,g,b) [UIColor colorWithRed:r/256.0 green:g/256.0 blue:b/256.0 alpha:1]
 
 
 #endif

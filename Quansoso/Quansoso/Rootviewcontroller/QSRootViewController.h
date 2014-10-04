@@ -14,6 +14,8 @@
 #import "QSSearchView.h"
 #import "QSSettingView.h"
 #import "QSCouponView.h"
+#import "QSShareAppView.h"
+#import "QSAttentionBrandView.h"
 
 @interface QSRootViewController : BaseViewController<UISearchBarDelegate>
 {
@@ -24,5 +26,7 @@
     QSSearchView *searchView;
     QSSettingView *settingView;
     QSCouponView *couponView;
+    QSShareAppView *shareAppView;
+    QSAttentionBrandView *attentionBrandView;
 }
 @end

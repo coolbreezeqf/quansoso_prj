@@ -10,6 +10,7 @@
 #import "SVPullToRefresh.h"
 #import "ViewInteraction.h"
 #import "QSSearchViewController.h"
+#import "QSBrandCollectionViewController.h"
 
 int btnCount;
 @implementation QSFirstView
@@ -39,13 +40,6 @@ int btnCount;
     [self.imagebrand addGestureRecognizer:tapSGR];
     [self.viewSearch addGestureRecognizer:self.tapSearchGestureRecognizer];
 
-    
-//    CGRect frameRect = _viewSearch.frame;
-//    UIView *frameView = [[UIView alloc] initWithFrame:frameRect] ;
-//    frameView.layer.borderWidth = 1;
-//    frameView.layer.borderColor = [[UIColor blackColor] CGColor];
-//    [self.headView addSubview:frameView];
-    
     self.labelDaily = [[UILabel alloc]
                            initWithFrame:CGRectMake(10, ViewBottom(_viewSearch)+10, 90, 20)];
     self.labelDaily.text = @"本日推荐";
@@ -198,7 +192,8 @@ int btnCount;
 #pragma mark 加号按钮
 - (void)touchPlusButton
 {
-    NSLog(@"ok");
+    QSBrandCollectionViewController *brandCollectionVC = [[QSBrandCollectionViewController alloc] init];
+    [ViewInteraction viewPushViewcontroller:brandCollectionVC];
 }
 
 

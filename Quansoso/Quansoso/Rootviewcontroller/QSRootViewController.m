@@ -88,6 +88,11 @@ typedef NS_ENUM(NSInteger, cateType) {
     if(!leftView)
     {
         leftView = [[QSRootLeftView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kMainScreenHeight)];
+        [leftView useFadeBlock:^{
+            [ViewInteraction viewDissmissAnimationToRight:leftView isRemove:NO completeBlock:^(BOOL isComplete) {
+                
+            }];
+        }];
         __weak QSRootViewController *weakself = self;
         [fbkvo observe:leftView keyPath:@"categoryType" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
             MLOG(@"%@", change);
@@ -108,6 +113,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                     {
                         [weakself showCouponView];
                         self.title = @"我的优惠券";
+                        MLOG(@"%@", [[TaeSession sharedInstance] getUser]);
                     }
                     else
                     {
@@ -123,13 +129,13 @@ typedef NS_ENUM(NSInteger, cateType) {
                 break;
                 case cateTypeBrand:
                 {
-                    [weakself showSearchView];
+                    [weakself showAttentionBrandView];
                     self.title = @"我关注的品牌";
                 }
                 break;
                 case cateTypeShare:
                 {
-                    [weakself showSettingView];
+                    [weakself showShareAppView];
                     self.title = @"分享app";
                 }
                 break;
@@ -201,6 +207,28 @@ typedef NS_ENUM(NSInteger, cateType) {
         [self.view addSubview:couponView];
     }
     [self.view bringSubviewToFront:couponView];
+}
+
+#pragma mark showShareAppView
+- (void)showShareAppView
+{
+    if (!shareAppView)
+    {
+        shareAppView = [[QSShareAppView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:shareAppView];
+    }
+    [self.view bringSubviewToFront:shareAppView];
+}
+
+#pragma mark showAttentionBrandView
+- (void)showAttentionBrandView
+{
+    if (!attentionBrandView)
+    {
+        attentionBrandView = [[QSAttentionBrandView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:attentionBrandView];
+    }
+    [self.view bringSubviewToFront:attentionBrandView];
 }
 
 #pragma mark searchView

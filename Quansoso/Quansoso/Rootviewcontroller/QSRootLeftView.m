@@ -20,8 +20,25 @@ CGFloat cellHeight;
     if(self = [super initWithFrame:frame])
     {
         [self createTableview];
+        self.userInteractionEnabled = YES;
+        UISwipeGestureRecognizer *swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc]
+                                                        initWithTarget:self action:@selector(useBlock:)];
+        [self addGestureRecognizer:swipeGestureRecognizer];
     }
     return self;
+}
+
+- (void)useBlock:(UISwipeGestureRecognizer *)aGestureRecongnizer
+{
+    if (aGestureRecongnizer.direction == UISwipeGestureRecognizerDirectionRight)
+    {
+        _fadeBlock();
+    }
+}
+
+- (void)useFadeBlock:(void (^)(void))aBlock
+{
+    _fadeBlock = aBlock;
 }
 
 - (void)createTableview
@@ -33,7 +50,8 @@ CGFloat cellHeight;
     
     self.headImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width*1/3-40, ViewBottom(_topView)/2-40, 80, 80)];
     self.headImgView.backgroundColor = [UIColor blueColor];
-    [self.headImgView sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]];
+    [self.headImgView sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]
+                        placeholderImage:[UIImage imageNamed:@"defaultImage"]];
     [_topView addSubview:self.headImgView];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.width*1/2-1, self.width*2/3, 0.5)];
