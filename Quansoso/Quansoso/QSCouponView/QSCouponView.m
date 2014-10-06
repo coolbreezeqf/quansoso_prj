@@ -9,6 +9,8 @@
 #import "QSCouponView.h"
 #import "QSCouponTableViewCell.h"
 #import "SVPullToRefresh.h"
+#import "UIImageView+WebCache.h"
+#import <TAESDK/TAESDK.h>
 
 @implementation QSCouponView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -19,17 +21,19 @@
     self.viewHead = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 190)];
     
     self.imgViewUserHead = [[UIImageView alloc]
-                            initWithFrame:CGRectMake(kMainScreenWidth/2-40, 20, 80, 80)];
+                            initWithFrame:CGRectMake(kMainScreenWidth/2-30, 20, 60, 60)];
     self.imgViewUserHead.backgroundColor = [UIColor blueColor];
+    [self.imgViewUserHead sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]
+                        placeholderImage:[UIImage imageNamed:@"defaultImage"]];
     [self.viewHead addSubview:self.imgViewUserHead];
     
-    self.labelStore = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-50, ViewBottom(self.imgViewUserHead)+10, 100, 20)];
-    self.labelStore.text = @"商家名";
+    self.labelStore = [[UILabel alloc] initWithFrame:CGRectMake(0, ViewBottom(self.imgViewUserHead)+10, kMainScreenWidth, 20)];
+    self.labelStore.text = [[TaeSession sharedInstance] getUser].nick;
     self.labelStore.font = kFont16;
     self.labelStore.textAlignment = NSTextAlignmentCenter;
     [self.viewHead addSubview:self.labelStore];
     
-    self.couponLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, ViewBottom(self.imgViewUserHead)+50, kMainScreenWidth, 40)];
+    self.couponLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, ViewBottom(self.imgViewUserHead)+40, kMainScreenWidth, 40)];
     self.couponLabel.backgroundColor = [UIColor blueColor];
     self.couponLabel.text = @"我的优惠券";
     self.couponLabel.textAlignment = NSTextAlignmentCenter;
@@ -76,9 +80,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     QSCouponTableViewCell *cell = [[QSCouponTableViewCell alloc] init];
-    CGRect frame = cell.frame;
-    frame.size.width = kMainScreenWidth;
-    cell.frame = frame;
     cell.textLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
     return cell;
 }

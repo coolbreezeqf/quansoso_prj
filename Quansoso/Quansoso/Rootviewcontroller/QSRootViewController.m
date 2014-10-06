@@ -9,6 +9,7 @@
 #import "QSRootViewController.h"
 #import "ViewInteraction.h"
 #import "UIImageView+WebCache.h"
+#import "NetManager.h"
 #import <TAESDK/TAESDK.h>
 
 typedef NS_ENUM(NSInteger, cateType) {
@@ -120,6 +121,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                         [[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
                             [weakself showCouponView];
                             self.title = @"我的优惠券";
+                            [self accreditLogin];
                             [self updateUI];
                         } failedCallback:^(NSError *error) {
                             
@@ -157,6 +159,18 @@ typedef NS_ENUM(NSInteger, cateType) {
         leftView.backgroundColor = kClearColor;
     }
     [ViewInteraction viewPresentAnimationFromRight:self.view toView:leftView];
+}
+
+#pragma mark 授权登陆
+- (void)accreditLogin
+{
+    TaeUser *temUser = [[TaeSession sharedInstance] getUser];
+    NSString *loginUrl = [NSString stringWithFormat:@"%@?service=outh&tbNick=%@&picUrl=%@&userId=%@", KBaseUrl, temUser.nick, temUser.iconUrl, temUser.userId];
+    [NetManager requestWith:nil url:loginUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict){
+        MLOG(@"%@", successDict);
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        MLOG(@"%@", failDict);
+    }];
 }
 
 #pragma mark 登陆刷新UI

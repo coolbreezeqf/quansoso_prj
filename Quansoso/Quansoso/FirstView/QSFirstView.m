@@ -12,7 +12,7 @@
 #import "QSSearchViewController.h"
 #import "QSBrandCollectionViewController.h"
 
-int btnCount;
+int btnCount; //关注的商家数量 包括加号按钮
 @implementation QSFirstView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -76,6 +76,7 @@ int btnCount;
     self.showQuanTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.showQuanTableView.tableFooterView = [UIView new];
     self.showQuanTableView.tableHeaderView = self.headView;
+    self.showQuanTableView.allowsSelection = NO;
     [self addSubview:self.showQuanTableView];
     
     [self addTableViewTrag];

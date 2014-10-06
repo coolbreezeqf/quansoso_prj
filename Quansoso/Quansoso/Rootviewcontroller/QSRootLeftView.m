@@ -48,7 +48,7 @@ CGFloat cellHeight;
     
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width*2/3, self.width*1/2)];
     
-    self.headImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width*1/3-40, ViewBottom(_topView)/2-40, 80, 80)];
+    self.headImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width*1/3-30, ViewBottom(_topView)/2-30, 60, 60)];
     self.headImgView.backgroundColor = [UIColor blueColor];
     [self.headImgView sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]
                         placeholderImage:[UIImage imageNamed:@"defaultImage"]];

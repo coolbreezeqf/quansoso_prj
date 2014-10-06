@@ -10,6 +10,17 @@
 
 @implementation QSCouponTableViewCell
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    CGRect temframe = self.frame;
+    frame.size.width = kMainScreenWidth;
+    self.frame = temframe;
+    
+    
+    return self;
+}
+
 - (void)awakeFromNib {
     
 }

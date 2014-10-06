@@ -10,6 +10,6 @@
 
 @interface QSBrandCollectionViewController : BaseViewController
 
-
+- (instancetype)init;
 @property(nonatomic, strong) UITableView *showBrandTableView;
 @end

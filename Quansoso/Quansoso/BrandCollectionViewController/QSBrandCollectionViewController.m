@@ -8,6 +8,7 @@
 
 #import "QSBrandCollectionViewController.h"
 #import "SVPullToRefresh.h"
+#import "BrandListManage.h"
 
 //#define brandWidth 80;
 //#define brandHeight 80;
@@ -24,13 +25,23 @@
 
 @implementation QSBrandCollectionViewController
 
+- (instancetype)init
+{
+    self = [super init];
+    brandWidth = 80;
+    brandHeight = 80;
+    interval = (kMainScreenWidth-3*brandWidth)/4.0;
+    lines = (kMainScreenHeight-66-40)/(interval+brandHeight);
+    [BrandListManage getBrandListArray:lines*3 andSuccBlock:^{
+        
+    }];
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"品牌聚合";
-    brandWidth = 80;
-    brandHeight = 80;
-    interval = (kMainScreenWidth-3*brandWidth)/4.0;
     
     headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 40)];
     attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-45, 5, 90, 30)];
@@ -46,7 +57,6 @@
     lineView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lineView];
     
-    lines = (kMainScreenHeight-66-headerView.frame.size.height)/(interval+brandHeight);
     UIView *tableBackView = [[UIView alloc]
                              initWithFrame:CGRectMake(5, ViewBottom(headerView)+5, kMainScreenWidth-10, kMainScreenHeight)];
     [self.view addSubview:tableBackView];
@@ -54,6 +64,7 @@
     self.showBrandTableView = [[UITableView alloc] initWithFrame:tableBackView.bounds];
     self.showBrandTableView.delegate = self;
     self.showBrandTableView.dataSource = self;
+    self.showBrandTableView.allowsSelection = NO;
     self.showBrandTableView.tableFooterView = [UIView new];
     self.showBrandTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addTableViewTrag];
@@ -69,6 +80,7 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showBrandTableView.pullToRefreshView stopAnimating];
+            [self.showBrandTableView reloadData];
         });
     }];
 }
@@ -77,6 +89,15 @@
 - (void)payAttention
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
+    NSMutableArray *array = [NSMutableArray new];
+    for(int i=1; i<lines*3+1; i++)
+    {
+        if([self.showBrandTableView viewWithTag:i])
+        {
+            [array addObject:[NSString stringWithFormat:@"%d", i-1]];
+        }
+    }
+    MLOG(@"%@", array);
 }
 
 #pragma mark tableView
@@ -98,9 +119,26 @@
     {
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval/2+5+(interval+brandWidth)*i, interval/2, brandWidth, brandHeight)];
         btn.backgroundColor = [UIColor yellowColor];
+        [btn addTarget:self action:@selector(chooseBrand:) forControlEvents:UIControlEventTouchUpInside];
+        btn.tag = 100+indexPath.row*3+i+1;
         [cell addSubview:btn];
     }
     return cell;
+}
+
+#pragma mark 按钮事件
+- (void)chooseBrand:(UIButton *)aBtn
+{
+    if (aBtn.tag>=100)
+    {
+        aBtn.backgroundColor = [UIColor blueColor];
+        aBtn.tag -= 100;
+    }
+    else
+    {
+        aBtn.backgroundColor = [UIColor yellowColor];
+        aBtn.tag += 100;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
