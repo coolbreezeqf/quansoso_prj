@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QSAttentionBrandListManage.h"
 
 @interface QSFirstView : UIView<UITableViewDataSource, UITableViewDelegate>
 @property(nonatomic, strong) UIScrollView *scrollView;
@@ -16,6 +17,7 @@
 @property(nonatomic, strong) UILabel *labelPrivilege;
 @property(nonatomic, strong) UIView *headView;
 @property(nonatomic, strong) UITableView *showQuanTableView;
+@property(nonatomic, strong) QSAttentionBrandListManage *attentionBrandListManage;
 
 @property(nonatomic, strong) UITapGestureRecognizer *tapSearchGestureRecognizer;
 

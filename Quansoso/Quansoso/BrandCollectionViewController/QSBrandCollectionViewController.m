@@ -8,7 +8,7 @@
 
 #import "QSBrandCollectionViewController.h"
 #import "SVPullToRefresh.h"
-#import "BrandListManage.h"
+#import "QSBrandListManage.h"
 
 //#define brandWidth 80;
 //#define brandHeight 80;
@@ -21,6 +21,8 @@
     int brandWidth;
     int brandHeight;
 }
+@property(nonatomic ,strong) UIActivityIndicatorView *activityIndicatorView;
+@property(nonatomic ,strong) QSBrandListManage *brandListManage;
 @end
 
 @implementation QSBrandCollectionViewController
@@ -28,13 +30,7 @@
 - (instancetype)init
 {
     self = [super init];
-    brandWidth = 80;
-    brandHeight = 80;
-    interval = (kMainScreenWidth-3*brandWidth)/4.0;
-    lines = (kMainScreenHeight-66-40)/(interval+brandHeight);
-    [BrandListManage getBrandListArray:lines*3 andSuccBlock:^{
-        
-    }];
+
     return self;
 }
 
@@ -42,6 +38,10 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"品牌聚合";
+    brandWidth = 80;
+    brandHeight = 80;
+    interval = (kMainScreenWidth-3*brandWidth)/4.0;
+    lines = (kMainScreenHeight-66-40)/(interval+brandHeight);
     
     headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 40)];
     attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-45, 5, 90, 30)];
@@ -69,6 +69,26 @@
     self.showBrandTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addTableViewTrag];
     [tableBackView addSubview:self.showBrandTableView];
+    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc]
+                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-20, 40, 40)];
+    [self.activityIndicatorView startAnimating];
+    [self.view addSubview:self.activityIndicatorView];
+    
+#pragma mark 网络请求
+    [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^{
+        [self.activityIndicatorView stopAnimating];
+    }];
+}
+
+#pragma mark getter
+- (QSBrandListManage *)brandListManage
+{
+    if (!_brandListManage)
+    {
+        _brandListManage = [[QSBrandListManage alloc] init];
+    }
+    return _brandListManage;
 }
 
 #pragma mark 增加上拉下拉
@@ -80,6 +100,9 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showBrandTableView.pullToRefreshView stopAnimating];
+            [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^{
+                [self.activityIndicatorView stopAnimating];
+            }];
             [self.showBrandTableView reloadData];
         });
     }];

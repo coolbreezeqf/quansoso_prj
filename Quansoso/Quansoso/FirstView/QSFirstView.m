@@ -81,7 +81,22 @@ int btnCount; //关注的商家数量 包括加号按钮
     
     [self addTableViewTrag];
     
+#pragma mark 网络请求
+    [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
+        
+    }];
+    
     return self;
+}
+
+#pragma mark getter
+- (QSAttentionBrandListManage *)attentionBrandListManage
+{
+    if (!_attentionBrandListManage)
+    {
+        _attentionBrandListManage = [[QSAttentionBrandListManage alloc] init];
+    }
+    return _attentionBrandListManage;
 }
 
 #pragma mark 跳转到搜索页面
@@ -100,6 +115,9 @@ int btnCount; //关注的商家数量 包括加号按钮
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showQuanTableView.pullToRefreshView stopAnimating];
+            [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
+                
+            }];
         });
     }];
     
@@ -110,6 +128,9 @@ int btnCount; //关注的商家数量 包括加号按钮
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
             dispatch_after(popTime, dispatch_get_main_queue(), ^{
                 [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+                [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^{
+                    
+                }];
             });
         }];
     }

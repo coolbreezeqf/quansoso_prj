@@ -16,5 +16,5 @@
 @property(nonatomic, strong) UILabel *labelTime;
 @property(nonatomic, strong) UIImageView *imgPrice;
 
-- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)init;
 @end

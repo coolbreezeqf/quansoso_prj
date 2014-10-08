@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BrandListManage : NSObject
+@interface QSBrandListManage : NSObject
 
-+ (void)getBrandListArray:(int)aPageSize andSuccBlock:(void(^)(void))aBlock;
+- (void)getBrandListPageSize:(int)aPageSize andSuccBlock:(void(^)(void))aBlock;
 @end

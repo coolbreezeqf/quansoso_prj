@@ -6,12 +6,12 @@
 //  Copyright (c) 2014年 taobao. All rights reserved.
 //
 
-#import "BrandListManage.h"
+#import "QSBrandListManage.h"
 #import "NetManager.h"
 
-@implementation BrandListManage
+@implementation QSBrandListManage
 
-+ (void)getBrandListArray:(int)aPageSize andSuccBlock:(void(^)(void))aBlock
+- (void)getBrandListPageSize:(int)aPageSize andSuccBlock:(void(^)(void))aBlock
 {
     NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=follow_list&current=1&pageSize=%d", KBaseUrl, aPageSize];
     [NetManager requestWith:nil url:BrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {

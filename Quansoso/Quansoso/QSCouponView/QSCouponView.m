@@ -18,7 +18,7 @@
     self = [super initWithFrame:frame];
     self.backgroundColor = [UIColor whiteColor];
     
-    self.viewHead = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 190)];
+    self.viewHead = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 160)];
     
     self.imgViewUserHead = [[UIImageView alloc]
                             initWithFrame:CGRectMake(kMainScreenWidth/2-30, 20, 60, 60)];
@@ -39,14 +39,33 @@
     self.couponLabel.textAlignment = NSTextAlignmentCenter;
     [self.viewHead addSubview:self.couponLabel];
     
-    self.tableViewShow = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-ViewBottom(self.viewHead))];
+    self.tableViewShow = [[UITableView alloc] initWithFrame:self.bounds];
     self.tableViewShow.delegate = self;
     self.tableViewShow.dataSource = self;
     self.tableViewShow.tableFooterView = [[UIView alloc] init];
     self.tableViewShow.tableHeaderView = self.viewHead;
     [self addTableViewTrag];
     [self addSubview:self.tableViewShow];
+
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc]
+                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-20, 40, 40)];
+    [self.activityIndicatorView startAnimating];
+    [self addSubview:self.activityIndicatorView];
+#pragma mark 网络请求
+    [self.userCouponListManage getFirstUserCouponListSuccBlock:^{
+        [self.activityIndicatorView stopAnimating];
+    }];
     return self;
+}
+
+#pragma mark getter方法
+- (QSUserCouponListManage *)userCouponListManage
+{
+    if (!_userCouponListManage)
+    {
+        _userCouponListManage = [[QSUserCouponListManage alloc] init];
+    }
+    return _userCouponListManage;
 }
 
 #pragma mark 增加上拉下拉
@@ -58,23 +77,29 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.tableViewShow.pullToRefreshView stopAnimating];
+            [self.userCouponListManage getFirstUserCouponListSuccBlock:^{
+                
+            }];
         });
     }];
     
-    //    [weakself.tableViewShow addInfiniteScrollingWithActionHandler:^{
-    //        int64_t delayInSeconds = 2.0;
-    //        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    //        dispatch_after(popTime, dispatch_get_main_queue(), ^{
-    //            [weakself.tableViewShow.infiniteScrollingView stopAnimating];
-    //        });
-    //    }];
+    [weakself.tableViewShow addInfiniteScrollingWithActionHandler:^{
+        int64_t delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^{
+            [weakself.tableViewShow.infiniteScrollingView stopAnimating];
+            [self.userCouponListManage getNextUserCouponListSuccBlock:^{
+                
+            }];
+        });
+    }];
     
 }
 
 #pragma mark tableView delegate datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

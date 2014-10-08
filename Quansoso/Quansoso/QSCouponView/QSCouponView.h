@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QSUserCouponListManage.h"
 
 @interface QSCouponView : UIView<UITableViewDelegate, UITableViewDataSource>
 
@@ -15,6 +16,8 @@
 @property(nonatomic, strong) UILabel *labelStore;
 @property(nonatomic, strong) UITableView *tableViewShow;
 @property(nonatomic, strong) UILabel *couponLabel;
+@property(nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
+@property(nonatomic, strong) QSUserCouponListManage *userCouponListManage;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

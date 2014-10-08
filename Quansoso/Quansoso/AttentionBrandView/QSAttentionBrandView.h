@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QSAttentionBrandView : UIView
-
+@interface QSAttentionBrandView : UIView<UITableViewDataSource, UITableViewDelegate>
+@property(nonatomic, strong) UITableView *showBrandTableView;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

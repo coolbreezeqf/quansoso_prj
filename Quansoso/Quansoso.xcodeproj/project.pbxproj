@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AB101E8A19E2350E00434DEE /* BrandListManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB101E8919E2350E00434DEE /* BrandListManage.m */; };
+		AB101E8A19E2350E00434DEE /* QSBrandListManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB101E8919E2350E00434DEE /* QSBrandListManage.m */; };
 		AB219E2919D7E864001395AC /* QSRootLeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2619D7E864001395AC /* QSRootLeftView.m */; };
 		AB219E2A19D7E864001395AC /* QSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2819D7E864001395AC /* QSRootViewController.m */; };
 		AB219E2E19D7E874001395AC /* QSFirstView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2D19D7E874001395AC /* QSFirstView.m */; };
@@ -15,6 +15,9 @@
 		AB5AE54719DE738500F6BA7A /* QSAttentionBrandView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5AE54619DE738500F6BA7A /* QSAttentionBrandView.m */; };
 		AB5AE54B19DE76B100F6BA7A /* QSBrandCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5AE54A19DE76B100F6BA7A /* QSBrandCollectionViewController.m */; };
 		AB6D320719D674320016B8CF /* QSCouponView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6D320619D674320016B8CF /* QSCouponView.m */; };
+		AB7AE3C019E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7AE3BF19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m */; };
+		AB9FF08919E3CB2400E65601 /* QSUserCouponListManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9FF08819E3CB2400E65601 /* QSUserCouponListManage.m */; };
+		AB9FF08C19E3CB5100E65601 /* QSAttentionBrandListManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9FF08B19E3CB5100E65601 /* QSAttentionBrandListManage.m */; };
 		ABC7F6C819D6553D00D6B34C /* QSCouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */; };
 		B02E0BC019CA8FDD009A0306 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BBA19CA8FDD009A0306 /* Card.m */; };
 		B02E0BC119CA8FDD009A0306 /* CardCarzy.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BBC19CA8FDD009A0306 /* CardCarzy.m */; };
@@ -110,8 +113,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AB101E8819E2350E00434DEE /* BrandListManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BrandListManage.h; path = NetManage/BrandListManage.h; sourceTree = "<group>"; };
-		AB101E8919E2350E00434DEE /* BrandListManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BrandListManage.m; path = NetManage/BrandListManage.m; sourceTree = "<group>"; };
+		AB101E8819E2350E00434DEE /* QSBrandListManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSBrandListManage.h; path = NetManage/QSBrandListManage.h; sourceTree = "<group>"; };
+		AB101E8919E2350E00434DEE /* QSBrandListManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSBrandListManage.m; path = NetManage/QSBrandListManage.m; sourceTree = "<group>"; };
 		AB219E2619D7E864001395AC /* QSRootLeftView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSRootLeftView.m; sourceTree = "<group>"; };
 		AB219E2719D7E864001395AC /* QSRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSRootViewController.h; sourceTree = "<group>"; };
 		AB219E2819D7E864001395AC /* QSRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSRootViewController.m; sourceTree = "<group>"; };
@@ -125,6 +128,12 @@
 		AB5AE54A19DE76B100F6BA7A /* QSBrandCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSBrandCollectionViewController.m; path = BrandCollectionViewController/QSBrandCollectionViewController.m; sourceTree = "<group>"; };
 		AB6D320519D674320016B8CF /* QSCouponView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSCouponView.h; path = QSCouponView/QSCouponView.h; sourceTree = "<group>"; };
 		AB6D320619D674320016B8CF /* QSCouponView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSCouponView.m; path = QSCouponView/QSCouponView.m; sourceTree = "<group>"; };
+		AB7AE3BE19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSAttentionBrandTableViewCell.h; sourceTree = "<group>"; };
+		AB7AE3BF19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSAttentionBrandTableViewCell.m; sourceTree = "<group>"; };
+		AB9FF08719E3CB2400E65601 /* QSUserCouponListManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSUserCouponListManage.h; path = NetManage/QSUserCouponListManage.h; sourceTree = "<group>"; };
+		AB9FF08819E3CB2400E65601 /* QSUserCouponListManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSUserCouponListManage.m; path = NetManage/QSUserCouponListManage.m; sourceTree = "<group>"; };
+		AB9FF08A19E3CB5100E65601 /* QSAttentionBrandListManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSAttentionBrandListManage.h; path = NetManage/QSAttentionBrandListManage.h; sourceTree = "<group>"; };
+		AB9FF08B19E3CB5100E65601 /* QSAttentionBrandListManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSAttentionBrandListManage.m; path = NetManage/QSAttentionBrandListManage.m; sourceTree = "<group>"; };
 		ABC7F6C319D6553D00D6B34C /* QSCouponTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCouponTableViewCell.h; sourceTree = "<group>"; };
 		ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSCouponTableViewCell.m; sourceTree = "<group>"; };
 		B02E0BB919CA8FDD009A0306 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Card.h; sourceTree = "<group>"; };
@@ -318,8 +327,12 @@
 		AB101E8719E234DD00434DEE /* NetManage */ = {
 			isa = PBXGroup;
 			children = (
-				AB101E8819E2350E00434DEE /* BrandListManage.h */,
-				AB101E8919E2350E00434DEE /* BrandListManage.m */,
+				AB9FF08A19E3CB5100E65601 /* QSAttentionBrandListManage.h */,
+				AB9FF08B19E3CB5100E65601 /* QSAttentionBrandListManage.m */,
+				AB101E8819E2350E00434DEE /* QSBrandListManage.h */,
+				AB101E8919E2350E00434DEE /* QSBrandListManage.m */,
+				AB9FF08719E3CB2400E65601 /* QSUserCouponListManage.h */,
+				AB9FF08819E3CB2400E65601 /* QSUserCouponListManage.m */,
 			);
 			name = NetManage;
 			sourceTree = "<group>";
@@ -377,6 +390,8 @@
 				B08A5FF519DE78FE008077E7 /* QSMerchantTableViewCell.h */,
 				B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */,
 				B08A5FF719DE78FE008077E7 /* MerchantCell.xib */,
+				AB7AE3BE19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.h */,
+				AB7AE3BF19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m */,
 			);
 			path = Tableviewcell;
 			sourceTree = "<group>";
@@ -885,8 +900,10 @@
 				FFE85F3819CABCB300A216BB /* AppDelegate.m in Sources */,
 				B02E0BCA19CA8FFC009A0306 /* Merchant.m in Sources */,
 				B02E0BD319CADAAB009A0306 /* ResultCard.m in Sources */,
+				AB7AE3C019E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m in Sources */,
 				FFBA9E9719C680C800D9CBA2 /* AFPropertyListRequestOperation.m in Sources */,
 				FFE85F1B19CABAF100A216BB /* ViewInteraction.m in Sources */,
+				AB9FF08919E3CB2400E65601 /* QSUserCouponListManage.m in Sources */,
 				FFBA9E9519C680C800D9CBA2 /* AFJSONRequestOperation.m in Sources */,
 				B02E0BCB19CA8FFC009A0306 /* MerchantCard.m in Sources */,
 				FFBA9E9819C680C800D9CBA2 /* AFURLConnectionOperation.m in Sources */,
@@ -894,6 +911,7 @@
 				B02E0BC119CA8FDD009A0306 /* CardCarzy.m in Sources */,
 				B08A5FEA19DD7772008077E7 /* QSDataSevice.m in Sources */,
 				FFBA9E9919C680C800D9CBA2 /* AFXMLRequestOperation.m in Sources */,
+				AB9FF08C19E3CB5100E65601 /* QSAttentionBrandListManage.m in Sources */,
 				B08A5FD719D826DD008077E7 /* QSSearchHistoryView.m in Sources */,
 				B08A5FF819DE78FE008077E7 /* QSMerchantTableViewCell.m in Sources */,
 				FFBA9EE319C688F200D9CBA2 /* SDWebImageDownloaderOperation.m in Sources */,
@@ -923,7 +941,7 @@
 				B08A5FFE19DFE61A008077E7 /* UILabel+dynamicSizeMe.m in Sources */,
 				FFE85F2E19CABB9300A216BB /* QSSettingView.m in Sources */,
 				FFE85F3419CABBAE00A216BB /* FBKVOController.m in Sources */,
-				AB101E8A19E2350E00434DEE /* BrandListManage.m in Sources */,
+				AB101E8A19E2350E00434DEE /* QSBrandListManage.m in Sources */,
 				AB5AE54419DE736E00F6BA7A /* QSShareAppView.m in Sources */,
 				FFBA9EEC19C688F200D9CBA2 /* UIView+WebCacheOperation.m in Sources */,
 				FFBA9EEA19C688F200D9CBA2 /* UIImageView+HighlightedWebCache.m in Sources */,
