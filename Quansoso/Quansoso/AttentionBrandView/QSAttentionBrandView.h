@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QSAttentionBrandListManage.h"
 
 @interface QSAttentionBrandView : UIView<UITableViewDataSource, UITableViewDelegate>
 @property(nonatomic, strong) UITableView *showBrandTableView;
-
+@property(nonatomic, strong) QSAttentionBrandListManage *attentionBrandListManage;
+@property(nonatomic, strong) void(^cellBolck)(void);
+@property(nonatomic, strong) UIAlertView *alertView;
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

@@ -39,7 +39,6 @@
     [self.cancelBtn.layer setBorderColor:[[UIColor blackColor] CGColor]];
     [self.cancelBtn.layer setBorderWidth:0.5];
     [self.cancelBtn.layer setCornerRadius:5];
-    [self.cancelBtn addTarget:self action:@selector(cancelAttention) forControlEvents:UIControlEventTouchUpInside];
     [backView addSubview:self.cancelBtn];
     
     self.brandNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 5, 150, 30)];
@@ -49,11 +48,6 @@
     
     
     return self;
-}
-
-- (void)cancelAttention
-{
-    MLOG(@"cancel");
 }
 
 - (void)awakeFromNib {
