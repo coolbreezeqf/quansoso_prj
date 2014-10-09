@@ -43,7 +43,7 @@
     interval = (kMainScreenWidth-3*brandWidth)/4.0;
     lines = (kMainScreenHeight-66-40)/(interval+brandHeight);
     
-    headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 40)];
+    headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 50)];
     attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-45, 5, 90, 30)];
     [attentionBtn addTarget:self action:@selector(payAttention) forControlEvents:UIControlEventTouchUpInside];
     [attentionBtn setTitle:@"关注这些品牌" forState:UIControlStateNormal];
@@ -51,24 +51,28 @@
     attentionBtn.titleLabel.font = kFont12;
     attentionBtn.backgroundColor = [UIColor blueColor];
     [headerView addSubview:attentionBtn];
-    [self.view addSubview:headerView];
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, ViewBottom(headerView)-1, kMainScreenWidth, 1)];
-    lineView.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:lineView];
+    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 0.5)];
+    topLineView.backgroundColor = [UIColor blackColor];
+    [headerView addSubview:topLineView];
     
-    UIView *tableBackView = [[UIView alloc]
-                             initWithFrame:CGRectMake(5, ViewBottom(headerView)+5, kMainScreenWidth-10, kMainScreenHeight)];
-    [self.view addSubview:tableBackView];
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39.5, kMainScreenWidth, 0.5)];
+    bottomLineView.backgroundColor = [UIColor blackColor];
+    [headerView addSubview:bottomLineView];
     
-    self.showBrandTableView = [[UITableView alloc] initWithFrame:tableBackView.bounds];
+//    UIView *tableBackView = [[UIView alloc]
+//                             initWithFrame:CGRectMake(5, ViewBottom(headerView)+5, kMainScreenWidth-10, kMainScreenHeight)];
+//    [self.view addSubview:tableBackView];
+    
+    self.showBrandTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.showBrandTableView.delegate = self;
     self.showBrandTableView.dataSource = self;
     self.showBrandTableView.allowsSelection = NO;
     self.showBrandTableView.tableFooterView = [UIView new];
     self.showBrandTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.showBrandTableView.tableHeaderView = headerView;
     [self addTableViewTrag];
-    [tableBackView addSubview:self.showBrandTableView];
+    [self.view addSubview:self.showBrandTableView];
     
     self.activityIndicatorView = [[UIActivityIndicatorView alloc]
                                   initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-20, 40, 40)];
@@ -137,14 +141,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] init];
-    cell.backgroundColor = RGBCOLOR(246, 246, 246);
+    UIView *backGroundView = [[UIView alloc] initWithFrame:CGRectMake(5, 0, kMainScreenWidth-10, brandHeight+interval)];
+    backGroundView.backgroundColor = RGBCOLOR(246, 246, 246);
+    [cell addSubview:backGroundView];
     for (int i=0; i<3; i++)
     {
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval/2+5+(interval+brandWidth)*i, interval/2, brandWidth, brandHeight)];
         btn.backgroundColor = [UIColor yellowColor];
         [btn addTarget:self action:@selector(chooseBrand:) forControlEvents:UIControlEventTouchUpInside];
         btn.tag = 100+indexPath.row*3+i+1;
-        [cell addSubview:btn];
+        [backGroundView addSubview:btn];
     }
     return cell;
 }
