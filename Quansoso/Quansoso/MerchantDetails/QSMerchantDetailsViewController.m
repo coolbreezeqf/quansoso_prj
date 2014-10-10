@@ -9,7 +9,8 @@
 #import "QSMerchantDetailsViewController.h"
 #import "ResultCard.h"
 #import "UIImageView+WebCache.h"
-#import "UILabel+dynamicSizeMe.h"
+#import "QSCardTableViewCell.h"
+//#import "QSCardDetailsViewController.h"
 @interface QSMerchantDetailsViewController ()
 //data
 @property (nonatomic,strong) Result *merchant;
@@ -40,17 +41,20 @@
 #pragma mark - tableview detegate and datasource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-	return 44;
+	return 90;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CardCell"];
+	QSCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CardCell"];
 	if (!cell) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CardCell"];
+		cell = [[QSCardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CardCell"];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
 	ResultCard *card = [_merchant.card objectAtIndex:indexPath.row];
-	cell.textLabel.text = card.name;
+	[cell.contentLabel setNumberOfLines:2];
+	cell.contentLabel.font = kFont12;
+	cell.contentLabel.text = [NSString stringWithFormat:@"%@\n 截止%@",card.name,card.endProperty];
+	[cell.iconView setImageWithURL:[NSURL URLWithString:card.picUrl]];
 	return cell;
 }
 
@@ -73,6 +77,11 @@
 	return _merchant.card.count;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//	ResultCard *card = [_merchant.card objectAtIndex:indexPath.row];
+//	QSCardDetailsViewController *cdvc = [[QSCardDetailsViewController alloc] initWithCard:card];
+//	[self.navigationController pushViewController:cdvc animated:YES];
+}
 #pragma mark - view life
 - (instancetype)initWithMerchant:(Result *)merchant{
 	if (self = [super init]) {

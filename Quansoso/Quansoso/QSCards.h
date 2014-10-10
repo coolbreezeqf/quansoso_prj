@@ -1,20 +1,20 @@
 //
-//  Card.h
+//  QSCards.h
 //
-//  Created by qf  on 14/9/18
+//  Created by qf  on 14/10/10
 //  Copyright (c) 2014 __MyCompanyName__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-//卡券详情
 
-@interface Card : NSObject <NSCoding, NSCopying>
+
+@interface QSCards : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *stocks;
 @property (nonatomic, strong) NSString *timeType;
 @property (nonatomic, strong) NSString *useCount;
-@property (nonatomic, strong) NSString *cardIdentifier; //id
+@property (nonatomic, strong) NSString *cardsIdentifier;
 @property (nonatomic, strong) NSString *itemRange;
 @property (nonatomic, strong) NSString *sourceId;
 @property (nonatomic, strong) NSString *discountRate;
