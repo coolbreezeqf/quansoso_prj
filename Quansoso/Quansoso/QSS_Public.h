@@ -142,7 +142,7 @@ NSNumber *iNum = [NSNumber numberWithLongLong:i];\
 
 #define ViewBottom(view) view.frame.origin.y+view.frame.size.height
 #define RGBCOLOR(r,g,b) [UIColor colorWithRed:r/256.0 green:g/256.0 blue:b/256.0 alpha:1]
-#define KBaseUrl @"http://quansoso.uz.taobao.com/view/app/my_exchange.php"
+#define KBaseUrl @"http://quansoso.uz.taobao.com/d/cr/rest"
 
 
 #endif

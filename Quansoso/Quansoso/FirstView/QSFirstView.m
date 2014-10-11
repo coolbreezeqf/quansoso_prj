@@ -11,6 +11,9 @@
 #import "ViewInteraction.h"
 #import "QSSearchViewController.h"
 #import "QSBrandCollectionViewController.h"
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
+#import "QSDayRecommends.h"
 
 int btnCount; //关注的商家数量 包括加号按钮
 @implementation QSFirstView
@@ -48,23 +51,23 @@ int btnCount; //关注的商家数量 包括加号按钮
     [self.headView addSubview:self.labelDaily];
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, ViewBottom(self.labelDaily)+5, kMainScreenWidth, 80)];
-    self.scrollView.contentSize = CGSizeMake(2*kMainScreenWidth, 80);
+//    self.scrollView.contentSize = CGSizeMake(2*kMainScreenWidth, 80);
     self.scrollView.pagingEnabled = YES;
-    CGFloat interval = (kMainScreenWidth-240)/4;
-    for (int i=0; i<6; i++)
-    {
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval+(interval+80)*i+interval*(i/3), 0, 80, 80)];
-        btn.tag = 10+i;
-        [btn addTarget:self action:@selector(touchQuanButton:) forControlEvents:UIControlEventTouchUpInside];
-        btn.backgroundColor = [UIColor blueColor];
-        self.scrollView.showsHorizontalScrollIndicator = NO;
-        [self.scrollView addSubview:btn];
-    }
+//    CGFloat interval = (kMainScreenWidth-240)/4;
+//    for (int i=0; i<6; i++)
+//    {
+//        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval+(interval+80)*i+interval*(i/3), 0, 80, 80)];
+//        btn.tag = 10+i;
+//        [btn addTarget:self action:@selector(touchQuanButton:) forControlEvents:UIControlEventTouchUpInside];
+//        btn.backgroundColor = [UIColor blueColor];
+//        self.scrollView.showsHorizontalScrollIndicator = NO;
+//        [self.scrollView addSubview:btn];
+//    }
     [self.headView addSubview:self.scrollView];
     self.labelPrivilege = [[UILabel alloc] initWithFrame:CGRectMake(10, ViewBottom(self.scrollView)+5, 90, 20)];
     self.labelPrivilege.text = @"我关注的商家";
     self.labelPrivilege.font = kFont12;
-    self.labelPrivilege.textAlignment = NSTextAlignmentCenter;
+    self.labelPrivilege.textAlignment = NSTextAlignmentLeft;
     [self.headView addSubview:self.labelPrivilege];
     
     
@@ -79,11 +82,49 @@ int btnCount; //关注的商家数量 包括加号按钮
     self.showQuanTableView.allowsSelection = NO;
     [self addSubview:self.showQuanTableView];
     
+    self.activityDayRecommendView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-20, 40, 40)];
+    self.activityDayRecommendView.backgroundColor = [UIColor blackColor];
+    [self.activityDayRecommendView startAnimating];
+    [self addSubview:self.activityDayRecommendView];
+    
     [self addTableViewTrag];
     
 #pragma mark 网络请求
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
         
+    }];
+    
+    [self.dayRecommendManage getDayRecommendSuccBlock:^(NSArray *dayRecomendModelArray){
+        CGFloat interval = (kMainScreenWidth-240)/4;
+        for (int i=0; i<dayRecomendModelArray.count; i++)
+        {
+            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake((interval+80)*i+interval*(i/3+1), 0, 80, 80)];
+            btn.tag = 10+i;
+            [btn addTarget:self action:@selector(touchQuanButton:) forControlEvents:UIControlEventTouchUpInside];
+//            btn.backgroundColor = [UIColor blueColor];
+            QSDayRecommends *model = [dayRecomendModelArray objectAtIndex:i];
+            UIImageView *couponImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 60)];
+            [couponImgView sd_setImageWithURL:[NSURL URLWithString:model.picUrl]];
+            [btn addSubview:couponImgView];
+            UILabel *couponLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, 80, 20)];
+            couponLabel.text = model.name;
+            couponLabel.font = kFont12;
+            couponLabel.textAlignment = NSTextAlignmentCenter;
+            [btn addSubview:couponLabel];
+            self.scrollView.showsHorizontalScrollIndicator = NO;
+            [self.scrollView addSubview:btn];
+        }
+        int width;
+        if (dayRecomendModelArray.count/3 == 0)
+        {
+            width = kMainScreenWidth*dayRecomendModelArray.count/3;
+        }
+        else
+        {
+            width = kMainScreenWidth*dayRecomendModelArray.count/3+1;
+        }
+        self.scrollView.contentSize = CGSizeMake(width, 80);
+        [self.activityDayRecommendView stopAnimating];
     }];
     
     return self;
@@ -97,6 +138,15 @@ int btnCount; //关注的商家数量 包括加号按钮
         _attentionBrandListManage = [[QSAttentionBrandListManage alloc] init];
     }
     return _attentionBrandListManage;
+}
+
+- (QSDayRecommendManage *)dayRecommendManage
+{
+    if (!_dayRecommendManage)
+    {
+        _dayRecommendManage = [[QSDayRecommendManage alloc] init];
+    }
+    return _dayRecommendManage;
 }
 
 #pragma mark 跳转到搜索页面

@@ -131,8 +131,23 @@ typedef NS_ENUM(NSInteger, cateType) {
                 break;
                 case cateTypeBrand:
                 {
-                    [weakself showAttentionBrandView];
-                    self.title = @"我关注的品牌";
+                    if ([[TaeSession sharedInstance] isLogin])
+                    {
+                        [weakself showAttentionBrandView];
+                        self.title = @"我关注的品牌";
+                        MLOG(@"%@", [[TaeSession sharedInstance] getUser]);
+                    }
+                    else
+                    {
+                        [[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
+                            [weakself showAttentionBrandView];
+                            self.title = @"我关注的品牌";
+                            [self accreditLogin];
+                            [self updateUI];
+                        } failedCallback:^(NSError *error) {
+                            
+                        }];
+                    }
                 }
                 break;
                 case cateTypeShare:

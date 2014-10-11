@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "QSAttentionBrandListManage.h"
+#import "QSDayRecommendManage.h"
 
 @interface QSFirstView : UIView<UITableViewDataSource, UITableViewDelegate>
 @property(nonatomic, strong) UIScrollView *scrollView;
@@ -18,8 +19,9 @@
 @property(nonatomic, strong) UIView *headView;
 @property(nonatomic, strong) UITableView *showQuanTableView;
 @property(nonatomic, strong) QSAttentionBrandListManage *attentionBrandListManage;
-
+@property(nonatomic, strong) QSDayRecommendManage *dayRecommendManage;
 @property(nonatomic, strong) UITapGestureRecognizer *tapSearchGestureRecognizer;
+@property(nonatomic, strong) UIActivityIndicatorView *activityDayRecommendView;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 @end
