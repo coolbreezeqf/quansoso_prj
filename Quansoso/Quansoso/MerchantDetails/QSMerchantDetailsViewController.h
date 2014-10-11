@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Result.h"
 @interface QSMerchantDetailsViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate>
-- (instancetype)initWithMerchant:(Result *)merchant;
+- (instancetype)initWithTopId:(double)topid;
 @end

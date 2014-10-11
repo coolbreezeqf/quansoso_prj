@@ -10,28 +10,75 @@
 #import "ResultCard.h"
 #import "UIImageView+WebCache.h"
 #import "QSCardTableViewCell.h"
+#import "QSMerchantNetManager.h"
+#import "QSMerchantDetails.h"
+#import "QSMerchant.h"
+#import "QSCards.h"
 //#import "QSCardDetailsViewController.h"
-@interface QSMerchantDetailsViewController ()
+@interface QSMerchantDetailsViewController (){
+	double _topId;
+}
 //data
-@property (nonatomic,strong) Result *merchant;
+@property (nonatomic,strong) QSMerchantDetails *merchantDetails;
+@property (nonatomic,strong) QSMerchant *merchant;
 //UI
 @property (nonatomic,strong) UIImageView *logoView;
 @property (nonatomic,strong) UITextView *introduceText;
 @property (nonatomic,strong) UITableView *cardTable;
 @property (nonatomic,strong) UILabel *tipLabel;
 @property (nonatomic,strong) UIButton *likeBt;
-@property (nonatomic,strong) UIButton *shareBt;
+@property (nonatomic,strong) UIActivityIndicatorView *activityView;
 @end
 
 @implementation QSMerchantDetailsViewController
 
+- (void)setMerchantData:(NSDictionary *)dic{
+	_merchantDetails = [QSMerchantDetails modelObjectWithDictionary:dic];
+	_merchant = _merchantDetails.merchant;
+}
+
+- (void)setUI{
+	self.navigationItem.title = _merchant.name;
+	self.view.backgroundColor = [UIColor whiteColor];
+	
+	_logoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90, 45)];
+	_logoView.center = CGPointMake(self.view.center.x, 30);
+	[_logoView setImageWithURL:[NSURL URLWithString:_merchant.picUrl]];
+	_logoView.layer.borderWidth = 1;
+	_logoView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+	
+	_likeBt = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth - 50, _logoView.top + 5 , 33, 33)];
+	[_likeBt setBackgroundImage:[UIImage imageNamed:@"like"] forState:UIControlStateNormal];
+	[_likeBt addTarget:self action:@selector(likeMerchant) forControlEvents:UIControlEventTouchDown];
+	
+	_introduceText = [[UITextView alloc] initWithFrame:CGRectMake(10, _logoView.bottom + 5, kMainScreenWidth - 10 , 54)];
+	_introduceText.editable = NO;
+	_introduceText.text = [NSString stringWithFormat:@"品牌介绍:\n  %@",	_merchant.merchantDescription];
+	_introduceText.font = kFont13;
+	_introduceText.textColor = [UIColor lightGrayColor];
+	
+	UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, _introduceText.top - 1, kMainScreenWidth, 1)];
+	line.backgroundColor = [UIColor lightGrayColor];
+	
+	UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake(0, _introduceText.bottom + 1, kMainScreenWidth , 1)];
+	line2.backgroundColor = [UIColor lightGrayColor];
+	
+	
+	_cardTable = [[UITableView alloc] initWithFrame:CGRectMake(0, _introduceText.bottom+5, kMainScreenWidth, self.view.frame.size.height - _introduceText.bottom - 5) style:UITableViewStylePlain];
+	_cardTable.delegate = self;
+	_cardTable.dataSource = self;
+	_cardTable.backgroundColor = [UIColor whiteColor];
+	
+	[self.view addSubview:_logoView];
+	[self.view addSubview:_likeBt];
+	[self.view addSubview:line];
+	[self.view addSubview:_introduceText];
+	[self.view addSubview:line2];
+	[self.view addSubview:_cardTable];
+}
 
 - (void)likeMerchant{
 	MLOG(@"like");
-}
-
-- (void)shareAction{
-	MLOG(@"share");
 }
 
 - (void)back{
@@ -44,13 +91,18 @@
 	return 90;
 }
 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+	return 1;  //用来消除多余的分割线
+}
+
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 	QSCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CardCell"];
 	if (!cell) {
 		cell = [[QSCardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CardCell"];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
-	ResultCard *card = [_merchant.card objectAtIndex:indexPath.row];
+	QSCards *card = [_merchantDetails.cards objectAtIndex:indexPath.row];
 	[cell.contentLabel setNumberOfLines:2];
 	cell.contentLabel.font = kFont12;
 	cell.contentLabel.text = [NSString stringWithFormat:@"%@\n 截止%@",card.name,card.endProperty];
@@ -59,7 +111,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-	if (_merchant.card.count == 0) {
+	if (_merchantDetails.cards.count == 0) {
 		tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		if (!_tipLabel) {
 			_tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(tableView.left + 20, tableView.top + 20, tableView.width - 40, 44)];
@@ -74,7 +126,7 @@
 			[_tipLabel removeFromSuperview];
 		}
 	}
-	return _merchant.card.count;
+	return _merchantDetails.cards.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -83,9 +135,10 @@
 //	[self.navigationController pushViewController:cdvc animated:YES];
 }
 #pragma mark - view life
-- (instancetype)initWithMerchant:(Result *)merchant{
+
+- (instancetype)initWithTopId:(double)topid{
 	if (self = [super init]) {
-		_merchant = merchant;
+		_topId = topid;
 	}
 	return self;
 }
@@ -94,46 +147,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
-	self.navigationItem.title = _merchant.name;
+	
 	self.view.backgroundColor = [UIColor whiteColor];
 	
-	_logoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90, 45)];
-	_logoView.center = CGPointMake(self.view.center.x, 50);
-	[_logoView setImageWithURL:[NSURL URLWithString:_merchant.picUrl]];
-	
-	_likeBt = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth - 50, _logoView.top, 22, 22)];
-
-	[_likeBt setBackgroundImage:[UIImage imageNamed:@"like"] forState:UIControlStateNormal];
-	[_likeBt addTarget:self action:@selector(likeMerchant) forControlEvents:UIControlEventTouchDown];
-	_shareBt = [[UIButton alloc] initWithFrame:CGRectMake(_likeBt.left, _likeBt.bottom + 1, 22, 22)];
-	[_shareBt setBackgroundImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
-	[_shareBt addTarget:self action:@selector(shareAction) forControlEvents:UIControlEventTouchDown];
-	
-	_introduceText = [[UITextView alloc] initWithFrame:CGRectMake(10, _logoView.bottom + 5, kMainScreenWidth - 10 , 54)];
-	_introduceText.editable = NO;
-	_introduceText.text = [NSString stringWithFormat:@"品牌介绍:\n  %@",_merchant.resultsDescription];
-	_introduceText.font = kFont13;
-	_introduceText.textColor = [UIColor lightGrayColor];
-	
-	UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, _introduceText.top - 1, kMainScreenWidth, 1)];
-	line.backgroundColor = [UIColor lightGrayColor];
-	
-	UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake(0, _introduceText.bottom + 1, kMainScreenWidth , 1)];
-	line2.backgroundColor = [UIColor lightGrayColor];
-	
-
-	_cardTable = [[UITableView alloc] initWithFrame:CGRectMake(0, _introduceText.bottom+5, kMainScreenWidth, self.view.frame.size.height - _introduceText.bottom - 5) style:UITableViewStylePlain];
-	_cardTable.delegate = self;
-	_cardTable.dataSource = self;
-	_cardTable.backgroundColor = [UIColor whiteColor];
-	
-	[self.view addSubview:_logoView];
-	[self.view addSubview:_shareBt];
-	[self.view addSubview:_likeBt];
-	[self.view addSubview:line];
-	[self.view addSubview:_introduceText];
-	[self.view addSubview:line2];
-	[self.view addSubview:_cardTable];
+	_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+	_activityView.frame = CGRectMake(0, 0, 20, 20);
+	_activityView.center = CGPointMake(kMainScreenWidth/2, kMainScreenHeight/2 - 100);
+	[self.view addSubview:_activityView];
+	[_activityView startAnimating];
+	QSMerchantNetManager *netManager = [[QSMerchantNetManager alloc] init];
+	__weak QSMerchantDetailsViewController *weakSelf = self;
+	[netManager getMerchantWithTopID:_topId success:^(NSDictionary *successDict) {
+		[weakSelf setMerchantData:successDict];
+		[weakSelf setUI];
+		[_activityView stopAnimating];
+	} failure:^{
+		
+	}];
 	
 }
 

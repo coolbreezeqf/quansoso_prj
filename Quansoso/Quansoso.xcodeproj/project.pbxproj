@@ -28,6 +28,9 @@
 		B03624E619E8059000ECFE61 /* QSCards.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624E019E8059000ECFE61 /* QSCards.m */; };
 		B03624E719E8059000ECFE61 /* QSMerchant.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624E219E8059000ECFE61 /* QSMerchant.m */; };
 		B03624E819E8059000ECFE61 /* QSMerchantDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624E419E8059000ECFE61 /* QSMerchantDetails.m */; };
+		B03624EB19E80A8800ECFE61 /* QSMerchantNetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624EA19E80A8800ECFE61 /* QSMerchantNetManager.m */; };
+		B03624EF19E9186B00ECFE61 /* QSCardDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624EE19E9186B00ECFE61 /* QSCardDetailsViewController.m */; };
+		B03624F219E91B6C00ECFE61 /* QSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624F119E91B6C00ECFE61 /* QSUser.m */; };
 		B08A5FD819D826DD008077E7 /* QSSearchNetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FD419D826DD008077E7 /* QSSearchNetManager.m */; };
 		B08A5FD919D826DD008077E7 /* QSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FD619D826DD008077E7 /* QSSearchViewController.m */; };
 		B08A5FDD19D826E7008077E7 /* QSMerchantDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FDC19D826E7008077E7 /* QSMerchantDetailsViewController.m */; };
@@ -155,6 +158,12 @@
 		B03624E219E8059000ECFE61 /* QSMerchant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSMerchant.m; sourceTree = "<group>"; };
 		B03624E319E8059000ECFE61 /* QSMerchantDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSMerchantDetails.h; sourceTree = "<group>"; };
 		B03624E419E8059000ECFE61 /* QSMerchantDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSMerchantDetails.m; sourceTree = "<group>"; };
+		B03624E919E80A8800ECFE61 /* QSMerchantNetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSMerchantNetManager.h; sourceTree = "<group>"; };
+		B03624EA19E80A8800ECFE61 /* QSMerchantNetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSMerchantNetManager.m; sourceTree = "<group>"; };
+		B03624ED19E9186B00ECFE61 /* QSCardDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSCardDetailsViewController.h; path = CardDetails/QSCardDetailsViewController.h; sourceTree = "<group>"; };
+		B03624EE19E9186B00ECFE61 /* QSCardDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSCardDetailsViewController.m; path = CardDetails/QSCardDetailsViewController.m; sourceTree = "<group>"; };
+		B03624F019E91B6C00ECFE61 /* QSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSUser.h; sourceTree = "<group>"; };
+		B03624F119E91B6C00ECFE61 /* QSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSUser.m; sourceTree = "<group>"; };
 		B08A5FD319D826DD008077E7 /* QSSearchNetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchNetManager.h; sourceTree = "<group>"; };
 		B08A5FD419D826DD008077E7 /* QSSearchNetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchNetManager.m; sourceTree = "<group>"; };
 		B08A5FD519D826DD008077E7 /* QSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchViewController.h; sourceTree = "<group>"; };
@@ -426,8 +435,19 @@
 				B08A5FE819DD7772008077E7 /* QSDataSevice.h */,
 				B08A5FE919DD7772008077E7 /* QSDataSevice.m */,
 				B08A5FEB19DD7853008077E7 /* SynthesizeSingleton.h */,
+				B03624F019E91B6C00ECFE61 /* QSUser.h */,
+				B03624F119E91B6C00ECFE61 /* QSUser.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		B03624EC19E9184B00ECFE61 /* CardDetails */ = {
+			isa = PBXGroup;
+			children = (
+				B03624ED19E9186B00ECFE61 /* QSCardDetailsViewController.h */,
+				B03624EE19E9186B00ECFE61 /* QSCardDetailsViewController.m */,
+			);
+			name = CardDetails;
 			sourceTree = "<group>";
 		};
 		B08A5FCF19D826DD008077E7 /* SearchViewController */ = {
@@ -448,6 +468,8 @@
 			children = (
 				B08A5FDB19D826E7008077E7 /* QSMerchantDetailsViewController.h */,
 				B08A5FDC19D826E7008077E7 /* QSMerchantDetailsViewController.m */,
+				B03624E919E80A8800ECFE61 /* QSMerchantNetManager.h */,
+				B03624EA19E80A8800ECFE61 /* QSMerchantNetManager.m */,
 			);
 			path = MerchantDetails;
 			sourceTree = "<group>";
@@ -699,6 +721,7 @@
 		FFE85F1119CABAD300A216BB /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				B03624EC19E9184B00ECFE61 /* CardDetails */,
 				AB101E8719E234DD00434DEE /* NetManage */,
 				AB5AE54819DE766E00F6BA7A /* BrandCollectionViewController */,
 				AB5AE53E19DE72DC00F6BA7A /* ShareAppView */,
@@ -874,6 +897,7 @@
 				FFBA9E9319C680C800D9CBA2 /* AFHTTPRequestOperation.m in Sources */,
 				FFBA9EDD19C688F200D9CBA2 /* MKAnnotationView+WebCache.m in Sources */,
 				FFBA9EAA19C6811400D9CBA2 /* ThreadSafeMutableArry.m in Sources */,
+				B03624F219E91B6C00ECFE61 /* QSUser.m in Sources */,
 				FFBA9EB719C6812500D9CBA2 /* DataCenterDeal.mm in Sources */,
 				FFBA9E9C19C680C800D9CBA2 /* UIImageView+AFNetworking.m in Sources */,
 				FFE85F4319CAC84400A216BB /* UIImage+ImageEffects.m in Sources */,
@@ -918,6 +942,7 @@
 				B08A5FD919D826DD008077E7 /* QSSearchViewController.m in Sources */,
 				FFBA9EA419C6810100D9CBA2 /* UIViewAdditions.m in Sources */,
 				FFBA9EE519C688F200D9CBA2 /* SDWebImagePrefetcher.m in Sources */,
+				B03624EB19E80A8800ECFE61 /* QSMerchantNetManager.m in Sources */,
 				FFBA9EE419C688F200D9CBA2 /* SDWebImageManager.m in Sources */,
 				FFBA9EDE19C688F200D9CBA2 /* NSData+ImageContentType.m in Sources */,
 				ABC7F6C819D6553D00D6B34C /* QSCouponTableViewCell.m in Sources */,
@@ -929,6 +954,7 @@
 				AB6D320719D674320016B8CF /* QSCouponView.m in Sources */,
 				B03624E719E8059000ECFE61 /* QSMerchant.m in Sources */,
 				B08A5FE319D8271E008077E7 /* QSSearchResultView.m in Sources */,
+				B03624EF19E9186B00ECFE61 /* QSCardDetailsViewController.m in Sources */,
 				B02E0BD219CADAAB009A0306 /* Result.m in Sources */,
 				FFBA9E9619C680C800D9CBA2 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				AB219E2E19D7E874001395AC /* QSFirstView.m in Sources */,

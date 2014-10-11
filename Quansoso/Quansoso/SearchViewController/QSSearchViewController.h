@@ -12,6 +12,6 @@
 @interface QSSearchViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 
 @property (nonatomic,strong) UITableView *tableView;
-@property (nonatomic,strong) NSMutableArray *searchResult;		//of SearchInfo.result
+@property (nonatomic,strong) NSMutableArray *searchResults;		//of SearchInfo.result
 
 @end

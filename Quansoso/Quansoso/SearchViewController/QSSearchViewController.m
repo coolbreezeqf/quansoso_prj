@@ -13,11 +13,8 @@
 #import "Result.h"
 #import "QSMerchantTableViewCell.h"
 #import "QSMerchantDetailsViewController.h"
+#import "UIImageView+WebCache.h"
 @interface QSSearchViewController (){
-	NSInteger currentPage;  //init in viewDidLoad
-	NSInteger totalPage;
-	NSInteger pageSize;
-	NSInteger totalCount;
 	NSString *currentText;
 	float keyboardHeight;
 }
@@ -29,7 +26,7 @@
 @property (nonatomic,strong) UITableView *historyTable;
 @property (nonatomic,strong) NSMutableArray *historyArr; //of  NSString
 @property (nonatomic,strong) UIButton *feedback;	//反馈按钮
-@property (nonatomic,strong) SearchInfo *searchInfo;
+@property (nonatomic,strong) QSSearchNetManager *netManager;
 @end
 
 @implementation QSSearchViewController
@@ -77,6 +74,13 @@
 	[self.view bringSubviewToFront:_tableView];
 }
 
+- (void)refreshHistoryData{
+	[self.historyArr insertObject:_searchBar.text atIndex:0];
+	[_historyTable beginUpdates];
+	NSArray *arr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
+	[_historyTable insertRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationNone];
+	[_historyTable endUpdates];
+}
 
 - (void)addSearchData{
 	int64_t delayInSeconds = 2.0;
@@ -84,12 +88,22 @@
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 		
 		//请求并添加数据
-		NSDictionary *dic = @{@"pageSize":@(pageSize),
-							  @"keywords":currentText,
-							  @"currentPage":@(currentPage + 1)};
+		
 		__weak QSSearchViewController *weakSelf = self;
-		[QSSearchNetManager searchContent:dic success:^(NSDictionary *successDict) {
-			[weakSelf searchEndAddContentUse:successDict];
+		[_netManager searchNextContentWithSuccess:^(NSArray *results) {
+			NSInteger lastIndex = _searchResults.count;
+			if (results) {
+				[weakSelf.searchResults addObjectsFromArray:results];
+			}
+			NSMutableArray *insertArr = [[NSMutableArray alloc] initWithCapacity:42];
+			for (int i = 0; i < results.count; i++) {
+				[insertArr addObject:[NSIndexPath indexPathForRow:lastIndex + i inSection:0]];
+			}
+			//开始更新
+			[_tableView beginUpdates];
+			[_tableView insertRowsAtIndexPaths:insertArr withRowAnimation:UITableViewRowAnimationFade];
+			//结束更新
+			[_tableView endUpdates];
 		} failure:^{
 			
 		}];
@@ -106,12 +120,10 @@
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 		
 		//请求并更新数据
-		NSDictionary *dic = @{@"pageSize":@(pageSize),
-							  @"keywords":currentText,
-							  @"currentPage":@1};
+
 		__weak QSSearchViewController *weakSelf = self;
-		[QSSearchNetManager searchContent:dic success:^(NSDictionary *successDict) {
-			[weakSelf searchEndAddContentUse:successDict];
+		[_netManager searchContent:currentText success:^(NSArray *results) {
+			[weakSelf searchEndAddContentUse:results];
 		} failure:^{
 			
 		}];
@@ -122,13 +134,6 @@
 	
 }
 
-- (void)refreshHistoryData{
-	[self.historyArr insertObject:_searchBar.text atIndex:0];
-	[_historyTable beginUpdates];
-	NSArray *arr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
-	[_historyTable insertRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationNone];
-	[_historyTable endUpdates];
-}
 
 - (void)searchContent{
 	[_activityView startAnimating];
@@ -138,47 +143,23 @@
 		[al showAlertLabel];
 		return ;
 	}
-	NSDictionary *dic = @{@"keywords":currentText,
-						  @"pageSize":@(pageSize),
-						  @"currentPage":@1};
 	__weak QSSearchViewController *weakSelf = self;
-	[QSSearchNetManager searchContent:dic success:^(NSDictionary *successDict) {
-		[weakSelf searchEndAddContentUse:successDict];
+	[_netManager searchContent:currentText success:^(NSArray *results) {
+		[weakSelf searchEndAddContentUse:results];
 		[_activityView stopAnimating];
-	}
-							  failure:^{
-								  
-							  }];
+	} failure:^{
+		
+	}];
 	[_searchBar resignFirstResponder];
 	[self.view sendSubviewToBack:_historyTable];
 	[self refreshHistoryData];
 }
 
-- (void)searchEndAddContentUse:(NSDictionary* )result{
-	_searchInfo = [SearchInfo modelObjectWithDictionary:result];
-	totalPage = _searchInfo.totalPage;
-	totalCount = _searchInfo.totalCount;
-	currentPage = _searchInfo.currentPage;
-	if (currentPage == 1) { // currentPage = 1 说明进行了新的请求 清空数组
-		[_searchResult removeAllObjects];
-	}
-	NSInteger lastIndex = _searchResult.count;
-	if (_searchInfo.results) {
-		[_searchResult addObjectsFromArray:_searchInfo.results];
-	}
-	if (currentPage == 1) {	//下拉刷新时 用插入会有问题
-		[_tableView reloadData];
-		return ;
-	}
-	NSMutableArray *insertArr = [[NSMutableArray alloc] initWithCapacity:42];
-	for (int i = 0; i < _searchInfo.results.count; i++) {
-		[insertArr addObject:[NSIndexPath indexPathForRow:lastIndex + i inSection:0]];
-	}
-	//开始更新
-	[_tableView beginUpdates];
-	[_tableView insertRowsAtIndexPaths:insertArr withRowAnimation:UITableViewRowAnimationFade];
-	//结束更新
-	[_tableView endUpdates];
+- (void)searchEndAddContentUse:(NSArray* )result{
+	[_searchResults removeAllObjects];
+	[_searchResults addObjectsFromArray:result];
+	//下拉刷新时 用插入会有问题
+	[_tableView reloadData];
 }
 
 - (void)clearHistory{
@@ -235,10 +216,10 @@
 #pragma mark - tableview delegate and datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 	if (tableView.tag == 0) { //tableview
-		if (currentPage == 0) {
+		if (!currentText) {
 			self.tipLabel.text = @"";
 			[self.tableView addSubview:_tipLabel];
-		}else if(_searchResult.count == 0){  //histroy为空时 将tiplabel和反馈按钮添加上去
+		}else if(_searchResults.count == 0){  //result为空时 将tiplabel和反馈按钮添加上去
 			self.tipLabel.text = @"您想要的品牌还未入住券搜搜哦，\n请点击下方‘反馈’按钮，\n我们将尽快收录该品牌...";
 			[self.tipLabel setNumberOfLines:3];
 			if (![_tipLabel superview]) {
@@ -253,7 +234,7 @@
 			[self.feedback removeFromSuperview];
 			_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 		}
-		return _searchResult.count;
+		return _searchResults.count;
 	}
 	else {				//historytable
 		
@@ -286,7 +267,7 @@
 			cell = [[QSMerchantTableViewCell alloc] initWithFrame:CGRectNull];
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
-		Result *result = [_searchResult objectAtIndex:indexPath.row];
+		Result *result = [_searchResults objectAtIndex:indexPath.row];
 //		cell.textLabel.text = result.name;
 ////		UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 95, 45)];
 ////		[imageView setImageWithURL:[NSURL URLWithString:result.picUrl] placeholderImage:[UIImage imageNamed:@"MerchantDefault"]];
@@ -315,7 +296,9 @@
 	if (tableView.tag == 0) {
 		[_searchBar resignFirstResponder];
 		[self hideHistoryTable];
-		QSMerchantDetailsViewController *mdvc = [[QSMerchantDetailsViewController alloc] initWithMerchant:[_searchResult objectAtIndex:indexPath.row]];
+//		QSMerchantDetailsViewController *mdvc = [[QSMerchantDetailsViewController alloc] initWithMerchant:[_searchResult objectAtIndex:indexPath.row]];
+		Result *result = [_searchResults objectAtIndex:indexPath.row];
+		QSMerchantDetailsViewController *mdvc = [[QSMerchantDetailsViewController alloc] initWithTopId:result.topId];
 		[self.navigationController pushViewController:mdvc animated:YES];
 	}
 	else{
@@ -337,7 +320,7 @@
 		return 30;
 	}
 	else{
-		return 0;
+		return 1; //用来消除searchResult的table里多余的分割线
 	}
 }
 
@@ -406,10 +389,9 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view.
-	currentPage = 0;
-	pageSize = (kMainScreenHeight - 44) / 90 ;
-	totalPage = NSIntegerMax;
-	_searchResult = [[NSMutableArray alloc] initWithCapacity:42];
+	
+	_netManager = [[QSSearchNetManager alloc] init];
+	_searchResults = [[NSMutableArray alloc] initWithCapacity:42];
 	_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight) style:UITableViewStylePlain];
 	
 	_tableView.tag = 0;

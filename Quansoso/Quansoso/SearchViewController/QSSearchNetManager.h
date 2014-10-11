@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
+
 @interface QSSearchNetManager : NSObject
 
-+ (NSDictionary *)searchContent:(NSDictionary *)content success:(void (^)(NSDictionary *successDict))succ failure:(void (^)())failure;
+- (void)searchNextContentWithSuccess:(void (^)(NSArray *results))succ failure:(void (^)())failure;
 
+- (void)searchContent:(NSString *)content success:(void (^)(NSArray *results))succ failure:(void (^)())failure;
 @end
