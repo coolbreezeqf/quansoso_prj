@@ -12,7 +12,7 @@
 
 @implementation QSDayRecommendManage : NSObject
 
-- (void)getDayRecommendSuccBlock:(void(^)(NSArray *))aBlock
+- (void)getDayRecommendSuccBlock:(void(^)(NSArray *dayRecomendModelArray))aBlock andFailBlock:(void(^)(void))aFailBlock
 {
     NSString *dayRecommendUrl = [NSString stringWithFormat:@"%@?service=every_recommend", KBaseUrl];
     [NetManager requestWith:nil url:dayRecommendUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {

@@ -32,8 +32,9 @@
 #pragma mark 网络请求
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
         
+    } andFailBlock:^{
+        
     }];
-    
     return self;
 }
 
@@ -85,8 +86,10 @@
             [weakself.showBrandTableView.pullToRefreshView stopAnimating];
             [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
                 [self.showBrandTableView reloadData];
+            } andFailBlock:^{
+                
             }];
-        });
+             });
     }];
     
 //    if (btnCount == 15)

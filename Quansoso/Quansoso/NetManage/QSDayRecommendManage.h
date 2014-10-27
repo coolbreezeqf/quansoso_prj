@@ -10,5 +10,5 @@
 
 @interface QSDayRecommendManage : NSObject
 
-- (void)getDayRecommendSuccBlock:(void(^)(NSArray *))aBlock;
+- (void)getDayRecommendSuccBlock:(void(^)(NSArray *dayRecomendModelArray))aBlock andFailBlock:(void(^)(void))aFailBlock;
 @end

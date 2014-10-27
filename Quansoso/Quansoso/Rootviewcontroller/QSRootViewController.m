@@ -38,6 +38,11 @@ typedef NS_ENUM(NSInteger, cateType) {
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setLeftButton:nil title:@"登出" target:self action:@selector(logout)];
