@@ -15,7 +15,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="105" height="136"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vS-iw-F3g">
-                    <rect key="frame" x="19" y="45" width="66" height="21"/>
+                    <rect key="frame" x="7.5" y="40" width="90" height="24"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
@@ -38,15 +38,10 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="rFk-90-L87">
-                    <rect key="frame" x="0.0" y="0.0" width="39" height="37"/>
-                    <color key="pageIndicatorTintColor" red="0.92156862750000001" green="0.2666666667" blue="0.20392156859999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <color key="currentPageIndicatorTintColor" red="1" green="0.064588077460000004" blue="0.055653886469999997" alpha="1" colorSpace="calibratedRGB"/>
-                </pageControl>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="351.5" y="294"/>
+            <point key="canvasLocation" x="204.5" y="282"/>
         </view>
     </objects>
     <resources>

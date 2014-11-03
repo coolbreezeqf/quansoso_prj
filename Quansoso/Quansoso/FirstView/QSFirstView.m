@@ -45,27 +45,20 @@ int btnCount; //关注的商家数量 包括加号按钮
     self.imagebrand.userInteractionEnabled = YES;
     [backImgView addSubview:self.imagebrand];
     
-    self.viewSearch = [[UIView alloc] initWithFrame:CGRectMake(30, ViewBottom(_imagebrand)+20, kMainScreenWidth-60, 35)];
+    self.viewSearch = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-300)/2, ViewBottom(_imagebrand)+20, 300, 35)];
     self.viewSearch.userInteractionEnabled = YES;
+    [self.viewSearch setImage:[UIImage imageNamed:@"QSSearchBack"]];
     
-    CGFloat viewSearchWidth = self.viewSearch.right - self.viewSearch.left;
-    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 34, viewSearchWidth, 1)];
-    bottomLineView.backgroundColor = RGBCOLOR(100, 255, 11);
-    [self.viewSearch addSubview:bottomLineView];
     
-    UIImageView *searchBtnView = [[UIImageView alloc] initWithFrame:CGRectMake(viewSearchWidth-26, 8, 22, 22)];
-    [searchBtnView setImage:[UIImage imageNamed:@"QSSearchBtn"]];
-    [self.viewSearch addSubview:searchBtnView];
-    
-    self.labelNike = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 80, 35)];
+    self.labelNike = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 35)];
     self.labelNike.text = @"耐克跑鞋";
     self.labelNike.font = kFont18;
     self.labelNike.textAlignment = NSTextAlignmentCenter;
-    self.labelNike.textColor = RGBCOLOR(191, 255, 144);
+    self.labelNike.textColor = [UIColor whiteColor];
     [self.viewSearch addSubview:self.labelNike];
     
     UIView *shulineView = [[UIView alloc] initWithFrame:CGRectMake(self.labelNike.right, 5, 1, 25)];
-    shulineView.backgroundColor = RGBCOLOR(100, 255, 11);
+    shulineView.backgroundColor = [UIColor whiteColor];
     [self.viewSearch addSubview:shulineView];
     
     [self.headView addSubview:self.viewSearch];
@@ -96,6 +89,20 @@ int btnCount; //关注的商家数量 包括加号按钮
     for (int i=0; i<9; i++)
     {
         QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake(interval+102*(i%3)+i/3*kMainScreenWidth, 0, 105, 136)];
+        if (i%3==1) {
+            NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"50%"];
+            [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(253, 82, 88) range:NSMakeRange(0, string.length)];
+            btn.preferentialLabel.attributedText = string;
+            btn.preferentialDetailLabel.text = @"OFF";
+            btn.brandNameLabel.text = @"素缕";
+        }
+        if (i%3==2) {
+            NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"包邮"];
+            [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(26, 167, 124) range:NSMakeRange(0, string.length)];
+            btn.preferentialLabel.attributedText = string;
+            btn.preferentialDetailLabel.text = @"满400元";
+            btn.brandNameLabel.text = @"正山堂";
+        }
 //        btn.tag = 10+i;
 //        [btn setImage:[UIImage imageNamed:@"QSDailyBackGround"] forState:UIControlStateNormal];
 //        [btn addTarget:self action:@selector(touchQuanButton:) forControlEvents:UIControlEventTouchUpInside];

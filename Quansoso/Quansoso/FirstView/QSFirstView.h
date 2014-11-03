@@ -13,7 +13,7 @@
 @interface QSFirstView : UIView<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 @property(nonatomic, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) UIImageView *imagebrand;
-@property(nonatomic, strong) UIView *viewSearch;
+@property(nonatomic, strong) UIImageView *viewSearch;
 @property(nonatomic, strong) UILabel *labelDaily;
 @property(nonatomic, strong) UILabel *labelNike;
 @property(nonatomic, strong) UILabel *labelPrivilege;

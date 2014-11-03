@@ -28,11 +28,13 @@
 - (UILabel *)preferentialLabel
 {
     if (!_preferentialLabel) {
-        _preferentialLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 45, 66, 21)];
-        [_preferentialLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:25]];
+        _preferentialLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 38, 90, 28)];
+        [_preferentialLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:30]];
         _preferentialLabel.textAlignment = NSTextAlignmentCenter;
-        _preferentialLabel.textColor = RGBCOLOR(75, 171, 14);
-        _preferentialLabel.text = @"100";
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"100元"];
+        [string addAttribute:NSFontAttributeName value:kFont18 range:NSMakeRange(string.length-1, 1)];
+        [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(243, 130, 11) range:NSMakeRange(0, string.length)];
+        _preferentialLabel.attributedText = string;
     }
     return _preferentialLabel;
 }
@@ -66,7 +68,7 @@
         _preferentialDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 74, 89, 21)];
         _preferentialDetailLabel.textAlignment = NSTextAlignmentCenter;
         _preferentialDetailLabel.font = kFont14;
-        _preferentialDetailLabel.text = @"元优惠券";
+        _preferentialDetailLabel.text = @"优惠券";
         _preferentialDetailLabel.textColor = RGBCOLOR(127, 127, 127);
     }
     return _preferentialDetailLabel;
