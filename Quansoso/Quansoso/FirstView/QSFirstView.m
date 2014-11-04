@@ -84,6 +84,7 @@ int btnCount; //关注的商家数量 包括加号按钮
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, ViewBottom(self.labelDaily)+5, kMainScreenWidth, 136)];
     self.scrollView.delegate = self;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.pagingEnabled = YES;
     CGFloat interval = (kMainScreenWidth-310)/2;
     for (int i=0; i<9; i++)

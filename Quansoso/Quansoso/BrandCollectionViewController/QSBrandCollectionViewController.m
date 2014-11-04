@@ -9,6 +9,7 @@
 #import "QSBrandCollectionViewController.h"
 #import "SVPullToRefresh.h"
 #import "QSBrandListManage.h"
+#import "QSBrandBtn.h"
 
 //#define brandWidth 80;
 //#define brandHeight 80;
@@ -18,8 +19,8 @@
     UIButton *attentionBtn;
     int lines;
     CGFloat interval;
-    int brandWidth;
-    int brandHeight;
+    CGFloat brandWidth;
+    CGFloat brandHeight;
 }
 @property(nonatomic ,strong) UIActivityIndicatorView *activityIndicatorView;
 @property(nonatomic ,strong) QSBrandListManage *brandListManage;
@@ -38,31 +39,20 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"品牌聚合";
-    brandWidth = 80;
-    brandHeight = 80;
-    interval = (kMainScreenWidth-3*brandWidth)/4.0;
+    brandWidth = kMainScreenWidth/3;
+    brandHeight = brandWidth/0.85;
+    interval = 1;
     lines = (kMainScreenHeight-66-40)/(interval+brandHeight);
     
-    headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 50)];
-    attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-45, 5, 90, 30)];
+    headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 40)];
+    attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-95, 5, 88, 25)];
     [attentionBtn addTarget:self action:@selector(payAttention) forControlEvents:UIControlEventTouchUpInside];
-    [attentionBtn setTitle:@"关注这些品牌" forState:UIControlStateNormal];
-    attentionBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-    attentionBtn.titleLabel.font = kFont12;
-    attentionBtn.backgroundColor = [UIColor blueColor];
+    [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrand"] forState:UIControlStateNormal];
     [headerView addSubview:attentionBtn];
     
-    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 0.5)];
-    topLineView.backgroundColor = [UIColor blackColor];
-    [headerView addSubview:topLineView];
-    
     UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39.5, kMainScreenWidth, 0.5)];
-    bottomLineView.backgroundColor = [UIColor blackColor];
+    bottomLineView.backgroundColor = [UIColor greenColor];
     [headerView addSubview:bottomLineView];
-    
-//    UIView *tableBackView = [[UIView alloc]
-//                             initWithFrame:CGRectMake(5, ViewBottom(headerView)+5, kMainScreenWidth-10, kMainScreenHeight)];
-//    [self.view addSubview:tableBackView];
     
     self.showBrandTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.showBrandTableView.delegate = self;
@@ -135,37 +125,37 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return brandHeight+interval;
+    return brandHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] init];
-    UIView *backGroundView = [[UIView alloc] initWithFrame:CGRectMake(5, 0, kMainScreenWidth-10, brandHeight+interval)];
-    backGroundView.backgroundColor = RGBCOLOR(246, 246, 246);
-    [cell addSubview:backGroundView];
+    cell.backgroundColor = RGBCOLOR(228, 222, 214);
     for (int i=0; i<3; i++)
     {
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval/2+5+(interval+brandWidth)*i, interval/2, brandWidth, brandHeight)];
-        btn.backgroundColor = [UIColor yellowColor];
-        [btn addTarget:self action:@selector(chooseBrand:) forControlEvents:UIControlEventTouchUpInside];
+        QSBrandBtn *btn = [[QSBrandBtn alloc] initWithFrame:CGRectMake(brandWidth*i, 0, brandWidth, brandHeight)];
+//        [btn addTarget:self action:@selector(chooseBrand:) forControlEvents:UIControlEventTouchUpInside];
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseBrand:)];
+        [btn addGestureRecognizer:tapGesture];
         btn.tag = 100+indexPath.row*3+i+1;
-        [backGroundView addSubview:btn];
+        [cell addSubview:btn];
     }
     return cell;
 }
 
 #pragma mark 按钮事件
-- (void)chooseBrand:(UIButton *)aBtn
+- (void)chooseBrand:(UITapGestureRecognizer *)aGestureRecognizer
 {
+    QSBrandBtn *aBtn = (QSBrandBtn *)aGestureRecognizer.view;
     if (aBtn.tag>=100)
     {
-        aBtn.backgroundColor = [UIColor blueColor];
+        [aBtn.brandLikeView setImage:[UIImage imageNamed:@"QSBrandLiked"]];
         aBtn.tag -= 100;
     }
     else
     {
-        aBtn.backgroundColor = [UIColor yellowColor];
+        [aBtn.brandLikeView setImage:[UIImage imageNamed:@"QSBrandUnlike"]];
         aBtn.tag += 100;
     }
 }
