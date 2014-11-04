@@ -30,11 +30,11 @@
     [self addTableViewTrag];
     
 #pragma mark 网络请求
-    [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
-        
-    } andFailBlock:^{
-        
-    }];
+//    [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
+//        
+//    } andFailBlock:^{
+//        
+//    }];
     return self;
 }
 
@@ -79,11 +79,11 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showBrandTableView.pullToRefreshView stopAnimating];
-            [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
-                [self.showBrandTableView reloadData];
-            } andFailBlock:^{
-                
-            }];
+//            [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
+//                [self.showBrandTableView reloadData];
+//            } andFailBlock:^{
+//                
+//            }];
              });
     }];
     

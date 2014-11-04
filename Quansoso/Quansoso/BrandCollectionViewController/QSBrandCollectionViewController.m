@@ -10,6 +10,8 @@
 #import "SVPullToRefresh.h"
 #import "QSBrandListManage.h"
 #import "QSBrandBtn.h"
+#import "QSMerchant.h"
+#import "UIImageView+WebCache.h"
 
 //#define brandWidth 80;
 //#define brandHeight 80;
@@ -24,6 +26,7 @@
 }
 @property(nonatomic ,strong) UIActivityIndicatorView *activityIndicatorView;
 @property(nonatomic ,strong) QSBrandListManage *brandListManage;
+@property(nonatomic, strong) NSMutableArray *brandArray;
 @end
 
 @implementation QSBrandCollectionViewController
@@ -65,16 +68,20 @@
     [self.view addSubview:self.showBrandTableView];
     
     self.activityIndicatorView = [[UIActivityIndicatorView alloc]
-                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-20, 40, 40)];
+                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-40, 40, 40)];
     [self.activityIndicatorView startAnimating];
+    self.activityIndicatorView.color = [UIColor blackColor];
     [self.view addSubview:self.activityIndicatorView];
     
 #pragma mark 网络请求
-    [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^{
+    [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^(NSMutableArray *aArray) {
         [self.activityIndicatorView stopAnimating];
+        self.brandArray = aArray;
+        [self.showBrandTableView reloadData];
+    } andFailBlock:^{
+        
     }];
 }
-
 #pragma mark getter
 - (QSBrandListManage *)brandListManage
 {
@@ -83,6 +90,14 @@
         _brandListManage = [[QSBrandListManage alloc] init];
     }
     return _brandListManage;
+}
+
+- (NSMutableArray *)brandArray
+{
+    if (!_brandArray) {
+        _brandArray = [[NSMutableArray alloc] init];
+    }
+    return _brandArray;
 }
 
 #pragma mark 增加上拉下拉
@@ -94,12 +109,29 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showBrandTableView.pullToRefreshView stopAnimating];
-            [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^{
-                [self.activityIndicatorView stopAnimating];
+            [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^(NSMutableArray *aArray) {
+                self.brandArray = aArray;
+            } andFailBlock:^{
+                
             }];
             [self.showBrandTableView reloadData];
         });
     }];
+    
+    [weakself.showBrandTableView addInfiniteScrollingWithActionHandler:^{
+        int64_t delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^{
+            [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
+            [self.brandListManage getNextBrandListSuccBlock:^(NSArray *aArray) {
+                [self.brandArray addObjectsFromArray:aArray];
+                [self.showBrandTableView reloadData];
+            } andFailBlock:^{
+                
+            }];
+            });
+    }];
+    
 }
 
 #pragma mark 按钮 关注这些品牌
@@ -120,7 +152,7 @@
 #pragma mark tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return lines;
+    return self.brandArray.count/3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -134,11 +166,12 @@
     cell.backgroundColor = RGBCOLOR(228, 222, 214);
     for (int i=0; i<3; i++)
     {
+        QSMerchant *model = [self.brandArray objectAtIndex:indexPath.row*3+i];
         QSBrandBtn *btn = [[QSBrandBtn alloc] initWithFrame:CGRectMake(brandWidth*i, 0, brandWidth, brandHeight)];
-//        [btn addTarget:self action:@selector(chooseBrand:) forControlEvents:UIControlEventTouchUpInside];
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseBrand:)];
         [btn addGestureRecognizer:tapGesture];
         btn.tag = 100+indexPath.row*3+i+1;
+        [btn.brandImgView sd_setImageWithURL:[NSURL URLWithString:model.picUrl] placeholderImage:[UIImage imageNamed:@""]];
         [cell addSubview:btn];
     }
     return cell;

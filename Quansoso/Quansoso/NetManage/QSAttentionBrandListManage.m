@@ -11,24 +11,22 @@
 #import "NetManager.h"
 @implementation QSAttentionBrandListManage
 
-- (void)getFirstAttentionBrandListSuccBlock:(void(^)(void))aSuccBlock andFailBlock:(void(^)(void))aFailBlock
+- (void)getFirstAttentionBrandListSuccBlock:(void(^)(NSMutableArray *))aSuccBlock andFailBlock:(void(^)(void))aFailBlock
 {
     _nextPage = 2;
     NSString *attentionBrandListUrl = [NSString stringWithFormat:@"%@?service=my_follow&tbNick=%@&current=1&pageSize=14", KBaseUrl, [[TaeSession sharedInstance] getUser].nick];
     [NetManager requestWith:nil url:attentionBrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
-        aSuccBlock();
     } failure:^(NSDictionary *failDict, NSError *error) {
         
     }];
 }
 
-- (void)getNextAttentionBrandListSuccBlock:(void(^)(void))aBlock andFailBlock:(void(^)(void))aFailBlock
+- (void)getNextAttentionBrandListSuccBlock:(void(^)(NSArray *))aBlock andFailBlock:(void(^)(void))aFailBlock
 {
     NSString *nextAttentionBrandListUrl = [NSString stringWithFormat:@"%@?service=my_follow&tbNick=%@&current=%d&pageSize=15", KBaseUrl, [[TaeSession sharedInstance] getUser].nick, _nextPage];
     [NetManager requestWith:nil url:nextAttentionBrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
-        aBlock();
         _nextPage++;
     } failure:^(NSDictionary *failDict, NSError *error) {
         

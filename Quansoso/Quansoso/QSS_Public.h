@@ -144,5 +144,8 @@ NSNumber *iNum = [NSNumber numberWithLongLong:i];\
 #define RGBCOLOR(r,g,b) [UIColor colorWithRed:r/256.0 green:g/256.0 blue:b/256.0 alpha:1]
 #define KBaseUrl @"http://quansoso.uz.taobao.com/d/cr/rest"
 
+#define kQSRequestUrl(path,outUrl) do{\
+outUrl = [NSString stringWithFormat:@"%@%@",KBaseUrl,path];\
+}while(0)
 
 #endif

@@ -141,11 +141,11 @@ int btnCount; //关注的商家数量 包括加号按钮
     [self addTableViewTrag];
     
 #pragma mark 网络请求
-    [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
-        
-    } andFailBlock:^{
-        
-    }];
+//    [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
+//        
+//    } andFailBlock:^{
+//        
+//    }];
     [self getDayRecommends];
     
     return self;
@@ -222,11 +222,11 @@ int btnCount; //关注的商家数量 包括加号按钮
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showQuanTableView.pullToRefreshView stopAnimating];
-            [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
-                
-            } andFailBlock:^{
-                
-            }];
+//            [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
+//                
+//            } andFailBlock:^{
+//                
+//            }];
             [self getDayRecommends];
         });
     }];
@@ -238,11 +238,11 @@ int btnCount; //关注的商家数量 包括加号按钮
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
             dispatch_after(popTime, dispatch_get_main_queue(), ^{
                 [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
-                [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^{
-                    
-                } andFailBlock:^{
-                    
-                }];
+//                [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^{
+//                    
+//                } andFailBlock:^{
+//                    
+//                }];
             });
         }];
     }

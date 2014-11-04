@@ -10,5 +10,7 @@
 
 @interface QSBrandListManage : NSObject
 
-- (void)getBrandListPageSize:(int)aPageSize andSuccBlock:(void(^)(void))aBlock;
+- (void)getBrandListPageSize:(int)aPageSize andSuccBlock:(void(^)(NSMutableArray *aArray))aBlock andFailBlock:(void(^)(void))aFailBlock;
+
+- (void)getNextBrandListSuccBlock:(void(^)(NSArray *aArray))aSuccBlock andFailBlock:(void(^)(void))aFailBlock;
 @end
