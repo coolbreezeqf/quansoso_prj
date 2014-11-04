@@ -16,34 +16,33 @@
     CGRect temframe = self.frame;
     temframe.size.width = kMainScreenWidth;
     self.frame = temframe;
+    CGFloat cellHeight = 70;
     
-    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 4.5, kMainScreenWidth, 0.5)];
-    topLineView.backgroundColor = [UIColor blackColor];
-    [self addSubview:topLineView];
-    
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 5, kMainScreenWidth, 40)];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, cellHeight)];
     [self addSubview:backView];
     
-    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, ViewBottom(backView), kMainScreenWidth, 0.5)];
-    bottomLineView.backgroundColor = [UIColor blackColor];
+    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 0.5)];
+    topLineView.backgroundColor = RGBCOLOR(239, 235, 227);
+    [self addSubview:topLineView];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, ViewBottom(backView)-0.5, kMainScreenWidth, 0.5)];
+    bottomLineView.backgroundColor = RGBCOLOR(239, 235, 227);
     [self addSubview:bottomLineView];
     
-    self.brandImgView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
-    self.brandImgView.backgroundColor = [UIColor blueColor];
+    self.brandImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 60, 60)];
+    self.brandImgView.backgroundColor = [UIColor greenColor];
+    self.brandImgView.layer.borderColor = [[UIColor blackColor] CGColor];
+    self.brandImgView.layer.borderWidth = 0.5;
     [backView addSubview:self.brandImgView];
     
-    self.cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-80, 10, 60, 20)];
-    self.cancelBtn.titleLabel.font = kFont12;
-    [self.cancelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.cancelBtn setTitle:@"取消关注" forState:UIControlStateNormal];
-    [self.cancelBtn.layer setBorderColor:[[UIColor blackColor] CGColor]];
-    [self.cancelBtn.layer setBorderWidth:0.5];
-    [self.cancelBtn.layer setCornerRadius:5];
+    self.cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-40, cellHeight/2-11, 22, 22)];
+    [self.cancelBtn setImage:[UIImage imageNamed:@"QSBrandLiked"] forState:UIControlStateNormal];
     [backView addSubview:self.cancelBtn];
     
-    self.brandNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 5, 150, 30)];
-    self.brandNameLabel.text = @"优衣库官方旗舰店";
-    self.brandNameLabel.font = kFont14;
+    self.brandNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.brandImgView.right+10, cellHeight/2-10, 180, 20)];
+    self.brandNameLabel.text = @"江南布衣官方旗舰店";
+    self.brandNameLabel.font = kFont16;
+    self.brandNameLabel.textAlignment = NSTextAlignmentLeft;
     [backView addSubview:self.brandNameLabel];
     
     

@@ -11,11 +11,11 @@
 
 @interface QSCouponView : UIView<UITableViewDelegate, UITableViewDataSource>
 
-@property(nonatomic, strong) UIView *viewHead;
-@property(nonatomic, strong) UIImageView *imgViewUserHead;
-@property(nonatomic, strong) UILabel *labelStore;
+//@property(nonatomic, strong) UIView *viewHead;
+//@property(nonatomic, strong) UIImageView *imgViewUserHead;
+//@property(nonatomic, strong) UILabel *labelStore;
 @property(nonatomic, strong) UITableView *tableViewShow;
-@property(nonatomic, strong) UILabel *couponLabel;
+//@property(nonatomic, strong) UILabel *couponLabel;
 @property(nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property(nonatomic, strong) QSUserCouponListManage *userCouponListManage;
 

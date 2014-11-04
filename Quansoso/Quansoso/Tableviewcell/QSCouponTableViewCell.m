@@ -10,13 +10,17 @@
 
 @implementation QSCouponTableViewCell
 
-- (instancetype)init
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super init];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     CGRect temframe = self.frame;
     temframe.size.width = kMainScreenWidth;
     self.frame = temframe;
-
+    
+    UIImageView *backgroundImg = [[UIImageView alloc] initWithFrame:CGRectMake(kMainScreenWidth-310, 4, 310, 61)];
+    [backgroundImg setImage:[UIImage imageNamed:@"QSCouponImg100"]];
+    [self addSubview:backgroundImg];
+    
     return self;
 }
 

@@ -10,11 +10,9 @@
 
 @interface QSCouponTableViewCell : UITableViewCell
 
-@property(nonatomic, strong) UIImageView *imgBackground;
 @property(nonatomic, strong) UIImageView *imgCoupon;
-@property(nonatomic, strong) UILabel *labelCouponName;
+@property(nonatomic, strong) UILabel *labelBrandName;
 @property(nonatomic, strong) UILabel *labelTime;
-@property(nonatomic, strong) UIImageView *imgPrice;
 
-- (instancetype)init;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 @end

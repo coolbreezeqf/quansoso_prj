@@ -18,32 +18,12 @@
     self = [super initWithFrame:frame];
     self.backgroundColor = [UIColor whiteColor];
     
-    self.viewHead = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 160)];
-    
-    self.imgViewUserHead = [[UIImageView alloc]
-                            initWithFrame:CGRectMake(kMainScreenWidth/2-30, 20, 60, 60)];
-    self.imgViewUserHead.backgroundColor = [UIColor blueColor];
-    [self.imgViewUserHead sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]
-                        placeholderImage:[UIImage imageNamed:@"defaultImage"]];
-    [self.viewHead addSubview:self.imgViewUserHead];
-    
-    self.labelStore = [[UILabel alloc] initWithFrame:CGRectMake(0, ViewBottom(self.imgViewUserHead)+10, kMainScreenWidth, 20)];
-    self.labelStore.text = [[TaeSession sharedInstance] getUser].nick;
-    self.labelStore.font = kFont16;
-    self.labelStore.textAlignment = NSTextAlignmentCenter;
-    [self.viewHead addSubview:self.labelStore];
-    
-    self.couponLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, ViewBottom(self.imgViewUserHead)+40, kMainScreenWidth, 40)];
-    self.couponLabel.backgroundColor = [UIColor blueColor];
-    self.couponLabel.text = @"我的优惠券";
-    self.couponLabel.textAlignment = NSTextAlignmentCenter;
-    [self.viewHead addSubview:self.couponLabel];
-    
     self.tableViewShow = [[UITableView alloc] initWithFrame:self.bounds];
     self.tableViewShow.delegate = self;
     self.tableViewShow.dataSource = self;
     self.tableViewShow.tableFooterView = [[UIView alloc] init];
-    self.tableViewShow.tableHeaderView = self.viewHead;
+    self.tableViewShow.backgroundColor = RGBCOLOR(239, 235, 227);
+    self.tableViewShow.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addTableViewTrag];
     [self addSubview:self.tableViewShow];
 
@@ -102,10 +82,21 @@
     return 10;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 65;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QSCouponTableViewCell *cell = [[QSCouponTableViewCell alloc] init];
-    cell.textLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+    NSString *cellIdentifier = @"CouponCell";
+    QSCouponTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+        cell = [[QSCouponTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    cell.backgroundColor = RGBCOLOR(239, 235, 227);
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 

@@ -48,19 +48,14 @@
     UIView *topview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 40)];
     topview.backgroundColor = [UIColor whiteColor];
     UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 0.5)];
-    topLineView.backgroundColor = [UIColor blackColor];
+    topLineView.backgroundColor = [UIColor greenColor];
     [topview addSubview:topLineView];
     UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, kMainScreenWidth, 0.5)];
     bottomLineView.backgroundColor = [UIColor blackColor];
     [topview addSubview:bottomLineView];
-    UIButton *attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-110, 5, 100, 30)];
-    [attentionBtn setTitle:@"关注其他品牌" forState:UIControlStateNormal];
+    UIButton *attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-15, 5, 31, 28)];
+    [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrandImg"] forState:UIControlStateNormal];
     [attentionBtn addTarget:self action:@selector(attentionBrand) forControlEvents:UIControlEventTouchUpInside];
-    [attentionBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    attentionBtn.titleLabel.font = kFont14;
-    [attentionBtn.layer setBorderColor:[[UIColor blackColor] CGColor]];
-    [attentionBtn.layer setBorderWidth:0.5];
-    [attentionBtn.layer setCornerRadius:5];
     [topview addSubview:attentionBtn];
 
     return topview;
@@ -124,14 +119,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 70;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     QSAttentionBrandTableViewCell *cell = [[QSAttentionBrandTableViewCell alloc] init];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    [cell.cancelBtn addTarget:self action:@selector(cancelAttention:) forControlEvents:UIControlEventTouchUpInside];
+//    [cell.cancelBtn addTarget:self action:@selector(cancelAttention:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
