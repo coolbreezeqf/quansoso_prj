@@ -325,7 +325,7 @@
 	[self.view addSubview:self.activityView];
 	
 	//初始化键盘通知
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 	[self setLeftButton:[UIImage imageNamed:@"back"] title:@"" target:self action:@selector(back)];
 }
 

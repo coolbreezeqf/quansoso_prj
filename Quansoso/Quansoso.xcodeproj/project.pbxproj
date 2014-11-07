@@ -25,7 +25,6 @@
 		B02E0BD219CADAAB009A0306 /* Result.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCD19CADAAB009A0306 /* Result.m */; };
 		B02E0BD319CADAAB009A0306 /* ResultCard.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCF19CADAAB009A0306 /* ResultCard.m */; };
 		B02E0BD419CADAAB009A0306 /* SearchInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BD119CADAAB009A0306 /* SearchInfo.m */; };
-		B03624DB19E8049400ECFE61 /* CardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B03624D819E8049400ECFE61 /* CardCell.xib */; };
 		B03624DC19E8049400ECFE61 /* QSCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624DA19E8049400ECFE61 /* QSCardTableViewCell.m */; };
 		B03624E519E8059000ECFE61 /* QSActivities.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624DE19E8059000ECFE61 /* QSActivities.m */; };
 		B03624E619E8059000ECFE61 /* QSCards.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624E019E8059000ECFE61 /* QSCards.m */; };
@@ -42,7 +41,6 @@
 		B08A5FEA19DD7772008077E7 /* QSDataSevice.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FE919DD7772008077E7 /* QSDataSevice.m */; };
 		B08A5FEE19DD8025008077E7 /* CAlertLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FED19DD8025008077E7 /* CAlertLabel.m */; };
 		B08A5FF819DE78FE008077E7 /* QSMerchantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */; };
-		B08A5FF919DE78FE008077E7 /* MerchantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B08A5FF719DE78FE008077E7 /* MerchantCell.xib */; };
 		B08A5FFE19DFE61A008077E7 /* UILabel+dynamicSizeMe.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */; };
 		B0BFDD3E1A0A32C8002037DA /* QSSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD3D1A0A32C8002037DA /* QSSSearchBar.m */; };
 		B0BFDD411A0A3B65002037DA /* QSSearchHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD401A0A3B65002037DA /* QSSearchHistoryView.m */; };
@@ -158,7 +156,6 @@
 		B02E0BCF19CADAAB009A0306 /* ResultCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultCard.m; sourceTree = "<group>"; };
 		B02E0BD019CADAAB009A0306 /* SearchInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInfo.h; sourceTree = "<group>"; };
 		B02E0BD119CADAAB009A0306 /* SearchInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInfo.m; sourceTree = "<group>"; };
-		B03624D819E8049400ECFE61 /* CardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardCell.xib; sourceTree = "<group>"; };
 		B03624D919E8049400ECFE61 /* QSCardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCardTableViewCell.h; sourceTree = "<group>"; };
 		B03624DA19E8049400ECFE61 /* QSCardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSCardTableViewCell.m; sourceTree = "<group>"; };
 		B03624DD19E8059000ECFE61 /* QSActivities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSActivities.h; sourceTree = "<group>"; };
@@ -192,7 +189,6 @@
 		B08A5FED19DD8025008077E7 /* CAlertLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAlertLabel.m; sourceTree = "<group>"; };
 		B08A5FF519DE78FE008077E7 /* QSMerchantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSMerchantTableViewCell.h; sourceTree = "<group>"; };
 		B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSMerchantTableViewCell.m; sourceTree = "<group>"; };
-		B08A5FF719DE78FE008077E7 /* MerchantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MerchantCell.xib; sourceTree = "<group>"; };
 		B08A5FFC19DFE61A008077E7 /* UILabel+dynamicSizeMe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+dynamicSizeMe.h"; sourceTree = "<group>"; };
 		B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+dynamicSizeMe.m"; sourceTree = "<group>"; };
 		B0BFDD3C1A0A32C8002037DA /* QSSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSSearchBar.h; sourceTree = "<group>"; };
@@ -418,14 +414,12 @@
 			isa = PBXGroup;
 			children = (
 				ABC4488719FE08420012EFEB /* QSDailyView.xib */,
-				B03624D819E8049400ECFE61 /* CardCell.xib */,
 				B03624D919E8049400ECFE61 /* QSCardTableViewCell.h */,
 				B03624DA19E8049400ECFE61 /* QSCardTableViewCell.m */,
 				ABC7F6C319D6553D00D6B34C /* QSCouponTableViewCell.h */,
 				ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */,
 				B08A5FF519DE78FE008077E7 /* QSMerchantTableViewCell.h */,
 				B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */,
-				B08A5FF719DE78FE008077E7 /* MerchantCell.xib */,
 				AB7AE3BE19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.h */,
 				AB7AE3BF19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m */,
 				ABC4242B19FDD3B000AE7847 /* QSDailyView.h */,
@@ -898,9 +892,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B08A5FF919DE78FE008077E7 /* MerchantCell.xib in Resources */,
 				ABC4488819FE08420012EFEB /* QSDailyView.xib in Resources */,
-				B03624DB19E8049400ECFE61 /* CardCell.xib in Resources */,
 				FFD1243619D64937003B969F /* Tae.bundle in Resources */,
 				FFD1243519D64937003B969F /* AlipaySDK.bundle in Resources */,
 				FF8A929A19C433B80010439B /* Images.xcassets in Resources */,
