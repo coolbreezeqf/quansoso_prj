@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QSCardDetailsViewController : UIViewController
+@class QSCards;
+@class TaeSession;
+@interface QSCardDetailsViewController : BaseViewController
+- (instancetype)initWithCard:(QSCards *)card;
 
 @end

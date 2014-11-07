@@ -14,40 +14,36 @@
 #import "QSMerchantTableViewCell.h"
 #import "QSMerchantDetailsViewController.h"
 #import "UIImageView+WebCache.h"
+#import "QSSSearchBar.h"
+#import "QSSearchNothingView.h"
 @interface QSSearchViewController (){
 	NSString *currentText;
 	float keyboardHeight;
 }
 
-@property (nonatomic,strong) UISearchBar *searchBar;
+@property (nonatomic,strong) QSSSearchBar *searchBar;
 @property (nonatomic,strong) UIActivityIndicatorView *activityView;
 @property (nonatomic,strong) UILabel *tipLabel;
 @property (nonatomic,strong) UILabel *historyTip;
-@property (nonatomic,strong) UITableView *historyTable;
+@property (nonatomic,strong) QSSearchHistoryView *historyTable;
 @property (nonatomic,strong) NSMutableArray *historyArr; //of  NSString
-@property (nonatomic,strong) UIButton *feedback;	//反馈按钮
 @property (nonatomic,strong) QSSearchNetManager *netManager;
+@property (nonatomic,strong) QSSearchNothingView *nothingView;
+@property (nonatomic,strong) NSMutableArray *searchResults;		//of SearchInfo.result
 @end
 
 @implementation QSSearchViewController
 
 - (void)showSearchBar{
-	[self setRightButton:nil title:@"搜索" target:self action:@selector(searchContent)];
-
 	if (!_searchBar) {
 		UIView *leftBarView = self.navigationItem.leftBarButtonItem.customView;
-		UIView *rightBarView = self.navigationItem.rightBarButtonItem.customView;
 		if(kMainScreenWidth != 320){
-			_searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBarView.right+15+5 ,0, kMainScreenWidth - leftBarView.right - (rightBarView.width+15+5)-10 , 44)];
+			_searchBar = [[QSSSearchBar alloc] initWithFrame:CGRectMake(leftBarView.width ,0, kMainScreenWidth - leftBarView.width -10 , 46)];
 		}else{
-			_searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBarView.width ,0, kMainScreenWidth - leftBarView.width - rightBarView.width , 44)];
+			_searchBar = [[QSSSearchBar alloc] initWithFrame:CGRectMake(leftBarView.width ,0, kMainScreenWidth - leftBarView.width - 10, 46)];
 		}
-		_searchBar.backgroundColor = [UIColor clearColor];
-		_searchBar.delegate = self;
-		_searchBar.Placeholder = @"搜索品牌/优惠";
-		//		_searchBar.keyboardType = UIKeyboardTypeDefault;
-		[_searchBar setTintColor:[UIColor blackColor]];
 		[_searchBar becomeFirstResponder];
+		_searchBar.delegate = self;
 	}
 	[self.navigationController.navigationBar addSubview:_searchBar];
 }
@@ -59,11 +55,9 @@
 
 - (void)showHistoryTable{
 	if(!_historyTable){
-		_historyTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - keyboardHeight) style:UITableViewStylePlain];
+		_historyTable = [[QSSearchHistoryView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - keyboardHeight) withHistoryArr:self.historyArr];
 		_historyTable.tag = 1;
 		_historyTable.delegate = self;
-		_historyTable.dataSource = self;
-		_historyTable.backgroundColor = [UIColor whiteColor];
 		[self.view addSubview:_historyTable];
 	}
 	[self.view bringSubviewToFront:_historyTable];
@@ -74,12 +68,16 @@
 	[self.view bringSubviewToFront:_tableView];
 }
 
+
+//添加历史纪录
 - (void)refreshHistoryData{
 	[self.historyArr insertObject:_searchBar.text atIndex:0];
-	[_historyTable beginUpdates];
-	NSArray *arr = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]];
-	[_historyTable insertRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationNone];
-	[_historyTable endUpdates];
+	for (int i = 1; i < self.historyArr.count; i++) {
+		if ([_historyArr[i] isEqualToString:_historyArr[0]]) {
+			[_historyArr removeObjectAtIndex:i];
+		}
+	}
+	[self.historyTable reloadHistory:_historyArr];
 }
 
 - (void)addSearchData{
@@ -136,6 +134,7 @@
 
 
 - (void)searchContent{
+	[self.view bringSubviewToFront:self.tableView];
 	[_activityView startAnimating];
 	currentText = _searchBar.text;
 	if ([currentText isEqualToString:@""]) {
@@ -162,9 +161,8 @@
 	[_tableView reloadData];
 }
 
-- (void)clearHistory{
+- (void)cleanHistory{
 	[self.historyArr removeAllObjects];
-	[_historyTable reloadData];
 }
 
 - (void)userFeedback{
@@ -173,6 +171,12 @@
 
 - (void)back{
 	[self.navigationController popViewControllerAnimated:YES];
+}
+#pragma mark - history delegate
+
+- (void)historySearch:(NSString *)searchContent{
+	_searchBar.text = searchContent;
+	[self searchContent];
 }
 
 #pragma mark - property lazy init
@@ -194,17 +198,6 @@
 	return _historyArr;
 }
 
-- (UIButton *)feedback{
-	if (!_feedback) {
-		_feedback = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-		[_feedback setTitle:@"反馈" forState:UIControlStateNormal];
-		_feedback.center = CGPointMake(self.tipLabel.center.x, self.tipLabel.center.y + 40);
-		_feedback.backgroundColor = [UIColor redColor];
-		[_feedback addTarget:self action:@selector(userFeedback) forControlEvents:UIControlEventTouchDown];
-	}
-	return _feedback;
-}
-
 - (UIActivityIndicatorView *)activityView{
 	if (!_activityView) {
 		_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -215,158 +208,71 @@
 }
 #pragma mark - tableview delegate and datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-	if (tableView.tag == 0) { //tableview
-		if (!currentText) {
-			self.tipLabel.text = @"";
-			[self.tableView addSubview:_tipLabel];
-		}else if(_searchResults.count == 0){  //result为空时 将tiplabel和反馈按钮添加上去
-			self.tipLabel.text = @"您想要的品牌还未入住券搜搜哦，\n请点击下方‘反馈’按钮，\n我们将尽快收录该品牌...";
-			[self.tipLabel setNumberOfLines:3];
-			if (![_tipLabel superview]) {
-				[self.tableView addSubview:_tipLabel];
-			}
-			if (![self.feedback superview]) {
-				[self.tableView addSubview:_feedback];
-			}
-			_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-		}else{ // _searchResult != nil and count>0
-			[self.tipLabel removeFromSuperview];
-			[self.feedback removeFromSuperview];
-			_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+
+	if (!currentText) {
+		self.tipLabel.text = @"请输入你要搜索的品牌";
+		[self.tableView addSubview:_tipLabel];
+	}else if(_searchResults.count == 0){  //result为空时 将nothingview置顶
+		if (!_nothingView) {
+			_nothingView = [[QSSearchNothingView alloc] initWithFrame:self.view.bounds];
+			[self.view addSubview:_nothingView];
 		}
-		return _searchResults.count;
+		[self.view bringSubviewToFront:_nothingView];
+	}else{ // _searchResult != nil and count>0
+		[self.tipLabel removeFromSuperview];
+		_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 	}
-	else {				//historytable
-		
-		if (self.historyArr.count == 0) {
-			_historyTip = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 200)];
-			[_historyTip setNumberOfLines:4];
-			_historyTip.textColor = [UIColor lightGrayColor];
-			_historyTip.text = @"还没有搜索记录";
-			_historyTip.font = kFont13;
-			_historyTip.textAlignment = NSTextAlignmentCenter;
-			[_historyTable addSubview:_historyTip];
-			_historyTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-			
-		}else{
-			_historyTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-			if (_historyTip) {
-				[_historyTip removeFromSuperview];
-			}
-		}
-		return _historyArr.count;
-	}
-	
+	return _searchResults.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-	if (tableView.tag == 0) {
-		QSMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MerchantCell"];
-		if (!cell) {
-//			cell = [[QSMerchantTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchResultCell"];
-			cell = [[QSMerchantTableViewCell alloc] initWithFrame:CGRectNull];
-			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		}
-		Result *result = [_searchResults objectAtIndex:indexPath.row];
-//		cell.textLabel.text = result.name;
-////		UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 95, 45)];
-////		[imageView setImageWithURL:[NSURL URLWithString:result.picUrl] placeholderImage:[UIImage imageNamed:@"MerchantDefault"]];
-////		[cell.imageView addSubview:imageView];
-//		[cell.imageView setImageWithURL:[NSURL URLWithString:result.picUrl] placeholderImage:[UIImage imageNamed:@"MerchantDefault"]];
-//		//		[cell.imageView setFrame:CGRectMake(5, 0, 95, 45)]; // 没有用
-
-		cell.titleLb.text = result.name;
-		CGRect rect = cell.titleLb.frame;
-		rect.size.width = kMainScreenWidth - cell.iconImageView.right;
-		[cell.titleLb setFrame:rect];
-		[cell.iconImageView setImageWithURL:[NSURL URLWithString:result.picUrl]];
-		return cell;
+	QSMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MerchantCell"];
+	if (!cell) {
+		cell = [[QSMerchantTableViewCell alloc] initWithFrame:CGRectNull];
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
-	else{
-		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SearchHistoryCell"];
-		if (!cell) {
-			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchHistoryCell"];
-		}
-		cell.textLabel.text = [_historyArr objectAtIndex:indexPath.row];
-		return cell;
-	}
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-	if (tableView.tag == 0) {
-		[_searchBar resignFirstResponder];
-		[self hideHistoryTable];
-//		QSMerchantDetailsViewController *mdvc = [[QSMerchantDetailsViewController alloc] initWithMerchant:[_searchResult objectAtIndex:indexPath.row]];
-		Result *result = [_searchResults objectAtIndex:indexPath.row];
-		QSMerchantDetailsViewController *mdvc = [[QSMerchantDetailsViewController alloc] initWithTopId:result.topId];
-		[self.navigationController pushViewController:mdvc animated:YES];
-	}
-	else{
-		_searchBar.text = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
-		[self searchContent];
-	}
+	Result *result = [_searchResults objectAtIndex:indexPath.row];
+	cell.titleLb.text = result.name;
+	CGRect rect = cell.titleLb.frame;
+	rect.size.width = kMainScreenWidth - cell.iconImageView.right;
+	[cell.titleLb setFrame:rect];
+	[cell.iconImageView setImageWithURL:[NSURL URLWithString:result.picUrl]];
+	return cell;
 	
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+	[_searchBar resignFirstResponder];
+	[self hideHistoryTable];
+	Result *result = [_searchResults objectAtIndex:indexPath.row];
+	QSMerchantDetailsViewController *mdvc = [[QSMerchantDetailsViewController alloc] initWithTopId:result.topId];
+	[self.navigationController pushViewController:mdvc animated:YES];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-	if (tableView.tag == 0) {
-		return 90;
-	}
-	return 44;
+	return 90;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-	if (tableView.tag == 1 && self.historyArr.count != 0) {
-		return 30;
-	}
-	else{
-		return 1; //用来消除searchResult的table里多余的分割线
-	}
+	return 1; //用来消除searchResult的table里多余的分割线
 }
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-	if (tableView.tag == 1 && self.historyArr.count != 0) {
-		UIView *clearView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 30)];
-		clearView.backgroundColor = [UIColor whiteColor];
-		UIButton *bt = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
-		bt.center = clearView.center;
-		[clearView addSubview:bt];
-		[bt setTitle:@"清空历史纪录"  forState:UIControlStateNormal];
-		bt.backgroundColor = [UIColor clearColor];
-		//		bt.titleLabel.textColor = [UIColor blueColor];
-		[bt setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-		bt.titleLabel.textAlignment = NSTextAlignmentCenter;
-		[bt addTarget:self action:@selector(clearHistory) forControlEvents:UIControlEventTouchDown];
-		return clearView;
-	}
-	return nil;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-	if (tableView.tag == 1) {
-		return @"历史记录";
-	}
-	return nil;
-}
-
-
 
 #pragma mark touch event
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-	[_searchBar resignFirstResponder]; //点击空白部分 取消_searchBar的第一响应者
-	[self hideHistoryTable];
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-	[_searchBar resignFirstResponder];
-	[self hideHistoryTable];
-}
+//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+//	[_searchBar resignFirstResponder]; //点击空白部分 取消_searchBar的第一响应者
+//	[self hideHistoryTable];
+//}
+//
+//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+//	[_searchBar resignFirstResponder];
+//	[self hideHistoryTable];
+//}
 
 #pragma mark UISearchBar delegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
 	[self searchContent];
 	[_searchBar resignFirstResponder];
-	[self hideHistoryTable];
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{

@@ -14,6 +14,7 @@
 #import "QSMerchantDetails.h"
 #import "QSMerchant.h"
 #import "QSCards.h"
+#import "QSCardDetailsViewController.h"
 //#import "QSCardDetailsViewController.h"
 @interface QSMerchantDetailsViewController (){
 	double _topId;
@@ -133,6 +134,10 @@
 //	ResultCard *card = [_merchant.card objectAtIndex:indexPath.row];
 //	QSCardDetailsViewController *cdvc = [[QSCardDetailsViewController alloc] initWithCard:card];
 //	[self.navigationController pushViewController:cdvc animated:YES];
+	QSCards *card = [_merchantDetails.cards objectAtIndex:indexPath.row];
+	QSCardDetailsViewController *cdVC = [[QSCardDetailsViewController alloc] initWithCard:card];
+	[self.navigationController pushViewController:cdVC animated:YES];
+
 }
 #pragma mark - view life
 

@@ -52,6 +52,9 @@
 }
 
 - (void)reloadHistory:(NSArray *)historyarr{
+	if ([_historyNilTip superview]) {
+		[_historyNilTip removeFromSuperview];
+	}
 	_historyArr = historyarr;
 	if (!_historyBlockArr) {
 		_historyBlockArr = [[NSMutableArray alloc] initWithCapacity:15];
@@ -122,9 +125,7 @@
 		}
 		[self addSubview:_historyNilTip];
 	}else{
-		if ([_historyNilTip superview]) {
-			[_historyNilTip removeFromSuperview];
-		}
+
 		[self reloadHistory:_historyArr];
 	}
 }

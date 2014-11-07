@@ -9,9 +9,10 @@
 #import "BaseViewController.h"
 #import "QSSearchResultView.h"
 #import "QSSearchNetManager.h"
-@interface QSSearchViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
+#import "QSSearchHistoryView.h"
+
+@interface QSSearchViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,QSSearchHistoryDelegate>
 
 @property (nonatomic,strong) UITableView *tableView;
-@property (nonatomic,strong) NSMutableArray *searchResults;		//of SearchInfo.result
 
 @end

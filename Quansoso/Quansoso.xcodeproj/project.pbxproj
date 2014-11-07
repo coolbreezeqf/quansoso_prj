@@ -44,6 +44,9 @@
 		B08A5FF819DE78FE008077E7 /* QSMerchantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */; };
 		B08A5FF919DE78FE008077E7 /* MerchantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B08A5FF719DE78FE008077E7 /* MerchantCell.xib */; };
 		B08A5FFE19DFE61A008077E7 /* UILabel+dynamicSizeMe.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */; };
+		B0BFDD3E1A0A32C8002037DA /* QSSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD3D1A0A32C8002037DA /* QSSSearchBar.m */; };
+		B0BFDD411A0A3B65002037DA /* QSSearchHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD401A0A3B65002037DA /* QSSearchHistoryView.m */; };
+		B0BFDD441A0CB23D002037DA /* QSSearchNothingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD431A0CB23D002037DA /* QSSearchNothingView.m */; };
 		C2E099BD19E9014B00828DD0 /* QSDayRecommendManage.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E099BC19E9014B00828DD0 /* QSDayRecommendManage.m */; };
 		C2E099C319E9064600828DD0 /* QSDayRecommends.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E099C219E9064600828DD0 /* QSDayRecommends.m */; };
 		FF8A929519C433B80010439B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A929419C433B80010439B /* main.m */; };
@@ -192,6 +195,12 @@
 		B08A5FF719DE78FE008077E7 /* MerchantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MerchantCell.xib; sourceTree = "<group>"; };
 		B08A5FFC19DFE61A008077E7 /* UILabel+dynamicSizeMe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+dynamicSizeMe.h"; sourceTree = "<group>"; };
 		B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+dynamicSizeMe.m"; sourceTree = "<group>"; };
+		B0BFDD3C1A0A32C8002037DA /* QSSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSSearchBar.h; sourceTree = "<group>"; };
+		B0BFDD3D1A0A32C8002037DA /* QSSSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSSearchBar.m; sourceTree = "<group>"; };
+		B0BFDD3F1A0A3B65002037DA /* QSSearchHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchHistoryView.h; sourceTree = "<group>"; };
+		B0BFDD401A0A3B65002037DA /* QSSearchHistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchHistoryView.m; sourceTree = "<group>"; };
+		B0BFDD421A0CB23D002037DA /* QSSearchNothingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchNothingView.h; sourceTree = "<group>"; };
+		B0BFDD431A0CB23D002037DA /* QSSearchNothingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchNothingView.m; sourceTree = "<group>"; };
 		C2E099BB19E9014B00828DD0 /* QSDayRecommendManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSDayRecommendManage.h; path = NetManage/QSDayRecommendManage.h; sourceTree = "<group>"; };
 		C2E099BC19E9014B00828DD0 /* QSDayRecommendManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSDayRecommendManage.m; path = NetManage/QSDayRecommendManage.m; sourceTree = "<group>"; };
 		C2E099C119E9064600828DD0 /* QSDayRecommends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSDayRecommends.h; sourceTree = "<group>"; };
@@ -470,8 +479,14 @@
 				B08A5FD419D826DD008077E7 /* QSSearchNetManager.m */,
 				B08A5FD519D826DD008077E7 /* QSSearchViewController.h */,
 				B08A5FD619D826DD008077E7 /* QSSearchViewController.m */,
+				B0BFDD421A0CB23D002037DA /* QSSearchNothingView.h */,
+				B0BFDD431A0CB23D002037DA /* QSSearchNothingView.m */,
 				B08A5FEC19DD8025008077E7 /* CAlertLabel.h */,
 				B08A5FED19DD8025008077E7 /* CAlertLabel.m */,
+				B0BFDD3C1A0A32C8002037DA /* QSSSearchBar.h */,
+				B0BFDD3D1A0A32C8002037DA /* QSSSearchBar.m */,
+				B0BFDD3F1A0A3B65002037DA /* QSSearchHistoryView.h */,
+				B0BFDD401A0A3B65002037DA /* QSSearchHistoryView.m */,
 			);
 			path = SearchViewController;
 			sourceTree = "<group>";
@@ -907,6 +922,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0BFDD411A0A3B65002037DA /* QSSearchHistoryView.m in Sources */,
 				FFBA9EE119C688F200D9CBA2 /* SDWebImageDecoder.m in Sources */,
 				FFBA9E9319C680C800D9CBA2 /* AFHTTPRequestOperation.m in Sources */,
 				FFBA9EDD19C688F200D9CBA2 /* MKAnnotationView+WebCache.m in Sources */,
@@ -926,6 +942,7 @@
 				FFE85F2B19CABB9300A216BB /* QSCrazyQGView.m in Sources */,
 				FFBA9EE719C688F200D9CBA2 /* UIImage+GIF.m in Sources */,
 				FFBA9EE219C688F200D9CBA2 /* SDWebImageDownloader.m in Sources */,
+				B0BFDD441A0CB23D002037DA /* QSSearchNothingView.m in Sources */,
 				B03624DC19E8049400ECFE61 /* QSCardTableViewCell.m in Sources */,
 				FFBA9E9419C680C800D9CBA2 /* AFImageRequestOperation.m in Sources */,
 				AB219E2919D7E864001395AC /* QSRootLeftView.m in Sources */,
@@ -950,6 +967,7 @@
 				B03624E519E8059000ECFE61 /* QSActivities.m in Sources */,
 				ABC4242D19FDD3B000AE7847 /* QSDailyView.m in Sources */,
 				B08A5FF819DE78FE008077E7 /* QSMerchantTableViewCell.m in Sources */,
+				B0BFDD3E1A0A32C8002037DA /* QSSSearchBar.m in Sources */,
 				FFBA9EE319C688F200D9CBA2 /* SDWebImageDownloaderOperation.m in Sources */,
 				B08A5FDD19D826E7008077E7 /* QSMerchantDetailsViewController.m in Sources */,
 				AB219E2A19D7E864001395AC /* QSRootViewController.m in Sources */,
