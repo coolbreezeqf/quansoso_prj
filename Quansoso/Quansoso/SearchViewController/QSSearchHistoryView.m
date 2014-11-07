@@ -7,7 +7,7 @@
 //
 
 #import "QSSearchHistoryView.h"
-#define kTitleHeight 40
+#define kTitleHeight 30
 
 @interface QSSearchHistoryView (){
 	UILabel *_historyNilTip;
@@ -31,6 +31,7 @@
 - (void)setTitle{
 	UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, kMainScreenWidth-20, kTitleHeight-20)];
 	titleLabel.text = @"历史记录";
+	titleLabel.font = kFont13;
 	titleLabel.textColor = [UIColor lightGrayColor];
 	[self addSubview:titleLabel];
 }
@@ -71,8 +72,8 @@
 	for (NSString *his in historyarr) {
 		int len = [self widthOfString:his withFont:kFont15];
 		int width = len + 30;
-		if (width > kMainScreenWidth - 40) {
-			width = kMainScreenWidth - 40;
+		if (width > kMainScreenWidth/2 - 40) {
+			width = kMainScreenWidth/2 - 30;
 		}
 		if (offsetX + width + 20 > kMainScreenWidth) {
 			offsetX = 20;

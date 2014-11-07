@@ -77,6 +77,9 @@
 			[_historyArr removeObjectAtIndex:i];
 		}
 	}
+	if(self.historyArr.count > 10){
+		[_historyArr removeLastObject];
+	}
 	[self.historyTable reloadHistory:_historyArr];
 }
 
@@ -259,15 +262,18 @@
 }
 
 #pragma mark touch event
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-//	[_searchBar resignFirstResponder]; //点击空白部分 取消_searchBar的第一响应者
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+	if([_searchBar isFirstResponder]){
+		[_searchBar resignFirstResponder]; //点击空白部分 取消_searchBar的第一响应者
+	}
 //	[self hideHistoryTable];
-//}
-//
-//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-//	[_searchBar resignFirstResponder];
-//	[self hideHistoryTable];
-//}
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+	if([_searchBar isFirstResponder]){
+		[_searchBar resignFirstResponder]; //点击空白部分 取消_searchBar的第一响应者
+	}//	[self hideHistoryTable];
+}
 
 #pragma mark UISearchBar delegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
@@ -284,13 +290,12 @@
 	return YES;
 }
 #pragma mark - keyboard
-- (void)keyboardWillShow:(NSNotification *)notification{
-	NSDictionary *info = [notification userInfo];
-	//获取高度
-	NSValue *value = [info objectForKey:@"UIKeyboardBoundsUserInfoKey"];
-	CGSize hightSize = [value CGRectValue].size;
-	_historyTable.frame = CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - hightSize.height - 64);
-}
+//- (void)keyboardWillShow:(NSNotification *)notification{
+//	NSDictionary *info = [notification userInfo];
+//	//获取高度
+//	NSValue *value = [info objectForKey:@"UIKeyboardBoundsUserInfoKey"];
+//	CGSize hightSize = [value CGRectValue].size;
+//}
 #pragma mark -
 - (void)viewDidLoad {
 	[super viewDidLoad];
