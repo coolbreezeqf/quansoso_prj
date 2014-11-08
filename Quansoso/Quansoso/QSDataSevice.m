@@ -19,6 +19,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(QSDataSevice);
 	[self saveSearchHistoryArr];
 }
 
+- (BOOL)pushIntroduceStatus{
+	if (!_pushIntroduceStatus) {
+		NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+		[ud synchronize];
+		_pushIntroduceStatus = [ud boolForKey:@"pushIntroduceStatus"];
+	}
+	return _pushIntroduceStatus;
+}
+
+- (void)savePushIntroduceStatus{
+	NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+	[ud synchronize];
+	[ud setValue:[NSNumber numberWithBool:_pushIntroduceStatus] forKey:@"pushIntroduceStatus"];
+}
+
 - (NSMutableArray *)searchHistoryArr{
 	if (!_searchHistoryArr) {
 		NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];

@@ -9,6 +9,7 @@
 #import "QSMerchantNetManager.h"
 #import "NetManager.h"
 #define kURLMerchant @"http://quansoso.uz.taobao.com/d/cr/rest?service=merchant&topId="
+#define kURL
 @implementation QSMerchantNetManager
 - (void)getMerchantWithTopID:(double)topId success:(void (^)(NSDictionary *successDict))succ failure:(void (^)())failure{
 	[NetManager requestWith:nil url:[NSString stringWithFormat:@"%@%.0lf",kURLMerchant,topId] method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {

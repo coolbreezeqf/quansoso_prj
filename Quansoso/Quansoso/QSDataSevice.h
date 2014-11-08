@@ -12,8 +12,9 @@
 	
 }
 @property (nonatomic,strong) NSMutableArray *searchHistoryArr;
-
+@property (nonatomic,assign) BOOL pushIntroduceStatus;
 + (QSDataSevice *)sharedQSDataSevice;
 - (void)saveData;
+- (void)savePushIntroduceStatus;
 
 @end

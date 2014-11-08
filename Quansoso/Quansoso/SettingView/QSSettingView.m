@@ -7,17 +7,23 @@
 //
 
 #import "QSSettingView.h"
+#import "QSDataSevice.h"
+#import "CAlertLabel.h"
+#define kTitleColor RGBCOLOR(149, 149, 149)
 
 @interface QSSettingView (){
 	NSArray *titles;
 }
-
+@property (nonatomic,strong) UISwitch *switchView;
+@property (nonatomic,strong) QSDataSevice *dataSevice;
 @end
 
 @implementation QSSettingView
 
-- (void)pushIntroduce{
-
+- (void)switchChanged{
+	BOOL isOn = _switchView.isOn;
+	_dataSevice.pushIntroduceStatus = isOn;
+	[_dataSevice savePushIntroduceStatus];
 }
 
 - (void)attentionWeibo{
@@ -37,19 +43,37 @@
 }
 
 - (void)cleanCache{
-	
+#warning clean Cache
+	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"清理成功"];
+	[alert showAlertLabel];
+}
+
+- (void)logout{
+#warning logout
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
 	if (self = [super initWithFrame:frame]) {
 		self.backgroundColor = RGBCOLOR(242, 239, 233);
 		titles = @[@"优惠消息推送",@"关注券搜搜微博",@"意见反馈",@"分享app",@"关于我们",@"清楚缓存"];
-		_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth, 44*6) style:UITableViewStylePlain];
+		_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth, 44*6-1) style:UITableViewStylePlain];
 		_tableView.backgroundColor = [UIColor whiteColor];
 		_tableView.delegate = self;
 		_tableView.dataSource = self;
+		_tableView.scrollEnabled = NO;
 		_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 		[self addSubview:_tableView];
+		
+		UIButton *bt = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 250, 40)];
+		bt.center = CGPointMake(kMainScreenWidth/2, self.bounds.size.height - 40);
+		[bt setTitleColor:RGBCOLOR(105, 192, 17) forState:UIControlStateNormal];
+		[bt setTitle:@"退出登陆" forState:UIControlStateNormal];
+		[bt addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchDown];
+		[bt setBackgroundImage:[UIImage imageNamed:@"feedbackImg.png"] forState:UIControlStateNormal];
+		[self addSubview:bt];
+
+		
+		_dataSevice = [QSDataSevice sharedQSDataSevice];
 	}
 	return self;
 }
@@ -69,49 +93,55 @@
 	switch (indexPath.row) {
 		case 0:{
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-			cell.selectionStyle = UITableViewCellSelectionStyleNone;
-			cell.textLabel.text = [titles objectAtIndex:indexPath.row];
+			_switchView  = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 40, 30)];
+			[_switchView addTarget:self action:@selector(switchChanged) forControlEvents:UIControlEventValueChanged];
+			_switchView.on = _dataSevice.pushIntroduceStatus;
+			cell.accessoryView = _switchView;
 		}
 			break;
 		case 1:{
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-			cell.selectionStyle = UITableViewCellSelectionStyleNone;
-			cell.textLabel.text = [titles objectAtIndex:indexPath.row];
-			cell.detailTextLabel.text = @"每月有抽奖";
+			cell.detailTextLabel.font = kFont10;
+			cell.detailTextLabel.text = @"每月有抽奖,惊喜乐不停";
 			cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 			break;
-		case 2:
-		{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		cell.textLabel.text = [titles objectAtIndex:indexPath.row];
-		cell.detailTextLabel.text = @"每月有抽奖";
+		case 2:{
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+			cell.detailTextLabel.font = kFont10;
+			cell.detailTextLabel.text = @"您的建议，是我们进步的动力";
+			cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 			break;
 		case 3:
 		{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		cell.textLabel.text = [titles objectAtIndex:indexPath.row];
-		cell.detailTextLabel.text = @"每月有抽奖";
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+			cell.detailTextLabel.font = kFont10;
+			cell.detailTextLabel.text = @"和好朋友一起来省钱吧";
+			cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 			break;
 		case 4:
 		{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		cell.textLabel.text = [titles objectAtIndex:indexPath.row];
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}			break;
 		case 5:
-		{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		cell.textLabel.text = [titles objectAtIndex:indexPath.row];
+			{
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}			break;
 		default:
 			break;
 	}
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	cell.textLabel.text = [titles objectAtIndex:indexPath.row];
+	cell.textLabel.textColor = kTitleColor;
+	cell.textLabel.font = kFont13;
+
 	return cell;
 }
 
