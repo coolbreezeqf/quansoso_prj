@@ -33,6 +33,7 @@
 	titleLabel.text = @"历史记录";
 	titleLabel.font = kFont13;
 	titleLabel.textColor = [UIColor lightGrayColor];
+    titleLabel.backgroundColor = [UIColor clearColor];
 	[self addSubview:titleLabel];
 }
 

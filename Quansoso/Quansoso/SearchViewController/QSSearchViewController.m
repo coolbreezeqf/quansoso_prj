@@ -231,15 +231,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 	QSMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MerchantCell"];
 	if (!cell) {
-		cell = [[QSMerchantTableViewCell alloc] initWithFrame:CGRectNull];
+		cell = [[QSMerchantTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MerchantCell"];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	Result *result = [_searchResults objectAtIndex:indexPath.row];
 	cell.titleLb.text = result.name;
-	CGRect rect = cell.titleLb.frame;
-	rect.size.width = kMainScreenWidth - cell.iconImageView.right;
-	[cell.titleLb setFrame:rect];
+//	CGRect rect = cell.titleLb.frame;
+//	rect.size.width = kMainScreenWidth - cell.iconImageView.right;
+//	[cell.titleLb setFrame:rect];
 	[cell.iconImageView setImageWithURL:[NSURL URLWithString:result.picUrl]];
 	return cell;
 	

@@ -21,9 +21,19 @@
 		//输入文本的offset
 		self.searchTextPositionAdjustment = UIOffsetMake(10, 0);
 		self.Placeholder = @"搜索品牌/优惠";
-
+        
 		//设置光标颜色
 		[self setTintColor:[UIColor lightGrayColor]];
+//        self.backgroundImage = nil;
+//        self.backgroundColor = [UIColor clearColor];
+        for (UIView *subview in self.subviews)
+        {
+            if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")])
+            {
+                [subview removeFromSuperview];
+                break;
+            }
+        }
 	}
 	return self;
 }

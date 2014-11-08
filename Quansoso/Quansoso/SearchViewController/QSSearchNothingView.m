@@ -36,6 +36,7 @@
 	tipLb.font = kFont14;
 	tipLb.textColor = [UIColor lightGrayColor];
 	tipLb.textAlignment = NSTextAlignmentCenter;
+    tipLb.backgroundColor = [UIColor clearColor];
 	[self addSubview:tipLb];
 	//feedback按钮
 /*

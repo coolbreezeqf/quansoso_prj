@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QSMerchantTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
-@property (weak, nonatomic) IBOutlet UILabel *titleLb;
+@property (strong, nonatomic)  UIImageView *iconImageView;
+@property (strong, nonatomic)  UILabel *titleLb;
 
 @end
