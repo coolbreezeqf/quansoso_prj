@@ -19,7 +19,6 @@
 		AB9FF08919E3CB2400E65601 /* QSUserCouponListManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9FF08819E3CB2400E65601 /* QSUserCouponListManage.m */; };
 		AB9FF08C19E3CB5100E65601 /* QSAttentionBrandListManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9FF08B19E3CB5100E65601 /* QSAttentionBrandListManage.m */; };
 		ABC4242D19FDD3B000AE7847 /* QSDailyView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC4242C19FDD3B000AE7847 /* QSDailyView.m */; };
-		ABC4488819FE08420012EFEB /* QSDailyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABC4488719FE08420012EFEB /* QSDailyView.xib */; };
 		ABC54D861A086498009071D8 /* QSBrandBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC54D851A086498009071D8 /* QSBrandBtn.m */; };
 		ABC7F6C819D6553D00D6B34C /* QSCouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */; };
 		B02E0BD219CADAAB009A0306 /* Result.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCD19CADAAB009A0306 /* Result.m */; };
@@ -144,7 +143,6 @@
 		AB9FF08B19E3CB5100E65601 /* QSAttentionBrandListManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSAttentionBrandListManage.m; path = NetManage/QSAttentionBrandListManage.m; sourceTree = "<group>"; };
 		ABC4242B19FDD3B000AE7847 /* QSDailyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSDailyView.h; sourceTree = "<group>"; };
 		ABC4242C19FDD3B000AE7847 /* QSDailyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSDailyView.m; sourceTree = "<group>"; };
-		ABC4488719FE08420012EFEB /* QSDailyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QSDailyView.xib; sourceTree = "<group>"; };
 		ABC54D841A086498009071D8 /* QSBrandBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSBrandBtn.h; path = BrandCollectionViewController/QSBrandBtn.h; sourceTree = "<group>"; };
 		ABC54D851A086498009071D8 /* QSBrandBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSBrandBtn.m; path = BrandCollectionViewController/QSBrandBtn.m; sourceTree = "<group>"; };
 		ABC7F6C319D6553D00D6B34C /* QSCouponTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCouponTableViewCell.h; sourceTree = "<group>"; };
@@ -413,7 +411,6 @@
 		ABC7F6C219D6553D00D6B34C /* Tableviewcell */ = {
 			isa = PBXGroup;
 			children = (
-				ABC4488719FE08420012EFEB /* QSDailyView.xib */,
 				B03624D919E8049400ECFE61 /* QSCardTableViewCell.h */,
 				B03624DA19E8049400ECFE61 /* QSCardTableViewCell.m */,
 				ABC7F6C319D6553D00D6B34C /* QSCouponTableViewCell.h */,
@@ -892,7 +889,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABC4488819FE08420012EFEB /* QSDailyView.xib in Resources */,
 				FFD1243619D64937003B969F /* Tae.bundle in Resources */,
 				FFD1243519D64937003B969F /* AlipaySDK.bundle in Resources */,
 				FF8A929A19C433B80010439B /* Images.xcassets in Resources */,
