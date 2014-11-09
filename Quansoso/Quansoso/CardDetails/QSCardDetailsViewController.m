@@ -9,7 +9,8 @@
 #import "QSCardDetailsViewController.h"
 #import "QSCards.h"
 #import <TAESDK/TAESDK.h>
-
+#import "NetManager.h"
+#import "CAlertLabel.h"
 @interface QSCardDetailsViewController ()
 //data
 @property (nonatomic,strong) QSCards *card;
@@ -28,19 +29,28 @@
 	
 	if(![[TaeSession sharedInstance] isLogin]){
 		__weak QSCardDetailsViewController *weakself = self;
-		[[TaeSDK sharedInstance] showLogin:self successCallback:^(TaeSession *session) {
-			[weakself getCardWith:session];
+		[[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
+			[weakself accreditLogin];
 		} failedCallback:^(NSError *error) {
-			
+			CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"授权失败"];
+			[alert showAlertLabel];
 		}];
 		return;
+	}else{
+		
 	}
-	TaeSession *session = [TaeSession sharedInstance];
-	[self getCardWith:session];
 }
 
-- (void)getCardWith:(TaeSession *)session{
-	TaeUser *user = [session getUser];
+#pragma mark 授权登陆
+- (void)accreditLogin
+{
+	TaeUser *temUser = [[TaeSession sharedInstance] getUser];
+	NSString *loginUrl = [NSString stringWithFormat:@"%@?service=outh&tbNick=%@&picUrl=%@&userId=%@", KBaseUrl, temUser.nick, temUser.iconUrl, temUser.userId];
+	[NetManager requestWith:nil url:loginUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict){
+		MLOG(@"%@", successDict);
+	} failure:^(NSDictionary *failDict, NSError *error) {
+		MLOG(@"%@", failDict);
+	}];
 }
 
 - (void)back{
@@ -55,12 +65,7 @@
 }
 
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-	self.view.backgroundColor = RGBCOLOR(230, 230, 230);
-	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
-	
+- (void)setUI{
 	_merchantName = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, kMainScreenWidth - 40, 30)];
 	_merchantName.text = _card.merchant;
 	_merchantName.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
@@ -107,6 +112,15 @@
 	_recommendsView.backgroundColor = [UIColor whiteColor];
 	[self.view addSubview:_recommendsView];
 
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+	self.view.backgroundColor = RGBCOLOR(230, 230, 230);
+	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
+	[self setUI];
+	
 }
 
 - (void)didReceiveMemoryWarning {

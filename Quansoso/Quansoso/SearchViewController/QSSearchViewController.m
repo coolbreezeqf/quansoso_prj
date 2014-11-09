@@ -300,7 +300,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view.
-	
+	self.navigationController.navigationBarHidden = NO;
 	_netManager = [[QSSearchNetManager alloc] init];
 	_searchResults = [[NSMutableArray alloc] initWithCapacity:42];
 	_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight) style:UITableViewStylePlain];

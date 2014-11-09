@@ -12,7 +12,7 @@
 #define kURL
 @implementation QSMerchantNetManager
 - (void)getMerchantWithTopID:(double)topId success:(void (^)(NSDictionary *successDict))succ failure:(void (^)())failure{
-	[NetManager requestWith:nil url:[NSString stringWithFormat:@"%@%.0lf",kURLMerchant,topId] method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+	[NetManager requestWith:nil url:[NSString stringWithFormat:@"%@%.0lf",kURLMerchant,topId] method:@"GET" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
 		succ(successDict);
 	} failure:^(NSDictionary *failDict, NSError *error) {
 		failure();

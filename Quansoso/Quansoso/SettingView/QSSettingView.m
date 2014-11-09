@@ -17,6 +17,7 @@
 }
 @property (nonatomic,strong) UISwitch *switchView;
 @property (nonatomic,strong) QSDataSevice *dataSevice;
+@property (nonatomic,strong) UIButton *logoutBt;
 @end
 
 @implementation QSSettingView
@@ -49,8 +50,29 @@
 	[alert showAlertLabel];
 }
 
+- (void)showLogoutButton{
+	if (!_logoutBt) {
+		_logoutBt = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 250, 40)];
+		_logoutBt.center = CGPointMake(kMainScreenWidth/2, self.bounds.size.height - 40);
+		[_logoutBt setTitleColor:RGBCOLOR(105, 192, 17) forState:UIControlStateNormal];
+		[_logoutBt setTitle:@"退出登陆" forState:UIControlStateNormal];
+		[_logoutBt addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchDown];
+		[_logoutBt setBackgroundImage:[UIImage imageNamed:@"feedbackImg.png"] forState:UIControlStateNormal];
+	}
+	[self addSubview:_logoutBt];
+}
 - (void)logout{
+	if (![[TaeSession sharedInstance] isLogin]) {
+		CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"尚未登陆"];
+		[alert showAlertLabel];
+		return;
+	}
+	
     [[TaeSDK sharedInstance] logout];
+	if (![[TaeSession sharedInstance] isLogin]) {
+		CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"退出成功"];
+		[alert showAlertLabel];
+	}
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -64,16 +86,7 @@
 		_tableView.scrollEnabled = NO;
 		_tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 		[self addSubview:_tableView];
-		
-		UIButton *bt = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 250, 40)];
-		bt.center = CGPointMake(kMainScreenWidth/2, self.bounds.size.height - 40);
-		[bt setTitleColor:RGBCOLOR(105, 192, 17) forState:UIControlStateNormal];
-		[bt setTitle:@"退出登陆" forState:UIControlStateNormal];
-		[bt addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchDown];
-		[bt setBackgroundImage:[UIImage imageNamed:@"feedbackImg.png"] forState:UIControlStateNormal];
-		[self addSubview:bt];
-
-		
+		[self showLogoutButton];
 		_dataSevice = [QSDataSevice sharedQSDataSevice];
 	}
 	return self;

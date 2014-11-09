@@ -13,20 +13,6 @@
 @implementation QSUser
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(QSUser);
-//delete
-//- (instancetype)init{
-//	if (self = [super init]) {
-//		if ([[TaeSession sharedInstance] isLogin]){
-//			MLOG(@"%@", [[TaeSession sharedInstance] getUser]);
-//		}
-//		else{
-//			[TaeSDK sharedInstance]showLogin:<#(UIViewController *)#> successCallback:<#^(TaeSession *session)successCallback#> failedCallback:<#^(NSError *error)failedCallback#>
-//		}
-//	}
-//	return self;
-//}
-
-//这里思路有点乱 重写
 
 - (TaeUser *)user{
 	if (!_user) {
