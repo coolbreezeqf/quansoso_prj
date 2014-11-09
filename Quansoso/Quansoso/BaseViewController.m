@@ -51,6 +51,15 @@
     NSDictionary *attributes=[NSDictionary dictionaryWithObjectsAndKeys:RGBCOLOR(75, 171, 14),NSForegroundColorAttributeName,nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     
+    if (self != [self.navigationController.viewControllers objectAtIndex:0])
+    {
+        UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 8, 16)];
+        [backBtn setImage:[UIImage imageNamed:@"QSBackItem"] forState:UIControlStateNormal];
+        [backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+//        [self setLeftButton:[UIImage imageNamed:@"QSBackItem"] title:nil target:self action:@selector(back)];
+    }
+    
     if(kSystemVersion >= 7.0)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -98,6 +107,10 @@
             self.view.frame = CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight-20);
         }
     }
+}
+- (void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)viewWillAppear:(BOOL)animated
 {

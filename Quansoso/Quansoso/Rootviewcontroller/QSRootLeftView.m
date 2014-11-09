@@ -82,6 +82,16 @@ CGFloat cellHeight;
     [self addSubview:_tableview];
 }
 
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self];
+    if (point.x<kMainScreenWidth*1/3)
+    {
+        _fadeBlock();
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 6;

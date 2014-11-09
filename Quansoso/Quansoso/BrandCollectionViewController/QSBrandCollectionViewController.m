@@ -50,17 +50,18 @@
     brandWidth = kMainScreenWidth/3;
     brandHeight = brandWidth/0.85;
     interval = 1;
-    lines = (kMainScreenHeight-66-40)/(interval+brandHeight);
+    lines = (kMainScreenHeight-66)/(interval+brandHeight);
     
-    headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 40)];
-    attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-95, 5, 88, 25)];
+    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 8, 16)];
+    [backBtn setImage:[UIImage imageNamed:@"QSBackItem"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    
+    attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-85, 8, 80, 24)];
     [attentionBtn addTarget:self action:@selector(payAttention) forControlEvents:UIControlEventTouchUpInside];
     [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrand"] forState:UIControlStateNormal];
-    [headerView addSubview:attentionBtn];
-    
-    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39.5, kMainScreenWidth, 0.5)];
-    bottomLineView.backgroundColor = [UIColor greenColor];
-    [headerView addSubview:bottomLineView];
+//    [self.navigationController.navigationBar addSubview:attentionBtn];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:attentionBtn];
     
     self.showBrandTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.showBrandTableView.delegate = self;
@@ -68,7 +69,7 @@
     self.showBrandTableView.allowsSelection = NO;
     self.showBrandTableView.tableFooterView = [UIView new];
     self.showBrandTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.showBrandTableView.tableHeaderView = headerView;
+//    self.showBrandTableView.tableHeaderView = headerView;
     [self addTableViewTrag];
     [self.view addSubview:self.showBrandTableView];
     
@@ -87,6 +88,13 @@
         
     }];
 }
+
+- (void)back
+{
+    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark getter
 - (QSBrandListManage *)brandListManage
 {
@@ -142,6 +150,8 @@
 #pragma mark 按钮 关注这些品牌
 - (void)payAttention
 {
+    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = YES;
     [self.navigationController popToRootViewControllerAnimated:YES];
     NSMutableArray *array = [NSMutableArray new];
     for(int i=1; i<lines*3+1; i++)
