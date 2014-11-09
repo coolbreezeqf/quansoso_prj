@@ -30,14 +30,16 @@ int btnCount; //关注的商家数量 包括加号按钮
     
     UIImageView *backImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenWidth/720*478)];
     [backImgView setImage:[UIImage imageNamed:@"QSIndexTopView"]];
+    backImgView.userInteractionEnabled = YES;
     [self.headView addSubview:backImgView];
     
     self.tapSearchGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToSearchVC)];
     
     UITapGestureRecognizer *tapSGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToSearchVC)];
     
-    UIButton *rightMoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(backImgView.right-30, 40, 18, 12)];
+    UIButton *rightMoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(backImgView.right-45, 40, 36, 24)];
     [rightMoreBtn setImage:[UIImage imageNamed:@"QSRightMoreBtn"] forState:UIControlStateNormal];
+    [rightMoreBtn addTarget:self action:@selector(rightMoreBtn) forControlEvents:UIControlEventTouchUpInside];
     [backImgView addSubview:rightMoreBtn];
     
     self.imagebrand = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-185)/2, 80, 185, 56)];
@@ -185,6 +187,17 @@ int btnCount; //关注的商家数量 包括加号按钮
         
     }];
      
+}
+
+#pragma mark rightMoreBtn
+- (void)touchRightMoreBtn:(void (^)(void))aBlock
+{
+    self.myBlock = aBlock;
+}
+
+- (void)rightMoreBtn
+{
+    self.myBlock();
 }
 
 #pragma mark getter

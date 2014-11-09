@@ -31,6 +31,11 @@
 
 @implementation QSBrandCollectionViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (instancetype)init
 {
     self = [super init];

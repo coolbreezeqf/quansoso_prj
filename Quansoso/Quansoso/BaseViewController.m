@@ -31,7 +31,21 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     //[self setNavgtionBarBg];
-
+    
+    if(kSystemVersion>=7.0)
+    {
+        self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    }
+    else
+    {
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    }
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, kMainScreenWidth, 0.5)];
+    lineView.backgroundColor = [UIColor greenColor];
+    [self.navigationController.navigationBar addSubview:lineView];
+    [self.navigationController.navigationBar setTranslucent:NO];
+    self.navigationController.navigationBar.barStyle = UIBaselineAdjustmentNone;
+    
     if(kSystemVersion >= 7.0)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;

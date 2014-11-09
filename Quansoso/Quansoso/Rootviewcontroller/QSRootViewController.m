@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, cateType) {
 	BOOL haveSearchBar;
 }
 @property (nonatomic,strong) UISearchBar *searchBar;
+@property (nonatomic) int currentPage;
 @end
 
 @implementation QSRootViewController
@@ -40,13 +41,31 @@ typedef NS_ENUM(NSInteger, cateType) {
 
 - (void)viewWillAppear:(BOOL)animated
 {
-//    self.navigationController.navigationBarHidden = YES;
+    if (leftView) {
+        if (_currentPage==cateTypeIndex)
+        {
+            self.navigationController.navigationBarHidden = YES;
+        }
+        else
+        {
+            self.navigationController.navigationBarHidden = NO;
+        }
+    }
+    else
+    {
+        self.navigationController.navigationBarHidden = YES;
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setLeftButton:nil title:@"登出" target:self action:@selector(logout)];
-    [self setRightButton:nil title:@"right" target:self action:@selector(leftButtonItem)];
+//    [self setLeftButton:nil title:@"登出" target:self action:@selector(logout)];
+    _currentPage=cateTypeIndex;
+    UIButton *rigthBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 18, 12)];
+    [rigthBtn addTarget:self action:@selector(leftButtonItem) forControlEvents:UIControlEventTouchUpInside];
+    [rigthBtn setImage:[UIImage imageNamed:@"QSRightMoreButton"] forState:UIControlStateNormal];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rigthBtn];
+    self.navigationItem.rightBarButtonItem = barButtonItem;
     [self showFirstView];
     self.title = @"首页";
 }
@@ -106,10 +125,13 @@ typedef NS_ENUM(NSInteger, cateType) {
             [ViewInteraction viewDissmissAnimationToRight:leftView isRemove:NO completeBlock:^(BOOL isComplete) {
                 
             }];
+            self.navigationController.navigationBarHidden = NO;
             switch (cateType) {
                 case cateTypeIndex:
                 {
+                    _currentPage=cateTypeIndex;
                     [weakself showFirstView];
+                    self.navigationController.navigationBarHidden = YES;
                     self.title = @"首页";
                 }
                 break;
@@ -117,6 +139,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                 {
                     if ([[TaeSession sharedInstance] isLogin])
                     {
+                        _currentPage=cateTypeCoupon;
                         [weakself showCouponView];
                         self.title = @"我的优惠券";
                         MLOG(@"%@", [[TaeSession sharedInstance] getUser]);
@@ -129,7 +152,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                             [self accreditLogin];
                             [self updateUI];
                         } failedCallback:^(NSError *error) {
-                            
+
                         }];
                     }
                 }
@@ -138,6 +161,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                 {
                     if ([[TaeSession sharedInstance] isLogin])
                     {
+                        _currentPage=cateTypeBrand;
                         [weakself showAttentionBrandView];
                         self.title = @"我关注的品牌";
                         MLOG(@"%@", [[TaeSession sharedInstance] getUser]);
@@ -157,6 +181,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                 break;
                 case cateTypeShare:
                 {
+                    _currentPage=cateTypeShare;
                     [weakself showShareAppView];
                     self.title = @"分享app";
                 }
@@ -168,6 +193,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                 break;
                 case cateTypeSetting:
                 {
+                    _currentPage=cateTypeSetting;
                     [weakself showSettingView];
                     self.title = @"设置";
                 }
@@ -205,6 +231,9 @@ typedef NS_ENUM(NSInteger, cateType) {
     if(!firstview)
     {
         firstview = [[QSFirstView alloc] initWithFrame:self.view.bounds];
+        [firstview touchRightMoreBtn:^{
+            [self leftButtonItem];
+        }];
         [self.view addSubview:firstview];
     }
     [self.view bringSubviewToFront:firstview];

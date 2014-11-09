@@ -9,6 +9,7 @@
 #import "QSSettingView.h"
 #import "QSDataSevice.h"
 #import "CAlertLabel.h"
+#import <TAESDK/TAESDK.h>
 #define kTitleColor RGBCOLOR(149, 149, 149)
 
 @interface QSSettingView (){
@@ -49,7 +50,7 @@
 }
 
 - (void)logout{
-#warning logout
+    [[TaeSDK sharedInstance] logout];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{

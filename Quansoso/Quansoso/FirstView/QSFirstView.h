@@ -24,6 +24,8 @@
 @property(nonatomic, strong) UITapGestureRecognizer *tapSearchGestureRecognizer;
 @property(nonatomic, strong) UIActivityIndicatorView *activityDayRecommendView;
 @property(nonatomic, strong) UIPageControl *pageControl;
+@property(nonatomic, strong) void(^ myBlock)(void);
 
 - (instancetype)initWithFrame:(CGRect)frame;
+- (void)touchRightMoreBtn:(void(^)(void))aBlock;
 @end

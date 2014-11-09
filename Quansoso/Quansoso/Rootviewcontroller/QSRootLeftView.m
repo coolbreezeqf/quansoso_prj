@@ -53,18 +53,18 @@ CGFloat cellHeight;
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width*2/3, self.width*1/2+40)];
     _topView.backgroundColor = [UIColor clearColor];
     
-    self.headImgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width*1/3-30, ViewBottom(_topView)/2-40, 60, 60)];
+    self.headImgView = [[UIImageView alloc] initWithFrame:CGRectMake(30, ViewBottom(_topView)/2-40, 80, 80)];
     [self.headImgView sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]
                         placeholderImage:[UIImage imageNamed:@"QSUserDefualt"]];
-    self.headImgView.layer.cornerRadius = 30;
+    self.headImgView.layer.cornerRadius = 40;
     self.headImgView.clipsToBounds = YES;
     [_topView addSubview:self.headImgView];
     
-    UILabel *logInLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.headImgView.bottom+10, kMainScreenWidth*2/3, 21)];
+    UILabel *logInLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.headImgView.right+20, self.headImgView.bottom-50, 40, 21)];
     logInLabel.font = kFont16;
-    logInLabel.textColor = RGBCOLOR(51, 113, 17);
-    logInLabel.text = @"登陆";
-    logInLabel.textAlignment = NSTextAlignmentCenter;
+    logInLabel.textColor = RGBCOLOR(126, 165, 97);
+    logInLabel.text = @"登录";
+    logInLabel.textAlignment = NSTextAlignmentLeft;
     [_topView addSubview:logInLabel];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.topView.bottom-1, self.width*2/3, 0.5)];
