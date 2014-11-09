@@ -147,6 +147,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                     else
                     {
                         [[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
+                            _currentPage=cateTypeCoupon;
                             [weakself showCouponView];
                             self.title = @"我的优惠券";
                             [self accreditLogin];
@@ -169,6 +170,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                     else
                     {
                         [[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
+                            _currentPage=cateTypeBrand;
                             [weakself showAttentionBrandView];
                             self.title = @"我关注的品牌";
                             [self accreditLogin];

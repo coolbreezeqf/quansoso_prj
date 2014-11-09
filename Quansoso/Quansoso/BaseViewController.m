@@ -35,6 +35,7 @@
     if(kSystemVersion>=7.0)
     {
         self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+        self.navigationController.navigationBar.tintColor = RGBCOLOR(75, 171, 14);
     }
     else
     {
@@ -45,6 +46,10 @@
     [self.navigationController.navigationBar addSubview:lineView];
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationController.navigationBar.barStyle = UIBaselineAdjustmentNone;
+    
+    self.navigationController.navigationBar.alpha = 1;
+    NSDictionary *attributes=[NSDictionary dictionaryWithObjectsAndKeys:RGBCOLOR(75, 171, 14),NSForegroundColorAttributeName,nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:attributes];
     
     if(kSystemVersion >= 7.0)
     {
