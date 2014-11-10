@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+@class QSSMerchant;
 
 @interface QSMerchantNetManager : NSObject
-- (void)getMerchantWithTopID:(double)topId success:(void (^)(NSDictionary *successDict))succ failure:(void (^)())failure;
+- (void)getMerchantWithTopID:(double)topId success:(void (^)(QSSMerchant *merchant,NSArray *cardsArray))succ failure:(void (^)())failure;
 
 @end

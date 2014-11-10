@@ -7,6 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface QSMerchantDetailsViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate>
+@interface QSMerchantDetailsViewController : BaseViewController
 - (instancetype)initWithTopId:(double)topid;
 @end

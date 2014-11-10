@@ -5,171 +5,205 @@
 //  Created by qf on 14/9/27.
 //  Copyright (c) 2014年 taobao. All rights reserved.
 //
-
 #import "QSMerchantDetailsViewController.h"
 #import "ResultCard.h"
 #import "UIImageView+WebCache.h"
 #import "QSCardTableViewCell.h"
 #import "QSMerchantNetManager.h"
-#import "QSMerchantDetails.h"
-#import "QSMerchant.h"
+#import "QSSActivities.h"
+#import "QSSMerchant.h"
 #import "QSCards.h"
 #import "QSCardDetailsViewController.h"
+#import "QSCardCell.h"
 //#import "QSCardDetailsViewController.h"
-@interface QSMerchantDetailsViewController (){
+#define logoViewWidth 130
+#define logoImgWidth 100
+#define kGrayColor RGBCOLOR(242, 239, 233)
+#define isTest 1
+
+@interface QSMerchantDetailsViewController()<UITableViewDataSource,UITableViewDelegate>
+{
 	double _topId;
 }
 //data
-@property (nonatomic,strong) QSMerchantDetails *merchantDetails;
-@property (nonatomic,strong) QSMerchant *merchant;
+@property (strong, nonatomic) QSSMerchant *merchant;
+@property (strong, nonatomic) NSArray *cardsArray;
 //UI
-@property (nonatomic,strong) UIImageView *logoView;
-@property (nonatomic,strong) UITextView *introduceText;
-@property (nonatomic,strong) UITableView *cardTable;
-@property (nonatomic,strong) UILabel *tipLabel;
-@property (nonatomic,strong) UIButton *likeBt;
+@property (nonatomic,strong) UIView *logoView;
+@property (nonatomic,strong) UIView *merchantToolView;
+@property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UIActivityIndicatorView *activityView;
 @end
 
 @implementation QSMerchantDetailsViewController
 
-- (void)setMerchantData:(NSDictionary *)dic{
-	_merchantDetails = [QSMerchantDetails modelObjectWithDictionary:dic];
-	_merchant = _merchantDetails.merchant;
-}
-
-- (void)setUI{
-	self.navigationItem.title = _merchant.name;
-	self.view.backgroundColor = [UIColor whiteColor];
-	
-	_logoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90, 45)];
-	_logoView.center = CGPointMake(self.view.center.x, 30);
-	[_logoView setImageWithURL:[NSURL URLWithString:_merchant.picUrl]];
-	_logoView.layer.borderWidth = 1;
-	_logoView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-	
-	_likeBt = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth - 50, _logoView.top + 5 , 33, 33)];
-	[_likeBt setBackgroundImage:[UIImage imageNamed:@"like"] forState:UIControlStateNormal];
-	[_likeBt addTarget:self action:@selector(likeMerchant) forControlEvents:UIControlEventTouchDown];
-	
-	_introduceText = [[UITextView alloc] initWithFrame:CGRectMake(10, _logoView.bottom + 5, kMainScreenWidth - 10 , 54)];
-	_introduceText.editable = NO;
-	_introduceText.text = [NSString stringWithFormat:@"品牌介绍:\n  %@",	_merchant.merchantDescription];
-	_introduceText.font = kFont13;
-	_introduceText.textColor = [UIColor lightGrayColor];
-	
-	UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, _introduceText.top - 1, kMainScreenWidth, 1)];
-	line.backgroundColor = [UIColor lightGrayColor];
-	
-	UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake(0, _introduceText.bottom + 1, kMainScreenWidth , 1)];
-	line2.backgroundColor = [UIColor lightGrayColor];
-	
-	
-	_cardTable = [[UITableView alloc] initWithFrame:CGRectMake(0, _introduceText.bottom+5, kMainScreenWidth, self.view.frame.size.height - _introduceText.bottom - 5) style:UITableViewStylePlain];
-	_cardTable.delegate = self;
-	_cardTable.dataSource = self;
-	_cardTable.backgroundColor = [UIColor whiteColor];
-	
-	[self.view addSubview:_logoView];
-	[self.view addSubview:_likeBt];
-	[self.view addSubview:line];
-	[self.view addSubview:_introduceText];
-	[self.view addSubview:line2];
-	[self.view addSubview:_cardTable];
-}
-
-- (void)likeMerchant{
-	MLOG(@"like");
-}
-
-- (void)back{
-	[self.navigationController popViewControllerAnimated:YES];
-}
-
-#pragma mark - tableview detegate and datasource
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-	return 90;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-	return 1;  //用来消除多余的分割线
-}
-
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-	QSCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CardCell"];
-	if (!cell) {
-		cell = [[QSCardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CardCell"];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	}
-	QSCards *card = [_merchantDetails.cards objectAtIndex:indexPath.row];
-	[cell.contentLabel setNumberOfLines:2];
-	cell.contentLabel.font = kFont12;
-	cell.contentLabel.text = [NSString stringWithFormat:@"%@\n 截止%@",card.name,card.endProperty];
-	[cell.iconView setImageWithURL:[NSURL URLWithString:card.picUrl]];
-	return cell;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-	if (_merchantDetails.cards.count == 0) {
-		tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-		if (!_tipLabel) {
-			_tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(tableView.left + 20, tableView.top + 20, tableView.width - 40, 44)];
-			_tipLabel.textColor = [UIColor lightGrayColor];
-			_tipLabel.text = @"该商家暂无优惠券";
-			_tipLabel.font = kFont13;
-		}
-		[self.view addSubview:_tipLabel];
-	}else{
-		tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-		if ([_tipLabel superview]) {
-			[_tipLabel removeFromSuperview];
-		}
-	}
-	return _merchantDetails.cards.count;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//	ResultCard *card = [_merchant.card objectAtIndex:indexPath.row];
-//	QSCardDetailsViewController *cdvc = [[QSCardDetailsViewController alloc] initWithCard:card];
-//	[self.navigationController pushViewController:cdvc animated:YES];
-	QSCards *card = [_merchantDetails.cards objectAtIndex:indexPath.row];
-	QSCardDetailsViewController *cdVC = [[QSCardDetailsViewController alloc] initWithCard:card];
-	[self.navigationController pushViewController:cdVC animated:YES];
-
-}
-#pragma mark - view life
+#pragma mark - init
 
 - (instancetype)initWithTopId:(double)topid{
-	if (self = [super init]) {
-		_topId = topid;
-	}
-	return self;
+    if (self = [super init]) {
+        _topId = topid;
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
-	
+    [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _activityView.frame = CGRectMake(0, 0, 20, 20);
+    _activityView.center = CGPointMake(kMainScreenWidth/2, kMainScreenHeight/2 - 100);
+    [self.view addSubview:_activityView];
+    [_activityView startAnimating];
+    QSMerchantNetManager *netManager = [[QSMerchantNetManager alloc] init];
+    __weak QSMerchantDetailsViewController *weakSelf = self;
+    [netManager getMerchantWithTopID:_topId success:^(QSSMerchant *merchant,NSArray *cardsArray) {
+        [weakSelf.activityView stopAnimating];
+        weakSelf.merchant = merchant;
+        weakSelf.cardsArray = cardsArray;
+    } failure:^{
+#warning 错误处理
+        [weakSelf.activityView stopAnimating];
+    }];
+    [self setUI];
+}
+
+- (void)setUI{
+    self.navigationItem.title = self.merchant.name;
 	self.view.backgroundColor = [UIColor whiteColor];
-	
-	_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-	_activityView.frame = CGRectMake(0, 0, 20, 20);
-	_activityView.center = CGPointMake(kMainScreenWidth/2, kMainScreenHeight/2 - 100);
-	[self.view addSubview:_activityView];
-	[_activityView startAnimating];
-	QSMerchantNetManager *netManager = [[QSMerchantNetManager alloc] init];
-	__weak QSMerchantDetailsViewController *weakSelf = self;
-	[netManager getMerchantWithTopID:_topId success:^(NSDictionary *successDict) {
-		[weakSelf setMerchantData:successDict];
-		[weakSelf setUI];
-		[_activityView stopAnimating];
-	} failure:^{
-		
-	}];
-	
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"QSRightViewItem2"] style:UIBarButtonItemStylePlain target:self action:@selector(privateTheMerchant)];
+    
+    [self creatLogoView];
+    [self creatMerchantToolView];
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.merchantToolView.bottom, kMainScreenWidth, kMainScreenHeight-64-self.logoView.height-self.merchantToolView.height) style:UITableViewStylePlain];
+    self.tableView.backgroundColor = kGrayColor;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view addSubview:_tableView];
+    self.tableView.rowHeight = kCellHeight;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //[self.tableView registerClass:[QSCardCell class] forCellReuseIdentifier:@"CardCellIdentifier"];
+}
+
+- (void)creatLogoView
+{
+    //---商家logo部分view---
+    UIView *logoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 160)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:logoView.frame];
+#warning 待按店铺类型区分背景图片
+    imageView.image = [UIImage imageNamed:@"QSstoreBackImg"];
+    [logoView addSubview:imageView];
+    //圆形logo背景
+    UIView *logoBackview = [[UIView alloc] initWithFrame:CGRectMake((kMainScreenWidth-logoViewWidth)/2.0f, (160-logoViewWidth)/2.0, logoViewWidth, logoViewWidth)];
+    logoBackview.layer.cornerRadius = logoBackview.width/2.0;
+    logoBackview.backgroundColor = RGBACOLOR(255, 255, 255, 0.6);
+    [logoView addSubview:logoBackview];
+    //logo
+    UIImageView *logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake((logoViewWidth - logoImgWidth)/2.0, (logoViewWidth - logoImgWidth)/2.0, logoImgWidth, logoImgWidth)];
+    [logoImageView sd_setImageWithURL:[NSURL URLWithString:self.merchant.picUrl] placeholderImage:[UIImage imageNamed:@"QSUserDefualt"]];
+    [logoBackview addSubview:logoImageView];
+    [self.view addSubview:logoView];
+    _logoView = logoView;
+}
+
+- (void)creatMerchantToolView
+{
+    //---店铺信息 功能view
+    UIView *merchantToolView = [[UIView alloc] initWithFrame:CGRectMake(0, _logoView.bottom, kMainScreenWidth, 40)];
+    merchantToolView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:merchantToolView];
+    UILabel *titileLable = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 70, 30)];
+    titileLable.text = @"店铺优惠";
+    [merchantToolView addSubview:titileLable];
+    
+    UIButton *goMercButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [goMercButton setFrame:CGRectMake(kMainScreenWidth-55-10, 5, 55, 30)];
+    [goMercButton setTitle:@"进入店铺" forState:UIControlStateNormal];
+    [goMercButton addTarget:self action:@selector(touchGoMercButton) forControlEvents:UIControlEventTouchUpInside];
+    goMercButton.titleLabel.font = kFont13;
+    [goMercButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    //goMercButton.backgroundColor = [UIColor blackColor];
+    [merchantToolView addSubview:goMercButton];
+    UIImageView *mImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"QSgoMerc"]];
+    mImageview.frame = CGRectMake(goMercButton.left-5-20, 12, 20, 15);
+    [merchantToolView addSubview:mImageview];
+    
+    UIButton *detailMercButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [detailMercButton setFrame:CGRectMake(mImageview.left-10-55, 5, 55, 30)];
+    [detailMercButton addTarget:self action:@selector(touchDetailMercButton) forControlEvents:UIControlEventTouchUpInside];
+    detailMercButton.titleLabel.font = kFont13;
+    [detailMercButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [detailMercButton setTitle:@"品牌介绍" forState:UIControlStateNormal];
+    [merchantToolView addSubview:detailMercButton];
+    UIImageView *dImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"QSmeIntro"]];
+    dImageview.frame = CGRectMake(detailMercButton.frame.origin.x-5-20, 12, 20, 15);
+    [merchantToolView addSubview:dImageview];
+    _merchantToolView = merchantToolView;
+}
+
+
+
+#pragma mark - tableview detegate and datasource
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (isTest) {
+        return 5;
+    }
+    if (self.cardsArray && self.cardsArray.count) {
+        return self.cardsArray.count;
+    }else{
+        return 0;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+	return 1;  //用来消除多余的分割线
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"CardCellIdentifier";
+    QSCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[QSCardCell alloc] initWithReuseIdentifier:cellIdentifier];
+    }
+    return cell;
+}
+
+
+
+#pragma mark - action
+//收藏
+- (void)privateTheMerchant
+{
+    
+}
+
+//进入店铺
+- (void)touchGoMercButton
+{
+    
+}
+//显示店铺详情
+- (void)touchDetailMercButton
+{
+    
+}
+
+- (void)back{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
