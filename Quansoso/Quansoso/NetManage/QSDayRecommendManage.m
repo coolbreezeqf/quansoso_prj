@@ -14,9 +14,9 @@
 
 - (void)getDayRecommendSuccBlock:(void(^)(NSArray *dayRecomendModelArray))aBlock andFailBlock:(void(^)(void))aFailBlock
 {
-    NSString *dayRecommendUrl = [NSString stringWithFormat:@"%@?service=every_recommend", KBaseUrl];
+    NSString *dayRecommendUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=fd&current=1&pageSize=9", KBaseUrl];
     [NetManager requestWith:nil url:dayRecommendUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
-//        MLOG(@"%@", successDict);
+        MLOG(@"%@", successDict);
         NSArray *dayRecommendArray = [successDict objectForKey:@"recommends"];
         NSMutableArray *dayRecommendModelArray = [NSMutableArray new];
         for (int i=0; i<dayRecommendArray.count; i++)

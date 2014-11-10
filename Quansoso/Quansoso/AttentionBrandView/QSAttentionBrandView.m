@@ -19,8 +19,18 @@
     self = [super initWithFrame:frame];
     self.backgroundColor = [UIColor whiteColor];
     
+    UIView *topview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 60)];
+    topview.backgroundColor = [UIColor whiteColor];
+    UIButton *attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-40, 15, 100, 30)];
+    [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrand"] forState:UIControlStateNormal];
+    [attentionBtn addTarget:self action:@selector(attentionBrand) forControlEvents:UIControlEventTouchUpInside];
+    [topview addSubview:attentionBtn];
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 59.5, kMainScreenWidth, 0.5)];
+    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    [topview addSubview:bottomLineView];
+    [self addSubview:topview];
     
-    self.showBrandTableView = [[UITableView alloc] initWithFrame:self.bounds];
+    self.showBrandTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 60, kMainScreenWidth, kMainScreenHeight-60-62)];
     self.showBrandTableView.delegate = self;
     self.showBrandTableView.dataSource = self;
     self.showBrandTableView.tableFooterView = [UIView new];
@@ -38,28 +48,28 @@
     return self;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 40;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 40;
+//}
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *topview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 40)];
-    topview.backgroundColor = [UIColor whiteColor];
-    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 0.5)];
-    topLineView.backgroundColor = [UIColor greenColor];
-    [topview addSubview:topLineView];
-    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, kMainScreenWidth, 0.5)];
-    bottomLineView.backgroundColor = [UIColor blackColor];
-    [topview addSubview:bottomLineView];
-    UIButton *attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-15, 5, 31, 28)];
-    [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrandImg"] forState:UIControlStateNormal];
-    [attentionBtn addTarget:self action:@selector(attentionBrand) forControlEvents:UIControlEventTouchUpInside];
-    [topview addSubview:attentionBtn];
-
-    return topview;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *topview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 40)];
+//    topview.backgroundColor = [UIColor whiteColor];
+//    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 0.5)];
+//    topLineView.backgroundColor = [UIColor greenColor];
+//    [topview addSubview:topLineView];
+//    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, kMainScreenWidth, 0.5)];
+//    bottomLineView.backgroundColor = [UIColor blackColor];
+//    [topview addSubview:bottomLineView];
+//    UIButton *attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-15, 5, 31, 28)];
+//    [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrandImg"] forState:UIControlStateNormal];
+//    [attentionBtn addTarget:self action:@selector(attentionBrand) forControlEvents:UIControlEventTouchUpInside];
+//    [topview addSubview:attentionBtn];
+//
+//    return topview;
+//}
 
 - (QSAttentionBrandListManage *)attentionBrandListManage
 {

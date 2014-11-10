@@ -26,104 +26,38 @@ int btnCount; //关注的商家数量 包括加号按钮
 //    btnCount = 10;
     btnCount = 1;
     
-    self.headView = [[UIView alloc] init];
-    
-    UIImageView *backImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenWidth/720*478)];
-    [backImgView setImage:[UIImage imageNamed:@"QSIndexTopView"]];
-    backImgView.userInteractionEnabled = YES;
-    [self.headView addSubview:backImgView];
+    UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenWidth/720*478)];
+    [headView setImage:[UIImage imageNamed:@"QSIndexTopView"]];
+    headView.userInteractionEnabled = YES;
     
     self.tapSearchGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToSearchVC)];
     
     UITapGestureRecognizer *tapSGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToSearchVC)];
     
-    UIButton *rightMoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(backImgView.right-45, 40, 36, 24)];
+    UIButton *rightMoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(headView.right-45, 40, 36, 24)];
     [rightMoreBtn setImage:[UIImage imageNamed:@"QSRightMoreBtn"] forState:UIControlStateNormal];
     [rightMoreBtn addTarget:self action:@selector(rightMoreBtn) forControlEvents:UIControlEventTouchUpInside];
-    [backImgView addSubview:rightMoreBtn];
+    [headView addSubview:rightMoreBtn];
     
     self.imagebrand = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-185)/2, 80, 185, 56)];
     [self.imagebrand setImage:[UIImage imageNamed:@"QSquansosoImg"]];
     self.imagebrand.userInteractionEnabled = YES;
-    [backImgView addSubview:self.imagebrand];
+    [headView addSubview:self.imagebrand];
     
-    self.viewSearch = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-300)/2, ViewBottom(_imagebrand)+20, 300, 35)];
+    self.viewSearch = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-240)/2, ViewBottom(_imagebrand)+20, 240, 30)];
     self.viewSearch.userInteractionEnabled = YES;
     [self.viewSearch setImage:[UIImage imageNamed:@"QSSearchBack"]];
     
+    UILabel *defalutLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 5, 150, 20)];
+    defalutLabel.font = kFont16;
+    defalutLabel.text = @"搜索品牌优惠券";
+    defalutLabel.textColor = RGBCOLOR(147, 192, 115);
+    [self.viewSearch addSubview:defalutLabel];
     
-    self.labelNike = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 35)];
-    self.labelNike.text = @"耐克跑鞋";
-    self.labelNike.font = kFont18;
-    self.labelNike.textAlignment = NSTextAlignmentCenter;
-    self.labelNike.textColor = [UIColor whiteColor];
-    [self.viewSearch addSubview:self.labelNike];
-    
-    UIView *shulineView = [[UIView alloc] initWithFrame:CGRectMake(self.labelNike.right, 5, 1, 25)];
-    shulineView.backgroundColor = [UIColor whiteColor];
-    [self.viewSearch addSubview:shulineView];
-    
-    [self.headView addSubview:self.viewSearch];
+    [headView addSubview:self.viewSearch];
     
     [self.imagebrand addGestureRecognizer:tapSGR];
     [self.viewSearch addGestureRecognizer:self.tapSearchGestureRecognizer];
-
-    self.labelDaily = [[UILabel alloc]
-                           initWithFrame:CGRectMake(10, backImgView.bottom+10, 90, 20)];
-    self.labelDaily.text = @"本日推荐";
-    self.labelDaily.textColor = RGBCOLOR(73, 167, 14);
-    self.labelDaily.font = kFont12;
-    self.labelDaily.textAlignment = NSTextAlignmentLeft;
-    [self.headView addSubview:self.labelDaily];
-    
-    self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-50, self.labelDaily.top-10, 39, 37)];
-    self.pageControl.pageIndicatorTintColor = RGBCOLOR(201, 223, 175);
-    self.pageControl.currentPageIndicatorTintColor = RGBCOLOR(75, 171, 14);
-    self.pageControl.numberOfPages = 3;
-    self.pageControl.userInteractionEnabled = NO;
-    self.pageControl.currentPage = 0;
-    [self.headView addSubview:self.pageControl];
-    
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, ViewBottom(self.labelDaily)+5, kMainScreenWidth, 136)];
-    self.scrollView.delegate = self;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.pagingEnabled = YES;
-    CGFloat interval = (kMainScreenWidth-310)/2;
-    for (int i=0; i<9; i++)
-    {
-        QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake(interval+102*(i%3)+i/3*kMainScreenWidth, 0, 105, 136)];
-        if (i%3==1) {
-            NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"50%"];
-            [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(253, 82, 88) range:NSMakeRange(0, string.length)];
-            btn.preferentialLabel.attributedText = string;
-            btn.preferentialDetailLabel.text = @"OFF";
-            btn.brandNameLabel.text = @"素缕";
-        }
-        if (i%3==2) {
-            NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"包邮"];
-            [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(26, 167, 124) range:NSMakeRange(0, string.length)];
-            btn.preferentialLabel.attributedText = string;
-            btn.preferentialDetailLabel.text = @"满400元";
-            btn.brandNameLabel.text = @"正山堂";
-        }
-//        btn.tag = 10+i;
-//        [btn setImage:[UIImage imageNamed:@"QSDailyBackGround"] forState:UIControlStateNormal];
-//        [btn addTarget:self action:@selector(touchQuanButton:) forControlEvents:UIControlEventTouchUpInside];
-//        self.scrollView.showsHorizontalScrollIndicator = NO;
-//        btn.userInteractionEnabled = NO;
-        [self.scrollView addSubview:btn];
-    }
-    [self.headView addSubview:self.scrollView];
-    self.labelPrivilege = [[UILabel alloc] initWithFrame:CGRectMake(10, ViewBottom(self.scrollView)+5, 90, 20)];
-    self.labelPrivilege.text = @"我关注的商家";
-    self.labelPrivilege.textColor = RGBCOLOR(73, 167, 14);
-    self.labelPrivilege.font = kFont12;
-    self.labelPrivilege.textAlignment = NSTextAlignmentLeft;
-    [self.headView addSubview:self.labelPrivilege];
-    
-    
-    self.headView.frame = CGRectMake(0, 0, kMainScreenWidth, ViewBottom(self.labelPrivilege)+5);
-    self.headView.backgroundColor = RGBCOLOR(245, 240, 232);
     
     self.showQuanTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight)];
     self.showQuanTableView.dataSource = self;
@@ -131,7 +65,7 @@ int btnCount; //关注的商家数量 包括加号按钮
     self.showQuanTableView.backgroundColor = RGBCOLOR(245, 240, 232);
     self.showQuanTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.showQuanTableView.tableFooterView = [UIView new];
-    self.showQuanTableView.tableHeaderView = self.headView;
+    self.showQuanTableView.tableHeaderView = headView;
     self.showQuanTableView.allowsSelection = NO;
     [self addSubview:self.showQuanTableView];
     
@@ -156,32 +90,8 @@ int btnCount; //关注的商家数量 包括加号按钮
 - (void)getDayRecommends
 {
     [self.dayRecommendManage getDayRecommendSuccBlock:^(NSArray *dayRecomendModelArray) {
-        for (int i=0; i<9; i++)
-        {
-            UIButton *btn = (UIButton *)[self viewWithTag:i+10];
-//            QSDayRecommends *model = [dayRecomendModelArray objectAtIndex:i];
-//            UIImageView *couponImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 60)];
-//            [couponImgView sd_setImageWithURL:[NSURL URLWithString:model.picUrl]];
-//            [btn addSubview:couponImgView];
-//            UILabel *couponLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, 80, 20)];
-//            couponLabel.text = model.name;
-//            couponLabel.font = kFont12;
-//            couponLabel.textAlignment = NSTextAlignmentCenter;
-//            [btn addSubview:couponLabel];
-            btn.userInteractionEnabled = YES;
-//            [self.scrollView addSubview:btn];
-        }
-        int width;
-        width = kMainScreenWidth*9/3;
-//        if (dayRecomendModelArray.count/3 == 0)
-//        {
-//            width = kMainScreenWidth*dayRecomendModelArray.count/3;
-//        }
-//        else
-//        {
-//            width = kMainScreenWidth*dayRecomendModelArray.count/3+1;
-//        }
-        self.scrollView.contentSize = CGSizeMake(width, 80);
+
+        [self.showQuanTableView reloadData];
         [self.activityDayRecommendView stopAnimating];
     } andFailBlock:^{
         
@@ -201,6 +111,55 @@ int btnCount; //关注的商家数量 包括加号按钮
 }
 
 #pragma mark getter
+- (UIScrollView *)scrollView
+{
+    if (!_scrollView) {
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 136)];
+        _scrollView.delegate = self;
+        _scrollView.showsHorizontalScrollIndicator = NO;
+        _scrollView.pagingEnabled = YES;
+    }
+    return _scrollView;
+}
+
+- (UIPageControl *)pageControl
+{
+    if (!_pageControl) {
+        _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(kMainScreenWidth-50, 0, 39, 37)];
+        _pageControl.pageIndicatorTintColor = RGBCOLOR(201, 223, 175);
+        _pageControl.currentPageIndicatorTintColor = RGBCOLOR(75, 171, 14);
+        _pageControl.numberOfPages = 3;
+        _pageControl.userInteractionEnabled = NO;
+        _pageControl.currentPage = 0;
+    }
+    return _pageControl;
+}
+
+- (UILabel *)labelPrivilege
+{
+    if (!_labelPrivilege) {
+        _labelPrivilege = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 90, 20)];
+        _labelPrivilege.text = @"我关注的商家";
+        _labelPrivilege.textColor = RGBCOLOR(73, 167, 14);
+        _labelPrivilege.font = kFont12;
+        _labelPrivilege.textAlignment = NSTextAlignmentLeft;
+    }
+    return _labelPrivilege;
+}
+
+- (UILabel *)labelDaily
+{
+    if (!_labelDaily) {
+        _labelDaily = [[UILabel alloc]
+                        initWithFrame:CGRectMake(10, 10, 90, 20)];
+        _labelDaily.text = @"本日推荐";
+        _labelDaily.textColor = RGBCOLOR(73, 167, 14);
+        _labelDaily.font = kFont12;
+        _labelDaily.textAlignment = NSTextAlignmentLeft;
+    }
+    return _labelDaily;
+}
+
 - (QSAttentionBrandListManage *)attentionBrandListManage
 {
     if (!_attentionBrandListManage)
@@ -267,61 +226,114 @@ int btnCount; //关注的商家数量 包括加号按钮
 {
     if (btnCount%3 == 0)
     {
-        return btnCount/3;
+        return btnCount/3+3;
     }
-    return btnCount/3+1;
+    return btnCount/3+1+3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row==0) {
+        return 40;
+    }
+    else if(indexPath.row==2)
+    {
+        return 30;
+    }
+    else if(indexPath.row==1)
+    {
+        return 140;
+    }
     return 101;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (btnCount == 1)
-    {
+    if (indexPath.row<3) {
         UITableViewCell *cell = [[UITableViewCell alloc] init];
-        CGFloat temInterval = (kMainScreenWidth-300)/2;
-        UIImageView *interestImg = [[UIImageView alloc] initWithFrame:CGRectMake(temInterval, 2.5, 197, 96)];
-        [interestImg setImage:[UIImage imageNamed:@"QSTryToAttention"]];
-        [cell addSubview:interestImg];
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interestImg.right+5, interestImg.top, 96, 96)];
-        [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
-        [btn setImage:[UIImage imageNamed:@"QSPlusBtn"] forState:UIControlStateNormal];
         cell.backgroundColor = [UIColor clearColor];
-        [cell addSubview:btn];
-        return cell;
-    }
-    else
-    {
-        UITableViewCell *cell = [[UITableViewCell alloc] init];
-        CGRect frame = cell.frame;
-        frame.size.width = kMainScreenWidth;
-        cell.frame = frame;
-        int j = btnCount-3*indexPath.row;
-        for (int i=0; i<(j>=3?3:j%3); i++)
+        if (indexPath.row==0)
         {
-            float temInterval = (kMainScreenWidth-300)/2;
-            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(temInterval+(96+5)*i, 2.5, 96, 96)];
-            btn.tag = 100+indexPath.row*3+i;
-            if (i+indexPath.row*3 != btnCount-1)
-            {
-                [btn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
-                btn.backgroundColor = [UIColor blueColor];
-            }
-            else
-            {
-                [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
-                btn.backgroundColor = [UIColor blackColor];
-            }
-            
-            [cell addSubview:btn];
+            [cell addSubview:self.labelDaily];
+            [cell addSubview:self.pageControl];
         }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = [UIColor clearColor];
+        else if(indexPath.row==1)
+        {
+            self.scrollView.contentSize = CGSizeMake(3*kMainScreenWidth, 136);
+            CGFloat interval = (kMainScreenWidth-310)/2;
+            for (int i=0; i<9; i++)
+            {
+                QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake(interval+102*(i%3)+i/3*kMainScreenWidth, 0, 105, 136)];
+                if (i%3==1) {
+                    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"50%"];
+                    [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(253, 82, 88) range:NSMakeRange(0, string.length)];
+                    btn.preferentialLabel.attributedText = string;
+                    btn.preferentialDetailLabel.text = @"OFF";
+                    btn.brandNameLabel.text = @"素缕";
+                }
+                if (i%3==2) {
+                    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"包邮"];
+                    [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(26, 167, 124) range:NSMakeRange(0, string.length)];
+                    btn.preferentialLabel.attributedText = string;
+                    btn.preferentialDetailLabel.text = @"满400元";
+                    btn.brandNameLabel.text = @"正山堂";
+                }
+                [self.scrollView addSubview:btn];
+            }
+            [cell addSubview:self.scrollView];
+        }
+        else if(indexPath.row==2)
+        {
+            [cell addSubview:self.labelPrivilege];
+        }
         return cell;
     }
+    if (indexPath.row>=3) {
+        if (btnCount == 1)
+        {
+            UITableViewCell *cell = [[UITableViewCell alloc] init];
+            CGFloat temInterval = (kMainScreenWidth-300)/2;
+            UIImageView *interestImg = [[UIImageView alloc] initWithFrame:CGRectMake(temInterval, 2.5, 197, 96)];
+            [interestImg setImage:[UIImage imageNamed:@"QSTryToAttention"]];
+            [cell addSubview:interestImg];
+            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interestImg.right+5, interestImg.top, 96, 96)];
+            [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
+            [btn setImage:[UIImage imageNamed:@"QSPlusBtn"] forState:UIControlStateNormal];
+            cell.backgroundColor = [UIColor clearColor];
+            [cell addSubview:btn];
+            return cell;
+        }
+        else
+        {
+            UITableViewCell *cell = [[UITableViewCell alloc] init];
+            CGRect frame = cell.frame;
+            frame.size.width = kMainScreenWidth;
+            cell.frame = frame;
+            int j = btnCount-3*indexPath.row;
+            for (int i=0; i<(j>=3?3:j%3); i++)
+            {
+                float temInterval = (kMainScreenWidth-300)/2;
+                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(temInterval+(96+5)*i, 2.5, 96, 96)];
+                btn.tag = 100+indexPath.row*3+i;
+                if (i+indexPath.row*3 != btnCount-1)
+                {
+                    [btn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
+                    btn.backgroundColor = [UIColor blueColor];
+                }
+                else
+                {
+                    [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
+                    btn.backgroundColor = [UIColor blackColor];
+                }
+                
+                [cell addSubview:btn];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.backgroundColor = [UIColor clearColor];
+            return cell;
+        }
+    }
+    return [UITableViewCell new];
 }
 
 #pragma mark scrollView Delegate

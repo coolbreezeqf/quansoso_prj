@@ -15,7 +15,6 @@
 @property(nonatomic, strong) UIImageView *imagebrand;
 @property(nonatomic, strong) UIImageView *viewSearch;
 @property(nonatomic, strong) UILabel *labelDaily;
-@property(nonatomic, strong) UILabel *labelNike;
 @property(nonatomic, strong) UILabel *labelPrivilege;
 @property(nonatomic, strong) UIView *headView;
 @property(nonatomic, strong) UITableView *showQuanTableView;

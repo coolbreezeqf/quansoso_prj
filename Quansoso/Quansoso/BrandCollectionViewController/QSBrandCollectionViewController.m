@@ -46,11 +46,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"品牌聚合";
     brandWidth = kMainScreenWidth/3;
     brandHeight = brandWidth/0.85;
     interval = 1;
-    lines = (kMainScreenHeight-66)/(interval+brandHeight);
+    MLOG(@"%f %f", kMainScreenHeight-66, interval+brandHeight);
+//    lines = (kMainScreenHeight-66)/(interval+brandHeight);
+    if (kMainScreenHeight>500) {
+        lines=4;
+    }
+    else
+    {
+        lines=3;
+    }
     
     UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 8, 16)];
     [backBtn setImage:[UIImage imageNamed:@"QSBackItem"] forState:UIControlStateNormal];
@@ -124,6 +131,7 @@
             [weakself.showBrandTableView.pullToRefreshView stopAnimating];
             [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^(NSMutableArray *aArray) {
                 self.brandArray = aArray;
+                [self.showBrandTableView reloadData];
             } andFailBlock:^{
                 
             }];
@@ -177,7 +185,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    NSString *cellIdentifier = @"brandCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
     cell.backgroundColor = RGBCOLOR(228, 222, 214);
     for (int i=0; i<3; i++)
     {
