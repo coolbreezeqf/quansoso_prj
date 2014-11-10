@@ -7,12 +7,20 @@
 //
 
 #import "QSAttentionBrandTableViewCell.h"
+#import "UIImageView+WebCache.h"
 
 @implementation QSAttentionBrandTableViewCell
 
 - (instancetype)init
 {
     self = [super init];
+    
+    return self;
+}
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     CGRect temframe = self.frame;
     temframe.size.width = kMainScreenWidth;
     self.frame = temframe;
@@ -44,9 +52,13 @@
     self.brandNameLabel.font = kFont16;
     self.brandNameLabel.textAlignment = NSTextAlignmentLeft;
     [backView addSubview:self.brandNameLabel];
-    
-    
     return self;
+}
+
+- (void)setCellWithModel:(QSMerchant *)aModel
+{
+    [self.brandImgView sd_setImageWithURL:[NSURL URLWithString:aModel.picUrl]];
+    self.brandNameLabel.text = aModel.name;
 }
 
 - (void)awakeFromNib {

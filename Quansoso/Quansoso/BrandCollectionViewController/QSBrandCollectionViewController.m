@@ -145,8 +145,13 @@
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
             [self.brandListManage getNextBrandListSuccBlock:^(NSArray *aArray) {
+                NSMutableArray *insertIndexPaths = [NSMutableArray new];
+                for (unsigned long i=self.brandArray.count/3; i<self.brandArray.count/3+aArray.count/3; i++) {
+                    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+                    [insertIndexPaths addObject:indexpath];
+                }
                 [self.brandArray addObjectsFromArray:aArray];
-                [self.showBrandTableView reloadData];
+                [self.showBrandTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
             } andFailBlock:^{
                 
             }];

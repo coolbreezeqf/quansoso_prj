@@ -14,5 +14,6 @@
 @property(nonatomic, strong) QSAttentionBrandListManage *attentionBrandListManage;
 @property(nonatomic, strong) void(^cellBolck)(void);
 @property(nonatomic, strong) UIAlertView *alertView;
+@property(nonatomic, strong) NSMutableArray *brandArray;
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

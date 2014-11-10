@@ -9,28 +9,55 @@
 #import "QSAttentionBrandListManage.h"
 #import <TAESDK/TAESDK.h>
 #import "NetManager.h"
+#import "QSMerchant.h"
+
+int current;
+int pageSize;
+int totalPage;
 @implementation QSAttentionBrandListManage
 
 - (void)getFirstAttentionBrandListSuccBlock:(void(^)(NSMutableArray *))aSuccBlock andFailBlock:(void(^)(void))aFailBlock
 {
-    _nextPage = 2;
-    NSString *attentionBrandListUrl = [NSString stringWithFormat:@"%@?service=my_follow&tbNick=%@&current=1&pageSize=14", KBaseUrl, [[TaeSession sharedInstance] getUser].nick];
-    [NetManager requestWith:nil url:attentionBrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+    current = 1;
+    pageSize = 14;
+    NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=aa&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
+    [NetManager requestWith:nil url:BrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
+        NSDictionary *pageDict = [successDict objectForKey:@"page"];
+        totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
+        NSArray *array = [pageDict objectForKey:@"resultList"];
+        NSMutableArray *mutableArray = [NSMutableArray new];
+        for (int i=0; i<array.count; i++)
+        {
+            QSMerchant *model = [QSMerchant modelObjectWithDictionary:[array objectAtIndex:i]];
+            [mutableArray addObject:model];
+        }
+        aSuccBlock(mutableArray);
     } failure:^(NSDictionary *failDict, NSError *error) {
-        
+        aFailBlock();
     }];
 }
 
 - (void)getNextAttentionBrandListSuccBlock:(void(^)(NSArray *))aBlock andFailBlock:(void(^)(void))aFailBlock
 {
-    NSString *nextAttentionBrandListUrl = [NSString stringWithFormat:@"%@?service=my_follow&tbNick=%@&current=%d&pageSize=15", KBaseUrl, [[TaeSession sharedInstance] getUser].nick, _nextPage];
-    [NetManager requestWith:nil url:nextAttentionBrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
-        MLOG(@"%@", successDict);
-        _nextPage++;
-    } failure:^(NSDictionary *failDict, NSError *error) {
-        
-    }];
-
+    if (current<totalPage) {
+        current++;
+        NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=aa&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
+        [NetManager requestWith:nil url:BrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+            MLOG(@"%@", successDict);
+            NSDictionary *pageDict = [successDict objectForKey:@"page"];
+            totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
+            NSArray *array = [pageDict objectForKey:@"resultList"];
+            NSMutableArray *mutableArray = [NSMutableArray new];
+            for (int i=0; i<array.count; i++)
+            {
+                QSMerchant *model = [QSMerchant modelObjectWithDictionary:[array objectAtIndex:i]];
+                [mutableArray addObject:model];
+            }
+            aBlock(mutableArray);
+        } failure:^(NSDictionary *failDict, NSError *error) {
+            aFailBlock();
+        }];
+    }
 }
 @end

@@ -11,12 +11,14 @@
 #import "SVPullToRefresh.h"
 #import "ViewInteraction.h"
 #import "QSBrandCollectionViewController.h"
+#import "QSMerchant.h"
 
 @implementation QSAttentionBrandView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+    self.brandArray = [NSMutableArray new];
     self.backgroundColor = [UIColor whiteColor];
     
     UIView *topview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 60)];
@@ -40,11 +42,12 @@
     [self addTableViewTrag];
     
 #pragma mark 网络请求
-//    [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
-//        
-//    } andFailBlock:^{
-//        
-//    }];
+    [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
+        self.brandArray = aArray;
+        [self.showBrandTableView reloadData];
+    } andFailBlock:^{
+        
+    }];
     return self;
 }
 
@@ -89,28 +92,33 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showBrandTableView.pullToRefreshView stopAnimating];
-//            [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
-//                [self.showBrandTableView reloadData];
-//            } andFailBlock:^{
-//                
-//            }];
+            [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
+                [self.showBrandTableView reloadData];
+            } andFailBlock:^{
+                
+            }];
              });
     }];
-    
-//    if (btnCount == 15)
-//    {
-//        [weakself.showQuanTableView addInfiniteScrollingWithActionHandler:^{
-//            int64_t delayInSeconds = 2.0;
-//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-//            dispatch_after(popTime, dispatch_get_main_queue(), ^{
-//                [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
-//                [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^{
-//                    
-//                }];
-//            });
-//        }];
-//    }
-    
+
+
+    [weakself.showBrandTableView addInfiniteScrollingWithActionHandler:^{
+        int64_t delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^{
+            [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
+            [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
+                NSMutableArray *insertIndexPaths = [NSMutableArray new];
+                for (unsigned long i=self.brandArray.count; i<self.brandArray.count+aArray.count; i++) {
+                    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+                    [insertIndexPaths addObject:indexpath];
+                }
+                [self.brandArray addObjectsFromArray:aArray];
+                [self.showBrandTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+            } andFailBlock:^{
+                
+            }];
+        });
+    }];    
 }
 
 
@@ -124,7 +132,7 @@
 #pragma mark tableView datasource delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 15;
+    return self.brandArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -134,8 +142,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QSAttentionBrandTableViewCell *cell = [[QSAttentionBrandTableViewCell alloc] init];
+    NSString *cellIdentifer = @"brandCell";
+    QSAttentionBrandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
+    if (!cell) {
+        cell = [[QSAttentionBrandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifer];
+    }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    QSMerchant *model = [self.brandArray objectAtIndex:indexPath.row];
+    [cell setCellWithModel:model];
 //    [cell.cancelBtn addTarget:self action:@selector(cancelAttention:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }

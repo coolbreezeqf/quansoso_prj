@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QSMerchant.h"
 
 @interface QSAttentionBrandTableViewCell : UITableViewCell
 @property(nonatomic, strong) UIImageView *brandImgView;
@@ -15,4 +16,6 @@
 
 
 - (instancetype)init;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+- (void)setCellWithModel:(QSMerchant *)aModel;
 @end
