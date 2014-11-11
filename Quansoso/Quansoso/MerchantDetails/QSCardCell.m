@@ -7,7 +7,7 @@
 //
 
 #import "QSCardCell.h"
-#define isTest 1
+#define isTest 2
 #define kGrayColor RGBCOLOR(242, 239, 233)
 #define kinCellHeight (kCellHeight - 10)
 //lf 242 128
@@ -21,6 +21,8 @@
 @property (strong, nonatomic) UIImageView *rightIconImageView;
 @property (strong, nonatomic) UILabel *conditionLabel;//限制条件label
 @property (strong, nonatomic) UILabel *endTimeLabel; //结束时间label
+@property (strong, nonatomic) UIView *dateInfoView;//过期优惠券view
+@property (strong, nonatomic) UIView *willODimageView;//即将过期
 
 @property (strong, nonatomic) NSArray *colorArray;
 
@@ -45,6 +47,7 @@
     
     //left
     UIImageView *leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, kinCellHeight*242/128.0f, kinCellHeight)];
+    leftImageView.backgroundColor = [UIColor clearColor];
     leftImageView.image = [UIImage imageNamed:@"QSCardLeft"];
     [self addSubview:leftImageView];
     
@@ -109,12 +112,29 @@
     [midView addSubview:endTimeLabel];
     _endTimeLabel = endTimeLabel;
     
+    //过期-到期部分view
+    UIView *dateInfoView = [[UIView alloc] initWithFrame:CGRectMake(leftImageView.left, leftImageView.top, leftImageView.width+midView.width+rightIconImageView.width, leftImageView.height)];
+    dateInfoView.backgroundColor = RGBCOLOR(251, 250, 248);
+    dateInfoView.alpha = 0.5f;
+    [self addSubview:dateInfoView];
+    
+    UIImageView *noUseImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"QSoutDate"]];
+    noUseImageView.frame = CGRectMake(midView.right- 2.5*kinCellHeight*191/(3*127.0f), 0, kinCellHeight*191/127.0f, kinCellHeight);
+    [dateInfoView addSubview:noUseImageView];
+    dateInfoView.hidden = YES;
+    
+    //即将过期imgv
+    UIImageView *willODimageView = [[UIImageView alloc] initWithFrame:CGRectMake(leftImageView.left+2, 0, (4*kinCellHeight/5.0f)*14/51, 4*kinCellHeight/5.0f)];
+    willODimageView.image = [UIImage imageNamed:@"QSwillOutDate"];
+    [leftImageView addSubview:willODimageView];
+    willODimageView.hidden = YES;
+    
     return self;
 }
 
-- (void)setCellUIwithCardType:(cardType)type denomination:(NSString *)denom Money_condition:(NSString *)money_condition end:(NSString *)endTime discountRate:(NSString *)rate
+- (void)setCellUIwithCardType:(NSString *)card_type denomination:(NSString *)denom Money_condition:(NSString *)money_condition end:(NSString *)endTime discountRate:(NSString *)rate outdateState:(int)odState
 {
-    self.type = type;
+    self.type = [self strTypetoIntType:card_type];
     //清除文字
     self.theTitleLabel.text = @"";
     self.theDetailLabel.text = @"";
@@ -124,7 +144,7 @@
     self.conditionLabel.text = [NSString stringWithFormat:@"满%@元",money_condition];
     self.endTimeLabel.text = [NSString stringWithFormat:@"截至%@",endTime];
 
-    switch (type) {
+    switch (self.type) {
 #warning 其他类型待定
         case cardType_privilege://优惠券
         {
@@ -174,12 +194,45 @@
         default:
             break;
     }
+    //过期优惠券处理
+    if (odState == 0) {
+        self.dateInfoView.hidden = YES;
+        self.willODimageView.hidden = YES;
+    }else if (odState == 1){
+        self.dateInfoView.hidden = YES;
+        self.willODimageView.hidden = NO;
+    }else if(odState == 2){
+        self.dateInfoView.hidden = NO;
+        self.willODimageView.hidden = YES;
+        self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg1_no"];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (NSInteger)strTypetoIntType:(NSString *)type
+{
+    if ([type isEqualToString:@"0"]) {
+        return 0;
+    }else if([type isEqualToString:@"1"]){
+        return 1;
+    }else if([type isEqualToString:@"2"]){
+        return 2;
+    }else if([type isEqualToString:@"3"]){
+        return 3;
+    }else if([type isEqualToString:@"4"]){
+        return 4;
+    }else if([type isEqualToString:@"5"]){
+        return 5;
+    }else if([type isEqualToString:@"6"]){
+        return 6;
+    }else if([type isEqualToString:@"7"]){
+        return 7;
+    }else return 8;
 }
 
 @end

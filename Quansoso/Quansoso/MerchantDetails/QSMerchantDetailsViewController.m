@@ -179,6 +179,10 @@
     if (cell == nil) {
         cell = [[QSCardCell alloc] initWithReuseIdentifier:cellIdentifier];
     }
+    if (indexPath.row < self.cardsArray.count) {
+        QSCards *card = self.cardsArray[indexPath.row];
+        if(!isTest) [cell setCellUIwithCardType:card.cardType denomination:card.denomination? :@"" Money_condition:card.moneyCondition? :@"" end:card.endProperty? :@"" discountRate:card.discountRate outdateState:0];
+    }
     return cell;
 }
 
