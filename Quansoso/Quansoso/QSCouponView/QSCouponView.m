@@ -7,16 +7,18 @@
 //
 
 #import "QSCouponView.h"
-#import "QSCouponTableViewCell.h"
 #import "SVPullToRefresh.h"
 #import "UIImageView+WebCache.h"
 #import <TAESDK/TAESDK.h>
+#import "QSCardCell.h"
+#import "QSCards.h"
 
 @implementation QSCouponView
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     self.backgroundColor = [UIColor whiteColor];
+    self.dataArray = [NSMutableArray new];
     
     self.tableViewShow = [[UITableView alloc] initWithFrame:self.bounds];
     self.tableViewShow.delegate = self;
@@ -32,8 +34,14 @@
     [self.activityIndicatorView startAnimating];
     [self addSubview:self.activityIndicatorView];
 #pragma mark 网络请求
-    [self.userCouponListManage getFirstUserCouponListSuccBlock:^{
-        [self.activityIndicatorView stopAnimating];
+//    [self.userCouponListManage getFirstUserCouponListSuccBlock:^{
+//        [self.activityIndicatorView stopAnimating];
+//    }];
+    [self.dailyManage getDayRecommendSuccBlock:^(NSArray *dayRecomendModelArray) {
+        self.dataArray = [dayRecomendModelArray mutableCopy];
+        [self.tableViewShow reloadData];
+    } andFailBlock:^{
+        
     }];
     return self;
 }
@@ -46,6 +54,14 @@
         _userCouponListManage = [[QSUserCouponListManage alloc] init];
     }
     return _userCouponListManage;
+}
+
+- (QSDayRecommendManage *)dailyManage
+{
+    if (!_dailyManage) {
+        _dailyManage = [[QSDayRecommendManage alloc] init];
+    }
+    return _dailyManage;
 }
 
 #pragma mark 增加上拉下拉
@@ -79,24 +95,24 @@
 #pragma mark tableView delegate datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return self.dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 65;
+    return 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellIdentifier = @"CouponCell";
-    QSCouponTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    QSCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[QSCouponTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[QSCardCell alloc] initWithReuseIdentifier:cellIdentifier];
     }
-    cell.backgroundColor = RGBCOLOR(239, 235, 227);
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    QSCards *cardModel = [self.dataArray objectAtIndex:indexPath.row];
+    MLOG(@"%@", cardModel);
+    [cell setCellUIwithCardType:cardModel.cardType denomination:cardModel.denomination Money_condition:cardModel.moneyCondition end:cardModel.endProperty discountRate:cardModel.discountRate outdateState:3];
     return cell;
 }
 

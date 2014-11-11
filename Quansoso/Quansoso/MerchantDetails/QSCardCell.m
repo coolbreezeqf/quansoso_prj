@@ -7,7 +7,7 @@
 //
 
 #import "QSCardCell.h"
-#define isTest 2
+#define isTest 0
 #define kGrayColor RGBCOLOR(242, 239, 233)
 #define kinCellHeight (kCellHeight - 10)
 //lf 242 128

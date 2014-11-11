@@ -72,7 +72,7 @@
 
 - (void)setCardWithModel:(QSCards *)aCardModel
 {
-    if ([aCardModel.cardType intValue]==1)
+    if ([aCardModel.cardType intValue]==1)//优惠券
     {
         NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@元", aCardModel.denomination]];
         [string addAttribute:NSFontAttributeName value:kFont18 range:NSMakeRange(string.length-1, 1)];
@@ -81,13 +81,15 @@
         self.preferentialDetailLabel.text = @"优惠券";
         self.preferentialTimeLabel.text = [NSString stringWithFormat:@"截止到%@", aCardModel.endProperty];
     }
-    if ([aCardModel.cardType intValue]==2) {
+    if ([aCardModel.cardType intValue]==2)//折扣
+    {
         NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"50%"];
         [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(253, 82, 88) range:NSMakeRange(0, string.length)];
         self.preferentialLabel.attributedText = string;
         self.preferentialDetailLabel.text = @"OFF";
     }
-    if ([aCardModel.cardType intValue]==3) {
+    if ([aCardModel.cardType intValue]==3)//包邮
+    {
         NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"包邮"];
         [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(26, 167, 124) range:NSMakeRange(0, string.length)];
         self.preferentialLabel.attributedText = string;

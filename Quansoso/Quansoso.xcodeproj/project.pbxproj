@@ -24,7 +24,6 @@
 		AB9FF08C19E3CB5100E65601 /* QSAttentionBrandListManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9FF08B19E3CB5100E65601 /* QSAttentionBrandListManage.m */; };
 		ABC4242D19FDD3B000AE7847 /* QSDailyView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC4242C19FDD3B000AE7847 /* QSDailyView.m */; };
 		ABC54D861A086498009071D8 /* QSBrandBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC54D851A086498009071D8 /* QSBrandBtn.m */; };
-		ABC7F6C819D6553D00D6B34C /* QSCouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */; };
 		B02E0BD219CADAAB009A0306 /* Result.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCD19CADAAB009A0306 /* Result.m */; };
 		B02E0BD319CADAAB009A0306 /* ResultCard.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCF19CADAAB009A0306 /* ResultCard.m */; };
 		B02E0BD419CADAAB009A0306 /* SearchInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BD119CADAAB009A0306 /* SearchInfo.m */; };
@@ -156,8 +155,6 @@
 		ABC4242C19FDD3B000AE7847 /* QSDailyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSDailyView.m; sourceTree = "<group>"; };
 		ABC54D841A086498009071D8 /* QSBrandBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSBrandBtn.h; path = BrandCollectionViewController/QSBrandBtn.h; sourceTree = "<group>"; };
 		ABC54D851A086498009071D8 /* QSBrandBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSBrandBtn.m; path = BrandCollectionViewController/QSBrandBtn.m; sourceTree = "<group>"; };
-		ABC7F6C319D6553D00D6B34C /* QSCouponTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCouponTableViewCell.h; sourceTree = "<group>"; };
-		ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSCouponTableViewCell.m; sourceTree = "<group>"; };
 		B02E0BBD19CA8FDD009A0306 /* DataModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModels.h; sourceTree = "<group>"; };
 		B02E0BCC19CADAAB009A0306 /* Result.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Result.h; sourceTree = "<group>"; };
 		B02E0BCD19CADAAB009A0306 /* Result.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Result.m; sourceTree = "<group>"; };
@@ -432,8 +429,6 @@
 			children = (
 				B03624D919E8049400ECFE61 /* QSCardTableViewCell.h */,
 				B03624DA19E8049400ECFE61 /* QSCardTableViewCell.m */,
-				ABC7F6C319D6553D00D6B34C /* QSCouponTableViewCell.h */,
-				ABC7F6C419D6553D00D6B34C /* QSCouponTableViewCell.m */,
 				B08A5FF519DE78FE008077E7 /* QSMerchantTableViewCell.h */,
 				B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */,
 				AB7AE3BE19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.h */,
@@ -996,7 +991,6 @@
 				B03624EB19E80A8800ECFE61 /* QSMerchantNetManager.m in Sources */,
 				FFBA9EE419C688F200D9CBA2 /* SDWebImageManager.m in Sources */,
 				FFBA9EDE19C688F200D9CBA2 /* NSData+ImageContentType.m in Sources */,
-				ABC7F6C819D6553D00D6B34C /* QSCouponTableViewCell.m in Sources */,
 				B08A5FEE19DD8025008077E7 /* CAlertLabel.m in Sources */,
 				FFE85F3519CABBAE00A216BB /* NSData+Base64.m in Sources */,
 				FFBA9EAB19C6811400D9CBA2 /* ThreadSafeMutableDictionary.m in Sources */,

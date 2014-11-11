@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "QSUserCouponListManage.h"
+#import "QSDayRecommendManage.h"
 
 @interface QSCouponView : UIView<UITableViewDelegate, UITableViewDataSource>
 
@@ -18,6 +19,8 @@
 //@property(nonatomic, strong) UILabel *couponLabel;
 @property(nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property(nonatomic, strong) QSUserCouponListManage *userCouponListManage;
+@property(nonatomic, strong) QSDayRecommendManage *dailyManage;
+@property(nonatomic, strong) NSMutableArray *dataArray;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 @end
