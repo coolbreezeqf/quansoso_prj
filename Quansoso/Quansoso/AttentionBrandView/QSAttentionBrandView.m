@@ -132,7 +132,7 @@
 #pragma mark tableView datasource delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.brandArray.count;
+    return self.brandArray.count>0?self.brandArray.count:4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -142,16 +142,32 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellIdentifer = @"brandCell";
-    QSAttentionBrandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
-    if (!cell) {
-        cell = [[QSAttentionBrandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifer];
+    if (self.brandArray.count>0) {
+        NSString *cellIdentifer = @"brandCell";
+        QSAttentionBrandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
+        if (!cell) {
+            cell = [[QSAttentionBrandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifer];
+        }
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        QSMerchant *model = [self.brandArray objectAtIndex:indexPath.row];
+        [cell setCellWithModel:model];
+        //    [cell.cancelBtn addTarget:self action:@selector(cancelAttention:) forControlEvents:UIControlEventTouchUpInside];
+        return cell;
     }
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    QSMerchant *model = [self.brandArray objectAtIndex:indexPath.row];
-    [cell setCellWithModel:model];
-//    [cell.cancelBtn addTarget:self action:@selector(cancelAttention:) forControlEvents:UIControlEventTouchUpInside];
-    return cell;
+    else
+    {
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        if (indexPath.row==3) {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-50, 20, 100, 20)];
+            label.text = @"暂时没有数据";
+            label.font = kFont14;
+            label.textColor = [UIColor lightGrayColor];
+            label.textAlignment = NSTextAlignmentCenter;
+            [cell addSubview:label];
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        return cell;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -31,10 +31,6 @@
         _preferentialLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 38, 90, 28)];
         [_preferentialLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:30]];
         _preferentialLabel.textAlignment = NSTextAlignmentCenter;
-        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"100元"];
-        [string addAttribute:NSFontAttributeName value:kFont18 range:NSMakeRange(string.length-1, 1)];
-        [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(243, 130, 11) range:NSMakeRange(0, string.length)];
-        _preferentialLabel.attributedText = string;
     }
     return _preferentialLabel;
 }
@@ -42,11 +38,11 @@
 - (UILabel *)preferentialTimeLabel
 {
     if (!_preferentialTimeLabel) {
-        _preferentialTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 107, 105, 21)];
+        _preferentialTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 107, 100, 21)];
         _preferentialTimeLabel.textAlignment = NSTextAlignmentCenter;
         _preferentialTimeLabel.font = kFont10;
         _preferentialTimeLabel.textColor = RGBCOLOR(172, 171, 168);
-        _preferentialTimeLabel.text = @"截止到2014.10.12";
+//        _preferentialTimeLabel.text = @"截止到2014.10.12";
     }
     return _preferentialTimeLabel;
 }
@@ -57,7 +53,7 @@
         _brandNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 3, 89, 21)];
         _brandNameLabel.font = kFont14;
         _brandNameLabel.textAlignment = NSTextAlignmentCenter;
-        _brandNameLabel.text = @"江南布衣";
+//        _brandNameLabel.text = @"江南布衣";
     }
     return _brandNameLabel;
 }
@@ -68,10 +64,36 @@
         _preferentialDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 74, 89, 21)];
         _preferentialDetailLabel.textAlignment = NSTextAlignmentCenter;
         _preferentialDetailLabel.font = kFont14;
-        _preferentialDetailLabel.text = @"优惠券";
+//        _preferentialDetailLabel.text = @"优惠券";
         _preferentialDetailLabel.textColor = RGBCOLOR(127, 127, 127);
     }
     return _preferentialDetailLabel;
+}
+
+- (void)setCardWithModel:(QSCards *)aCardModel
+{
+    if ([aCardModel.cardType intValue]==1)
+    {
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@元", aCardModel.denomination]];
+        [string addAttribute:NSFontAttributeName value:kFont18 range:NSMakeRange(string.length-1, 1)];
+        [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(243, 130, 11) range:NSMakeRange(0, string.length)];
+        self.preferentialLabel.attributedText = string;
+        self.preferentialDetailLabel.text = @"优惠券";
+        self.preferentialTimeLabel.text = [NSString stringWithFormat:@"截止到%@", aCardModel.endProperty];
+    }
+    if ([aCardModel.cardType intValue]==2) {
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"50%"];
+        [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(253, 82, 88) range:NSMakeRange(0, string.length)];
+        self.preferentialLabel.attributedText = string;
+        self.preferentialDetailLabel.text = @"OFF";
+    }
+    if ([aCardModel.cardType intValue]==3) {
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"包邮"];
+        [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(26, 167, 124) range:NSMakeRange(0, string.length)];
+        self.preferentialLabel.attributedText = string;
+        self.preferentialDetailLabel.text = @"满400元";
+    }
+    self.brandNameLabel.text = aCardModel.merchant;
 }
 
 @end

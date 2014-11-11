@@ -25,6 +25,8 @@
 @property(nonatomic, strong) UIPageControl *pageControl;
 @property(nonatomic, strong) void(^ myBlock)(void);
 
+@property(nonatomic, strong) NSArray *dailyArray;
+
 - (instancetype)initWithFrame:(CGRect)frame;
 - (void)touchRightMoreBtn:(void(^)(void))aBlock;
 @end

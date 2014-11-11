@@ -8,20 +8,22 @@
 
 #import "QSDayRecommendManage.h"
 #import "NetManager.h"
-#import "QSDayRecommends.h"
+#import "QSCards.h"
 
 @implementation QSDayRecommendManage : NSObject
 
 - (void)getDayRecommendSuccBlock:(void(^)(NSArray *dayRecomendModelArray))aBlock andFailBlock:(void(^)(void))aFailBlock
 {
-    NSString *dayRecommendUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=fd&current=1&pageSize=9", KBaseUrl];
+    NSString *dayRecommendUrl = [NSString stringWithFormat:@"%@?service=every_recommend", KBaseUrl];
     [NetManager requestWith:nil url:dayRecommendUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
         NSArray *dayRecommendArray = [successDict objectForKey:@"recommends"];
         NSMutableArray *dayRecommendModelArray = [NSMutableArray new];
         for (int i=0; i<dayRecommendArray.count; i++)
         {
-            QSDayRecommends *model = [QSDayRecommends modelObjectWithDictionary:[dayRecommendArray objectAtIndex:i]];
+            NSDictionary *recommendDict = [dayRecommendArray objectAtIndex:i];
+            NSDictionary *cardDict = [recommendDict objectForKey:@"card"];
+            QSCards *model = [QSCards modelObjectWithDictionary:cardDict];
             [dayRecommendModelArray addObject:model];
         }
         aBlock(dayRecommendModelArray);

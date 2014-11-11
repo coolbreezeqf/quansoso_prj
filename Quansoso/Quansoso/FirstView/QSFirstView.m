@@ -15,6 +15,7 @@
 #import "UIButton+WebCache.h"
 #import "QSDayRecommends.h"
 #import "QSDailyView.h"
+#import "QSCards.h"
 
 int btnCount; //关注的商家数量 包括加号按钮
 @implementation QSFirstView
@@ -70,7 +71,8 @@ int btnCount; //关注的商家数量 包括加号按钮
     [self addSubview:self.showQuanTableView];
     
     self.activityDayRecommendView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-20, 40, 40)];
-    self.activityDayRecommendView.backgroundColor = [UIColor blackColor];
+//    self.activityDayRecommendView.backgroundColor = [UIColor blackColor];
+    self.activityDayRecommendView.color = [UIColor blackColor];
     [self.activityDayRecommendView startAnimating];
     [self addSubview:self.activityDayRecommendView];
     
@@ -90,8 +92,9 @@ int btnCount; //关注的商家数量 包括加号按钮
 - (void)getDayRecommends
 {
     [self.dayRecommendManage getDayRecommendSuccBlock:^(NSArray *dayRecomendModelArray) {
-
-        [self.showQuanTableView reloadData];
+        self.dailyArray = dayRecomendModelArray;
+        NSArray *indexArray = [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:0], nil];
+        [self.showQuanTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationNone];
         [self.activityDayRecommendView stopAnimating];
     } andFailBlock:^{
         
@@ -263,21 +266,9 @@ int btnCount; //关注的商家数量 包括加号按钮
             CGFloat interval = (kMainScreenWidth-310)/2;
             for (int i=0; i<9; i++)
             {
+                QSCards *cardModel = [self.dailyArray objectAtIndex:i];
                 QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake(interval+102*(i%3)+i/3*kMainScreenWidth, 0, 105, 136)];
-                if (i%3==1) {
-                    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"50%"];
-                    [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(253, 82, 88) range:NSMakeRange(0, string.length)];
-                    btn.preferentialLabel.attributedText = string;
-                    btn.preferentialDetailLabel.text = @"OFF";
-                    btn.brandNameLabel.text = @"素缕";
-                }
-                if (i%3==2) {
-                    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"包邮"];
-                    [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(26, 167, 124) range:NSMakeRange(0, string.length)];
-                    btn.preferentialLabel.attributedText = string;
-                    btn.preferentialDetailLabel.text = @"满400元";
-                    btn.brandNameLabel.text = @"正山堂";
-                }
+                [btn setCardWithModel:cardModel];
                 [self.scrollView addSubview:btn];
             }
             [cell addSubview:self.scrollView];
