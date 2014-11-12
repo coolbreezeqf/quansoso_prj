@@ -31,6 +31,7 @@
 
     self.activityIndicatorView = [[UIActivityIndicatorView alloc]
                                   initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-20, 40, 40)];
+    self.activityIndicatorView.color = [UIColor blackColor];
     [self.activityIndicatorView startAnimating];
     [self addSubview:self.activityIndicatorView];
 #pragma mark 网络请求
@@ -39,6 +40,7 @@
 //    }];
     [self.dailyManage getDayRecommendSuccBlock:^(NSArray *dayRecomendModelArray) {
         self.dataArray = [dayRecomendModelArray mutableCopy];
+        [self.activityIndicatorView stopAnimating];
         [self.tableViewShow reloadData];
     } andFailBlock:^{
         
@@ -95,7 +97,7 @@
 #pragma mark tableView delegate datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArray.count;
+    return self.dataArray.count>0?self.dataArray.count:4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -105,21 +107,38 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellIdentifier = @"CouponCell";
-    QSCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[QSCardCell alloc] initWithReuseIdentifier:cellIdentifier];
+    if (self.dataArray.count>0)
+    {
+        NSString *cellIdentifier = @"CouponCell";
+        QSCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[QSCardCell alloc] initWithReuseIdentifier:cellIdentifier];
+        }
+        QSCards *cardModel = [self.dataArray objectAtIndex:indexPath.row];
+        MLOG(@"%@", cardModel);
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell setCellUIwithCardType:cardModel.cardType denomination:cardModel.denomination Money_condition:cardModel.moneyCondition end:cardModel.endProperty discountRate:cardModel.discountRate outdateState:3];
+        return cell;
     }
-    QSCards *cardModel = [self.dataArray objectAtIndex:indexPath.row];
-    MLOG(@"%@", cardModel);
-    [cell setCellUIwithCardType:cardModel.cardType denomination:cardModel.denomination Money_condition:cardModel.moneyCondition end:cardModel.endProperty discountRate:cardModel.discountRate outdateState:3];
-    return cell;
+    else
+    {
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        if (indexPath.row==3) {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-60, 20, 120, 20)];
+            label.text = @"暂无数据";
+            label.textColor = [UIColor lightGrayColor];
+            label.font = kFont14;
+            label.textAlignment = NSTextAlignmentCenter;
+            label.backgroundColor = [UIColor clearColor];
+            [cell addSubview:label];
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }
+    
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
 
 
 

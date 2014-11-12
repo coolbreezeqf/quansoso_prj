@@ -117,7 +117,7 @@ int btnCount; //关注的商家数量 包括加号按钮
 - (UIScrollView *)scrollView
 {
     if (!_scrollView) {
-        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 136)];
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 136*kMainScreenWidth/320)];
         _scrollView.delegate = self;
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.pagingEnabled = YES;
@@ -128,7 +128,20 @@ int btnCount; //关注的商家数量 包括加号按钮
 - (UIPageControl *)pageControl
 {
     if (!_pageControl) {
-        _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(kMainScreenWidth-50, 0, 39, 37)];
+        _pageControl = [[UIPageControl alloc] init];
+        MLOG(@"%f", kMainScreenWidth);
+        if (kMainScreenWidth==320)
+        {
+            _pageControl.frame = CGRectMake(kMainScreenWidth-50, 0, 39, 40);
+        }
+        else if (kMainScreenWidth==375)
+        {
+            _pageControl.frame = CGRectMake(kMainScreenWidth-80, 0, 39, 40);
+        }
+        else if (kMainScreenWidth==414)
+        {
+            _pageControl.frame = CGRectMake(kMainScreenWidth-100, 0, 39, 40);
+        }
         _pageControl.pageIndicatorTintColor = RGBCOLOR(201, 223, 175);
         _pageControl.currentPageIndicatorTintColor = RGBCOLOR(75, 171, 14);
         _pageControl.numberOfPages = 3;
@@ -245,7 +258,7 @@ int btnCount; //关注的商家数量 包括加号按钮
     }
     else if(indexPath.row==1)
     {
-        return 140*kMainScreenWidth/320;
+        return 136*kMainScreenWidth/320;
     }
     return 101;
 }
@@ -262,11 +275,13 @@ int btnCount; //关注的商家数量 包括加号按钮
         }
         else if(indexPath.row==1)
         {
-            self.scrollView.contentSize = CGSizeMake(3*kMainScreenWidth, 136);
+            self.scrollView.contentSize = CGSizeMake(3*kMainScreenWidth, 136*kMainScreenWidth/320);
             CGFloat interval = 5;
             for (int i=0; i<9; i++)
             {
-                QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake((interval+102*(i%3))*kMainScreenWidth/320+i/3*kMainScreenWidth, 0, 105*kMainScreenWidth/320, 136*kMainScreenWidth/320)];
+                float width = 105*kMainScreenWidth/320;
+                float height = 136*kMainScreenWidth/320;
+                QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake((interval+102*(i%3))*kMainScreenWidth/320+i/3*kMainScreenWidth, 0, width, height)];
                 if (self.dailyArray.count>0) {
                     QSCards *cardModel = [self.dailyArray objectAtIndex:i];
                     [btn setCardWithModel:cardModel];

@@ -43,7 +43,7 @@
     
 #pragma mark 网络请求
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
-        self.brandArray = aArray;
+        self.brandArray = [aArray mutableCopy];
         [self.showBrandTableView reloadData];
     } andFailBlock:^{
         
@@ -159,12 +159,13 @@
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         if (indexPath.row==3) {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-50, 20, 100, 20)];
-            label.text = @"暂时没有数据";
+            label.text = @"暂无数据";
             label.font = kFont14;
             label.textColor = [UIColor lightGrayColor];
             label.textAlignment = NSTextAlignmentCenter;
             [cell addSubview:label];
         }
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         cell.backgroundColor = [UIColor clearColor];
         return cell;
     }

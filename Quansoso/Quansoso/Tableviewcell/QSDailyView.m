@@ -8,6 +8,8 @@
 
 #import "QSDailyView.h"
 
+#define kWidth self.frame.size.width
+#define kHeight self.frame.size.height
 @implementation QSDailyView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -28,9 +30,13 @@
 - (UILabel *)preferentialLabel
 {
     if (!_preferentialLabel) {
-        _preferentialLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 38, 90, 28)];
+        _preferentialLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, kHeight*1/4, kWidth-16, 28)];
         [_preferentialLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:30]];
         _preferentialLabel.textAlignment = NSTextAlignmentCenter;
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"100元"]];
+        [string addAttribute:NSFontAttributeName value:kFont18 range:NSMakeRange(string.length-1, 1)];
+        [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(243, 130, 11) range:NSMakeRange(0, string.length)];
+        self.preferentialLabel.attributedText = string;
     }
     return _preferentialLabel;
 }
@@ -38,11 +44,11 @@
 - (UILabel *)preferentialTimeLabel
 {
     if (!_preferentialTimeLabel) {
-        _preferentialTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 107, 100, 21)];
+        _preferentialTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, kHeight-30, kWidth-10, 21)];
         _preferentialTimeLabel.textAlignment = NSTextAlignmentCenter;
         _preferentialTimeLabel.font = kFont10;
         _preferentialTimeLabel.textColor = RGBCOLOR(172, 171, 168);
-//        _preferentialTimeLabel.text = @"截止到2014.10.12";
+        _preferentialTimeLabel.text = @"截止到2014.10.12";
     }
     return _preferentialTimeLabel;
 }
@@ -50,10 +56,10 @@
 - (UILabel *)brandNameLabel
 {
     if (!_brandNameLabel) {
-        _brandNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 3, 89, 21)];
+        _brandNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 3*kMainScreenWidth/320, self.frame.size.width-16, 21)];
         _brandNameLabel.font = kFont14;
         _brandNameLabel.textAlignment = NSTextAlignmentCenter;
-//        _brandNameLabel.text = @"江南布衣";
+        _brandNameLabel.text = @"江南布衣江南布衣";
     }
     return _brandNameLabel;
 }
@@ -61,10 +67,10 @@
 - (UILabel *)preferentialDetailLabel
 {
     if (!_preferentialDetailLabel) {
-        _preferentialDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 74, 89, 21)];
+        _preferentialDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, kHeight*3/4-35, kWidth-16, 21)];
         _preferentialDetailLabel.textAlignment = NSTextAlignmentCenter;
         _preferentialDetailLabel.font = kFont14;
-//        _preferentialDetailLabel.text = @"优惠券";
+        _preferentialDetailLabel.text = @"优惠券";
         _preferentialDetailLabel.textColor = RGBCOLOR(127, 127, 127);
     }
     return _preferentialDetailLabel;
