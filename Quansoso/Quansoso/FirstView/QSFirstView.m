@@ -245,7 +245,7 @@ int btnCount; //关注的商家数量 包括加号按钮
     }
     else if(indexPath.row==1)
     {
-        return 140;
+        return 140*kMainScreenWidth/320;
     }
     return 101;
 }
@@ -263,12 +263,14 @@ int btnCount; //关注的商家数量 包括加号按钮
         else if(indexPath.row==1)
         {
             self.scrollView.contentSize = CGSizeMake(3*kMainScreenWidth, 136);
-            CGFloat interval = (kMainScreenWidth-310)/2;
+            CGFloat interval = 5;
             for (int i=0; i<9; i++)
             {
-                QSCards *cardModel = [self.dailyArray objectAtIndex:i];
-                QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake(interval+102*(i%3)+i/3*kMainScreenWidth, 0, 105, 136)];
-                [btn setCardWithModel:cardModel];
+                QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake((interval+102*(i%3))*kMainScreenWidth/320+i/3*kMainScreenWidth, 0, 105*kMainScreenWidth/320, 136*kMainScreenWidth/320)];
+                if (self.dailyArray.count>0) {
+                    QSCards *cardModel = [self.dailyArray objectAtIndex:i];
+                    [btn setCardWithModel:cardModel];
+                }
                 [self.scrollView addSubview:btn];
             }
             [cell addSubview:self.scrollView];
