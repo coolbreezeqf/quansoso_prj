@@ -12,7 +12,7 @@
 #import <TAESDK/TAESDK.h>
 #define kTitleColor RGBCOLOR(149, 149, 149)
 
-@interface QSSettingView ()<UIActionSheetDelegate>{
+@interface QSSettingView (){
 	NSArray *titles;
 }
 @property (nonatomic,strong) UISwitch *switchView;
@@ -29,29 +29,25 @@
 }
 
 - (void)attentionWeibo{
-	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
-	[alert showAlertLabel];
+	
 }
 
 - (void)feedback{
-	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
-	[alert showAlertLabel];
+	
 }
 
 - (void)aboutMe{
-	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
-	[alert showAlertLabel];
+	
 }
 
 - (void)share{
-	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
-	[alert showAlertLabel];
+	
 }
 
 - (void)cleanCache{
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"确定要清空券搜搜的本地所有缓存数据?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"清空缓存数据" otherButtonTitles: nil];
-	[actionSheet showInView:self];
-	
+#warning clean Cache
+	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"清理成功"];
+	[alert showAlertLabel];
 }
 
 - (void)showLogoutButton{
@@ -72,18 +68,9 @@
 		return;
 	}
 	
-	[[TaeSDK sharedInstance] logout];
+    [[TaeSDK sharedInstance] logout];
 	if (![[TaeSession sharedInstance] isLogin]) {
 		CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"退出成功"];
-		[alert showAlertLabel];
-	}
-}
-
-#pragma mark - action sheet delegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-	if (buttonIndex == 0) {
-#warning clean Cache
-		CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"清理成功"];
 		[alert showAlertLabel];
 	}
 }
@@ -91,7 +78,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
 	if (self = [super initWithFrame:frame]) {
 		self.backgroundColor = RGBCOLOR(242, 239, 233);
-		titles = @[@"优惠消息推送",@"关注券搜搜微博",@"意见反馈",@"分享app",@"关于我们",@"清处缓存"];
+		titles = @[@"优惠消息推送",@"关注券搜搜微博",@"意见反馈",@"分享app",@"关于我们",@"清楚缓存"];
 		_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth, 44*6-1) style:UITableViewStylePlain];
 		_tableView.backgroundColor = [UIColor whiteColor];
 		_tableView.delegate = self;
@@ -115,8 +102,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 	UITableViewCell *cell;
-	//	UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(10, 0, kMainScreenWidth - 100, 44)];
-	//	cell.textLabel.text = [titles objectAtIndex:indexPath.row];
+//	UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(10, 0, kMainScreenWidth - 100, 44)];
+//	cell.textLabel.text = [titles objectAtIndex:indexPath.row];
 	switch (indexPath.row) {
 		case 0:{
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -144,22 +131,22 @@
 			break;
 		case 3:
 		{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-		cell.detailTextLabel.font = kFont10;
-		cell.detailTextLabel.text = @"和好朋友一起来省钱吧";
-		cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+			cell.detailTextLabel.font = kFont10;
+			cell.detailTextLabel.text = @"和好朋友一起来省钱吧";
+			cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 			break;
 		case 4:
 		{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}			break;
 		case 5:
-		{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+			{
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}			break;
 		default:
 			break;
@@ -168,7 +155,7 @@
 	cell.textLabel.text = [titles objectAtIndex:indexPath.row];
 	cell.textLabel.textColor = kTitleColor;
 	cell.textLabel.font = kFont13;
-	
+
 	return cell;
 }
 
@@ -195,11 +182,11 @@
 }
 
 /*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect {
- // Drawing code
- }
- */
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
 
 @end
