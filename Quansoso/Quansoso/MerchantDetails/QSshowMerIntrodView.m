@@ -10,7 +10,7 @@
 #define angleWidth 20
 @interface QSshowMerIntrodView()
 @property (strong, nonatomic) UIBezierPath *path;
-@property (strong, nonatomic) NSString *text;
+//@property (strong, nonatomic) NSString *text;
 @property (strong, nonatomic) UITextView *textView;
 @end
 @implementation QSshowMerIntrodView
