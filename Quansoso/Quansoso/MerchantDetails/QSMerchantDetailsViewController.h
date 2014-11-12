@@ -2,7 +2,7 @@
 //  QSMerchantDetailsViewController.h
 //  Quansoso
 //
-//  Created by qf on 14/9/27.
+//  Created by yato_kami on 14/11/10.
 //  Copyright (c) 2014年 taobao. All rights reserved.
 //
 

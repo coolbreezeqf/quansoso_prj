@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		5B3B10F61A1078EA0020955E /* QSSActivities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3B10F11A1078EA0020955E /* QSSActivities.m */; };
 		5B3B10FB1A107B290020955E /* QSSMerchant.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3B10FA1A107B290020955E /* QSSMerchant.m */; };
-		5B3B10FE1A1082C60020955E /* merchant.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B10FD1A1082C60020955E /* merchant.plist */; };
 		5B3B11011A1095140020955E /* QSCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3B11001A1095140020955E /* QSCardCell.m */; };
+		5BC8E5721A133CEF0097768C /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5BC8E56F1A133CEF0097768C /* SVProgressHUD.bundle */; };
+		5BC8E5731A133CEF0097768C /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC8E5711A133CEF0097768C /* SVProgressHUD.m */; };
+		5BC8E5761A133E9A0097768C /* QSshowMerIntrodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC8E5751A133E9A0097768C /* QSshowMerIntrodView.m */; };
 		AB101E8A19E2350E00434DEE /* QSBrandListManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB101E8919E2350E00434DEE /* QSBrandListManage.m */; };
 		AB219E2919D7E864001395AC /* QSRootLeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2619D7E864001395AC /* QSRootLeftView.m */; };
 		AB219E2A19D7E864001395AC /* QSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2819D7E864001395AC /* QSRootViewController.m */; };
@@ -127,9 +129,13 @@
 		5B3B10F11A1078EA0020955E /* QSSActivities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSActivities.m; sourceTree = "<group>"; };
 		5B3B10F91A107B290020955E /* QSSMerchant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSMerchant.h; sourceTree = "<group>"; };
 		5B3B10FA1A107B290020955E /* QSSMerchant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSMerchant.m; sourceTree = "<group>"; };
-		5B3B10FD1A1082C60020955E /* merchant.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = merchant.plist; sourceTree = "<group>"; };
 		5B3B10FF1A1095140020955E /* QSCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCardCell.h; sourceTree = "<group>"; };
 		5B3B11001A1095140020955E /* QSCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSCardCell.m; sourceTree = "<group>"; };
+		5BC8E56F1A133CEF0097768C /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		5BC8E5701A133CEF0097768C /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		5BC8E5711A133CEF0097768C /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		5BC8E5741A133E9A0097768C /* QSshowMerIntrodView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSshowMerIntrodView.h; sourceTree = "<group>"; };
+		5BC8E5751A133E9A0097768C /* QSshowMerIntrodView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSshowMerIntrodView.m; sourceTree = "<group>"; };
 		AB101E8819E2350E00434DEE /* QSBrandListManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSBrandListManage.h; path = NetManage/QSBrandListManage.h; sourceTree = "<group>"; };
 		AB101E8919E2350E00434DEE /* QSBrandListManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSBrandListManage.m; path = NetManage/QSBrandListManage.m; sourceTree = "<group>"; };
 		AB219E2619D7E864001395AC /* QSRootLeftView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSRootLeftView.m; sourceTree = "<group>"; };
@@ -354,12 +360,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5B3B10FC1A1082950020955E /* Data */ = {
+		5BC8E56E1A133CEF0097768C /* ToastView */ = {
 			isa = PBXGroup;
 			children = (
-				5B3B10FD1A1082C60020955E /* merchant.plist */,
+				5BC8E56F1A133CEF0097768C /* SVProgressHUD.bundle */,
+				5BC8E5701A133CEF0097768C /* SVProgressHUD.h */,
+				5BC8E5711A133CEF0097768C /* SVProgressHUD.m */,
 			);
-			name = Data;
+			path = ToastView;
 			sourceTree = "<group>";
 		};
 		AB101E8719E234DD00434DEE /* NetManage */ = {
@@ -503,13 +511,14 @@
 		B08A5FDA19D826E7008077E7 /* MerchantDetails */ = {
 			isa = PBXGroup;
 			children = (
-				5B3B10FC1A1082950020955E /* Data */,
 				B08A5FDB19D826E7008077E7 /* QSMerchantDetailsViewController.h */,
 				B08A5FDC19D826E7008077E7 /* QSMerchantDetailsViewController.m */,
 				B03624E919E80A8800ECFE61 /* QSMerchantNetManager.h */,
 				B03624EA19E80A8800ECFE61 /* QSMerchantNetManager.m */,
 				5B3B10FF1A1095140020955E /* QSCardCell.h */,
 				5B3B11001A1095140020955E /* QSCardCell.m */,
+				5BC8E5741A133E9A0097768C /* QSshowMerIntrodView.h */,
+				5BC8E5751A133E9A0097768C /* QSshowMerIntrodView.m */,
 			);
 			path = MerchantDetails;
 			sourceTree = "<group>";
@@ -616,6 +625,7 @@
 		FFBA9E7819C680BE00D9CBA2 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				5BC8E56E1A133CEF0097768C /* ToastView */,
 				B08A5FFB19DFE61A008077E7 /* UILabel+dynamicSizeMe */,
 				FFE85F4019CAC84400A216BB /* UIImageEffects */,
 				FFE85F2F19CABBAE00A216BB /* FBKVOController */,
@@ -911,10 +921,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFD1243619D64937003B969F /* Tae.bundle in Resources */,
+				5BC8E5721A133CEF0097768C /* SVProgressHUD.bundle in Resources */,
 				FFD1243519D64937003B969F /* AlipaySDK.bundle in Resources */,
 				FF8A929A19C433B80010439B /* Images.xcassets in Resources */,
 				FFE85F4719CACDEF00A216BB /* yw_1222.jpg in Resources */,
-				5B3B10FE1A1082C60020955E /* merchant.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -954,6 +964,7 @@
 				FFBA9EE219C688F200D9CBA2 /* SDWebImageDownloader.m in Sources */,
 				B0BFDD441A0CB23D002037DA /* QSSearchNothingView.m in Sources */,
 				5B3B11011A1095140020955E /* QSCardCell.m in Sources */,
+				5BC8E5731A133CEF0097768C /* SVProgressHUD.m in Sources */,
 				B03624DC19E8049400ECFE61 /* QSCardTableViewCell.m in Sources */,
 				FFBA9E9419C680C800D9CBA2 /* AFImageRequestOperation.m in Sources */,
 				AB219E2919D7E864001395AC /* QSRootLeftView.m in Sources */,
@@ -987,6 +998,7 @@
 				FF8A929519C433B80010439B /* main.m in Sources */,
 				B08A5FD919D826DD008077E7 /* QSSearchViewController.m in Sources */,
 				FFBA9EA419C6810100D9CBA2 /* UIViewAdditions.m in Sources */,
+				5BC8E5761A133E9A0097768C /* QSshowMerIntrodView.m in Sources */,
 				FFBA9EE519C688F200D9CBA2 /* SDWebImagePrefetcher.m in Sources */,
 				B03624EB19E80A8800ECFE61 /* QSMerchantNetManager.m in Sources */,
 				FFBA9EE419C688F200D9CBA2 /* SDWebImageManager.m in Sources */,

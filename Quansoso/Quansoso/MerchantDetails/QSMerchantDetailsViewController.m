@@ -2,7 +2,7 @@
 //  QSMerchantDetailsViewController.m
 //  Quansoso
 //
-//  Created by qf on 14/9/27.
+//  Created by yato_kami on 14/11/10.
 //  Copyright (c) 2014年 taobao. All rights reserved.
 //
 #import "QSMerchantDetailsViewController.h"
@@ -15,6 +15,8 @@
 #import "QSCards.h"
 #import "QSCardDetailsViewController.h"
 #import "QSCardCell.h"
+#import "SVProgressHUD.h"
+#import "QSshowMerIntrodView.h"
 //#import "QSCardDetailsViewController.h"
 #define logoViewWidth 130
 #define logoImgWidth 100
@@ -24,6 +26,7 @@
 @interface QSMerchantDetailsViewController()<UITableViewDataSource,UITableViewDelegate>
 {
 	double _topId;
+    CGFloat _detailMercBtnCenterX;
 }
 //data
 @property (strong, nonatomic) QSSMerchant *merchant;
@@ -33,9 +36,35 @@
 @property (nonatomic,strong) UIView *merchantToolView;
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UIActivityIndicatorView *activityView;
+@property (strong, nonatomic) UIView *dimView;
+@property (strong, nonatomic) QSshowMerIntrodView *showMerIntrodView;
+
 @end
 
 @implementation QSMerchantDetailsViewController
+
+#pragma mark - getter and setter
+- (UIView *)dimView
+{
+    if (!_dimView) {
+        _dimView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth,kMainScreenHeight)];
+        _dimView.backgroundColor = [UIColor clearColor];
+        UIView *blackView = [[UIView alloc] initWithFrame:CGRectMake(0, self.tableView.top, kMainScreenWidth, self.tableView.height)];
+        blackView.backgroundColor = RGBACOLOR(200, 200, 200, 0.7);
+        [_dimView addSubview:blackView];
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeDimView)];
+        [_dimView addGestureRecognizer:tapRecognizer];
+    }
+    return _dimView;
+}
+
+- (QSshowMerIntrodView *)showMerIntrodView
+{
+    if (!_showMerIntrodView) {
+        _showMerIntrodView = [[QSshowMerIntrodView alloc] initWithFrame:CGRectMake(0, self.tableView.top-10, kMainScreenWidth, 100) AngleX:_detailMercBtnCenterX angleHeight:10];
+    }
+    return _showMerIntrodView;
+}
 
 #pragma mark - init
 
@@ -64,9 +93,10 @@
         [weakSelf.activityView stopAnimating];
         weakSelf.merchant = merchant;
         weakSelf.cardsArray = cardsArray;
+        weakSelf.showMerIntrodView.text = (weakSelf.merchant.description ? weakSelf.merchant.description : @"");
     } failure:^{
-#warning 错误处理
         [weakSelf.activityView stopAnimating];
+        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
     [self setUI];
 }
@@ -96,6 +126,7 @@
     UIView *logoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 160)];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:logoView.frame];
 #warning 待按店铺类型区分背景图片
+    //self.merchant.type
     imageView.image = [UIImage imageNamed:@"QSstoreBackImg"];
     [logoView addSubview:imageView];
     //圆形logo背景
@@ -135,10 +166,11 @@
     
     UIButton *detailMercButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [detailMercButton setFrame:CGRectMake(mImageview.left-10-55, 5, 55, 30)];
-    [detailMercButton addTarget:self action:@selector(touchDetailMercButton) forControlEvents:UIControlEventTouchUpInside];
+    [detailMercButton addTarget:self action:@selector(touchDetailMercButton:) forControlEvents:UIControlEventTouchUpInside];
     detailMercButton.titleLabel.font = kFont13;
     [detailMercButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     [detailMercButton setTitle:@"品牌介绍" forState:UIControlStateNormal];
+    _detailMercBtnCenterX = detailMercButton.centerX;
     [merchantToolView addSubview:detailMercButton];
     UIImageView *dImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"QSmeIntro"]];
     dImageview.frame = CGRectMake(detailMercButton.frame.origin.x-5-20, 12, 20, 15);
@@ -201,9 +233,17 @@
     
 }
 //显示店铺详情
-- (void)touchDetailMercButton
+- (void)touchDetailMercButton:(UIButton *)sender
 {
     
+    [self.view addSubview:self.dimView];
+    [self.dimView addSubview:self.showMerIntrodView];
+}
+
+//隐藏dimView
+- (void)removeDimView
+{
+    [self.dimView removeFromSuperview];
 }
 
 - (void)back{
