@@ -26,6 +26,7 @@
 @property(nonatomic, strong) void(^ myBlock)(void);
 
 @property(nonatomic, strong) NSArray *dailyArray;
+@property(nonatomic, strong) NSMutableArray *brandArray;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 - (void)touchRightMoreBtn:(void(^)(void))aBlock;
