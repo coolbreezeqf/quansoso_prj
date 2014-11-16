@@ -234,7 +234,7 @@ typedef NS_ENUM(NSInteger, cateType) {
 {
     if(!firstview)
     {
-        firstview = [[QSFirstView alloc] initWithFrame:self.view.bounds];
+        firstview = [[QSFirstView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight)];
         [firstview touchRightMoreBtn:^{
             [self leftButtonItem];
         }];

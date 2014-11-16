@@ -40,12 +40,12 @@
     [rightMoreBtn addTarget:self action:@selector(rightMoreBtn) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:rightMoreBtn];
     
-    self.imagebrand = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-185*times)/2, 80, 185*times, 56*times)];
+    self.imagebrand = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-185)/2, 80, 185, 56)];
     [self.imagebrand setImage:[UIImage imageNamed:@"QSquansosoImg"]];
     self.imagebrand.userInteractionEnabled = YES;
     [headView addSubview:self.imagebrand];
     
-    self.viewSearch = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-240*times)/2, ViewBottom(_imagebrand)+20, 240*times, 30*times)];
+    self.viewSearch = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-240)/2, ViewBottom(_imagebrand)+20, 240, 30)];
     self.viewSearch.userInteractionEnabled = YES;
     [self.viewSearch setImage:[UIImage imageNamed:@"QSSearchBack"]];
     
@@ -60,7 +60,7 @@
     [self.imagebrand addGestureRecognizer:tapSGR];
     [self.viewSearch addGestureRecognizer:self.tapSearchGestureRecognizer];
     
-    self.showQuanTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight)];
+    self.showQuanTableView = [[UITableView alloc] initWithFrame:self.bounds];
     self.showQuanTableView.dataSource = self;
     self.showQuanTableView.delegate = self;
     self.showQuanTableView.backgroundColor = RGBCOLOR(245, 240, 232);
@@ -117,7 +117,7 @@
 - (UIScrollView *)scrollView
 {
     if (!_scrollView) {
-        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 136*times)];
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 136)];
         _scrollView.delegate = self;
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.pagingEnabled = YES;
@@ -266,12 +266,12 @@
         }
         else
         {
-            return 136*times;
+            return 136;
         }
     }
     else
     {
-        float cellHeight = 101*times;
+        float cellHeight = 101;
         return self.brandArray.count>0?cellHeight:cellHeight+30;
     }
 }
@@ -290,13 +290,13 @@
         }
         else if(indexPath.row==1)
         {
-            self.scrollView.contentSize = CGSizeMake(3*kMainScreenWidth, 136*times);
-            CGFloat interval = 5;
+            self.scrollView.contentSize = CGSizeMake(3*kMainScreenWidth, 136);
+            CGFloat interval = (kMainScreenWidth-310)/2;
             for (int i=0; i<9; i++)
             {
-                float width = 105*times;
-                float height = 136*times;
-                QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake((interval+102*(i%3))*times+i/3*kMainScreenWidth, 0, width, height)];
+                float width = 105;
+                float height = 136;
+                QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake((interval+102*(i%3))+i/3*kMainScreenWidth, 0, width, height)];
                 if (self.dailyArray.count>0) {
                     QSCards *cardModel = [self.dailyArray objectAtIndex:i];
                     [btn setCardWithModel:cardModel];
@@ -328,13 +328,13 @@
             int j = btnCount-3*indexPath.row;
             for (int i=0; i<(j>=3?3:j%3); i++)
             {
-                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake((11+(96+5)*i)*times, 2.5*times, 96*times, 96*times)];
+                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake((kMainScreenWidth-298)/2+(96+5)*i, 2.5, 96, 96)];
                 btn.tag = 100+indexPath.row*3+i;
                 btn.backgroundColor = [UIColor whiteColor];
                 if (i+indexPath.row*3 != btnCount-1)
                 {
                     QSMerchant *model = [self.brandArray objectAtIndex:i+indexPath.row*3];
-                    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40)*times, (96/2-40)*times, 80*times, 80*times)];
+                    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40), (96/2-40), 80, 80)];
                     [imgView sd_setImageWithURL:[NSURL URLWithString:model.picUrl] placeholderImage:[UIImage imageNamed:@""]];
                     [btn addSubview:imgView];
                     [btn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -342,7 +342,7 @@
                 else
                 {
                     [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
-                    [btn setImage:[UIImage imageNamed:@"QSLikeBrandImg"] forState:UIControlStateNormal];
+                    [btn setImage:[UIImage imageNamed:@"QSLikeOtherBrand"] forState:UIControlStateNormal];
                 }
 
                 [cell addSubview:btn];
@@ -354,15 +354,16 @@
         else
         {
             UITableViewCell *cell = [[UITableViewCell alloc] init];
+            cell.backgroundColor = [UIColor clearColor];
             for (int i=0; i<3; i++)
             {
-                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake((11+(96+5)*i)*times, 2.5*times, 96*times, 96*times)];
+                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake((kMainScreenWidth-298)/2+(96+5)*i, 2.5, 96, 96)];
                 btn.backgroundColor = [UIColor whiteColor];
-                [btn setImage:[UIImage imageNamed:@"QSLikeBrandImg"] forState:UIControlStateNormal];
+                [btn setImage:[UIImage imageNamed:@"QSLikeOtherBrand"] forState:UIControlStateNormal];
                 [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
                 [cell addSubview:btn];
             }
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(11*times, 105*times, 300, 15)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((kMainScreenWidth-298)/2, 105, 300, 15)];
             label.font = kFont12;
             label.backgroundColor = [UIColor clearColor];
             label.textColor = RGBCOLOR(120, 120, 120);
@@ -371,41 +372,6 @@
             return cell;
         }
     }
-//    if (indexPath.row>=3) {
-//        if (btnCount == 1)
-//        {
-//            
-//        }
-//        else
-//        {
-//            UITableViewCell *cell = [[UITableViewCell alloc] init];
-//            CGRect frame = cell.frame;
-//            frame.size.width = kMainScreenWidth;
-//            cell.frame = frame;
-//            int j = btnCount-3*indexPath.row;
-//            for (int i=0; i<(j>=3?3:j%3); i++)
-//            {
-//                float temInterval = (kMainScreenWidth-300)/2;
-//                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(temInterval+(96+5)*i, 2.5, 96, 96)];
-//                btn.tag = 100+indexPath.row*3+i;
-//                if (i+indexPath.row*3 != btnCount-1)
-//                {
-//                    [btn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
-//                    btn.backgroundColor = [UIColor blueColor];
-//                }
-//                else
-//                {
-//                    [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
-//                    btn.backgroundColor = [UIColor blackColor];
-//                }
-//                
-//                [cell addSubview:btn];
-//            }
-//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            cell.backgroundColor = [UIColor clearColor];
-//            return cell;
-//        }
-//    }
     return [UITableViewCell new];
 }
 
