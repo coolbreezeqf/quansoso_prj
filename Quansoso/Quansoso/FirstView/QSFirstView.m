@@ -80,7 +80,7 @@
 #pragma mark 网络请求
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
         self.brandArray = aArray;
-        [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+        [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     } andFailBlock:^{
         
     }];
@@ -248,7 +248,7 @@
     }
     else
     {
-        int btnCount = self.brandArray.count+1;
+        int btnCount = self.brandArray.count%9==0?self.brandArray.count:self.brandArray.count+1;
         return btnCount%3==0?btnCount/3:btnCount/3+1;
     }
 }
@@ -291,13 +291,16 @@
         else if(indexPath.row==1)
         {
             self.scrollView.contentSize = CGSizeMake(3*kMainScreenWidth, 136);
-            CGFloat interval = (kMainScreenWidth-310)/2;
+            CGFloat interval = (kMainScreenWidth-310)/6;
             for (int i=0; i<9; i++)
             {
                 float width = 105;
                 float height = 136;
-                QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake((interval+102*(i%3))+i/3*kMainScreenWidth, 0, width, height)];
+                QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake((interval*2+(102+interval)*(i%3))+i/3*kMainScreenWidth, 0, width, height)];
+                btn.tag = 1000+i;
                 if (self.dailyArray.count>0) {
+                    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchQuanButton:)];
+                    [btn addGestureRecognizer:tapGestureRecognizer];
                     QSCards *cardModel = [self.dailyArray objectAtIndex:i];
                     [btn setCardWithModel:cardModel];
                 }
@@ -324,14 +327,19 @@
             CGRect frame = cell.frame;
             frame.size.width = kMainScreenWidth;
             cell.frame = frame;
-            int btnCount = self.brandArray.count+1;
+            int btnCount = self.brandArray.count;
+            if (self.brandArray.count%9!=0)
+            {
+                btnCount = self.brandArray.count+1;
+            }
             int j = btnCount-3*indexPath.row;
+            CGFloat interval = (kMainScreenWidth-298)/6;
             for (int i=0; i<(j>=3?3:j%3); i++)
             {
-                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake((kMainScreenWidth-298)/2+(96+5)*i, 2.5, 96, 96)];
+                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 2.5, 96, 96)];
                 btn.tag = 100+indexPath.row*3+i;
                 btn.backgroundColor = [UIColor whiteColor];
-                if (i+indexPath.row*3 != btnCount-1)
+                if (self.brandArray.count%9==0)
                 {
                     QSMerchant *model = [self.brandArray objectAtIndex:i+indexPath.row*3];
                     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40), (96/2-40), 80, 80)];
@@ -341,8 +349,19 @@
                 }
                 else
                 {
-                    [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
-                    [btn setImage:[UIImage imageNamed:@"QSLikeOtherBrand"] forState:UIControlStateNormal];
+                    if (i+indexPath.row*3 != btnCount-1)
+                    {
+                        QSMerchant *model = [self.brandArray objectAtIndex:i+indexPath.row*3];
+                        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40), (96/2-40), 80, 80)];
+                        [imgView sd_setImageWithURL:[NSURL URLWithString:model.picUrl] placeholderImage:[UIImage imageNamed:@""]];
+                        [btn addSubview:imgView];
+                        [btn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
+                    }
+                    else
+                    {
+                        [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
+                        [btn setImage:[UIImage imageNamed:@"QSLikeOtherBrand"] forState:UIControlStateNormal];
+                    }
                 }
 
                 [cell addSubview:btn];
@@ -383,9 +402,9 @@
 }
 
 #pragma mark 优惠券按钮
-- (void)touchQuanButton:(UIButton *)aBtn
+- (void)touchQuanButton:(UITapGestureRecognizer *)TapGestureRecognizer
 {
-    NSLog(@"%d", aBtn.tag);
+    NSLog(@"%d", TapGestureRecognizer.view.tag);
 }
 
 #pragma mark 店铺按钮
