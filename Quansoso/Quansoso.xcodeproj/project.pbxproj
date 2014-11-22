@@ -46,6 +46,8 @@
 		B08A5FEE19DD8025008077E7 /* CAlertLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FED19DD8025008077E7 /* CAlertLabel.m */; };
 		B08A5FF819DE78FE008077E7 /* QSMerchantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */; };
 		B08A5FFE19DFE61A008077E7 /* UILabel+dynamicSizeMe.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */; };
+		B0BEDD761A2074B200721A68 /* QSAboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BEDD751A2074B200721A68 /* QSAboutMeViewController.m */; };
+		B0BEDD791A2077F900721A68 /* QSFeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BEDD781A2077F900721A68 /* QSFeedBackViewController.m */; };
 		B0BFDD3E1A0A32C8002037DA /* QSSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD3D1A0A32C8002037DA /* QSSSearchBar.m */; };
 		B0BFDD411A0A3B65002037DA /* QSSearchHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD401A0A3B65002037DA /* QSSearchHistoryView.m */; };
 		B0BFDD441A0CB23D002037DA /* QSSearchNothingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD431A0CB23D002037DA /* QSSearchNothingView.m */; };
@@ -203,6 +205,10 @@
 		B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSMerchantTableViewCell.m; sourceTree = "<group>"; };
 		B08A5FFC19DFE61A008077E7 /* UILabel+dynamicSizeMe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+dynamicSizeMe.h"; sourceTree = "<group>"; };
 		B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+dynamicSizeMe.m"; sourceTree = "<group>"; };
+		B0BEDD741A2074B200721A68 /* QSAboutMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSAboutMeViewController.h; sourceTree = "<group>"; };
+		B0BEDD751A2074B200721A68 /* QSAboutMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSAboutMeViewController.m; sourceTree = "<group>"; };
+		B0BEDD771A2077F900721A68 /* QSFeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSFeedBackViewController.h; sourceTree = "<group>"; };
+		B0BEDD781A2077F900721A68 /* QSFeedBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSFeedBackViewController.m; sourceTree = "<group>"; };
 		B0BFDD3C1A0A32C8002037DA /* QSSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSSearchBar.h; sourceTree = "<group>"; };
 		B0BFDD3D1A0A32C8002037DA /* QSSSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSSearchBar.m; sourceTree = "<group>"; };
 		B0BFDD3F1A0A3B65002037DA /* QSSearchHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchHistoryView.h; sourceTree = "<group>"; };
@@ -816,6 +822,10 @@
 			children = (
 				FFE85F2919CABB9300A216BB /* QSSettingView.h */,
 				FFE85F2A19CABB9300A216BB /* QSSettingView.m */,
+				B0BEDD741A2074B200721A68 /* QSAboutMeViewController.h */,
+				B0BEDD751A2074B200721A68 /* QSAboutMeViewController.m */,
+				B0BEDD771A2077F900721A68 /* QSFeedBackViewController.h */,
+				B0BEDD781A2077F900721A68 /* QSFeedBackViewController.m */,
 			);
 			path = SettingView;
 			sourceTree = "<group>";
@@ -1020,12 +1030,14 @@
 				FFE85F2E19CABB9300A216BB /* QSSettingView.m in Sources */,
 				FFE85F3419CABBAE00A216BB /* FBKVOController.m in Sources */,
 				AB101E8A19E2350E00434DEE /* QSBrandListManage.m in Sources */,
+				B0BEDD761A2074B200721A68 /* QSAboutMeViewController.m in Sources */,
 				AB5AE54419DE736E00F6BA7A /* QSShareAppView.m in Sources */,
 				FFBA9EEC19C688F200D9CBA2 /* UIView+WebCacheOperation.m in Sources */,
 				FFBA9EEA19C688F200D9CBA2 /* UIImageView+HighlightedWebCache.m in Sources */,
 				FFBA9E9219C680C800D9CBA2 /* AFHTTPClient.m in Sources */,
 				FFE85F1E19CABB1300A216BB /* BaseViewController.m in Sources */,
 				AB5AE54719DE738500F6BA7A /* QSAttentionBrandView.m in Sources */,
+				B0BEDD791A2077F900721A68 /* QSFeedBackViewController.m in Sources */,
 				C2E099C319E9064600828DD0 /* QSDayRecommends.m in Sources */,
 				5B3B10FB1A107B290020955E /* QSSMerchant.m in Sources */,
 			);

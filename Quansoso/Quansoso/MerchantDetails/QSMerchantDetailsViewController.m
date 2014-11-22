@@ -21,7 +21,7 @@
 #define logoViewWidth 130
 #define logoImgWidth 100
 #define kGrayColor RGBCOLOR(242, 239, 233)
-#define isTest 1
+#define isTest 0
 
 @interface QSMerchantDetailsViewController()<UITableViewDataSource,UITableViewDelegate>
 {

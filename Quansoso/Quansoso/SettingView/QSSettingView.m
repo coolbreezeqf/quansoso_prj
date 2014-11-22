@@ -10,6 +10,9 @@
 #import "QSDataSevice.h"
 #import "CAlertLabel.h"
 #import <TAESDK/TAESDK.h>
+#import "QSAboutMeViewController.h"
+#import "QSFeedBackViewController.h"
+#import "ViewInteraction.h"
 #define kTitleColor RGBCOLOR(149, 149, 149)
 
 @interface QSSettingView ()<UIActionSheetDelegate>{
@@ -34,13 +37,13 @@
 }
 
 - (void)feedback{
-	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
-	[alert showAlertLabel];
+	QSFeedBackViewController *fbvc = [[QSFeedBackViewController alloc] init];
+	[ViewInteraction viewPushViewcontroller:fbvc];
 }
 
 - (void)aboutMe{
-	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
-	[alert showAlertLabel];
+	QSAboutMeViewController *amvc = [[QSAboutMeViewController alloc] init];
+	[ViewInteraction viewPushViewcontroller:amvc];
 }
 
 - (void)share{
