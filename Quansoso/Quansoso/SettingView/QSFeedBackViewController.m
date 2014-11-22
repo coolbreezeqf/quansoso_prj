@@ -21,11 +21,13 @@
 - (void)setUI{
 	numberTf = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, kMainScreenWidth-40, 40)];
 	numberTf.placeholder = @"QQ、Email或手机号码";
+	numberTf.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	numberTf.layer.cornerRadius = 5;
 	numberTf.layer.borderColor = [UIColor lightGrayColor].CGColor;
 	numberTf.layer.borderWidth = 1;
 	UILabel *leftlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
 	leftlabel.text = @" ";
+	leftlabel.backgroundColor = [UIColor clearColor];
 	numberTf.leftView = leftlabel;
 	numberTf.leftViewMode = UITextFieldViewModeAlways;
 	[numberTf becomeFirstResponder];
@@ -42,6 +44,7 @@
 	
 	tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, contentView.top, kMainScreenWidth - 50, 30)];
 	tipLabel.enabled = NO;
+	tipLabel.backgroundColor = [UIColor clearColor];
 	tipLabel.textColor = [UIColor lightGrayColor];
 	tipLabel.text = @"您的建议对我们至关重要，谢谢！";
 	[self.view addSubview:tipLabel];
@@ -70,7 +73,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-	self.title = @"意见反馈";
+	self.title = @"反馈建议";
 	self.view.backgroundColor = RGBCOLOR(242, 239, 233);
 	[self setUI];
 	UIButton *sendBt = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];

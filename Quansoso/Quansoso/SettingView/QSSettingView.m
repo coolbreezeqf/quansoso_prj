@@ -32,8 +32,8 @@
 }
 
 - (void)attentionWeibo{
-	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
-	[alert showAlertLabel];
+//	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
+//	[alert showAlertLabel];
 }
 
 - (void)feedback{
@@ -47,8 +47,8 @@
 }
 
 - (void)share{
-	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
-	[alert showAlertLabel];
+//	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
+//	[alert showAlertLabel];
 }
 
 - (void)cleanCache{
