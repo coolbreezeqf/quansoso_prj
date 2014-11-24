@@ -206,8 +206,8 @@
 		B08A5FEB19DD7853008077E7 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		B08A5FEC19DD8025008077E7 /* CAlertLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAlertLabel.h; sourceTree = "<group>"; };
 		B08A5FED19DD8025008077E7 /* CAlertLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAlertLabel.m; sourceTree = "<group>"; };
-		B08A5FF519DE78FE008077E7 /* QSMerchantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSMerchantTableViewCell.h; sourceTree = "<group>"; };
-		B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSMerchantTableViewCell.m; sourceTree = "<group>"; };
+		B08A5FF519DE78FE008077E7 /* QSMerchantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSMerchantTableViewCell.h; path = ../Tableviewcell/QSMerchantTableViewCell.h; sourceTree = "<group>"; };
+		B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSMerchantTableViewCell.m; path = ../Tableviewcell/QSMerchantTableViewCell.m; sourceTree = "<group>"; };
 		B08A5FFC19DFE61A008077E7 /* UILabel+dynamicSizeMe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+dynamicSizeMe.h"; sourceTree = "<group>"; };
 		B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+dynamicSizeMe.m"; sourceTree = "<group>"; };
 		B0BEDD741A2074B200721A68 /* QSAboutMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSAboutMeViewController.h; sourceTree = "<group>"; };
@@ -448,8 +448,6 @@
 			children = (
 				B03624D919E8049400ECFE61 /* QSCardTableViewCell.h */,
 				B03624DA19E8049400ECFE61 /* QSCardTableViewCell.m */,
-				B08A5FF519DE78FE008077E7 /* QSMerchantTableViewCell.h */,
-				B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */,
 				AB7AE3BE19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.h */,
 				AB7AE3BF19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m */,
 				ABC4242B19FDD3B000AE7847 /* QSDailyView.h */,
@@ -515,6 +513,8 @@
 				B0BFDD3D1A0A32C8002037DA /* QSSSearchBar.m */,
 				B0BFDD3F1A0A3B65002037DA /* QSSearchHistoryView.h */,
 				B0BFDD401A0A3B65002037DA /* QSSearchHistoryView.m */,
+				B08A5FF519DE78FE008077E7 /* QSMerchantTableViewCell.h */,
+				B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */,
 			);
 			path = SearchViewController;
 			sourceTree = "<group>";

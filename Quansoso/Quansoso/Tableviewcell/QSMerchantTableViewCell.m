@@ -13,14 +13,16 @@
 - (void)awakeFromNib {
     // Initialization code
 }
-
++ (CGFloat)cellHeight{
+	return 70;
+}
 - (id)initWithFrame:(CGRect)frame{
 //	NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MerchantCell" owner:self options:nil];
 //	self = nib[0];
     if (self = [super initWithFrame:frame]) {
-        _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 12.5, 90, 45)];
+        _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 22.5, 90, 45)];
         [self addSubview:_iconImageView];
-        _titleLb = [[UILabel alloc] initWithFrame:CGRectMake(_iconImageView.right+10, _iconImageView.top, kMainScreenWidth - _iconImageView.right - 20, 45)];
+        _titleLb = [[UILabel alloc] initWithFrame:CGRectMake(_iconImageView.right+20, _iconImageView.top, kMainScreenWidth - _iconImageView.right - 30, 45)];
         _titleLb.font = kFont15;
         _titleLb.textColor = [UIColor lightGrayColor];
         [self addSubview:_titleLb];
@@ -34,7 +36,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 12.5, 90, 45)];
         [self addSubview:_iconImageView];
-        _titleLb = [[UILabel alloc] initWithFrame:CGRectMake(_iconImageView.right+10, _iconImageView.top, kMainScreenWidth - _iconImageView.right - 20, 45)];
+        _titleLb = [[UILabel alloc] initWithFrame:CGRectMake(_iconImageView.right+20, _iconImageView.top, kMainScreenWidth - _iconImageView.right - 30, 45)];
         _titleLb.font = kFont15;
         _titleLb.textColor = [UIColor lightGrayColor];
         [self addSubview:_titleLb];

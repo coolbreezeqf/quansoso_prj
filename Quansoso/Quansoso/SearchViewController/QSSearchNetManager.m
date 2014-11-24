@@ -7,6 +7,7 @@
 //
 
 #import "QSSearchNetManager.h"
+#import "QSMerchantTableViewCell.h"
 #import "NetManager.h"
 #define kURLSearch @"http://repository.api.ekupeng.com/search/merchant"
 #import "SearchInfo.h"
@@ -24,7 +25,7 @@
 - (instancetype)init{
 	if (self = [super init]) {
 		currentPage = 0;
-		pageSize = (kMainScreenHeight - 44) / 90 ;
+		pageSize = (kMainScreenHeight - 44) / [QSMerchantTableViewCell cellHeight] ;
 	}
 	return self;
 }

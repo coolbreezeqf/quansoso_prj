@@ -66,18 +66,19 @@
 
 
 - (void)setUI{
-	_merchantName = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, kMainScreenWidth - 40, 30)];
+	_merchantName = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, kMainScreenWidth - 40, 30)];
 	_merchantName.text = _card.merchant;
-	_merchantName.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+	_merchantName.textColor = [UIColor blueColor];
+	_merchantName.font = kFont17;
 	[self.view addSubview:_merchantName];
 	
-	_cardTypeImage = [[UIImageView alloc] initWithFrame:CGRectMake(_merchantName.left, _merchantName.bottom + 5, 60, 60)];
+	_cardTypeImage = [[UIImageView alloc] initWithFrame:CGRectMake(_merchantName.left, _merchantName.bottom + 10, 60, 60)];
 	_cardTypeImage.image = [UIImage imageNamed:@"cardImage1"];
 	_cardTypeImage.highlightedImage = [UIImage imageNamed:@"cardImage1"];
 	[self.view addSubview:_cardTypeImage];
 	
 	_cardNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cardTypeImage.right + 10, _cardTypeImage.top, kMainScreenWidth - _cardTypeImage.right - 20, 20)];
-	_cardNameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+	_cardNameLabel.font = kFont17;
 	_cardNameLabel.text = _card.name;
 	[self.view addSubview:_cardNameLabel];
 	
@@ -99,44 +100,45 @@
 	_button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 28)];
 	_button.center = CGPointMake(kMainScreenWidth/2, _introduceLabel.bottom + 30);
 	[_button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchDown];
-	_button.backgroundColor = [UIColor whiteColor];
+	_button.backgroundColor = RGBCOLOR(240, 240, 240);
 	_button.layer.borderColor = [UIColor lightGrayColor].CGColor;
 	_button.layer.borderWidth = 1;
-	_button.layer.cornerRadius = 5;
+	//	_button.layer.cornerRadius = 5;
 	_button.titleLabel.font = kFont13;
 	[_button setTitle:@"立即领用" forState:UIControlStateNormal];
 	[_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[self.view addSubview:_button];
+	/*
+	 _recommendsView = [[UIView alloc] initWithFrame:CGRectMake(0, _button.bottom + 5, kMainScreenWidth, kMainScreenHeight - _button.bottom - 5)];
+	 _recommendsView.backgroundColor = [UIColor whiteColor];
+	 [self.view addSubview:_recommendsView];
+	 */
 	
-	_recommendsView = [[UIView alloc] initWithFrame:CGRectMake(0, _button.bottom + 5, kMainScreenWidth, kMainScreenHeight - _button.bottom - 5)];
-	_recommendsView.backgroundColor = [UIColor whiteColor];
-	[self.view addSubview:_recommendsView];
-
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-	self.view.backgroundColor = RGBCOLOR(230, 230, 230);
+	[super viewDidLoad];
+	// Do any additional setup after loading the view.
 	self.navigationController.navigationBarHidden = NO;
+	self.view.backgroundColor = RGBCOLOR(238, 238, 238);
 	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
 	[self setUI];
 	
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

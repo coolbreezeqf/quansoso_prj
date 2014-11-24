@@ -11,5 +11,5 @@
 @interface QSMerchantTableViewCell : UITableViewCell
 @property (strong, nonatomic)  UIImageView *iconImageView;
 @property (strong, nonatomic)  UILabel *titleLb;
-
++ (CGFloat)cellHeight;
 @end
