@@ -17,11 +17,13 @@
 #import "QSCardCell.h"
 #import "SVProgressHUD.h"
 #import "QSshowMerIntrodView.h"
+#import "QSLikeBrandManage.h"
 //#import "QSCardDetailsViewController.h"
 #define logoViewWidth 130
 #define logoImgWidth 100
 #define kGrayColor RGBCOLOR(242, 239, 233)
-#define isTest 1
+#define isTest 0
+#define showMerViewHeight 100
 
 @interface QSMerchantDetailsViewController()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -38,12 +40,23 @@
 @property (nonatomic,strong) UIActivityIndicatorView *activityView;
 @property (strong, nonatomic) UIView *dimView;
 @property (strong, nonatomic) QSshowMerIntrodView *showMerIntrodView;
-
+@property (strong, nonatomic) UIImageView *logoImageView;
+@property (strong, nonatomic) QSLikeBrandManage *likeManager;
+@property (strong, nonatomic) UIImageView *backImageView;
 @end
 
 @implementation QSMerchantDetailsViewController
 
 #pragma mark - getter and setter
+
+- (QSLikeBrandManage *)likeManager
+{
+    if (!_likeManager) {
+        _likeManager = [[QSLikeBrandManage alloc] init];
+    }
+    return _likeManager;
+}
+
 - (UIView *)dimView
 {
     if (!_dimView) {
@@ -61,14 +74,14 @@
 - (QSshowMerIntrodView *)showMerIntrodView
 {
     if (!_showMerIntrodView) {
-        _showMerIntrodView = [[QSshowMerIntrodView alloc] initWithFrame:CGRectMake(0, self.tableView.top-10, kMainScreenWidth, 100) AngleX:_detailMercBtnCenterX angleHeight:10];
+        _showMerIntrodView = [[QSshowMerIntrodView alloc] initWithFrame:CGRectMake(0, self.tableView.top-10, kMainScreenWidth, showMerViewHeight) AngleX:_detailMercBtnCenterX angleHeight:10];
     }
     return _showMerIntrodView;
 }
 
 #pragma mark - init
 
-- (instancetype)initWithShopId:(double)shopid{
+- (instancetype)initWithShopId:(NSInteger)shopid{
     if (self = [super init]) {
         _shopId = shopid;
     }
@@ -81,7 +94,7 @@
     [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
 	self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    self.title = @"加载中...";
     _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     _activityView.frame = CGRectMake(0, 0, 20, 20);
     _activityView.center = CGPointMake(kMainScreenWidth/2, kMainScreenHeight/2 - 100);
@@ -93,10 +106,18 @@
         [weakSelf.activityView stopAnimating];
         weakSelf.merchant = merchant;
         weakSelf.cardsArray = cardsArray;
-		[weakSelf.tableView reloadData];
-//        weakSelf.showMerIntrodView.text = weakSelf.merchant.merchantDescription;
+        weakSelf.title = merchant.name;
+        NSInteger categoryType = 1;
+        categoryType = [weakSelf.merchant.ekpCategory integerValue];
+        MLOG(@"------%@--------",weakSelf.merchant.ekpCategory);
+        weakSelf.backImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"QSstoreBackImg%i",categoryType]];
+        weakSelf.showMerIntrodView.text = weakSelf.merchant.merchantDescription;
+        [weakSelf.logoImageView sd_setImageWithURL:[NSURL URLWithString:self.merchant.picUrl] placeholderImage:[UIImage imageNamed:@"QSUserDefualt"]];
+        
+        [weakSelf.tableView reloadData];
     } failure:^{
         [weakSelf.activityView stopAnimating];
+        weakSelf.title = @"加载失败";
         [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
     [self setUI];
@@ -126,18 +147,25 @@
     //---商家logo部分view---
     UIView *logoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 160)];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:logoView.frame];
-#warning 待按店铺类型区分背景图片
+
     //self.merchant.type
-    imageView.image = [UIImage imageNamed:@"QSstoreBackImg"];
+    //imageView.image = [UIImage imageNamed:@"QSstoreBackImg1"];
+    imageView.backgroundColor = [UIColor whiteColor];
+    _backImageView = imageView;
     [logoView addSubview:imageView];
     //圆形logo背景
     UIView *logoBackview = [[UIView alloc] initWithFrame:CGRectMake((kMainScreenWidth-logoViewWidth)/2.0f, (160-logoViewWidth)/2.0, logoViewWidth, logoViewWidth)];
     logoBackview.layer.cornerRadius = logoBackview.width/2.0;
     logoBackview.backgroundColor = RGBACOLOR(255, 255, 255, 0.6);
+    logoBackview.clipsToBounds = YES;
     [logoView addSubview:logoBackview];
     //logo
     UIImageView *logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake((logoViewWidth - logoImgWidth)/2.0, (logoViewWidth - logoImgWidth)/2.0, logoImgWidth, logoImgWidth)];
-    [logoImageView sd_setImageWithURL:[NSURL URLWithString:self.merchant.picUrl] placeholderImage:[UIImage imageNamed:@"QSUserDefualt"]];
+    _logoImageView = logoImageView;
+    logoImageView.clipsToBounds = YES;
+    logoImageView.layer.cornerRadius = logoImageView.width/2.0f;
+    logoImageView.backgroundColor = [UIColor whiteColor];
+    [logoImageView setContentMode:UIViewContentModeScaleAspectFit];
     [logoBackview addSubview:logoImageView];
     [self.view addSubview:logoView];
     _logoView = logoView;
@@ -213,7 +241,8 @@
         cell = [[QSCardCell alloc] initWithReuseIdentifier:cellIdentifier];
     }
     if (indexPath.row < self.cardsArray.count) {
-        QSCards *card = self.cardsArray[indexPath.row];
+        QSCards *card = [[QSCards alloc] initWithDictionary:self.cardsArray[indexPath.row]];//self.cardsArray[indexPath.row];
+        //MLOG(@"%@",card.denomination);
         if(!isTest)	[cell setCellUIwithCardType:card.cardType
 						   denomination:card.denomination? :@""
 						Money_condition:card.moneyCondition? :@""
@@ -224,32 +253,56 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    QSCards *card = [[QSCards alloc] initWithDictionary:self.cardsArray[indexPath.row]];
+    //MLOG(@"%@",card);
+    QSCardDetailsViewController *dVC = [[QSCardDetailsViewController alloc] initWithCard:card];
+    [self.navigationController pushViewController:dVC animated:YES];
+}
 
 
 #pragma mark - action
 //收藏
 - (void)privateTheMerchant
 {
+    [self.likeManager likeBrand:[self.merchant.externalShopId integerValue] andSuccBlock:^{
+        [SVProgressHUD showSuccessWithStatus:@"关注成功" cover:NO offsetY:0];
+    } failBlock:^{
+        [SVProgressHUD showErrorWithStatus:@"关注失败" cover:NO offsetY:0];
+    }];
     
 }
 
 //进入店铺
 - (void)touchGoMercButton
 {
+    if (self.merchant.websiteUrl && self.merchant.websiteUrl.length) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.merchant.websiteUrl]];
+    }
     
 }
 //显示店铺详情
 - (void)touchDetailMercButton:(UIButton *)sender
 {
-    
+    self.showMerIntrodView.height = 1;
     [self.view addSubview:self.dimView];
     [self.dimView addSubview:self.showMerIntrodView];
+    [UIView animateWithDuration:0.5f animations:^{
+        self.showMerIntrodView.height = showMerViewHeight;
+    }];
+    
 }
 
 //隐藏dimView
 - (void)removeDimView
 {
-    [self.dimView removeFromSuperview];
+    [UIView animateWithDuration:0.5f animations:^{
+        self.showMerIntrodView.height = 1;
+    } completion:^(BOOL finished) {
+        [self.showMerIntrodView removeFromSuperview];
+        [self.dimView removeFromSuperview];
+    }];
 }
 
 - (void)back{

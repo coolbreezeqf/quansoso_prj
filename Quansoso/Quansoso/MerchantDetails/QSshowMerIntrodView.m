@@ -15,15 +15,21 @@
 @end
 @implementation QSshowMerIntrodView
 
+- (void)setText:(NSString *)text
+{
+    _text = text;
+    self.textView.text = text;
+}
 
 - (id)initWithFrame:(CGRect)frame AngleX:(CGFloat)angleX angleHeight:(CGFloat)angleHeight
 {
     self = [super initWithFrame:frame];
-    
+    self.clipsToBounds = YES;
     [self pathWithAngleX:angleX angleHeight:angleHeight frame:frame];
     self.backgroundColor = [UIColor clearColor];
     self.textView = [[UITextView alloc] initWithFrame:CGRectMake(10, angleHeight+10, kMainScreenWidth-20, frame.size.height - angleHeight-10-5)];
     self.textView.backgroundColor = [UIColor clearColor];
+    self.textView.editable = NO;
     self.textView.textColor = RGBCOLOR(171, 171, 171);
     self.textView.font = kFont12;
     self.textView.text = (self.text ? self.text : @"");

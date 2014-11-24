@@ -7,7 +7,7 @@
 //
 
 #import "QSCardCell.h"
-#define isTest 1
+#define isTest 0
 #define kGrayColor RGBCOLOR(242, 239, 233)
 #define kinCellHeight (kCellHeight - 10)
 //lf 242 128
@@ -54,13 +54,14 @@
     UILabel *theTitleLable = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 55, 24)];
     //theTitleLable.backgroundColor = [UIColor redColor];
     theTitleLable.font = [UIFont boldSystemFontOfSize:24];
-    theTitleLable = theTitleLable;
     theTitleLable.textAlignment = NSTextAlignmentRight;
+    _theTitleLabel = theTitleLable;
     [leftImageView addSubview:theTitleLable];
     if(isTest == 1) theTitleLable.text = @"100";
     
     UILabel *rmbTagLabel = [[UILabel alloc] initWithFrame:CGRectMake(theTitleLable.right+2, theTitleLable.bottom-14, 30, 14)];
-    if(isTest == 1) rmbTagLabel.text = @"元" ;
+    rmbTagLabel.bottom = theTitleLable.bottom;
+    rmbTagLabel.text = @"元" ;
     _rmbTagLabel = rmbTagLabel;
     rmbTagLabel.textAlignment = NSTextAlignmentLeft;
     rmbTagLabel.font = kFont14;
@@ -117,6 +118,7 @@
     dateInfoView.backgroundColor = RGBCOLOR(251, 250, 248);
     dateInfoView.alpha = 0.5f;
     [self addSubview:dateInfoView];
+    _dateInfoView = dateInfoView;
     
     UIImageView *noUseImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"QSoutDate"]];
     noUseImageView.frame = CGRectMake(midView.right- 2.5*kinCellHeight*191/(3*127.0f), 0, kinCellHeight*191/127.0f, kinCellHeight);
@@ -128,17 +130,20 @@
     willODimageView.image = [UIImage imageNamed:@"QSwillOutDate"];
     [leftImageView addSubview:willODimageView];
     willODimageView.hidden = YES;
+    _willODimageView = willODimageView;
     
     return self;
 }
 
 - (void)setCellUIwithCardType:(NSString *)card_type denomination:(NSString *)denom Money_condition:(NSString *)money_condition end:(NSString *)endTime discountRate:(NSString *)rate outdateState:(int)odState
 {
+    //MLOG(@"%@",denom);
     self.type = [self strTypetoIntType:card_type];
     //清除文字
     self.theTitleLabel.text = @"";
     self.theDetailLabel.text = @"";
     self.largeTitleLabel.text = @"";
+    self.rmbTagLabel.hidden = YES;
 
     //赋值
     self.conditionLabel.text = [NSString stringWithFormat:@"满%@元",money_condition];
@@ -149,16 +154,19 @@
         case cardType_privilege://优惠券
         {
             self.theTitleLabel.text = denom;
-            self.detailTextLabel.text = @"优惠券";
+            self.rmbTagLabel.hidden = NO;
+            self.theDetailLabel.text = @"优惠券";
             self.conditionLabel.text = [self.conditionLabel.text stringByAppendingString:@"使用"];
             
             int i = 0;
-            if ([denom isEqualToString:@"3"] || [denom isEqualToString:@"5"] || [denom isEqualToString:@"10"]) i = 0;
-            else if ([denom isEqualToString:@"20"])i = 1;
-            else if([denom isEqualToString:@"50"]) i = 2;
-            else if([denom isEqualToString:@"100"]) i = 3;
+            NSInteger denomNum = [denom integerValue];
+            if(denomNum<=10) i = 0;
+            else if(denomNum <= 20) i = 0;
+            else if(denomNum <= 50) i = 0;
+            else i=3;
             
             self.theTitleLabel.textColor = self.colorArray[i];
+            self.rmbTagLabel.textColor = self.colorArray[i];
             self.rightIconImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"cardRightImg1_%d",i]];
         }
             break;
@@ -187,6 +195,8 @@
         {
             self.theTitleLabel.text = denom;
             self.theDetailLabel.text = @"满减";
+            self.rmbTagLabel.hidden = NO;
+            self.rmbTagLabel.textColor = RGBCOLOR(230, 183, 60);
             self.theTitleLabel.textColor = RGBCOLOR(230, 183, 60);
             self.conditionLabel.text = [self.conditionLabel.text stringByAppendingString:[NSString stringWithFormat:@"减%@元",denom]];
             self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg2"];

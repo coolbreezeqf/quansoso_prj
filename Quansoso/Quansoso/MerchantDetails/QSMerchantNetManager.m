@@ -13,6 +13,7 @@
 #define kURL
 @implementation QSMerchantNetManager
 - (void)getMerchantWithShopID:(NSInteger)shopId success:(void (^)(QSSMerchant *merchant,NSArray *cardsArray))succ failure:(void (^)())failure{
+    MLOG(@"%i",shopId);
 	[NetManager requestWith:nil url:[NSString stringWithFormat:@"%@%i",kURLMerchant,shopId] method:@"GET" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         if([successDict[@"isSuccess"] boolValue] == true && [(NSString *)successDict[@"code"] isEqualToString:@"SUCCESS"]){
             QSSMerchant *merchantModel = [QSSMerchant modelObjectWithDictionary:successDict[@"merchant"]];
