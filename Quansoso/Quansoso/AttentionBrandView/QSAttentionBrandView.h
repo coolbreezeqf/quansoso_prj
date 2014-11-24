@@ -8,15 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "QSAttentionBrandListManage.h"
+#import "QSLikeBrandManage.h"
 
 @interface QSAttentionBrandView : UIView<UITableViewDataSource, UITableViewDelegate>
+{
+    int deleteBrandIndex;
+}
 @property(nonatomic, strong) UITableView *showBrandTableView;
 @property(nonatomic, strong) QSAttentionBrandListManage *attentionBrandListManage;
-@property(nonatomic, strong) void(^cellBolck)(void);
 @property(nonatomic, strong) UIAlertView *alertView;
 @property(nonatomic, strong) NSMutableArray *brandArray;
 @property(nonatomic, strong) UIView *failView;
 @property(nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
+@property(nonatomic, strong) QSLikeBrandManage *likeBrandManage;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

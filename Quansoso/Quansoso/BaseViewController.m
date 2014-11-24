@@ -42,7 +42,7 @@
         self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     }
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, kMainScreenWidth, 0.5)];
-    lineView.backgroundColor = [UIColor greenColor];
+    lineView.backgroundColor = RGBCOLOR(159, 214, 118);
     [self.navigationController.navigationBar addSubview:lineView];
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationController.navigationBar.barStyle = UIBaselineAdjustmentNone;

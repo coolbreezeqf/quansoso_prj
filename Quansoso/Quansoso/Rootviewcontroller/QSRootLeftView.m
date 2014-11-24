@@ -60,12 +60,19 @@ CGFloat cellHeight;
     self.headImgView.clipsToBounds = YES;
     [_topView addSubview:self.headImgView];
     
-    UILabel *logInLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.headImgView.right+20, self.headImgView.bottom-50, 40, 21)];
-    logInLabel.font = kFont16;
-    logInLabel.textColor = RGBCOLOR(126, 165, 97);
-    logInLabel.text = @"登录";
-    logInLabel.textAlignment = NSTextAlignmentLeft;
-    [_topView addSubview:logInLabel];
+    self.logInLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.headImgView.right+20, self.headImgView.bottom-50, 70, 21)];
+    self.logInLabel.font = kFont16;
+    self.logInLabel.textColor = RGBCOLOR(126, 165, 97);
+    if ([[TaeSession sharedInstance] isLogin])
+    {
+        self.logInLabel.text = [TaeSession sharedInstance].getUser.nick;
+    }
+    else
+    {
+        self.logInLabel.text = @"登录";
+    }
+    self.logInLabel.textAlignment = NSTextAlignmentLeft;
+    [_topView addSubview:self.logInLabel];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.topView.bottom-1, self.width*2/3, 0.5)];
     lineView.backgroundColor = [UIColor blackColor];

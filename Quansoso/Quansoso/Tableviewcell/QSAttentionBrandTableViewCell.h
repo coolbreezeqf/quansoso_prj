@@ -13,6 +13,7 @@
 @property(nonatomic, strong) UIImageView *brandImgView;
 @property(nonatomic, strong) UILabel *brandNameLabel;
 @property(nonatomic, strong) UIButton *cancelBtn;
+@property(nonatomic, assign) BOOL isfollow;
 
 
 - (instancetype)init;

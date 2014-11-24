@@ -226,7 +226,16 @@ typedef NS_ENUM(NSInteger, cateType) {
 #pragma mark 登陆刷新UI
 - (void)updateUI
 {
-    [leftView.headImgView sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]];
+    if ([[TaeSession sharedInstance] isLogin])
+    {
+        leftView.logInLabel.text = [TaeSession sharedInstance].getUser.nick;
+        [leftView.headImgView sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]];
+    }
+    else
+    {
+        leftView.logInLabel.text = @"登录";
+        [leftView.headImgView setImage:[UIImage imageNamed:@"QSUserDefualt"]];
+    }
 }
 
 #pragma mark Default  firstView

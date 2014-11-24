@@ -12,4 +12,5 @@
 
 - (void)likeBrand:(int)aBrandId andSuccBlock:(void(^)(void))aSuccBlock failBlock:(void(^)(void))aFailBlock;
 - (void)likeMultiBrand:(NSArray *)aBrandIdArray andSuccBlock:(void(^)(void))aSuccBlock failBlock:(void(^)(void))aFailBlock;
+- (void)unlikeBrand:(int)aBrandId andSuccBlock:(void(^)(void))aSuccBlock failBlock:(void(^)(void))aFailBlock;
 @end

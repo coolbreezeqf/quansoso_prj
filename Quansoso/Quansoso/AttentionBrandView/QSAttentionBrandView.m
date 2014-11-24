@@ -13,6 +13,8 @@
 #import "QSBrandCollectionViewController.h"
 #import "QSMerchant.h"
 #import "QSMerchantDetailsViewController.h"
+#import "NetManager.h"
+#import <TAESDK/TAESDK.h>
 
 @implementation QSAttentionBrandView
 
@@ -24,12 +26,12 @@
     
     UIView *topview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 60)];
     topview.backgroundColor = [UIColor whiteColor];
-    UIButton *attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-40, 15, 100, 30)];
+    UIButton *attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-50, 15, 100, 30)];
     [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrand"] forState:UIControlStateNormal];
     [attentionBtn addTarget:self action:@selector(attentionBrand) forControlEvents:UIControlEventTouchUpInside];
     [topview addSubview:attentionBtn];
     UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 59.5, kMainScreenWidth, 0.5)];
-    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    bottomLineView.backgroundColor = RGBCOLOR(239, 235, 227);
     [topview addSubview:bottomLineView];
     [self addSubview:topview];
     
@@ -111,6 +113,14 @@
     return _attentionBrandListManage;
 }
 
+- (QSLikeBrandManage *)likeBrandManage
+{
+    if (!_likeBrandManage) {
+        _likeBrandManage = [[QSLikeBrandManage alloc] init];
+    }
+    return _likeBrandManage;
+}
+
 #pragma mark 增加上拉下拉
 - (void)addTableViewTrag
 {
@@ -180,7 +190,9 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         QSMerchant *model = [self.brandArray objectAtIndex:indexPath.row];
         [cell setCellWithModel:model];
-        //    [cell.cancelBtn addTarget:self action:@selector(cancelAttention:) forControlEvents:UIControlEventTouchUpInside];
+        cell.isfollow = YES;
+        [cell.cancelBtn addTarget:self action:@selector(cancelAttention:) forControlEvents:UIControlEventTouchUpInside];
+        cell.cancelBtn.tag = indexPath.row+100;
         return cell;
 //    }
 //    else
@@ -211,17 +223,15 @@
 
 - (void)cancelAttention:(UIButton *)aBtn
 {
-    if ([aBtn.titleLabel.text isEqualToString:@"取消关注"])
+    deleteBrandIndex = aBtn.tag-100;
+    QSAttentionBrandTableViewCell *cell = (QSAttentionBrandTableViewCell *)[self.showBrandTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:deleteBrandIndex inSection:0]];
+    if (cell.isfollow==YES)
     {
         [self.alertView show];
-        self.cellBolck = ^(void)
-        {
-            [aBtn setTitle:@"添加关注" forState:UIControlStateNormal];
-        };
     }
     else
     {
-        [aBtn setTitle:@"取消关注" forState:UIControlStateNormal];
+        [self addAttentionBrand];
     }
 }
 
@@ -235,11 +245,32 @@
     return _alertView;
 }
 
+- (void)addAttentionBrand
+{
+    QSMerchant *model = [self.brandArray objectAtIndex:deleteBrandIndex];
+    QSAttentionBrandTableViewCell *cell = (QSAttentionBrandTableViewCell *)[self.showBrandTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:deleteBrandIndex inSection:0]];
+    [cell.cancelBtn setImage:[UIImage imageNamed:@"QSBrandLiked"] forState:UIControlStateNormal];
+    cell.isfollow = YES;
+    [self.likeBrandManage likeBrand:[model.externalShopId intValue] andSuccBlock:^{
+        
+    } failBlock:^{
+        
+    }];
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1)
     {
-        self.cellBolck();
+        QSAttentionBrandTableViewCell *cell = (QSAttentionBrandTableViewCell *)[self.showBrandTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:deleteBrandIndex inSection:0]];
+        [cell.cancelBtn setImage:[UIImage imageNamed:@"QSBrandUnlike"] forState:UIControlStateNormal];
+        cell.isfollow = NO;
+        QSMerchant *model = [self.brandArray objectAtIndex:deleteBrandIndex];
+        [self.likeBrandManage unlikeBrand:[model.externalShopId intValue] andSuccBlock:^{
+            
+        } failBlock:^{
+            
+        }];
     }
 }
 

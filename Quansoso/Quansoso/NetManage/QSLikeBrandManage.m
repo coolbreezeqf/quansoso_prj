@@ -47,4 +47,15 @@
 
 }
 
+- (void)unlikeBrand:(int)aBrandId andSuccBlock:(void (^)(void))aSuccBlock failBlock:(void (^)(void))aFailBlock
+{
+    NSString *deleteUrl = [NSString stringWithFormat:@"%@?service=unfollow&tbNick=%@&merchantShopId=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, aBrandId];
+    [NetManager requestWith:nil url:deleteUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+        MLOG(@"%@", successDict);
+        
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        
+    }];
+}
+
 @end

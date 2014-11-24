@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UITableView *tableview;
 @property (nonatomic, assign) int categoryType;
 @property(nonatomic, strong) UIImageView *headImgView;
+@property(nonatomic, strong) UILabel *logInLabel;
 
 @property(nonatomic ,copy) void(^ fadeBlock)(void);
 
