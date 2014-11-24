@@ -17,5 +17,5 @@
 @property(nonatomic, strong) UILabel *preferentialTimeLabel;
 
 - (instancetype)initWithFrame:(CGRect)frame;
-- (void)setCardWithModel:(QSCards *)aCardModel;
+- (void)setCardWithModel:(QSCards *)aCardModel andName:(NSString *)aName;
 @end

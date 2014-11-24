@@ -30,10 +30,10 @@
     [self addSubview:self.tableViewShow];
 
     self.activityIndicatorView = [[UIActivityIndicatorView alloc]
-                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-20, 40, 40)];
+                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2, 40, 40)];
     self.activityIndicatorView.color = [UIColor blackColor];
     [self.activityIndicatorView startAnimating];
-    [self addSubview:self.activityIndicatorView];
+    [self.tableViewShow addSubview:self.activityIndicatorView];
 #pragma mark 网络请求
 //    [self.userCouponListManage getFirstUserCouponListSuccBlock:^{
 //        [self.activityIndicatorView stopAnimating];

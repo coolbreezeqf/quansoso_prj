@@ -11,6 +11,7 @@
 @interface QSBrandBtn : UIButton
 @property(nonatomic, strong) UIImageView *brandLikeView;
 @property(nonatomic, strong) UIImageView *brandImgView;
+@property(nonatomic, assign) BOOL isLiked;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

@@ -22,6 +22,8 @@
 		AB5AE54B19DE76B100F6BA7A /* QSBrandCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5AE54A19DE76B100F6BA7A /* QSBrandCollectionViewController.m */; };
 		AB6D320719D674320016B8CF /* QSCouponView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6D320619D674320016B8CF /* QSCouponView.m */; };
 		AB7AE3C019E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7AE3BF19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m */; };
+		AB8F00701A22FE1E00C030AA /* QSDayRecommends.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F006F1A22FE1E00C030AA /* QSDayRecommends.m */; };
+		AB8F00731A23027F00C030AA /* QSLikeBrandManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F00721A23027F00C030AA /* QSLikeBrandManage.m */; };
 		AB9FF08919E3CB2400E65601 /* QSUserCouponListManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9FF08819E3CB2400E65601 /* QSUserCouponListManage.m */; };
 		AB9FF08C19E3CB5100E65601 /* QSAttentionBrandListManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9FF08B19E3CB5100E65601 /* QSAttentionBrandListManage.m */; };
 		ABC4242D19FDD3B000AE7847 /* QSDailyView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC4242C19FDD3B000AE7847 /* QSDailyView.m */; };
@@ -52,7 +54,6 @@
 		B0BFDD411A0A3B65002037DA /* QSSearchHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD401A0A3B65002037DA /* QSSearchHistoryView.m */; };
 		B0BFDD441A0CB23D002037DA /* QSSearchNothingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD431A0CB23D002037DA /* QSSearchNothingView.m */; };
 		C2E099BD19E9014B00828DD0 /* QSDayRecommendManage.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E099BC19E9014B00828DD0 /* QSDayRecommendManage.m */; };
-		C2E099C319E9064600828DD0 /* QSDayRecommends.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E099C219E9064600828DD0 /* QSDayRecommends.m */; };
 		FF8A929519C433B80010439B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A929419C433B80010439B /* main.m */; };
 		FF8A929A19C433B80010439B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8A929919C433B80010439B /* Images.xcassets */; };
 		FF8A92A919C433B80010439B /* QuansosoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A92A819C433B80010439B /* QuansosoTests.m */; };
@@ -155,6 +156,10 @@
 		AB6D320619D674320016B8CF /* QSCouponView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSCouponView.m; path = QSCouponView/QSCouponView.m; sourceTree = "<group>"; };
 		AB7AE3BE19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSAttentionBrandTableViewCell.h; sourceTree = "<group>"; };
 		AB7AE3BF19E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSAttentionBrandTableViewCell.m; sourceTree = "<group>"; };
+		AB8F006E1A22FE1E00C030AA /* QSDayRecommends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSDayRecommends.h; sourceTree = "<group>"; };
+		AB8F006F1A22FE1E00C030AA /* QSDayRecommends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSDayRecommends.m; sourceTree = "<group>"; };
+		AB8F00711A23027F00C030AA /* QSLikeBrandManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSLikeBrandManage.h; path = NetManage/QSLikeBrandManage.h; sourceTree = "<group>"; };
+		AB8F00721A23027F00C030AA /* QSLikeBrandManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSLikeBrandManage.m; path = NetManage/QSLikeBrandManage.m; sourceTree = "<group>"; };
 		AB9FF08719E3CB2400E65601 /* QSUserCouponListManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSUserCouponListManage.h; path = NetManage/QSUserCouponListManage.h; sourceTree = "<group>"; };
 		AB9FF08819E3CB2400E65601 /* QSUserCouponListManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSUserCouponListManage.m; path = NetManage/QSUserCouponListManage.m; sourceTree = "<group>"; };
 		AB9FF08A19E3CB5100E65601 /* QSAttentionBrandListManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSAttentionBrandListManage.h; path = NetManage/QSAttentionBrandListManage.h; sourceTree = "<group>"; };
@@ -217,8 +222,6 @@
 		B0BFDD431A0CB23D002037DA /* QSSearchNothingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchNothingView.m; sourceTree = "<group>"; };
 		C2E099BB19E9014B00828DD0 /* QSDayRecommendManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSDayRecommendManage.h; path = NetManage/QSDayRecommendManage.h; sourceTree = "<group>"; };
 		C2E099BC19E9014B00828DD0 /* QSDayRecommendManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSDayRecommendManage.m; path = NetManage/QSDayRecommendManage.m; sourceTree = "<group>"; };
-		C2E099C119E9064600828DD0 /* QSDayRecommends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSDayRecommends.h; sourceTree = "<group>"; };
-		C2E099C219E9064600828DD0 /* QSDayRecommends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSDayRecommends.m; sourceTree = "<group>"; };
 		FF8A928F19C433B80010439B /* Quansoso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quansoso.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8A929319C433B80010439B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF8A929419C433B80010439B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -387,6 +390,8 @@
 				AB9FF08819E3CB2400E65601 /* QSUserCouponListManage.m */,
 				C2E099BB19E9014B00828DD0 /* QSDayRecommendManage.h */,
 				C2E099BC19E9014B00828DD0 /* QSDayRecommendManage.m */,
+				AB8F00711A23027F00C030AA /* QSLikeBrandManage.h */,
+				AB8F00721A23027F00C030AA /* QSLikeBrandManage.m */,
 			);
 			name = NetManage;
 			sourceTree = "<group>";
@@ -460,10 +465,10 @@
 				5B3B10FA1A107B290020955E /* QSSMerchant.m */,
 				5B3B10F01A1078EA0020955E /* QSSActivities.h */,
 				5B3B10F11A1078EA0020955E /* QSSActivities.m */,
-				C2E099C119E9064600828DD0 /* QSDayRecommends.h */,
-				C2E099C219E9064600828DD0 /* QSDayRecommends.m */,
 				B02E0BD019CADAAB009A0306 /* SearchInfo.h */,
 				B02E0BD119CADAAB009A0306 /* SearchInfo.m */,
+				AB8F006E1A22FE1E00C030AA /* QSDayRecommends.h */,
+				AB8F006F1A22FE1E00C030AA /* QSDayRecommends.m */,
 				B02E0BCC19CADAAB009A0306 /* Result.h */,
 				B02E0BCD19CADAAB009A0306 /* Result.m */,
 				B02E0BCE19CADAAB009A0306 /* ResultCard.h */,
@@ -961,6 +966,7 @@
 				FFBA9EB719C6812500D9CBA2 /* DataCenterDeal.mm in Sources */,
 				FFBA9E9C19C680C800D9CBA2 /* UIImageView+AFNetworking.m in Sources */,
 				FFE85F4319CAC84400A216BB /* UIImage+ImageEffects.m in Sources */,
+				AB8F00731A23027F00C030AA /* QSLikeBrandManage.m in Sources */,
 				B08A5FE419D8271E008077E7 /* QSSearchView.m in Sources */,
 				B02E0BD419CADAAB009A0306 /* SearchInfo.m in Sources */,
 				FFBA9EB919C6812500D9CBA2 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
@@ -971,6 +977,7 @@
 				B08A5FD819D826DD008077E7 /* QSSearchNetManager.m in Sources */,
 				FFE85F2B19CABB9300A216BB /* QSCrazyQGView.m in Sources */,
 				FFBA9EE719C688F200D9CBA2 /* UIImage+GIF.m in Sources */,
+				AB8F00701A22FE1E00C030AA /* QSDayRecommends.m in Sources */,
 				FFBA9EE219C688F200D9CBA2 /* SDWebImageDownloader.m in Sources */,
 				B0BFDD441A0CB23D002037DA /* QSSearchNothingView.m in Sources */,
 				5B3B11011A1095140020955E /* QSCardCell.m in Sources */,
@@ -1038,7 +1045,6 @@
 				FFE85F1E19CABB1300A216BB /* BaseViewController.m in Sources */,
 				AB5AE54719DE738500F6BA7A /* QSAttentionBrandView.m in Sources */,
 				B0BEDD791A2077F900721A68 /* QSFeedBackViewController.m in Sources */,
-				C2E099C319E9064600828DD0 /* QSDayRecommends.m in Sources */,
 				5B3B10FB1A107B290020955E /* QSSMerchant.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

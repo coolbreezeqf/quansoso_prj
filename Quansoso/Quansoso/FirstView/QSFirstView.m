@@ -17,6 +17,8 @@
 #import "QSDailyView.h"
 #import "QSCards.h"
 #import "QSMerchant.h"
+#import "QSMerchantDetailsViewController.h"
+#import "QSCardDetailsViewController.h"
 
 #define times kMainScreenWidth/320
 @implementation QSFirstView
@@ -73,7 +75,7 @@
     self.activityDayRecommendView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-20, 40, 40)];
     self.activityDayRecommendView.color = [UIColor blackColor];
     [self.activityDayRecommendView startAnimating];
-    [self addSubview:self.activityDayRecommendView];
+    [self.showQuanTableView addSubview:self.activityDayRecommendView];
     
     [self addTableViewTrag];
     
@@ -301,8 +303,8 @@
                 if (self.dailyArray.count>0) {
                     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchQuanButton:)];
                     [btn addGestureRecognizer:tapGestureRecognizer];
-                    QSCards *cardModel = [self.dailyArray objectAtIndex:i];
-                    [btn setCardWithModel:cardModel];
+                    QSDayRecommends *model = [self.dailyArray objectAtIndex:i];
+                    [btn setCardWithModel:model.card andName:model.name];
                 }
                 [self.scrollView addSubview:btn];
             }
@@ -337,7 +339,7 @@
             for (int i=0; i<(j>=3?3:j%3); i++)
             {
                 UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 2.5, 96, 96)];
-                btn.tag = 100+indexPath.row*3+i;
+                btn.tag = 101+indexPath.row*3+i;
                 btn.backgroundColor = [UIColor whiteColor];
                 if (self.brandArray.count%9==0)
                 {
@@ -404,13 +406,20 @@
 #pragma mark 优惠券按钮
 - (void)touchQuanButton:(UITapGestureRecognizer *)TapGestureRecognizer
 {
-    NSLog(@"%d", TapGestureRecognizer.view.tag);
+    QSDayRecommends *model = [self.dailyArray objectAtIndex:TapGestureRecognizer.view.tag-1000];
+    QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:model.card];
+    vc.navigationController.navigationBarHidden = NO;
+    [ViewInteraction viewPushViewcontroller:vc];
 }
 
 #pragma mark 店铺按钮
 - (void)touchStoreButton:(UIButton *)aBtn
 {
-    NSLog(@"%d", aBtn.tag);
+    QSMerchant *model = [self.brandArray objectAtIndex:aBtn.tag-101];
+    QSMerchantDetailsViewController *vc = [[QSMerchantDetailsViewController alloc]
+                                           initWithTopId:[model.externalShopId doubleValue]];
+    vc.navigationController.navigationBarHidden = NO;
+    [ViewInteraction viewPushViewcontroller:vc];
 }
 
 #pragma mark 加号按钮

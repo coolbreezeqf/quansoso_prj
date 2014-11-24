@@ -8,7 +8,7 @@
 
 #import "QSDayRecommendManage.h"
 #import "NetManager.h"
-#import "QSCards.h"
+#import "QSDayRecommends.h"
 
 @implementation QSDayRecommendManage : NSObject
 
@@ -22,8 +22,7 @@
         for (int i=0; i<dayRecommendArray.count; i++)
         {
             NSDictionary *recommendDict = [dayRecommendArray objectAtIndex:i];
-            NSDictionary *cardDict = [recommendDict objectForKey:@"card"];
-            QSCards *model = [QSCards modelObjectWithDictionary:cardDict];
+            QSDayRecommends *model = [QSDayRecommends modelObjectWithDictionary:recommendDict];
             [dayRecommendModelArray addObject:model];
         }
         aBlock(dayRecommendModelArray);

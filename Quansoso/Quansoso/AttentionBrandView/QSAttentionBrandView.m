@@ -12,6 +12,7 @@
 #import "ViewInteraction.h"
 #import "QSBrandCollectionViewController.h"
 #import "QSMerchant.h"
+#import "QSMerchantDetailsViewController.h"
 
 @implementation QSAttentionBrandView
 
@@ -173,7 +174,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MLOG(@"%d", indexPath.row);
+    QSMerchant *model = [self.brandArray objectAtIndex:indexPath.row];
+    QSMerchantDetailsViewController *vc = [[QSMerchantDetailsViewController alloc]
+                                           initWithTopId:[model.externalShopId doubleValue]];
+    vc.navigationController.navigationBarHidden = NO;
+    [ViewInteraction viewPushViewcontroller:vc];
 }
 
 - (void)cancelAttention:(UIButton *)aBtn

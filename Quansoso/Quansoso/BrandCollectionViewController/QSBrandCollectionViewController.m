@@ -12,6 +12,7 @@
 #import "QSBrandBtn.h"
 #import "QSMerchant.h"
 #import "UIImageView+WebCache.h"
+#import "QSLikeBrandManage.h"
 
 //#define brandWidth 80;
 //#define brandHeight 80;
@@ -23,10 +24,12 @@
     CGFloat interval;
     CGFloat brandWidth;
     CGFloat brandHeight;
+    NSMutableDictionary *payAttentionBrand;
 }
 @property(nonatomic ,strong) UIActivityIndicatorView *activityIndicatorView;
 @property(nonatomic ,strong) QSBrandListManage *brandListManage;
 @property(nonatomic, strong) NSMutableArray *brandArray;
+@property(nonatomic, strong) QSLikeBrandManage *likeBrandManage;
 @end
 
 @implementation QSBrandCollectionViewController
@@ -50,6 +53,7 @@
     brandHeight = brandWidth/0.85;
     interval = 1;
     MLOG(@"%f %f", kMainScreenHeight-66, interval+brandHeight);
+    payAttentionBrand = [NSMutableDictionary new];
 //    lines = (kMainScreenHeight-66)/(interval+brandHeight);
     if (kMainScreenHeight>500) {
         lines=4;
@@ -160,21 +164,27 @@
     
 }
 
+- (QSLikeBrandManage *)likeBrandManage
+{
+    if (!_likeBrandManage) {
+        _likeBrandManage = [[QSLikeBrandManage alloc] init];
+    }
+    return _likeBrandManage;
+}
+
 #pragma mark 按钮 关注这些品牌
 - (void)payAttention
 {
     self.navigationController.navigationBarHidden = YES;
     self.navigationController.navigationBarHidden = YES;
+    NSArray *likedArray = [payAttentionBrand allValues];
+    [self.likeBrandManage likeMultiBrand:likedArray andSuccBlock:^{
+        
+    } failBlock:^{
+        
+    }];
+//    MLOG(@"%@", likedArray);
     [self.navigationController popToRootViewControllerAnimated:YES];
-    NSMutableArray *array = [NSMutableArray new];
-    for(int i=1; i<lines*3+1; i++)
-    {
-        if([self.showBrandTableView viewWithTag:i])
-        {
-            [array addObject:[NSString stringWithFormat:@"%d", i-1]];
-        }
-    }
-    MLOG(@"%@", array);
 }
 
 #pragma mark tableView
@@ -202,7 +212,8 @@
         QSBrandBtn *btn = [[QSBrandBtn alloc] initWithFrame:CGRectMake(brandWidth*i, 0, brandWidth, brandHeight)];
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseBrand:)];
         [btn addGestureRecognizer:tapGesture];
-        btn.tag = 100+indexPath.row*3+i+1;
+        btn.tag = 100+indexPath.row*3+i;
+        btn.isLiked = NO;
         [btn.brandImgView sd_setImageWithURL:[NSURL URLWithString:model.picUrl] placeholderImage:[UIImage imageNamed:@""]];
         [cell addSubview:btn];
     }
@@ -213,16 +224,18 @@
 - (void)chooseBrand:(UITapGestureRecognizer *)aGestureRecognizer
 {
     QSBrandBtn *aBtn = (QSBrandBtn *)aGestureRecognizer.view;
-    if (aBtn.tag>=100)
+    if (aBtn.isLiked==NO)
     {
         [aBtn.brandLikeView setImage:[UIImage imageNamed:@"QSBrandLiked"]];
-        aBtn.tag -= 100;
+        QSMerchant *model = [self.brandArray objectAtIndex:aBtn.tag-100];
+        [payAttentionBrand setObject:model.externalShopId forKey:[NSString stringWithFormat:@"%d", aBtn.tag]];
     }
     else
     {
         [aBtn.brandLikeView setImage:[UIImage imageNamed:@"QSBrandUnlike"]];
-        aBtn.tag += 100;
+        [payAttentionBrand removeObjectForKey:[NSString stringWithFormat:@"%d", aBtn.tag]];
     }
+    aBtn.isLiked = !aBtn.isLiked;
 }
 
 - (void)didReceiveMemoryWarning {
