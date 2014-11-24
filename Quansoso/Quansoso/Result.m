@@ -92,7 +92,7 @@ NSString *const kResultsName = @"name";
     }
 
     self.card = [NSArray arrayWithArray:parsedCard];
-            self.shopId = [[self objectOrNilForKey:kResultsShopId fromDictionary:dict] doubleValue];
+            self.shopId = [[self objectOrNilForKey:kResultsShopId fromDictionary:dict] integerValue];
             self.websiteUrl = [self objectOrNilForKey:kResultsWebsiteUrl fromDictionary:dict];
             self.isEnter = [[self objectOrNilForKey:kResultsIsEnter fromDictionary:dict] doubleValue];
             self.name = [self objectOrNilForKey:kResultsName fromDictionary:dict];
@@ -129,7 +129,7 @@ NSString *const kResultsName = @"name";
         }
     }
     [mutableDict setValue:[NSArray arrayWithArray:tempArrayForCard] forKey:kResultsCard];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.shopId] forKey:kResultsShopId];
+    [mutableDict setValue:[NSNumber numberWithInteger:self.shopId] forKey:kResultsShopId];
     [mutableDict setValue:self.websiteUrl forKey:kResultsWebsiteUrl];
     [mutableDict setValue:[NSNumber numberWithDouble:self.isEnter] forKey:kResultsIsEnter];
     [mutableDict setValue:self.name forKey:kResultsName];
@@ -169,7 +169,7 @@ NSString *const kResultsName = @"name";
     self.level = [aDecoder decodeDoubleForKey:kResultsLevel];
     self.keywords = [aDecoder decodeObjectForKey:kResultsKeywords];
     self.card = [aDecoder decodeObjectForKey:kResultsCard];
-    self.shopId = [aDecoder decodeDoubleForKey:kResultsShopId];
+    self.shopId = [aDecoder decodeIntegerForKey:kResultsShopId];
     self.websiteUrl = [aDecoder decodeObjectForKey:kResultsWebsiteUrl];
     self.isEnter = [aDecoder decodeDoubleForKey:kResultsIsEnter];
     self.name = [aDecoder decodeObjectForKey:kResultsName];
@@ -192,7 +192,7 @@ NSString *const kResultsName = @"name";
     [aCoder encodeDouble:_level forKey:kResultsLevel];
     [aCoder encodeObject:_keywords forKey:kResultsKeywords];
     [aCoder encodeObject:_card forKey:kResultsCard];
-    [aCoder encodeDouble:_shopId forKey:kResultsShopId];
+    [aCoder encodeInteger:_shopId forKey:kResultsShopId];
     [aCoder encodeObject:_websiteUrl forKey:kResultsWebsiteUrl];
     [aCoder encodeDouble:_isEnter forKey:kResultsIsEnter];
     [aCoder encodeObject:_name forKey:kResultsName];

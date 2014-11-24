@@ -8,5 +8,5 @@
 
 #import <UIKit/UIKit.h>
 @interface QSMerchantDetailsViewController : BaseViewController
-- (instancetype)initWithTopId:(double)topid;
+- (instancetype)initWithShopId:(NSInteger)shopid;
 @end

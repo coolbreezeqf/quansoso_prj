@@ -21,11 +21,11 @@
 #define logoViewWidth 130
 #define logoImgWidth 100
 #define kGrayColor RGBCOLOR(242, 239, 233)
-#define isTest 0
+#define isTest 1
 
 @interface QSMerchantDetailsViewController()<UITableViewDataSource,UITableViewDelegate>
 {
-	double _topId;
+	NSInteger _shopId;
     CGFloat _detailMercBtnCenterX;
 }
 //data
@@ -68,9 +68,9 @@
 
 #pragma mark - init
 
-- (instancetype)initWithTopId:(double)topid{
+- (instancetype)initWithShopId:(double)shopid{
     if (self = [super init]) {
-        _topId = topid;
+        _shopId = shopid;
     }
     return self;
 }
@@ -89,11 +89,12 @@
     [_activityView startAnimating];
     QSMerchantNetManager *netManager = [[QSMerchantNetManager alloc] init];
     __weak QSMerchantDetailsViewController *weakSelf = self;
-    [netManager getMerchantWithTopID:_topId success:^(QSSMerchant *merchant,NSArray *cardsArray) {
+    [netManager getMerchantWithShopID:_shopId success:^(QSSMerchant *merchant,NSArray *cardsArray) {
         [weakSelf.activityView stopAnimating];
         weakSelf.merchant = merchant;
         weakSelf.cardsArray = cardsArray;
-        weakSelf.showMerIntrodView.text = (weakSelf.merchant.description ? weakSelf.merchant.description : @"");
+		[weakSelf.tableView reloadData];
+//        weakSelf.showMerIntrodView.text = weakSelf.merchant.merchantDescription;
     } failure:^{
         [weakSelf.activityView stopAnimating];
         [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
@@ -213,7 +214,12 @@
     }
     if (indexPath.row < self.cardsArray.count) {
         QSCards *card = self.cardsArray[indexPath.row];
-        if(!isTest) [cell setCellUIwithCardType:card.cardType denomination:card.denomination? :@"" Money_condition:card.moneyCondition? :@"" end:card.endProperty? :@"" discountRate:card.discountRate outdateState:0];
+        if(!isTest)	[cell setCellUIwithCardType:card.cardType
+						   denomination:card.denomination? :@""
+						Money_condition:card.moneyCondition? :@""
+									end:card.endProperty? :@""
+						   discountRate:card.discountRate
+						   outdateState:0];
     }
     return cell;
 }

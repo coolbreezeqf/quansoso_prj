@@ -249,7 +249,7 @@
 	[_searchBar resignFirstResponder];
 	[self hideHistoryTable];
 	Result *result = [_searchResults objectAtIndex:indexPath.row];
-	QSMerchantDetailsViewController *mdvc = [[QSMerchantDetailsViewController alloc] initWithTopId:result.topId];
+	QSMerchantDetailsViewController *mdvc = [[QSMerchantDetailsViewController alloc] initWithShopId:result.shopId];
 	[self.navigationController pushViewController:mdvc animated:YES];
 }
 

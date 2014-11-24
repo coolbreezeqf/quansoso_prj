@@ -24,7 +24,7 @@
 @property (nonatomic, assign) double level;
 @property (nonatomic, strong) NSString *keywords;
 @property (nonatomic, strong) NSArray *card;  //of ResultCard
-@property (nonatomic, assign) double shopId;
+@property (nonatomic, assign) NSInteger shopId;
 @property (nonatomic, strong) NSString *websiteUrl;
 @property (nonatomic, assign) double isEnter;
 @property (nonatomic, strong) NSString *name;

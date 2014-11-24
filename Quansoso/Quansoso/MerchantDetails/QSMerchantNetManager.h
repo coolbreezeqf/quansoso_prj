@@ -10,6 +10,6 @@
 @class QSSMerchant;
 
 @interface QSMerchantNetManager : NSObject
-- (void)getMerchantWithTopID:(double)topId success:(void (^)(QSSMerchant *merchant,NSArray *cardsArray))succ failure:(void (^)())failure;
+- (void)getMerchantWithShopID:(NSInteger)topId success:(void (^)(QSSMerchant *merchant,NSArray *cardsArray))succ failure:(void (^)())failure;
 
 @end
