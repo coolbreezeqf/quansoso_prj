@@ -14,12 +14,20 @@
 int current;
 int pageSize;
 int totalPage;
+BOOL isIndex;
 @implementation QSAttentionBrandListManage
 
-- (void)getFirstAttentionBrandListSuccBlock:(void(^)(NSMutableArray *))aSuccBlock andFailBlock:(void(^)(void))aFailBlock
+- (void)getFirstAttentionBrandListSuccBlock:(void(^)(NSMutableArray *))aSuccBlock andFailBlock:(void(^)(void))aFailBlock isIndex:(BOOL)aBool
 {
     current = 1;
-    pageSize = 8;
+    if (aBool==YES)
+    {
+        pageSize = 9;
+    }
+    else
+    {
+        pageSize = 20;
+    }
     NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=j**t&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
     [NetManager requestWith:nil url:BrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
@@ -42,7 +50,6 @@ int totalPage;
 {
     if (current<totalPage) {
         current++;
-        pageSize=9;
         NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=j**t&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
         [NetManager requestWith:nil url:BrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
             MLOG(@"%@", successDict);

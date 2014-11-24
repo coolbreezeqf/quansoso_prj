@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "QSAttentionBrandListManage.h"
 #import "QSLikeBrandManage.h"
+#import "LoadingView.h"
 
 @interface QSAttentionBrandView : UIView<UITableViewDataSource, UITableViewDelegate>
 {
@@ -21,6 +22,7 @@
 @property(nonatomic, strong) UIView *failView;
 @property(nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property(nonatomic, strong) QSLikeBrandManage *likeBrandManage;
+@property(nonatomic, strong) LoadingView *loadingView;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

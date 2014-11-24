@@ -19,6 +19,8 @@
 #import "QSMerchant.h"
 #import "QSMerchantDetailsViewController.h"
 #import "QSCardDetailsViewController.h"
+#import "UIImage+GIF.h"
+
 
 #define times kMainScreenWidth/320
 @implementation QSFirstView
@@ -72,21 +74,19 @@
     self.showQuanTableView.allowsSelection = NO;
     [self addSubview:self.showQuanTableView];
     
-    self.activityDayRecommendView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-20, 40, 40)];
-    self.activityDayRecommendView.color = [UIColor blackColor];
-    [self.activityDayRecommendView startAnimating];
-    [self.showQuanTableView addSubview:self.activityDayRecommendView];
-    
     [self addTableViewTrag];
     
+    [self.showQuanTableView addSubview:self.loadingImgView];
+    
 #pragma mark 网络请求
+    [self getDayRecommends];
+    
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
         self.brandArray = aArray;
         [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     } andFailBlock:^{
         
-    }];
-    [self getDayRecommends];
+    } isIndex:YES];
     
     return self;
 }
@@ -97,7 +97,8 @@
         self.dailyArray = dayRecomendModelArray;
         NSArray *indexArray = [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:0], nil];
         [self.showQuanTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationNone];
-        [self.activityDayRecommendView stopAnimating];
+//        [self.activityDayRecommendView stopAnimating];
+        [self.loadingImgView removeFromSuperview];
     } andFailBlock:^{
         
     }];
@@ -116,6 +117,16 @@
 }
 
 #pragma mark getter
+- (UIImageView *)loadingImgView
+{
+    if (!_loadingImgView) {
+        _loadingImgView = [[UIImageView alloc]
+                           initWithFrame:CGRectMake(kMainScreenWidth/2-8, kMainScreenHeight/2-8, 16, 16)];
+        [_loadingImgView setImage:[UIImage sd_animatedGIFNamed:@"loading"]];
+    }
+    return _loadingImgView;
+}
+
 - (UIScrollView *)scrollView
 {
     if (!_scrollView) {
@@ -217,7 +228,7 @@
                 [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
             } andFailBlock:^{
                 
-            }];
+            } isIndex:YES];
             [self getDayRecommends];
         });
     }];
@@ -252,7 +263,7 @@
     else
     {
         if (self.brandArray.count>0) {
-            int btnCount = self.brandArray.count%9==0?self.brandArray.count:self.brandArray.count+1;
+            int btnCount = self.brandArray.count+1;//self.brandArray.count%9==0?self.brandArray.count:self.brandArray.count+1;
             return btnCount%3==0?btnCount/3:btnCount/3+1;
         }
         else
@@ -326,30 +337,36 @@
     }
     else
     {
+#warning tableView复用
         if (self.brandArray.count>0)
         {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellIdentifer"];
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellIdentifer"];
-            }
+            int btnCount = self.brandArray.count+1;
+            int j = btnCount-3*indexPath.row;
+            CGFloat interval = (kMainScreenWidth-298)/6;
+//            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellIdentifer"];
+//            if (cell==nil) {
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellIdentifer"];
+//                for (int i=0; i<3; i++) {
+//                    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 2.5, 96, 96)];
+//                    btn.tag = i;
+//                    btn.backgroundColor = [UIColor whiteColor];
+//                    [cell addSubview:btn];
+//                }
+//            }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundColor = [UIColor clearColor];
             CGRect frame = cell.frame;
             frame.size.width = kMainScreenWidth;
             cell.frame = frame;
-            int btnCount = self.brandArray.count;
-            if (self.brandArray.count%9!=0)
-            {
-                btnCount = self.brandArray.count+1;
-            }
-            int j = btnCount-3*indexPath.row;
-            CGFloat interval = (kMainScreenWidth-298)/6;
             for (int i=0; i<(j>=3?3:j%3); i++)
             {
+//                UIButton *btn = (UIButton *)[cell viewWithTag:i];
+//                btn.tag = 100+indexPath.row+i;
                 UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 2.5, 96, 96)];
-                btn.tag = 101+indexPath.row*3+i;
+                btn.tag = i+indexPath.row*3+100;
                 btn.backgroundColor = [UIColor whiteColor];
-                if (self.brandArray.count%9==0)
+                [cell addSubview:btn];
+                if (i+indexPath.row*3+1!=btnCount)
                 {
                     QSMerchant *model = [self.brandArray objectAtIndex:i+indexPath.row*3];
                     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40), (96/2-40), 80, 80)];
@@ -359,22 +376,10 @@
                 }
                 else
                 {
-                    if (i+indexPath.row*3 != btnCount-1)
-                    {
-                        QSMerchant *model = [self.brandArray objectAtIndex:i+indexPath.row*3];
-                        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40), (96/2-40), 80, 80)];
-                        [imgView sd_setImageWithURL:[NSURL URLWithString:model.picUrl] placeholderImage:[UIImage imageNamed:@""]];
-                        [btn addSubview:imgView];
-                        [btn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
-                    }
-                    else
-                    {
-                        [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
-                        [btn setImage:[UIImage imageNamed:@"QSLikeOtherBrand"] forState:UIControlStateNormal];
-                    }
+                    [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
+                    [btn setImage:[UIImage imageNamed:@"QSLikeOtherBrand"] forState:UIControlStateNormal];
                 }
 
-                [cell addSubview:btn];
             }
             cell.backgroundColor = [UIColor clearColor];
             return cell;
@@ -423,7 +428,8 @@
 #pragma mark 店铺按钮
 - (void)touchStoreButton:(UIButton *)aBtn
 {
-    QSMerchant *model = [self.brandArray objectAtIndex:aBtn.tag-101];
+    NSLog(@"%d", aBtn.tag);
+    QSMerchant *model = [self.brandArray objectAtIndex:aBtn.tag-100];
     QSMerchantDetailsViewController *vc = [[QSMerchantDetailsViewController alloc]
                                            initWithShopId:[model.externalShopId integerValue]];
     vc.navigationController.navigationBarHidden = NO;

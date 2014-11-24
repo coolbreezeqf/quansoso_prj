@@ -132,7 +132,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                     _currentPage=cateTypeIndex;
                     [weakself showFirstView];
                     self.navigationController.navigationBarHidden = YES;
-                    self.title = @"首页";
+//                    self.title = @"首页";
                 }
                 break;
                 case cateTypeCoupon:

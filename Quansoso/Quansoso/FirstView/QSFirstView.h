@@ -21,8 +21,8 @@
 @property(nonatomic, strong) QSAttentionBrandListManage *attentionBrandListManage;
 @property(nonatomic, strong) QSDayRecommendManage *dayRecommendManage;
 @property(nonatomic, strong) UITapGestureRecognizer *tapSearchGestureRecognizer;
-@property(nonatomic, strong) UIActivityIndicatorView *activityDayRecommendView;
 @property(nonatomic, strong) UIPageControl *pageControl;
+@property(nonatomic, strong) UIImageView *loadingImgView;
 @property(nonatomic, strong) void(^ myBlock)(void);
 
 @property(nonatomic, strong) NSArray *dailyArray;

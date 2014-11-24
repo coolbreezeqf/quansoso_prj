@@ -17,6 +17,8 @@
 		AB219E2919D7E864001395AC /* QSRootLeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2619D7E864001395AC /* QSRootLeftView.m */; };
 		AB219E2A19D7E864001395AC /* QSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2819D7E864001395AC /* QSRootViewController.m */; };
 		AB219E2E19D7E874001395AC /* QSFirstView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB219E2D19D7E874001395AC /* QSFirstView.m */; };
+		AB4509021A233E71006C7BD8 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4509011A233E71006C7BD8 /* LoadingView.m */; };
+		AB4509061A23470D006C7BD8 /* loading@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = AB4509051A23470D006C7BD8 /* loading@2x.gif */; };
 		AB5AE54419DE736E00F6BA7A /* QSShareAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5AE54319DE736E00F6BA7A /* QSShareAppView.m */; };
 		AB5AE54719DE738500F6BA7A /* QSAttentionBrandView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5AE54619DE738500F6BA7A /* QSAttentionBrandView.m */; };
 		AB5AE54B19DE76B100F6BA7A /* QSBrandCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5AE54A19DE76B100F6BA7A /* QSBrandCollectionViewController.m */; };
@@ -146,6 +148,9 @@
 		AB219E2819D7E864001395AC /* QSRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSRootViewController.m; sourceTree = "<group>"; };
 		AB219E2C19D7E874001395AC /* QSFirstView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSFirstView.h; sourceTree = "<group>"; };
 		AB219E2D19D7E874001395AC /* QSFirstView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSFirstView.m; sourceTree = "<group>"; };
+		AB4509001A233E71006C7BD8 /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingView.h; path = QSCouponView/LoadingView.h; sourceTree = "<group>"; };
+		AB4509011A233E71006C7BD8 /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingView.m; path = QSCouponView/LoadingView.m; sourceTree = "<group>"; };
+		AB4509051A23470D006C7BD8 /* loading@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "loading@2x.gif"; path = "QSCouponView/loading@2x.gif"; sourceTree = "<group>"; };
 		AB5AE54219DE736E00F6BA7A /* QSShareAppView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSShareAppView.h; path = ShareAppView/QSShareAppView.h; sourceTree = "<group>"; };
 		AB5AE54319DE736E00F6BA7A /* QSShareAppView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSShareAppView.m; path = ShareAppView/QSShareAppView.m; sourceTree = "<group>"; };
 		AB5AE54519DE738500F6BA7A /* QSAttentionBrandView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSAttentionBrandView.h; path = AttentionBrandView/QSAttentionBrandView.h; sourceTree = "<group>"; };
@@ -437,8 +442,11 @@
 		AB6D320419D674130016B8CF /* CouponView */ = {
 			isa = PBXGroup;
 			children = (
+				AB4509051A23470D006C7BD8 /* loading@2x.gif */,
 				AB6D320519D674320016B8CF /* QSCouponView.h */,
 				AB6D320619D674320016B8CF /* QSCouponView.m */,
+				AB4509001A233E71006C7BD8 /* LoadingView.h */,
+				AB4509011A233E71006C7BD8 /* LoadingView.m */,
 			);
 			name = CouponView;
 			sourceTree = "<group>";
@@ -937,6 +945,7 @@
 			files = (
 				FFD1243619D64937003B969F /* Tae.bundle in Resources */,
 				5BC8E5721A133CEF0097768C /* SVProgressHUD.bundle in Resources */,
+				AB4509061A23470D006C7BD8 /* loading@2x.gif in Resources */,
 				FFD1243519D64937003B969F /* AlipaySDK.bundle in Resources */,
 				FF8A929A19C433B80010439B /* Images.xcassets in Resources */,
 				FFE85F4719CACDEF00A216BB /* yw_1222.jpg in Resources */,
@@ -1018,6 +1027,7 @@
 				5BC8E5761A133E9A0097768C /* QSshowMerIntrodView.m in Sources */,
 				FFBA9EE519C688F200D9CBA2 /* SDWebImagePrefetcher.m in Sources */,
 				B03624EB19E80A8800ECFE61 /* QSMerchantNetManager.m in Sources */,
+				AB4509021A233E71006C7BD8 /* LoadingView.m in Sources */,
 				FFBA9EE419C688F200D9CBA2 /* SDWebImageManager.m in Sources */,
 				FFBA9EDE19C688F200D9CBA2 /* NSData+ImageContentType.m in Sources */,
 				B08A5FEE19DD8025008077E7 /* CAlertLabel.m in Sources */,

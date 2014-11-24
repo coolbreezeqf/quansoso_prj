@@ -29,18 +29,20 @@
     [self addTableViewTrag];
     [self addSubview:self.tableViewShow];
 
-    self.activityIndicatorView = [[UIActivityIndicatorView alloc]
-                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2, 40, 40)];
-    self.activityIndicatorView.color = [UIColor blackColor];
-    [self.activityIndicatorView startAnimating];
-    [self.tableViewShow addSubview:self.activityIndicatorView];
+//    self.activityIndicatorView = [[UIActivityIndicatorView alloc]
+//                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2, 40, 40)];
+//    self.activityIndicatorView.color = [UIColor blackColor];
+//    [self.activityIndicatorView startAnimating];
+//    [self.tableViewShow addSubview:self.activityIndicatorView];
+    [self addSubview:self.loadingView];
 #pragma mark 网络请求
     [self.userCouponListManage getFirstUserCouponListSuccBlock:^(NSArray *aArray) {
         self.dataArray = [aArray mutableCopy];
         if (self.dataArray.count==0) {
             [self addSubview:self.failView];
         }
-        [self.activityIndicatorView stopAnimating];
+//        [self.activityIndicatorView stopAnimating];
+        [self.loadingView removeFromSuperview];
         [self.tableViewShow reloadData];
     } andFailBlock:^{
         [self addSubview:self.failView];
@@ -49,6 +51,14 @@
 }
 
 #pragma mark getter方法
+- (LoadingView *)loadingView
+{
+    if (!_loadingView) {
+        _loadingView = [[LoadingView alloc] initWithFrame:self.tableViewShow.bounds];
+    }
+    return _loadingView;
+}
+
 - (UIView *)failView
 {
     if (!_failView) {
@@ -76,13 +86,15 @@
 - (void)reloadView
 {
     [self.failView removeFromSuperview];
-    [self.activityIndicatorView startAnimating];
+//    [self.activityIndicatorView startAnimating];
+    [self addSubview:self.loadingView];
     [self.userCouponListManage getFirstUserCouponListSuccBlock:^(NSArray *aArray) {
         self.dataArray = [aArray mutableCopy];
         if (self.dataArray.count==0) {
             [self addSubview:self.failView];
         }
-        [self.activityIndicatorView stopAnimating];
+//        [self.activityIndicatorView stopAnimating];
+        [self.loadingView removeFromSuperview];
         [self.tableViewShow reloadData];
     } andFailBlock:^{
         [self addSubview:self.failView];
@@ -117,7 +129,6 @@
             [weakself.tableViewShow.pullToRefreshView stopAnimating];
             [self.userCouponListManage getFirstUserCouponListSuccBlock:^(NSArray *aArray) {
                 self.dataArray = [aArray mutableCopy];
-                [self.activityIndicatorView stopAnimating];
                 [self.tableViewShow reloadData];
             } andFailBlock:^{
                 

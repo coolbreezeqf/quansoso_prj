@@ -44,11 +44,12 @@
     
     [self addTableViewTrag];
     
-    self.activityIndicatorView = [[UIActivityIndicatorView alloc]
-                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2, 40, 40)];
-    self.activityIndicatorView.color = [UIColor blackColor];
-    [self.activityIndicatorView startAnimating];
-    [self.showBrandTableView addSubview:self.activityIndicatorView];
+//    self.activityIndicatorView = [[UIActivityIndicatorView alloc]
+//                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2, 40, 40)];
+//    self.activityIndicatorView.color = [UIColor blackColor];
+//    [self.activityIndicatorView startAnimating];
+//    [self.showBrandTableView addSubview:self.activityIndicatorView];
+    [self addSubview:self.loadingView];
     
 #pragma mark 网络请求
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
@@ -56,12 +57,21 @@
         if (self.brandArray.count==0) {
             [self addSubview:self.failView];
         }
-        [self.activityIndicatorView stopAnimating];
+//        [self.activityIndicatorView stopAnimating];
+        [self.loadingView removeFromSuperview];
         [self.showBrandTableView reloadData];
     } andFailBlock:^{
         [self addSubview:self.failView];
-    }];
+    } isIndex:NO];
     return self;
+}
+
+- (LoadingView *)loadingView
+{
+    if (!_loadingView) {
+        _loadingView = [[LoadingView alloc] initWithFrame:self.showBrandTableView.bounds];
+    }
+    return _loadingView;
 }
 
 - (UIView *)failView
@@ -91,17 +101,19 @@
 - (void)reloadView
 {
     [self.failView removeFromSuperview];
-    [self.activityIndicatorView startAnimating];
+//    [self.activityIndicatorView startAnimating];
+    [self addSubview:self.loadingView];
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
         self.brandArray = [aArray mutableCopy];
         if (self.brandArray.count==0) {
             [self addSubview:self.failView];
         }
-        [self.activityIndicatorView stopAnimating];
+//        [self.activityIndicatorView stopAnimating];
+        [self.loadingView removeFromSuperview];
         [self.showBrandTableView reloadData];
     } andFailBlock:^{
         [self addSubview:self.failView];
-    }];
+    } isIndex:NO];
 }
 
 - (QSAttentionBrandListManage *)attentionBrandListManage
@@ -134,7 +146,7 @@
                 [self.showBrandTableView reloadData];
             } andFailBlock:^{
                 
-            }];
+            } isIndex:NO];
              });
     }];
 

@@ -13,6 +13,7 @@
 #import "QSMerchant.h"
 #import "UIImageView+WebCache.h"
 #import "QSLikeBrandManage.h"
+#import "LoadingView.h"
 
 //#define brandWidth 80;
 //#define brandHeight 80;
@@ -31,6 +32,7 @@
 @property(nonatomic, strong) NSMutableArray *brandArray;
 @property(nonatomic, strong) QSLikeBrandManage *likeBrandManage;
 @property(nonatomic, strong) UIView *failView;
+@property(nonatomic, strong) LoadingView *loadingView;
 @end
 
 @implementation QSBrandCollectionViewController
@@ -85,15 +87,17 @@
     [self addTableViewTrag];
     [self.view addSubview:self.showBrandTableView];
     
-    self.activityIndicatorView = [[UIActivityIndicatorView alloc]
-                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-40, 40, 40)];
-    [self.activityIndicatorView startAnimating];
-    self.activityIndicatorView.color = [UIColor blackColor];
-    [self.view addSubview:self.activityIndicatorView];
+//    self.activityIndicatorView = [[UIActivityIndicatorView alloc]
+//                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2-40, 40, 40)];
+//    [self.activityIndicatorView startAnimating];
+//    self.activityIndicatorView.color = [UIColor blackColor];
+//    [self.view addSubview:self.activityIndicatorView];
+    [self.view addSubview:self.loadingView];
     
 #pragma mark 网络请求
     [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^(NSMutableArray *aArray) {
-        [self.activityIndicatorView stopAnimating];
+//        [self.activityIndicatorView stopAnimating];
+        [self.loadingView removeFromSuperview];
         self.brandArray = aArray;
         if (self.brandArray.count==0) {
             [self.view addSubview:self.failView];
@@ -111,6 +115,14 @@
 }
 
 #pragma mark getter
+- (LoadingView *)loadingView
+{
+    if (!_loadingView) {
+        _loadingView = [[LoadingView alloc] initWithFrame:self.showBrandTableView.bounds];
+    }
+    return _loadingView;
+}
+
 - (UIView *)failView
 {
     if (!_failView) {
@@ -138,9 +150,11 @@
 - (void)reloadView
 {
     [self.failView removeFromSuperview];
-    [self.activityIndicatorView startAnimating];
+//    [self.activityIndicatorView startAnimating];
+    [self.view addSubview:self.loadingView];
     [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^(NSMutableArray *aArray) {
-        [self.activityIndicatorView stopAnimating];
+//        [self.activityIndicatorView stopAnimating];
+        [self.loadingView removeFromSuperview];
         self.brandArray = aArray;
         if (self.brandArray.count==0) {
             [self.view addSubview:self.failView];
