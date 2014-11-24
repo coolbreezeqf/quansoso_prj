@@ -30,6 +30,7 @@
 @property(nonatomic ,strong) QSBrandListManage *brandListManage;
 @property(nonatomic, strong) NSMutableArray *brandArray;
 @property(nonatomic, strong) QSLikeBrandManage *likeBrandManage;
+@property(nonatomic, strong) UIView *failView;
 @end
 
 @implementation QSBrandCollectionViewController
@@ -94,9 +95,12 @@
     [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^(NSMutableArray *aArray) {
         [self.activityIndicatorView stopAnimating];
         self.brandArray = aArray;
+        if (self.brandArray.count==0) {
+            [self.view addSubview:self.failView];
+        }
         [self.showBrandTableView reloadData];
     } andFailBlock:^{
-        
+        [self.view addSubview:self.failView];
     }];
 }
 
@@ -107,6 +111,46 @@
 }
 
 #pragma mark getter
+- (UIView *)failView
+{
+    if (!_failView) {
+        _failView = [[UIView alloc] initWithFrame:self.view.bounds];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-60, kMainScreenHeight/2-60, 120, 20)];
+        label.text = @"暂无数据";
+        label.textColor = [UIColor lightGrayColor];
+        label.font = kFont14;
+        label.textAlignment = NSTextAlignmentCenter;
+        label.backgroundColor = [UIColor clearColor];
+        [_failView addSubview:label];
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(label.left, label.bottom+50, 120, 30)];
+        [btn setTitle:@"重新加载" forState:UIControlStateNormal];
+        [btn setTitleColor:RGBCOLOR(73, 167, 14) forState:UIControlStateNormal];
+        btn.layer.cornerRadius = 5;
+        btn.layer.borderWidth = 0.5;
+        btn.layer.borderColor = [RGBCOLOR(73, 167, 14) CGColor];
+        
+        [btn addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventTouchUpInside];
+        [_failView addSubview:btn];
+    }
+    return _failView;
+}
+
+- (void)reloadView
+{
+    [self.failView removeFromSuperview];
+    [self.activityIndicatorView startAnimating];
+    [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^(NSMutableArray *aArray) {
+        [self.activityIndicatorView stopAnimating];
+        self.brandArray = aArray;
+        if (self.brandArray.count==0) {
+            [self.view addSubview:self.failView];
+        }
+        [self.showBrandTableView reloadData];
+    } andFailBlock:^{
+        [self.view addSubview:self.failView];
+    }];
+}
+
 - (QSBrandListManage *)brandListManage
 {
     if (!_brandListManage)
@@ -184,7 +228,7 @@
         
     }];
 //    MLOG(@"%@", likedArray);
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self back];
 }
 
 #pragma mark tableView

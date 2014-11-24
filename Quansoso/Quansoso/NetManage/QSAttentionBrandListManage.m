@@ -20,7 +20,7 @@ int totalPage;
 {
     current = 1;
     pageSize = 8;
-    NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=aa&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
+    NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=j**t&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
     [NetManager requestWith:nil url:BrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
         NSDictionary *pageDict = [successDict objectForKey:@"page"];
@@ -43,7 +43,7 @@ int totalPage;
     if (current<totalPage) {
         current++;
         pageSize=9;
-        NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=aa&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
+        NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=j**t&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
         [NetManager requestWith:nil url:BrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
             MLOG(@"%@", successDict);
             NSDictionary *pageDict = [successDict objectForKey:@"page"];

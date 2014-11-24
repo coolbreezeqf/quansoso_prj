@@ -212,11 +212,12 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showQuanTableView.pullToRefreshView stopAnimating];
-//            [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^{
-//                
-//            } andFailBlock:^{
-//                
-//            }];
+            [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
+                self.brandArray = aArray;
+                [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+            } andFailBlock:^{
+                
+            }];
             [self getDayRecommends];
         });
     }];
@@ -250,8 +251,15 @@
     }
     else
     {
-        int btnCount = self.brandArray.count%9==0?self.brandArray.count:self.brandArray.count+1;
-        return btnCount%3==0?btnCount/3:btnCount/3+1;
+        if (self.brandArray.count>0) {
+            int btnCount = self.brandArray.count%9==0?self.brandArray.count:self.brandArray.count+1;
+            return btnCount%3==0?btnCount/3:btnCount/3+1;
+        }
+        else
+        {
+            return 1;
+        }
+        
     }
 }
 

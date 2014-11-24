@@ -11,6 +11,6 @@
 @interface QSUserCouponListManage : NSObject
 @property(nonatomic) int nextPage;
 
-- (void)getFirstUserCouponListSuccBlock:(void(^)(void))aBlock;
-- (void)getNextUserCouponListSuccBlock:(void (^)(void))aBlock;
+- (void)getFirstUserCouponListSuccBlock:(void(^)(NSArray *aArray))aSuccBlock andFailBlock:(void(^)(void))aFailBlock;
+- (void)getNextUserCouponListSuccBlock:(void(^)(NSArray *aArray))aSuccBlock andFailBlock:(void(^)(void))aFailBlock;
 @end

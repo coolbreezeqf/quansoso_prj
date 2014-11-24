@@ -12,25 +12,26 @@
 
 @implementation QSUserCouponListManage
 
-- (void)getFirstUserCouponListSuccBlock:(void(^)(void))aBlock
+- (void)getFirstUserCouponListSuccBlock:(void(^)(NSArray *))aSuccBlock andFailBlock:(void(^)(void))aFailBlock
 {
     _nextPage = 2;
-    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=10", KBaseUrl,[[TaeSession sharedInstance] getUser].nick];
+//    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=10", KBaseUrl,[[TaeSession sharedInstance] getUser].nick];
+    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=j**t&current=1&pageSize=10", KBaseUrl];
     [NetManager requestWith:nil url:UserCouponListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
-        aBlock();
+        aSuccBlock([NSArray new]);
     } failure:^(NSDictionary *failDict, NSError *error) {
         
     }];
 
 }
 
-- (void)getNextUserCouponListSuccBlock:(void (^)(void))aBlock
+- (void)getNextUserCouponListSuccBlock:(void(^)(NSArray *))aSuccBlock andFailBlock:(void(^)(void))aFailBlock
 {
     NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=%d&pageSize=10", KBaseUrl,[[TaeSession sharedInstance] getUser].nick, _nextPage];
     [NetManager requestWith:nil url:UserCouponListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
-        aBlock();
+//        aBlock();
         _nextPage ++;
     } failure:^(NSDictionary *failDict, NSError *error) {
         

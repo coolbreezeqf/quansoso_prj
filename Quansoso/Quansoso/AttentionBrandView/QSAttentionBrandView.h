@@ -15,5 +15,8 @@
 @property(nonatomic, strong) void(^cellBolck)(void);
 @property(nonatomic, strong) UIAlertView *alertView;
 @property(nonatomic, strong) NSMutableArray *brandArray;
+@property(nonatomic, strong) UIView *failView;
+@property(nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
+
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

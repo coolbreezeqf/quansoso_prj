@@ -31,7 +31,7 @@
         
         self.brandImgView = [[UIImageView alloc] initWithFrame:CGRectMake((backView.right-backView.left-brandWidth)/2, 15, brandWidth, brandWidth)];
         self.brandLikeView.userInteractionEnabled = YES;
-        self.brandImgView.backgroundColor = [UIColor greenColor];
+        self.brandImgView.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.brandImgView];
     }
     return self;

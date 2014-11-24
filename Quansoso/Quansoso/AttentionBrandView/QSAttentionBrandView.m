@@ -42,38 +42,65 @@
     
     [self addTableViewTrag];
     
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc]
+                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2, 40, 40)];
+    self.activityIndicatorView.color = [UIColor blackColor];
+    [self.activityIndicatorView startAnimating];
+    [self.showBrandTableView addSubview:self.activityIndicatorView];
+    
 #pragma mark 网络请求
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
         self.brandArray = [aArray mutableCopy];
+        if (self.brandArray.count==0) {
+            [self addSubview:self.failView];
+        }
+        [self.activityIndicatorView stopAnimating];
         [self.showBrandTableView reloadData];
     } andFailBlock:^{
-        
+        [self addSubview:self.failView];
     }];
     return self;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 40;
-//}
+- (UIView *)failView
+{
+    if (!_failView) {
+        _failView = [[UIView alloc] initWithFrame:self.bounds];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-60, kMainScreenHeight/2-60, 120, 20)];
+        label.text = @"暂无数据";
+        label.textColor = [UIColor lightGrayColor];
+        label.font = kFont14;
+        label.textAlignment = NSTextAlignmentCenter;
+        label.backgroundColor = [UIColor clearColor];
+        [_failView addSubview:label];
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(label.left, label.bottom+50, 120, 30)];
+        [btn setTitle:@"重新加载" forState:UIControlStateNormal];
+        [btn setTitleColor:RGBCOLOR(73, 167, 14) forState:UIControlStateNormal];
+        btn.layer.cornerRadius = 5;
+        btn.layer.borderWidth = 0.5;
+        btn.layer.borderColor = [RGBCOLOR(73, 167, 14) CGColor];
+        
+        [btn addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventTouchUpInside];
+        [_failView addSubview:btn];
+    }
+    return _failView;
+}
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView *topview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 40)];
-//    topview.backgroundColor = [UIColor whiteColor];
-//    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 0.5)];
-//    topLineView.backgroundColor = [UIColor greenColor];
-//    [topview addSubview:topLineView];
-//    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, kMainScreenWidth, 0.5)];
-//    bottomLineView.backgroundColor = [UIColor blackColor];
-//    [topview addSubview:bottomLineView];
-//    UIButton *attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-15, 5, 31, 28)];
-//    [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrandImg"] forState:UIControlStateNormal];
-//    [attentionBtn addTarget:self action:@selector(attentionBrand) forControlEvents:UIControlEventTouchUpInside];
-//    [topview addSubview:attentionBtn];
-//
-//    return topview;
-//}
+- (void)reloadView
+{
+    [self.failView removeFromSuperview];
+    [self.activityIndicatorView startAnimating];
+    [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
+        self.brandArray = [aArray mutableCopy];
+        if (self.brandArray.count==0) {
+            [self addSubview:self.failView];
+        }
+        [self.activityIndicatorView stopAnimating];
+        [self.showBrandTableView reloadData];
+    } andFailBlock:^{
+        [self addSubview:self.failView];
+    }];
+}
 
 - (QSAttentionBrandListManage *)attentionBrandListManage
 {
@@ -133,7 +160,8 @@
 #pragma mark tableView datasource delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.brandArray.count>0?self.brandArray.count:4;
+//    return self.brandArray.count>0?self.brandArray.count:4;
+    return self.brandArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -143,7 +171,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.brandArray.count>0) {
+//    if (self.brandArray.count>0) {
         NSString *cellIdentifer = @"brandCell";
         QSAttentionBrandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
         if (!cell) {
@@ -154,22 +182,22 @@
         [cell setCellWithModel:model];
         //    [cell.cancelBtn addTarget:self action:@selector(cancelAttention:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
-    }
-    else
-    {
-        UITableViewCell *cell = [[UITableViewCell alloc] init];
-        if (indexPath.row==3) {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-50, 20, 100, 20)];
-            label.text = @"暂无数据";
-            label.font = kFont14;
-            label.textColor = [UIColor lightGrayColor];
-            label.textAlignment = NSTextAlignmentCenter;
-            [cell addSubview:label];
-        }
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        cell.backgroundColor = [UIColor clearColor];
-        return cell;
-    }
+//    }
+//    else
+//    {
+//        UITableViewCell *cell = [[UITableViewCell alloc] init];
+//        if (indexPath.row==3) {
+//            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-50, 20, 100, 20)];
+//            label.text = @"暂无数据";
+//            label.font = kFont14;
+//            label.textColor = [UIColor lightGrayColor];
+//            label.textAlignment = NSTextAlignmentCenter;
+//            [cell addSubview:label];
+//        }
+//        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+//        cell.backgroundColor = [UIColor clearColor];
+//        return cell;
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
