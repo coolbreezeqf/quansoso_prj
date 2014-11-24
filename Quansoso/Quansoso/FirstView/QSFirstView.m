@@ -425,7 +425,7 @@
 {
     QSMerchant *model = [self.brandArray objectAtIndex:aBtn.tag-101];
     QSMerchantDetailsViewController *vc = [[QSMerchantDetailsViewController alloc]
-                                           initWithTopId:[model.externalShopId doubleValue]];
+                                           initWithShopId:[model.externalShopId integerValue]];
     vc.navigationController.navigationBarHidden = NO;
     [ViewInteraction viewPushViewcontroller:vc];
 }

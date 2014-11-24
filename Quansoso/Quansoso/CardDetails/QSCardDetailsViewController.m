@@ -118,6 +118,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 	self.view.backgroundColor = RGBCOLOR(230, 230, 230);
+	self.navigationController.navigationBarHidden = NO;
 	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
 	[self setUI];
 	

@@ -79,7 +79,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
-    
+	self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
     _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
