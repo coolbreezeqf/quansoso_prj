@@ -67,7 +67,7 @@ typedef NS_ENUM(NSInteger, cateType) {
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rigthBtn];
     self.navigationItem.rightBarButtonItem = barButtonItem;
     [self showFirstView];
-    self.title = @"首页";
+//    self.title = @"首页";
 }
 
 #pragma mark 淘宝的系列操作

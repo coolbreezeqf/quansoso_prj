@@ -28,7 +28,7 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = RGBCOLOR(245, 240, 232);
     self.brandArray = [NSMutableArray new];
     
     UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenWidth/720*478)];

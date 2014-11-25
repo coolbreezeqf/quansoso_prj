@@ -120,13 +120,23 @@ CGFloat cellHeight;
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     if (indexPath.row != 4)
     {
-        UILabel *itemLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/3-15, cellHeight/2-10, 100, 20)];
+        UILabel *itemLabel = [[UILabel alloc] init];
+        UIImageView *itemImg = [[UIImageView alloc] init];
+        if (indexPath.row==5)
+        {
+            itemLabel.frame = CGRectMake(kMainScreenWidth/3-15, cellHeight/2-5, 100, 20);
+            itemImg.frame = CGRectMake(itemLabel.left-45, cellHeight/2-3, 16, 16);
+        }
+        else
+        {
+            itemLabel.frame = CGRectMake(kMainScreenWidth/3-15, cellHeight/2-10, 100, 20);
+            itemImg.frame = CGRectMake(itemLabel.left-45, cellHeight/2-8, 16, 16);
+        }
         itemLabel.text = [tableViewArray objectAtIndex:indexPath.row];
         itemLabel.font = kFont14;
         itemLabel.textColor = RGBCOLOR(126, 165, 97);
         itemLabel.textAlignment = NSTextAlignmentLeft;
         [cell addSubview:itemLabel];
-        UIImageView *itemImg = [[UIImageView alloc] initWithFrame:CGRectMake(itemLabel.left-45, cellHeight/2-8, 16, 16)];
         [itemImg setImage:[UIImage imageNamed:[NSString stringWithFormat:@"QSRightViewItem%d", indexPath.row]]];
         [cell addSubview:itemImg];
         if (indexPath.row != 5)

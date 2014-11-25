@@ -29,6 +29,7 @@ BOOL isIndex;
         pageSize = 20;
     }
     NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=j**t&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
+//    NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=%@&current=%d&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current,pageSize];
     [NetManager requestWith:nil url:BrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
         NSDictionary *pageDict = [successDict objectForKey:@"page"];
@@ -51,6 +52,7 @@ BOOL isIndex;
     if (current<totalPage) {
         current++;
         NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=j**t&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
+//        NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=%@&current=%d&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current,pageSize];
         [NetManager requestWith:nil url:BrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
             MLOG(@"%@", successDict);
             NSDictionary *pageDict = [successDict objectForKey:@"page"];
