@@ -12,6 +12,7 @@
 #import <TAESDK/TAESDK.h>
 #import "QSCardCell.h"
 #import "QSCards.h"
+#import "SVProgressHUD.h"
 
 @implementation QSCouponView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -46,6 +47,8 @@
         [self.tableViewShow reloadData];
     } andFailBlock:^{
         [self addSubview:self.failView];
+        [self.loadingView removeFromSuperview];
+        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
     return self;
 }
@@ -98,6 +101,8 @@
         [self.tableViewShow reloadData];
     } andFailBlock:^{
         [self addSubview:self.failView];
+        [self.loadingView removeFromSuperview];
+        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
 }
 
@@ -131,7 +136,7 @@
                 self.dataArray = [aArray mutableCopy];
                 [self.tableViewShow reloadData];
             } andFailBlock:^{
-                
+                [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
             }];
         });
     }];
@@ -144,7 +149,7 @@
             [self.userCouponListManage getNextUserCouponListSuccBlock:^(NSArray *aArray) {
                 
             } andFailBlock:^{
-                
+                [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
             }];
         });
     }];

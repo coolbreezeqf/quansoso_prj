@@ -14,6 +14,7 @@
 #import "UIImageView+WebCache.h"
 #import "QSLikeBrandManage.h"
 #import "LoadingView.h"
+#import "SVProgressHUD.h"
 
 //#define brandWidth 80;
 //#define brandHeight 80;
@@ -104,7 +105,9 @@
         }
         [self.showBrandTableView reloadData];
     } andFailBlock:^{
+        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
         [self.view addSubview:self.failView];
+        [self.loadingView removeFromSuperview];
     }];
 }
 
@@ -129,6 +132,7 @@
         _failView = [[UIView alloc] initWithFrame:self.view.bounds];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-60, kMainScreenHeight/2-60, 120, 20)];
         label.text = @"暂无数据";
+        label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor lightGrayColor];
         label.font = kFont14;
         label.textAlignment = NSTextAlignmentCenter;
@@ -161,6 +165,8 @@
         }
         [self.showBrandTableView reloadData];
     } andFailBlock:^{
+        [self.loadingView removeFromSuperview];
+        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
         [self.view addSubview:self.failView];
     }];
 }

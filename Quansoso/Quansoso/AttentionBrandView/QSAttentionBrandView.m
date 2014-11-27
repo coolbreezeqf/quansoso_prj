@@ -14,6 +14,7 @@
 #import "QSMerchant.h"
 #import "QSMerchantDetailsViewController.h"
 #import "NetManager.h"
+#import "SVProgressHUD.h"
 #import <TAESDK/TAESDK.h>
 
 @implementation QSAttentionBrandView
@@ -62,6 +63,8 @@
         [self.showBrandTableView reloadData];
     } andFailBlock:^{
         [self addSubview:self.failView];
+        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+        [self.loadingView removeFromSuperview];
     } isIndex:NO];
     return self;
 }
@@ -77,9 +80,10 @@
 - (UIView *)failView
 {
     if (!_failView) {
-        _failView = [[UIView alloc] initWithFrame:self.bounds];
+        _failView = [[UIView alloc] initWithFrame:CGRectMake(0, 60, kMainScreenWidth, kMainScreenHeight-60-62)];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-60, kMainScreenHeight/2-60, 120, 20)];
         label.text = @"暂无数据";
+        label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor lightGrayColor];
         label.font = kFont14;
         label.textAlignment = NSTextAlignmentCenter;
@@ -112,7 +116,9 @@
         [self.loadingView removeFromSuperview];
         [self.showBrandTableView reloadData];
     } andFailBlock:^{
+        [self.loadingView removeFromSuperview];
         [self addSubview:self.failView];
+        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
     } isIndex:NO];
 }
 
@@ -145,7 +151,7 @@
             [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
                 [self.showBrandTableView reloadData];
             } andFailBlock:^{
-                
+                [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
             } isIndex:NO];
              });
     }];
@@ -165,7 +171,7 @@
                 [self.brandArray addObjectsFromArray:aArray];
                 [self.showBrandTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
             } andFailBlock:^{
-                
+                [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
             }];
         });
     }];    

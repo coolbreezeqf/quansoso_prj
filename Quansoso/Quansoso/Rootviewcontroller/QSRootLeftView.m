@@ -62,6 +62,7 @@ CGFloat cellHeight;
     
     self.logInLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.headImgView.right+20, self.headImgView.bottom-50, 70, 21)];
     self.logInLabel.font = kFont16;
+    self.logInLabel.backgroundColor = [UIColor clearColor];
     self.logInLabel.textColor = RGBCOLOR(126, 165, 97);
     if ([[TaeSession sharedInstance] isLogin])
     {
@@ -121,6 +122,7 @@ CGFloat cellHeight;
     if (indexPath.row != 4)
     {
         UILabel *itemLabel = [[UILabel alloc] init];
+        itemLabel.backgroundColor = [UIColor clearColor];
         UIImageView *itemImg = [[UIImageView alloc] init];
         if (indexPath.row==5)
         {

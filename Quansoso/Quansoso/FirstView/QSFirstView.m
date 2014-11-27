@@ -20,6 +20,7 @@
 #import "QSMerchantDetailsViewController.h"
 #import "QSCardDetailsViewController.h"
 #import "UIImage+GIF.h"
+#import "SVProgressHUD.h"
 
 
 #define times kMainScreenWidth/320
@@ -54,6 +55,7 @@
     [self.viewSearch setImage:[UIImage imageNamed:@"QSSearchBack"]];
     
     UILabel *defalutLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, (self.viewSearch.bottom-self.viewSearch.top)/2-10, 150, 20)];
+    defalutLabel.backgroundColor = [UIColor clearColor];
     defalutLabel.font = kFont16;
     defalutLabel.text = @"搜索品牌优惠券";
     defalutLabel.textColor = RGBCOLOR(147, 192, 115);
@@ -85,7 +87,8 @@
         self.brandArray = aArray;
         [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     } andFailBlock:^{
-        
+        [self.loadingImgView removeFromSuperview];
+        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
     } isIndex:YES];
     
     return self;
@@ -100,7 +103,8 @@
 //        [self.activityDayRecommendView stopAnimating];
         [self.loadingImgView removeFromSuperview];
     } andFailBlock:^{
-        
+        [self.loadingImgView removeFromSuperview];
+        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
      
 }
@@ -171,6 +175,7 @@
         _labelPrivilege.text = @"我关注的商家";
         _labelPrivilege.textColor = RGBCOLOR(73, 167, 14);
         _labelPrivilege.font = kFont12;
+        _labelPrivilege.backgroundColor = [UIColor clearColor];
         _labelPrivilege.textAlignment = NSTextAlignmentLeft;
     }
     return _labelPrivilege;
@@ -182,6 +187,7 @@
         _labelDaily = [[UILabel alloc]
                         initWithFrame:CGRectMake(10, 10, 90, 20)];
         _labelDaily.text = @"本日推荐";
+        _labelDaily.backgroundColor = [UIColor clearColor];
         _labelDaily.textColor = RGBCOLOR(73, 167, 14);
         _labelDaily.font = kFont12;
         _labelDaily.textAlignment = NSTextAlignmentLeft;
@@ -227,7 +233,7 @@
                 self.brandArray = aArray;
                 [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
             } andFailBlock:^{
-                
+                [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
             } isIndex:YES];
             [self getDayRecommends];
         });
@@ -242,7 +248,7 @@
                     [self.brandArray addObjectsFromArray:aArray];
                     [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
                 } andFailBlock:^{
-                    
+                    [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
                 }];
         });
     }];
@@ -292,7 +298,7 @@
     }
     else
     {
-        float cellHeight = 101;
+        float cellHeight = 105;
         return self.brandArray.count>0?cellHeight:cellHeight+30;
     }
 }
@@ -372,6 +378,18 @@
                     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40), (96/2-40), 80, 80)];
                     [imgView sd_setImageWithURL:[NSURL URLWithString:model.picUrl] placeholderImage:[UIImage imageNamed:@""]];
                     [btn addSubview:imgView];
+                    UIImageView *countImgView = [[UIImageView alloc] initWithFrame:CGRectMake(96-12, -6, 18, 18)];
+                    countImgView.layer.cornerRadius = 9;
+                    countImgView.backgroundColor = RGBCOLOR(252, 82, 88);
+                    [btn addSubview:countImgView];
+                    UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+                    countLabel.textAlignment = NSTextAlignmentCenter;
+                    countLabel.backgroundColor = [UIColor clearColor];
+                    countLabel.font = kFont10;
+                    countLabel.text = @"15";
+                    countLabel.backgroundColor = [UIColor clearColor];
+                    countLabel.textColor = [UIColor whiteColor];
+                    [countImgView addSubview:countLabel];
                     [btn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
                 }
                 else
@@ -389,9 +407,10 @@
         {
             UITableViewCell *cell = [[UITableViewCell alloc] init];
             cell.backgroundColor = [UIColor clearColor];
+            CGFloat interval = (kMainScreenWidth-298)/6;
             for (int i=0; i<3; i++)
             {
-                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake((kMainScreenWidth-298)/2+(96+5)*i, 2.5, 96, 96)];
+                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 2.5, 96, 96)];
                 btn.backgroundColor = [UIColor whiteColor];
                 [btn setImage:[UIImage imageNamed:@"QSLikeOtherBrand"] forState:UIControlStateNormal];
                 [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
