@@ -11,16 +11,21 @@
 #import <TAESDK/TAESDK.h>
 #import "NetManager.h"
 #import "CAlertLabel.h"
-@interface QSCardDetailsViewController ()
+#import "QSCardDetailsNetManager.h"
+#import "SVProgressHUD.h"
+@interface QSCardDetailsViewController (){
+	BOOL isFromRoot;
+}
 //data
 @property (nonatomic,strong) QSCards *card;
+
 //UI
 @property (nonatomic,strong) UILabel *introduceLabel;
 @property (nonatomic,strong) UILabel *merchantName;
 @property (nonatomic,strong) UILabel *cardNameLabel;
 @property (nonatomic,strong) UIImageView *cardTypeImage;
 @property (nonatomic,strong) UIButton *button;
-@property (nonatomic,strong) UIView *recommendsView; // 推荐view
+@property (nonatomic,strong) QSMerchantCommendView *recommendsView; // 推荐view
 
 @end
 
@@ -32,12 +37,20 @@
 		[[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
 			[weakself accreditLogin];
 		} failedCallback:^(NSError *error) {
-			CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"授权失败"];
-			[alert showAlertLabel];
+			[SVProgressHUD showErrorWithStatus:@"授权失败" cover:YES offsetY:kMainScreenHeight/2];
 		}];
 		return;
 	}else{
-		
+		NSString *nick = [[TaeSession sharedInstance] getUser].nick;
+		QSCardDetailsNetManager *netManager = [[QSCardDetailsNetManager alloc] init];
+		[netManager getCardUseCouponId:_card.sourceId andNick:nick success:^(NSString *describe) {
+			MLOG(@"%@",describe);
+			[SVProgressHUD showSuccessWithStatus:@"领取成功" cover:YES offsetY:kMainScreenHeight/2];
+		} failure:^(NSString *describe) {
+			MLOG(@"%@",describe);
+			[SVProgressHUD showErrorWithStatus:describe cover:YES offsetY:kMainScreenHeight/2];
+
+		}];
 	}
 }
 
@@ -60,6 +73,15 @@
 - (instancetype)initWithCard:(QSCards *)card{
 	if (self = [super init]) {
 		_card = card;
+		isFromRoot = YES;
+	}
+	return self;
+}
+
+- (instancetype)initWithCard:(QSCards *)card isFromRoot:(BOOL)isRoot{
+	if (self = [super init]){
+		_card = card;
+		isFromRoot = isRoot;
 	}
 	return self;
 }
@@ -91,29 +113,40 @@
 			_introduceLabel.text = [NSString stringWithFormat:@"剩%@张 (已领用%@张)\n单笔满%.2lf元可用，每人限领%@张\n截止%@", _card.stocks,_card.sold,[_card.moneyCondition doubleValue]/100, _card.limited, _card.endProperty];
 		}
 			break;
-			
+		case 7:{
+			[_introduceLabel setNumberOfLines:3];
+			_introduceLabel.text = [NSString stringWithFormat:@"剩%@张 (已领用%@张)\n单笔满%.2lf元可用，每人限领%@张\n截止%@", _card.stocks,_card.sold,[_card.moneyCondition doubleValue]/100, _card.limited, _card.endProperty];
+		}break;
 		default:
 			break;
 	}
 	[self.view addSubview:_introduceLabel];
 	
-	_button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 28)];
+	_button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 88, 28)];
 	_button.center = CGPointMake(kMainScreenWidth/2, _introduceLabel.bottom + 30);
-	[_button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchDown];
-	_button.backgroundColor = RGBCOLOR(240, 240, 240);
-	_button.layer.borderColor = [UIColor lightGrayColor].CGColor;
-	_button.layer.borderWidth = 1;
-	//	_button.layer.cornerRadius = 5;
-	_button.titleLabel.font = kFont13;
-	[_button setTitle:@"立即领用" forState:UIControlStateNormal];
-	[_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//	[_button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchDown];
+//	_button.backgroundColor = RGBCOLOR(240, 240, 240);
+//	_button.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//	_button.layer.borderWidth = 1;
+//	//	_button.layer.cornerRadius = 5;
+//	_button.titleLabel.font = kFont13;
+//	[_button setTitle:@"立即领用" forState:UIControlStateNormal];
+//	[_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[_button setBackgroundImage:[UIImage imageNamed:@"QSLingYong"] forState:UIControlStateNormal];
 	[self.view addSubview:_button];
-	/*
-	 _recommendsView = [[UIView alloc] initWithFrame:CGRectMake(0, _button.bottom + 5, kMainScreenWidth, kMainScreenHeight - _button.bottom - 5)];
-	 _recommendsView.backgroundColor = [UIColor whiteColor];
-	 [self.view addSubview:_recommendsView];
-	 */
 	
+	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, _button.bottom + 5, kMainScreenWidth, kMainScreenHeight - _button.bottom - 5)];
+	_recommendsView.backgroundColor = [UIColor whiteColor];
+	_recommendsView.delegate = self;
+	[self.view addSubview:_recommendsView];
+}
+
+- (void)gotoMoreCard{
+	if (isFromRoot) {
+		[self.navigationController popViewControllerAnimated:YES];
+	}else{
+		[self.navigationController popViewControllerAnimated:YES];
+	}
 }
 
 - (void)viewDidLoad {
@@ -121,6 +154,7 @@
 	// Do any additional setup after loading the view.
 	self.navigationController.navigationBarHidden = NO;
 	self.view.backgroundColor = RGBCOLOR(238, 238, 238);
+	self.title = @"领取优惠券";
 	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
 	[self setUI];
 	

@@ -33,6 +33,7 @@
 		B02E0BD219CADAAB009A0306 /* Result.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCD19CADAAB009A0306 /* Result.m */; };
 		B02E0BD319CADAAB009A0306 /* ResultCard.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCF19CADAAB009A0306 /* ResultCard.m */; };
 		B02E0BD419CADAAB009A0306 /* SearchInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BD119CADAAB009A0306 /* SearchInfo.m */; };
+		B031A6421A23599B00012D67 /* QSCardDetailsNetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B031A6411A23599B00012D67 /* QSCardDetailsNetManager.m */; };
 		B03624DC19E8049400ECFE61 /* QSCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624DA19E8049400ECFE61 /* QSCardTableViewCell.m */; };
 		B03624E519E8059000ECFE61 /* QSActivities.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624DE19E8059000ECFE61 /* QSActivities.m */; };
 		B03624E619E8059000ECFE61 /* QSCards.m in Sources */ = {isa = PBXBuildFile; fileRef = B03624E019E8059000ECFE61 /* QSCards.m */; };
@@ -50,6 +51,8 @@
 		B08A5FEE19DD8025008077E7 /* CAlertLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FED19DD8025008077E7 /* CAlertLabel.m */; };
 		B08A5FF819DE78FE008077E7 /* QSMerchantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */; };
 		B08A5FFE19DFE61A008077E7 /* UILabel+dynamicSizeMe.m in Sources */ = {isa = PBXBuildFile; fileRef = B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */; };
+		B09EC6071A274DC700066239 /* QSMerchantCommendView.m in Sources */ = {isa = PBXBuildFile; fileRef = B09EC6061A274DC700066239 /* QSMerchantCommendView.m */; };
+		B09EC6091A27585300066239 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B09EC6081A27585300066239 /* Images.xcassets */; };
 		B0BEDD761A2074B200721A68 /* QSAboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BEDD751A2074B200721A68 /* QSAboutMeViewController.m */; };
 		B0BEDD791A2077F900721A68 /* QSFeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BEDD781A2077F900721A68 /* QSFeedBackViewController.m */; };
 		B0BFDD3E1A0A32C8002037DA /* QSSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD3D1A0A32C8002037DA /* QSSSearchBar.m */; };
@@ -57,7 +60,6 @@
 		B0BFDD441A0CB23D002037DA /* QSSearchNothingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD431A0CB23D002037DA /* QSSearchNothingView.m */; };
 		C2E099BD19E9014B00828DD0 /* QSDayRecommendManage.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E099BC19E9014B00828DD0 /* QSDayRecommendManage.m */; };
 		FF8A929519C433B80010439B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A929419C433B80010439B /* main.m */; };
-		FF8A929A19C433B80010439B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8A929919C433B80010439B /* Images.xcassets */; };
 		FF8A92A919C433B80010439B /* QuansosoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A92A819C433B80010439B /* QuansosoTests.m */; };
 		FFBA9E9219C680C800D9CBA2 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBA9E7B19C680C800D9CBA2 /* AFHTTPClient.m */; };
 		FFBA9E9319C680C800D9CBA2 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBA9E7D19C680C800D9CBA2 /* AFHTTPRequestOperation.m */; };
@@ -180,6 +182,8 @@
 		B02E0BCF19CADAAB009A0306 /* ResultCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultCard.m; sourceTree = "<group>"; };
 		B02E0BD019CADAAB009A0306 /* SearchInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInfo.h; sourceTree = "<group>"; };
 		B02E0BD119CADAAB009A0306 /* SearchInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInfo.m; sourceTree = "<group>"; };
+		B031A6401A23599B00012D67 /* QSCardDetailsNetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCardDetailsNetManager.h; sourceTree = "<group>"; };
+		B031A6411A23599B00012D67 /* QSCardDetailsNetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSCardDetailsNetManager.m; sourceTree = "<group>"; };
 		B03624D919E8049400ECFE61 /* QSCardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSCardTableViewCell.h; sourceTree = "<group>"; };
 		B03624DA19E8049400ECFE61 /* QSCardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSCardTableViewCell.m; sourceTree = "<group>"; };
 		B03624DD19E8059000ECFE61 /* QSActivities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSActivities.h; sourceTree = "<group>"; };
@@ -215,6 +219,9 @@
 		B08A5FF619DE78FE008077E7 /* QSMerchantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSMerchantTableViewCell.m; path = ../Tableviewcell/QSMerchantTableViewCell.m; sourceTree = "<group>"; };
 		B08A5FFC19DFE61A008077E7 /* UILabel+dynamicSizeMe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+dynamicSizeMe.h"; sourceTree = "<group>"; };
 		B08A5FFD19DFE61A008077E7 /* UILabel+dynamicSizeMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+dynamicSizeMe.m"; sourceTree = "<group>"; };
+		B09EC6051A274DC700066239 /* QSMerchantCommendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSMerchantCommendView.h; path = CardDetails/QSMerchantCommendView.h; sourceTree = "<group>"; };
+		B09EC6061A274DC700066239 /* QSMerchantCommendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSMerchantCommendView.m; path = CardDetails/QSMerchantCommendView.m; sourceTree = "<group>"; };
+		B09EC6081A27585300066239 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B0BEDD741A2074B200721A68 /* QSAboutMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSAboutMeViewController.h; sourceTree = "<group>"; };
 		B0BEDD751A2074B200721A68 /* QSAboutMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSAboutMeViewController.m; sourceTree = "<group>"; };
 		B0BEDD771A2077F900721A68 /* QSFeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSFeedBackViewController.h; sourceTree = "<group>"; };
@@ -230,7 +237,6 @@
 		FF8A928F19C433B80010439B /* Quansoso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quansoso.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8A929319C433B80010439B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF8A929419C433B80010439B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		FF8A929919C433B80010439B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FF8A929C19C433B80010439B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		FF8A92A219C433B80010439B /* QuansosoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuansosoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8A92A719C433B80010439B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -502,6 +508,10 @@
 			children = (
 				B03624ED19E9186B00ECFE61 /* QSCardDetailsViewController.h */,
 				B03624EE19E9186B00ECFE61 /* QSCardDetailsViewController.m */,
+				B031A6401A23599B00012D67 /* QSCardDetailsNetManager.h */,
+				B031A6411A23599B00012D67 /* QSCardDetailsNetManager.m */,
+				B09EC6051A274DC700066239 /* QSMerchantCommendView.h */,
+				B09EC6061A274DC700066239 /* QSMerchantCommendView.m */,
 			);
 			name = CardDetails;
 			sourceTree = "<group>";
@@ -598,7 +608,7 @@
 				FFE85F1D19CABB1300A216BB /* BaseViewController.m */,
 				FFE85F3619CABCB300A216BB /* AppDelegate.h */,
 				FFE85F3719CABCB300A216BB /* AppDelegate.m */,
-				FF8A929919C433B80010439B /* Images.xcassets */,
+				B09EC6081A27585300066239 /* Images.xcassets */,
 				FF8A929B19C433B80010439B /* LaunchScreen.xib */,
 				FF8A929219C433B80010439B /* Supporting Files */,
 			);
@@ -946,8 +956,8 @@
 				FFD1243619D64937003B969F /* Tae.bundle in Resources */,
 				5BC8E5721A133CEF0097768C /* SVProgressHUD.bundle in Resources */,
 				AB4509061A23470D006C7BD8 /* loading@2x.gif in Resources */,
+				B09EC6091A27585300066239 /* Images.xcassets in Resources */,
 				FFD1243519D64937003B969F /* AlipaySDK.bundle in Resources */,
-				FF8A929A19C433B80010439B /* Images.xcassets in Resources */,
 				FFE85F4719CACDEF00A216BB /* yw_1222.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -986,6 +996,7 @@
 				B08A5FD819D826DD008077E7 /* QSSearchNetManager.m in Sources */,
 				FFE85F2B19CABB9300A216BB /* QSCrazyQGView.m in Sources */,
 				FFBA9EE719C688F200D9CBA2 /* UIImage+GIF.m in Sources */,
+				B031A6421A23599B00012D67 /* QSCardDetailsNetManager.m in Sources */,
 				AB8F00701A22FE1E00C030AA /* QSDayRecommends.m in Sources */,
 				FFBA9EE219C688F200D9CBA2 /* SDWebImageDownloader.m in Sources */,
 				B0BFDD441A0CB23D002037DA /* QSSearchNothingView.m in Sources */,
@@ -999,6 +1010,7 @@
 				ABC54D861A086498009071D8 /* QSBrandBtn.m in Sources */,
 				FFBA9EE619C688F200D9CBA2 /* UIButton+WebCache.m in Sources */,
 				FFE85F3819CABCB300A216BB /* AppDelegate.m in Sources */,
+				B09EC6071A274DC700066239 /* QSMerchantCommendView.m in Sources */,
 				C2E099BD19E9014B00828DD0 /* QSDayRecommendManage.m in Sources */,
 				B02E0BD319CADAAB009A0306 /* ResultCard.m in Sources */,
 				AB7AE3C019E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m in Sources */,

@@ -25,10 +25,11 @@
 #define isTest 0
 #define showMerViewHeight 100
 
-@interface QSMerchantDetailsViewController()<UITableViewDataSource,UITableViewDelegate>
+@interface QSMerchantDetailsViewController()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 {
 	NSInteger _shopId;
     CGFloat _detailMercBtnCenterX;
+	UILabel *tipLabel;
 }
 //data
 @property (strong, nonatomic) QSSMerchant *merchant;
@@ -95,6 +96,7 @@
 	self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"加载中...";
+	[self setUI];
     _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     _activityView.frame = CGRectMake(0, 0, 20, 20);
     _activityView.center = CGPointMake(kMainScreenWidth/2, kMainScreenHeight/2 - 100);
@@ -120,7 +122,7 @@
         weakSelf.title = @"加载失败";
         [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
-    [self setUI];
+	
 }
 
 - (void)setUI{
@@ -140,6 +142,12 @@
     self.tableView.rowHeight = kCellHeight;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //[self.tableView registerClass:[QSCardCell class] forCellReuseIdentifier:@"CardCellIdentifier"];
+	tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth,30)];
+	tipLabel.text = @"该商家暂无优惠券";
+	tipLabel.textAlignment = NSTextAlignmentCenter;
+	tipLabel.textColor = [UIColor lightGrayColor];
+	tipLabel.center = CGPointMake(self.tableView.width/2, self.tableView.height/2);
+	[self.tableView addSubview:tipLabel];
 }
 
 - (void)creatLogoView
@@ -223,6 +231,9 @@
         return 5;
     }
     if (self.cardsArray && self.cardsArray.count) {
+		if ([tipLabel superview]) {
+			[tipLabel removeFromSuperview];
+		}
         return self.cardsArray.count;
     }else{
         return 0;
@@ -271,16 +282,33 @@
     } failBlock:^{
         [SVProgressHUD showErrorWithStatus:@"关注失败" cover:NO offsetY:0];
     }];
-    
 }
 
 //进入店铺
 - (void)touchGoMercButton
 {
     if (self.merchant.websiteUrl && self.merchant.websiteUrl.length) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.merchant.websiteUrl]];
-    }
-    
+		NSString *str = [self.merchant.websiteUrl substringFromIndex:[self.merchant.websiteUrl rangeOfString:@"http"].location+4];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"taobao%@",str]];
+		if ([[UIApplication sharedApplication] canOpenURL:url]) {
+			UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"确认使用淘宝客户端打开店铺" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"打开淘宝客户端" otherButtonTitles:nil];
+			[actionSheet showInView:self.view];
+		} else {
+			url = [NSURL URLWithString:[NSString stringWithFormat:@"http%@",str]];
+			[[UIApplication sharedApplication] openURL:url];
+		}
+
+	}else{
+		[SVProgressHUD showErrorWithStatus:@"缺少该商家店铺地址" cover:YES offsetY:kMainScreenHeight/2];
+	}
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+	if(buttonIndex == 0){
+		NSString *str = [self.merchant.websiteUrl substringFromIndex:[self.merchant.websiteUrl rangeOfString:@"http"].location+4];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"taobao%@",str]];
+		[[UIApplication sharedApplication] openURL:url];
+	}
 }
 //显示店铺详情
 - (void)touchDetailMercButton:(UIButton *)sender

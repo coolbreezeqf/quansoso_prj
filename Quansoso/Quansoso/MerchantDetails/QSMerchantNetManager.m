@@ -16,9 +16,15 @@
     MLOG(@"%i",shopId);
 	[NetManager requestWith:nil url:[NSString stringWithFormat:@"%@%i",kURLMerchant,shopId] method:@"GET" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
         if([successDict[@"isSuccess"] boolValue] == true && [(NSString *)successDict[@"code"] isEqualToString:@"SUCCESS"]){
-            QSSMerchant *merchantModel = [QSSMerchant modelObjectWithDictionary:successDict[@"merchant"]];
-            NSArray *cardsArray = successDict[@"cards"];
-            succ(merchantModel,cardsArray);
+			NSDictionary *dic = successDict[@"merchant"];
+			if(dic){
+				QSSMerchant *merchantModel = [QSSMerchant modelObjectWithDictionary:dic];
+				NSArray *cardsArray = successDict[@"cards"];
+				succ(merchantModel,cardsArray);
+			}else{
+				failure();
+			}
+			
         }else{
             failure();
         }

@@ -8,11 +8,11 @@
 
 #import "QSSettingView.h"
 #import "QSDataSevice.h"
-#import "CAlertLabel.h"
 #import <TAESDK/TAESDK.h>
 #import "QSAboutMeViewController.h"
 #import "QSFeedBackViewController.h"
 #import "ViewInteraction.h"
+#import "SVProgressHUD.h"
 #define kTitleColor RGBCOLOR(149, 149, 149)
 
 @interface QSSettingView ()<UIActionSheetDelegate>{
@@ -32,8 +32,8 @@
 }
 
 - (void)attentionWeibo{
-//	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
-//	[alert showAlertLabel];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://weibo.com/u/2269834092"]];
+	[[UIApplication sharedApplication] openURL:url];
 }
 
 - (void)feedback{
@@ -70,15 +70,16 @@
 }
 - (void)logout{
 	if (![[TaeSession sharedInstance] isLogin]) {
-		CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"尚未登陆"];
-		[alert showAlertLabel];
+		[SVProgressHUD showErrorWithStatus:@"尚未登陆" cover:YES offsetY:kMainScreenHeight/2];
+
 		return;
 	}
 	
 	[[TaeSDK sharedInstance] logout];
 	if (![[TaeSession sharedInstance] isLogin]) {
-		CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"退出成功"];
-		[alert showAlertLabel];
+//		CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"退出成功"];
+//		[alert showAlertLabel];
+		[SVProgressHUD showSuccessWithStatus:@"退出成功" cover:YES offsetY:kMainScreenHeight/2];
 	}
 }
 
@@ -86,8 +87,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
 	if (buttonIndex == 0) {
 #warning clean Cache
-		CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"清理成功"];
-		[alert showAlertLabel];
+		[SVProgressHUD showSuccessWithStatus:@"清理成功" cover:YES offsetY:kMainScreenHeight/2];
 	}
 }
 

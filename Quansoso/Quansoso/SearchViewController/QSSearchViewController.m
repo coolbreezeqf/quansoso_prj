@@ -16,13 +16,16 @@
 #import "UIImageView+WebCache.h"
 #import "QSSSearchBar.h"
 #import "QSSearchNothingView.h"
+#import "LoadingView.h"
+#import "SVProgressHUD.h"
 @interface QSSearchViewController (){
 	NSString *currentText;
 	float keyboardHeight;
 }
 
 @property (nonatomic,strong) QSSSearchBar *searchBar;
-@property (nonatomic,strong) UIActivityIndicatorView *activityView;
+//@property (nonatomic,strong) UIActivityIndicatorView *activityView;
+@property (nonatomic,strong) LoadingView *loadingView;
 @property (nonatomic,strong) UILabel *tipLabel;
 @property (nonatomic,strong) UILabel *historyTip;
 @property (nonatomic,strong) QSSearchHistoryView *historyTable;
@@ -138,17 +141,18 @@
 
 - (void)searchContent{
 	[self.view bringSubviewToFront:self.tableView];
-	[_activityView startAnimating];
+//	[_activityView startAnimating];
+	[self.view addSubview:self.loadingView];
 	currentText = _searchBar.text;
 	if ([currentText isEqualToString:@""]) {
-		CAlertLabel *al = [CAlertLabel alertLabelWithAdjustFrameForText:@"输入你要搜索的品牌"];
-		[al showAlertLabel];
+		[SVProgressHUD showWithStatus:@"输入你要搜索的品牌" cover:YES offsetY:kMainScreenHeight/2];
 		return ;
 	}
 	__weak QSSearchViewController *weakSelf = self;
 	[_netManager searchContent:currentText success:^(NSArray *results) {
 		[weakSelf searchEndAddContentUse:results];
-		[_activityView stopAnimating];
+//		[_activityView stopAnimating];
+		[weakSelf.loadingView removeFromSuperview];
 	} failure:^{
 		
 	}];
@@ -201,13 +205,20 @@
 	return _historyArr;
 }
 
-- (UIActivityIndicatorView *)activityView{
-	if (!_activityView) {
-		_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-		_activityView.frame = CGRectMake(0, 0, 20, 20);
-		_activityView.center = CGPointMake(kMainScreenWidth/2, kMainScreenHeight/2 - 100);
+//- (UIActivityIndicatorView *)activityView{
+//	if (!_activityView) {
+//		_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//		_activityView.frame = CGRectMake(0, 0, 20, 20);
+//		_activityView.center = CGPointMake(kMainScreenWidth/2, kMainScreenHeight/2 - 100);
+//	}
+//	return _activityView;
+//}
+- (LoadingView *)loadingView{
+	if(!_loadingView){
+		_loadingView = [[LoadingView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+		_loadingView.center	= CGPointMake(kMainScreenWidth/2, kMainScreenHeight/2);
 	}
-	return _activityView;
+	return _loadingView;
 }
 #pragma mark - tableview delegate and datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -322,7 +333,6 @@
 		//			[weakSelf.tableView.pullToRefreshView performSelector:@selector(stopAnimating) withObject:nil afterDelay:2];
 	}];
 	[self.view addSubview:_tableView];
-	[self.view addSubview:self.activityView];
 	
 	//初始化键盘通知
 //	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];

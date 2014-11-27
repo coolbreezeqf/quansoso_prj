@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QSMerchantCommendView.h"
 @class QSCards;
 
-@interface QSCardDetailsViewController : BaseViewController
+@interface QSCardDetailsViewController : BaseViewController<QSMerchantCommendDelegate>
 - (instancetype)initWithCard:(QSCards *)card;
-
+- (instancetype)initWithCard:(QSCards *)card isFromRoot:(BOOL)isRoot;
 @end

@@ -54,13 +54,13 @@
     UILabel *theTitleLable = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 55, 24)];
     //theTitleLable.backgroundColor = [UIColor redColor];
     theTitleLable.font = [UIFont boldSystemFontOfSize:24];
-    theTitleLable.textAlignment = NSTextAlignmentRight;
+    theTitleLable.textAlignment = NSTextAlignmentCenter;
     _theTitleLabel = theTitleLable;
     [leftImageView addSubview:theTitleLable];
     if(isTest == 1) theTitleLable.text = @"100";
     
-    UILabel *rmbTagLabel = [[UILabel alloc] initWithFrame:CGRectMake(theTitleLable.right+2, theTitleLable.bottom-14, 30, 14)];
-    rmbTagLabel.bottom = theTitleLable.bottom;
+    UILabel *rmbTagLabel = [[UILabel alloc] initWithFrame:CGRectMake(theTitleLable.right+2, theTitleLable.bottom-10, 30, 14)];
+    rmbTagLabel.bottom = theTitleLable.bottom-3;
     rmbTagLabel.text = @"元" ;
     _rmbTagLabel = rmbTagLabel;
     rmbTagLabel.textAlignment = NSTextAlignmentLeft;
@@ -138,6 +138,7 @@
 - (void)setCellUIwithCardType:(NSString *)card_type denomination:(NSString *)denom Money_condition:(NSString *)money_condition end:(NSString *)endTime discountRate:(NSString *)rate outdateState:(int)odState
 {
     //MLOG(@"%@",denom);
+	denom = [NSString stringWithFormat:@"%i",[denom integerValue]/100];
     self.type = [self strTypetoIntType:card_type];
     //清除文字
     self.theTitleLabel.text = @"";
@@ -146,30 +147,12 @@
     self.rmbTagLabel.hidden = YES;
 
     //赋值
-    self.conditionLabel.text = [NSString stringWithFormat:@"满%@元",money_condition];
+	NSInteger money = [money_condition integerValue];
+    self.conditionLabel.text = [NSString stringWithFormat:@"满%.2lf元",1.0*money/100];
     self.endTimeLabel.text = [NSString stringWithFormat:@"截至%@",endTime];
 
     switch (self.type) {
 #warning 其他类型待定
-        case cardType_privilege://优惠券
-        {
-            self.theTitleLabel.text = denom;
-            self.rmbTagLabel.hidden = NO;
-            self.theDetailLabel.text = @"优惠券";
-            self.conditionLabel.text = [self.conditionLabel.text stringByAppendingString:@"使用"];
-            
-            int i = 0;
-            NSInteger denomNum = [denom integerValue];
-            if(denomNum<=10) i = 0;
-            else if(denomNum <= 20) i = 0;
-            else if(denomNum <= 50) i = 0;
-            else i=3;
-            
-            self.theTitleLabel.textColor = self.colorArray[i];
-            self.rmbTagLabel.textColor = self.colorArray[i];
-            self.rightIconImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"cardRightImg1_%d",i]];
-        }
-            break;
         case cardType_mail://包邮
         {
             self.largeTitleLabel.text = @"包邮";
@@ -194,13 +177,43 @@
         case cardType_floor://阶梯卡-满减
         {
             self.theTitleLabel.text = denom;
+		float width = [self widthOfString:denom withFont:[UIFont boldSystemFontOfSize:24]];
+		self.theTitleLabel.width = width;
+		self.theTitleLabel.centerX = 38;
+		self.rmbTagLabel.left = self.theTitleLabel.right;
             self.theDetailLabel.text = @"满减";
             self.rmbTagLabel.hidden = NO;
             self.rmbTagLabel.textColor = RGBCOLOR(230, 183, 60);
             self.theTitleLabel.textColor = RGBCOLOR(230, 183, 60);
             self.conditionLabel.text = [self.conditionLabel.text stringByAppendingString:[NSString stringWithFormat:@"减%@元",denom]];
             self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg2"];
-        }
+		}break;
+			case cardType_complex:
+			case cardType_tao:
+			case cardType_prefextTao:
+		case cardType_privilege://优惠券
+		{
+			self.theTitleLabel.text = denom;
+		float width = [self widthOfString:denom withFont:[UIFont boldSystemFontOfSize:24]];
+		self.theTitleLabel.width = width;
+		self.theTitleLabel.centerX = 38;
+		self.rmbTagLabel.left = self.theTitleLabel.right;
+			self.rmbTagLabel.hidden = NO;
+			self.theDetailLabel.text = @"优惠券";
+			self.conditionLabel.text = [self.conditionLabel.text stringByAppendingString:@"使用"];
+			
+			int i = 0;
+			NSInteger denomNum = [denom integerValue];
+			if(denomNum<=10) i = 0;
+			else if(denomNum <= 20) i = 1;
+			else if(denomNum <= 50) i = 2;
+			else i=3;
+			
+			self.theTitleLabel.textColor = self.colorArray[i];
+			self.rmbTagLabel.textColor = self.colorArray[i];
+			self.rightIconImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"cardRightImg1_%d",i]];
+		}
+			break;
         default:
             break;
     }
@@ -216,6 +229,11 @@
         self.willODimageView.hidden = YES;
         self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg1_no"];
     }
+}
+
+- (CGFloat)widthOfString:(NSString *)string withFont:(UIFont *)font {
+	NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
+	return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
