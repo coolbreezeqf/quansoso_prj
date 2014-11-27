@@ -9,6 +9,7 @@
 #import "QSUserCouponListManage.h"
 #import "NetManager.h"
 #import <TAESDK/TAESDK.h>
+#import "QSCards.h"
 
 int current;
 int pageSize;
@@ -20,11 +21,22 @@ int totalPage;
     current = 1;
     pageSize = 20;
 //    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=10", KBaseUrl,[[TaeSession sharedInstance] getUser].nick];
-    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=j**t&current=1&pageSize=%d", KBaseUrl, pageSize];
-    [NetManager requestWith:nil url:UserCouponListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+//    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=易01wAwxxIxcL28uzuD2oLlS7c2DEMds1FAQI7fgfrP3PMg=&current=1&pageSize=%d", KBaseUrl, pageSize];
+    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=易01wAwxxIxcL28uzuD2oLlS7c2DEMds1FAQI7fgfrP3PMg=&current=1&pageSize=%d", KBaseUrl, pageSize];
+    NSString *encodeStr = [UserCouponListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [NetManager requestWith:nil url:encodeStr method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
-//        totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
-        aSuccBlock([NSArray new]);
+        NSDictionary *pageDict = [successDict objectForKey:@"page"];
+        totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
+        NSArray *array = [pageDict objectForKey:@"resultList"];
+        NSMutableArray *mutableArray = [NSMutableArray new];
+        for (int i=0; i<array.count; i++)
+        {
+            QSCards *model = [QSCards modelObjectWithDictionary:[array objectAtIndex:i]];
+            [mutableArray addObject:model];
+        }
+        totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
+        aSuccBlock(mutableArray);
     } failure:^(NSDictionary *failDict, NSError *error) {
         
     }];
@@ -38,7 +50,17 @@ int totalPage;
         NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=%d&pageSize=10", KBaseUrl,[[TaeSession sharedInstance] getUser].nick, current];
         [NetManager requestWith:nil url:UserCouponListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
             MLOG(@"%@", successDict);
-    //        aBlock();
+            NSDictionary *pageDict = [successDict objectForKey:@"page"];
+            totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
+            NSArray *array = [pageDict objectForKey:@"resultList"];
+            NSMutableArray *mutableArray = [NSMutableArray new];
+            for (int i=0; i<array.count; i++)
+            {
+                QSCards *model = [QSCards modelObjectWithDictionary:[array objectAtIndex:i]];
+                [mutableArray addObject:model];
+            }
+            totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
+            aSuccBlock(mutableArray);
         } failure:^(NSDictionary *failDict, NSError *error) {
             
         }];

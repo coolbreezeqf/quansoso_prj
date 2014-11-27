@@ -30,7 +30,8 @@ BOOL isIndex;
     }
     NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=j**t&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
 //    NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=%@&current=%d&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current,pageSize];
-    [NetManager requestWith:nil url:BrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+    NSString *encodeStr = [BrandListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [NetManager requestWith:nil url:encodeStr method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
         NSDictionary *pageDict = [successDict objectForKey:@"page"];
         totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
@@ -53,7 +54,8 @@ BOOL isIndex;
         current++;
         NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=j**t&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
 //        NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=%@&current=%d&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current,pageSize];
-        [NetManager requestWith:nil url:BrandListUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+        NSString *encodeStr = [BrandListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [NetManager requestWith:nil url:encodeStr method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
             MLOG(@"%@", successDict);
             NSDictionary *pageDict = [successDict objectForKey:@"page"];
             totalPage = [[pageDict objectForKey:@"totalPage"] intValue];

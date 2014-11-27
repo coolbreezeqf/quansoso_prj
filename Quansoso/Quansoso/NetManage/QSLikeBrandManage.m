@@ -15,7 +15,8 @@
 - (void)likeBrand:(int)aBrandId andSuccBlock:(void(^)(void))aSuccBlock failBlock:(void(^)(void))aFailBlock
 {
     NSString *likeBrandUrl = [NSString stringWithFormat:@"%@?service=follow&tbNick=%@&merchantShopIds=%d", KBaseUrl, [[TaeSession sharedInstance] getUser].nick, aBrandId];
-    [NetManager requestWith:nil url:likeBrandUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+    NSString *encodeStr = [likeBrandUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [NetManager requestWith:nil url:encodeStr method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
 
     } failure:^(NSDictionary *failDict, NSError *error) {
@@ -38,7 +39,8 @@
         }
     }
     NSString *likeBrandUrl = [NSString stringWithFormat:@"%@?service=follow&tbNick=%@&merchantShopIds=%@", KBaseUrl, [[TaeSession sharedInstance] getUser].nick, mutableString];
-    [NetManager requestWith:nil url:likeBrandUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+    NSString *encodeStr = [likeBrandUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [NetManager requestWith:nil url:encodeStr method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
         
     } failure:^(NSDictionary *failDict, NSError *error) {
@@ -50,7 +52,8 @@
 - (void)unlikeBrand:(int)aBrandId andSuccBlock:(void (^)(void))aSuccBlock failBlock:(void (^)(void))aFailBlock
 {
     NSString *deleteUrl = [NSString stringWithFormat:@"%@?service=unfollow&tbNick=%@&merchantShopId=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, aBrandId];
-    [NetManager requestWith:nil url:deleteUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+    NSString *encodeStr = [deleteUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [NetManager requestWith:nil url:encodeStr method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
         
     } failure:^(NSDictionary *failDict, NSError *error) {
