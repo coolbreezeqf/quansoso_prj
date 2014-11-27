@@ -89,6 +89,7 @@
 
 - (void)setUI{
 	_merchantName = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, kMainScreenWidth - 40, 30)];
+    _merchantName.backgroundColor = [UIColor clearColor];
 	_merchantName.text = _card.merchant;
 	_merchantName.textColor = [UIColor blueColor];
 	_merchantName.font = kFont17;
@@ -100,11 +101,13 @@
 	[self.view addSubview:_cardTypeImage];
 	
 	_cardNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cardTypeImage.right + 10, _cardTypeImage.top, kMainScreenWidth - _cardTypeImage.right - 20, 20)];
+    _cardNameLabel.backgroundColor = [UIColor clearColor];
 	_cardNameLabel.font = kFont17;
 	_cardNameLabel.text = _card.name;
 	[self.view addSubview:_cardNameLabel];
 	
 	_introduceLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cardTypeImage.right + 10, _cardNameLabel.bottom , _cardNameLabel.width, _cardTypeImage.height)];
+    _introduceLabel.backgroundColor = [UIColor clearColor];
 	_introduceLabel.font = kFont12;
 	_introduceLabel.textColor = [UIColor grayColor];
 	switch ([_card.cardType integerValue]) {

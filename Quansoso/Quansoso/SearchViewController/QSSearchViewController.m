@@ -48,6 +48,7 @@
 		[_searchBar becomeFirstResponder];
 		_searchBar.delegate = self;
 	}
+//    [self showHistoryTable];
 	[self.navigationController.navigationBar addSubview:_searchBar];
 }
 

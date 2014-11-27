@@ -144,6 +144,7 @@
     //[self.tableView registerClass:[QSCardCell class] forCellReuseIdentifier:@"CardCellIdentifier"];
 	tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth,30)];
 	tipLabel.text = @"该商家暂无优惠券";
+    tipLabel.backgroundColor = [UIColor clearColor];
 	tipLabel.textAlignment = NSTextAlignmentCenter;
 	tipLabel.textColor = [UIColor lightGrayColor];
 	tipLabel.center = CGPointMake(self.tableView.width/2, self.tableView.height/2);
