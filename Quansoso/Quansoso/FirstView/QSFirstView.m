@@ -368,7 +368,7 @@
             {
 //                UIButton *btn = (UIButton *)[cell viewWithTag:i];
 //                btn.tag = 100+indexPath.row+i;
-                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 2.5, 96, 96)];
+                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 8, 96, 96)];
                 btn.tag = i+indexPath.row*3+100;
                 btn.backgroundColor = [UIColor whiteColor];
                 [cell addSubview:btn];

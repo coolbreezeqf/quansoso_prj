@@ -24,4 +24,6 @@
 - (void)pushView:(UIView*)aView;
 
 - (void)popView:(UIView*)aView completeBlock:(void(^)(BOOL isComplete))aCompleteblock;
+
+- (void)settitleLabel:(NSString*)aTitle;
 @end

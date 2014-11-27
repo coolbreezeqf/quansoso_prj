@@ -141,7 +141,8 @@ typedef NS_ENUM(NSInteger, cateType) {
                     {
                         _currentPage=cateTypeCoupon;
                         [weakself showCouponView];
-                        self.title = @"我的优惠券";
+//                        self.title = @"我的优惠券";
+                        [self settitleLabel:@"我的优惠券"];
                         MLOG(@"%@", [[TaeSession sharedInstance] getUser]);
                     }
                     else
@@ -150,7 +151,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                             self.navigationController.navigationBarHidden = NO;
                             _currentPage=cateTypeCoupon;
                             [weakself showCouponView];
-                            self.title = @"我的优惠券";
+                            [self settitleLabel:@"我的优惠券"];
                             [self accreditLogin];
                             [self updateUI];
                         } failedCallback:^(NSError *error) {
@@ -165,7 +166,8 @@ typedef NS_ENUM(NSInteger, cateType) {
                     {
                         _currentPage=cateTypeBrand;
                         [weakself showAttentionBrandView];
-                        self.title = @"我关注的品牌";
+//                        self.title = @"我关注的品牌";
+                        [self settitleLabel:@"我关注的品牌"];
                         MLOG(@"%@", [[TaeSession sharedInstance] getUser]);
                     }
                     else
@@ -174,7 +176,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                             self.navigationController.navigationBarHidden = NO;
                             _currentPage=cateTypeBrand;
                             [weakself showAttentionBrandView];
-                            self.title = @"我关注的品牌";
+                            [self settitleLabel:@"我关注的品牌"];
                             [self accreditLogin];
                             [self updateUI];
                         } failedCallback:^(NSError *error) {
@@ -187,7 +189,8 @@ typedef NS_ENUM(NSInteger, cateType) {
                 {
                     _currentPage=cateTypeShare;
                     [weakself showShareAppView];
-                    self.title = @"分享app";
+//                    self.title = @"分享app";
+                    [self settitleLabel:@"分享app"];
                 }
                 break;
                 case cateTypeNull:
@@ -199,7 +202,8 @@ typedef NS_ENUM(NSInteger, cateType) {
                 {
                     _currentPage=cateTypeSetting;
                     [weakself showSettingView];
-                    self.title = @"设置";
+//                    self.title = @"设置";
+                    [self settitleLabel:@"设置"];
                 }
                 break;
                 default:

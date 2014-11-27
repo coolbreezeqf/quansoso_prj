@@ -10,7 +10,9 @@
 #import "ViewInteraction.h"
 
 @interface BaseViewController ()
-
+{
+    UILabel *titleLabel;
+}
 @end
 
 @implementation BaseViewController
@@ -35,7 +37,7 @@
     if(kSystemVersion>=7.0)
     {
         self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-        self.navigationController.navigationBar.tintColor = RGBCOLOR(75, 171, 14);
+//        self.navigationController.navigationBar.tintColor = RGBCOLOR(75, 171, 14);
     }
     else
     {
@@ -108,6 +110,24 @@
         }
     }
 }
+
+//设置标题
+- (void)settitleLabel:(NSString*)aTitle
+{
+    if(!titleLabel)
+    {
+        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 200, self.navigationController.navigationBar.frame.size.height)];
+        self.navigationItem.titleView = titleLabel;
+        titleLabel.center = self.navigationController.navigationBar.center;
+        titleLabel.backgroundColor = kClearColor;
+        titleLabel.textColor = RGBCOLOR(75, 171, 14);
+        titleLabel.font = kFont18;
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    titleLabel.text = aTitle;
+}
+
+
 - (void)back
 {
     [self.navigationController popViewControllerAnimated:YES];
