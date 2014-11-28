@@ -85,6 +85,7 @@
     
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
         self.brandArray = aArray;
+        dailyShopIdArray = [[NSMutableArray alloc] init];
         [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     } andFailBlock:^{
         [self.loadingImgView removeFromSuperview];
@@ -439,7 +440,7 @@
 - (void)touchQuanButton:(UITapGestureRecognizer *)TapGestureRecognizer
 {
     QSDayRecommends *model = [self.dailyArray objectAtIndex:TapGestureRecognizer.view.tag-1000];
-    QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:model.card];
+    QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:model.card andShopId:model.externalShopId];
     vc.navigationController.navigationBarHidden = NO;
     [ViewInteraction viewPushViewcontroller:vc];
 }

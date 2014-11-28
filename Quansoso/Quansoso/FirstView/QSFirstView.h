@@ -11,6 +11,9 @@
 #import "QSDayRecommendManage.h"
 
 @interface QSFirstView : UIView<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+{
+    NSMutableArray *dailyShopIdArray;
+}
 @property(nonatomic, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) UIImageView *imagebrand;
 @property(nonatomic, strong) UIImageView *viewSearch;
