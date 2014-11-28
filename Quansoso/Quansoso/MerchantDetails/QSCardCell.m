@@ -55,6 +55,7 @@
     //theTitleLable.backgroundColor = [UIColor redColor];
     theTitleLable.font = [UIFont boldSystemFontOfSize:24];
     theTitleLable.textAlignment = NSTextAlignmentCenter;
+    theTitleLable.backgroundColor = [UIColor clearColor];
     _theTitleLabel = theTitleLable;
     [leftImageView addSubview:theTitleLable];
     if(isTest == 1) theTitleLable.text = @"100";
@@ -62,6 +63,7 @@
     UILabel *rmbTagLabel = [[UILabel alloc] initWithFrame:CGRectMake(theTitleLable.right+2, theTitleLable.bottom-10, 30, 14)];
     rmbTagLabel.bottom = theTitleLable.bottom-3;
     rmbTagLabel.text = @"元" ;
+    rmbTagLabel.backgroundColor = [UIColor clearColor];
     _rmbTagLabel = rmbTagLabel;
     rmbTagLabel.textAlignment = NSTextAlignmentLeft;
     rmbTagLabel.font = kFont14;
@@ -72,6 +74,7 @@
     theDetailLabel.textAlignment = NSTextAlignmentCenter;
     theDetailLabel.textColor = [UIColor lightGrayColor];
     theDetailLabel.font = kFont12;
+    theTitleLable.backgroundColor = [UIColor clearColor];
     _theDetailLabel = theDetailLabel;
     [leftImageView addSubview:theDetailLabel];
     if(isTest == 1) theDetailLabel.text = @"优惠券";
@@ -79,6 +82,7 @@
     UILabel *largeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, (kinCellHeight-24)/2.0, 80, 24)];
     largeTitleLabel.font = [UIFont boldSystemFontOfSize:24];
     [leftImageView addSubview:largeTitleLabel];
+    largeTitleLabel.backgroundColor = [UIColor clearColor];
     _largeTitleLabel = largeTitleLabel;
     largeTitleLabel.textAlignment = NSTextAlignmentCenter;
     //largeTitleLabel.backgroundColor = [UIColor blueColor];
@@ -101,11 +105,13 @@
     UILabel *conditionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, midView.width, 14)];
     conditionLabel.font = kFont14;
     [midView addSubview:conditionLabel];
+    conditionLabel.backgroundColor = [UIColor clearColor];
     if(isTest) conditionLabel.text = @"满300使用";
     //conditionLabel.backgroundColor = [UIColor greenColor];
     _conditionLabel = conditionLabel;
     
     UILabel *endTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(conditionLabel.left, conditionLabel.bottom+5, conditionLabel.width, 10)];
+    endTimeLabel.backgroundColor = [UIColor clearColor];
     //endTimeLabel.backgroundColor = [UIColor blueColor];
     if(isTest) endTimeLabel.text = @"截止2014年11月16日";
     endTimeLabel.font = [UIFont systemFontOfSize:10];

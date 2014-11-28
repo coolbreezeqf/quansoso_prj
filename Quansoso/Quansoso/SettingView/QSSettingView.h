@@ -12,6 +12,8 @@
 
 @property (nonatomic,strong) UITableView *tableView;
 
+@property(nonatomic, strong) void(^myBlock)(void);
+- (void)useBlock:(void(^)(void))aBlock;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 @end

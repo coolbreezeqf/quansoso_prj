@@ -108,7 +108,8 @@
         [weakSelf.activityView stopAnimating];
         weakSelf.merchant = merchant;
         weakSelf.cardsArray = cardsArray;
-        weakSelf.title = merchant.name;
+//        weakSelf.title = merchant.name;
+        [weakSelf settitleLabel:merchant.name];
         NSInteger categoryType = 1;
         categoryType = [weakSelf.merchant.ekpCategory integerValue];
         MLOG(@"------%@--------",weakSelf.merchant.ekpCategory);
@@ -119,14 +120,15 @@
         [weakSelf.tableView reloadData];
     } failure:^{
         [weakSelf.activityView stopAnimating];
-        weakSelf.title = @"加载失败";
+//        weakSelf.title = @"加载失败";
+        [weakSelf settitleLabel:@"加载失败"];
         [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
 	
 }
 
 - (void)setUI{
-    self.navigationItem.title = self.merchant.name;
+//    self.navigationItem.title = self.merchant.name;
 	self.view.backgroundColor = [UIColor whiteColor];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"QSRightViewItem2"] style:UIBarButtonItemStylePlain target:self action:@selector(privateTheMerchant)];

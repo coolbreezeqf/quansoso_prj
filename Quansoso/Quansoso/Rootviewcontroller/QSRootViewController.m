@@ -262,6 +262,9 @@ typedef NS_ENUM(NSInteger, cateType) {
     if(!settingView)
     {
         settingView = [[QSSettingView alloc] initWithFrame:self.view.bounds];
+        [settingView useBlock:^{
+            [self updateUI];
+        }];
         [self.view addSubview:settingView];
     }
     [self.view bringSubviewToFront:settingView];

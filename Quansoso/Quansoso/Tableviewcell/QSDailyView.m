@@ -85,7 +85,9 @@
 {
     if ([aCardModel.cardType intValue]==1)//优惠券
     {
-        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@元", aCardModel.denomination]];
+        int price = [aCardModel.denomination intValue]/10;
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc]
+                                             initWithString:[NSString stringWithFormat:@"%d元", price]];
         [string addAttribute:NSFontAttributeName value:kFont18 range:NSMakeRange(string.length-1, 1)];
         [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(243, 130, 11) range:NSMakeRange(0, string.length)];
         self.preferentialLabel.attributedText = string;

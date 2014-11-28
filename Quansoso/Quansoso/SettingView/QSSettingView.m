@@ -24,6 +24,10 @@
 @end
 
 @implementation QSSettingView
+- (void)useBlock:(void (^)(void))aBlock
+{
+    self.myBlock = aBlock;
+}
 
 - (void)switchChanged{
 	BOOL isOn = _switchView.isOn;
@@ -74,12 +78,12 @@
 
 		return;
 	}
-	
 	[[TaeSDK sharedInstance] logout];
-	if (![[TaeSession sharedInstance] isLogin]) {
+    while([[TaeSession sharedInstance] isLogin]) {
 //		CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"退出成功"];
 //		[alert showAlertLabel];
-		[SVProgressHUD showSuccessWithStatus:@"退出成功" cover:YES offsetY:kMainScreenHeight/2];
+        self.myBlock();
+        [SVProgressHUD showSuccessWithStatus:@"退出成功" cover:YES offsetY:kMainScreenHeight/2];
 	}
 }
 

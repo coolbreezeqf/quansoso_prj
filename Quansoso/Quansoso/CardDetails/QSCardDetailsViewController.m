@@ -157,7 +157,8 @@
 	// Do any additional setup after loading the view.
 	self.navigationController.navigationBarHidden = NO;
 	self.view.backgroundColor = RGBCOLOR(238, 238, 238);
-	self.title = @"领取优惠券";
+//	self.title = @"领取优惠券";
+    [self settitleLabel:@"领取优惠券"];
 	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
 	[self setUI];
 	
