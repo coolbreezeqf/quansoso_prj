@@ -13,8 +13,9 @@
 #import "CAlertLabel.h"
 #import "QSCardDetailsNetManager.h"
 #import "SVProgressHUD.h"
+#import "QSMerchantDetailsViewController.h"
 @interface QSCardDetailsViewController (){
-	BOOL isFromRoot;
+	NSString *shopId;
 }
 //data
 @property (nonatomic,strong) QSCards *card;
@@ -73,15 +74,15 @@
 - (instancetype)initWithCard:(QSCards *)card{
 	if (self = [super init]) {
 		_card = card;
-		isFromRoot = YES;
+		shopId = nil;
 	}
 	return self;
 }
 
-- (instancetype)initWithCard:(QSCards *)card isFromRoot:(BOOL)isRoot{
-	if (self = [super init]){
+- (instancetype)initWithCard:(QSCards *)card andShopId:(NSString *)shopid{
+	if (self = [super init]) {
 		_card = card;
-		isFromRoot = isRoot;
+		shopId = shopid;
 	}
 	return self;
 }
@@ -145,8 +146,9 @@
 }
 
 - (void)gotoMoreCard{
-	if (isFromRoot) {
-		[self.navigationController popViewControllerAnimated:YES];
+	if (shopId) {
+		QSMerchantDetailsViewController *md = [[QSMerchantDetailsViewController alloc] initWithShopId:[shopId integerValue]];
+		[self.navigationController pushViewController:md animated:YES];
 	}else{
 		[self.navigationController popViewControllerAnimated:YES];
 	}

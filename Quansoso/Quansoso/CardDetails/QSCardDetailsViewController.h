@@ -12,5 +12,5 @@
 
 @interface QSCardDetailsViewController : BaseViewController<QSMerchantCommendDelegate>
 - (instancetype)initWithCard:(QSCards *)card;
-- (instancetype)initWithCard:(QSCards *)card isFromRoot:(BOOL)isRoot;
+- (instancetype)initWithCard:(QSCards *)card andShopId:(NSString *)shopid;
 @end
