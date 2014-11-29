@@ -242,6 +242,12 @@ typedef NS_ENUM(NSInteger, cateType) {
     }
 }
 
+- (void)updateLogoutUI
+{
+    leftView.logInLabel.text = @"登录";
+    [leftView.headImgView setImage:[UIImage imageNamed:@"QSUserDefualt"]];
+}
+
 #pragma mark Default  firstView
 - (void)showFirstView
 {
@@ -263,7 +269,7 @@ typedef NS_ENUM(NSInteger, cateType) {
     {
         settingView = [[QSSettingView alloc] initWithFrame:self.view.bounds];
         [settingView useBlock:^{
-            [self updateUI];
+            [self updateLogoutUI];
         }];
         [self.view addSubview:settingView];
     }

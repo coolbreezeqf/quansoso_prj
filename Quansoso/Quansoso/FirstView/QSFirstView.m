@@ -77,7 +77,7 @@
     [self addSubview:self.showQuanTableView];
     
     [self addTableViewTrag];
-    
+                    
     [self.showQuanTableView addSubview:self.loadingImgView];
     
 #pragma mark 网络请求
@@ -270,8 +270,9 @@
     else
     {
         if (self.brandArray.count>0) {
-            int btnCount = self.brandArray.count+1;//self.brandArray.count%9==0?self.brandArray.count:self.brandArray.count+1;
-            return btnCount%3==0?btnCount/3:btnCount/3+1;
+            int btnCount = (self.brandArray.count%3==0?self.brandArray.count/3+1:self.brandArray.count/3)*3;
+            //self.brandArray.count%9==0?self.brandArray.count:self.brandArray.count+1;
+            return btnCount/3;
         }
         else
         {
@@ -347,7 +348,7 @@
 #warning tableView复用
         if (self.brandArray.count>0)
         {
-            int btnCount = self.brandArray.count+1;
+            int btnCount = (self.brandArray.count%3==0?self.brandArray.count/3+1:self.brandArray.count/3)*3;
             int j = btnCount-3*indexPath.row;
             CGFloat interval = (kMainScreenWidth-298)/6;
 //            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellIdentifer"];
@@ -373,7 +374,7 @@
                 btn.tag = i+indexPath.row*3+100;
                 btn.backgroundColor = [UIColor whiteColor];
                 [cell addSubview:btn];
-                if (i+indexPath.row*3+1!=btnCount)
+                if (i+indexPath.row*3<self.brandArray.count)
                 {
                     QSMerchant *model = [self.brandArray objectAtIndex:i+indexPath.row*3];
                     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40), (96/2-40), 80, 80)];
@@ -396,7 +397,7 @@
                 else
                 {
                     [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
-                    [btn setImage:[UIImage imageNamed:@"QSLikeOtherBrand"] forState:UIControlStateNormal];
+                    [btn setImage:[UIImage imageNamed:@"QSPlusBtn"] forState:UIControlStateNormal];
                 }
 
             }
@@ -413,7 +414,7 @@
             {
                 UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 2.5, 96, 96)];
                 btn.backgroundColor = [UIColor whiteColor];
-                [btn setImage:[UIImage imageNamed:@"QSLikeOtherBrand"] forState:UIControlStateNormal];
+                [btn setImage:[UIImage imageNamed:@"QSPlusBtn"] forState:UIControlStateNormal];
                 [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
                 [cell addSubview:btn];
             }

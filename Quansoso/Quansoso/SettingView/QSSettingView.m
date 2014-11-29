@@ -79,12 +79,12 @@
 		return;
 	}
 	[[TaeSDK sharedInstance] logout];
-    while([[TaeSession sharedInstance] isLogin]) {
+//    while([[TaeSession sharedInstance] isLogin]) {
 //		CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"退出成功"];
 //		[alert showAlertLabel];
         self.myBlock();
         [SVProgressHUD showSuccessWithStatus:@"退出成功" cover:YES offsetY:kMainScreenHeight/2];
-	}
+//	}
 }
 
 #pragma mark - action sheet delegate
