@@ -15,6 +15,8 @@
 #import "QSLikeBrandManage.h"
 #import "LoadingView.h"
 #import "SVProgressHUD.h"
+#import <TAESDK/TAESDK.h>
+#import "NetManager.h"
 
 //#define brandWidth 80;
 //#define brandHeight 80;
@@ -239,17 +241,44 @@
 #pragma mark 按钮 关注这些品牌
 - (void)payAttention
 {
-    self.navigationController.navigationBarHidden = YES;
-    self.navigationController.navigationBarHidden = YES;
-    NSArray *likedArray = [payAttentionBrand allValues];
-    [self.likeBrandManage likeMultiBrand:likedArray andSuccBlock:^{
-        
-    } failBlock:^{
-        
-    }];
-//    MLOG(@"%@", likedArray);
-    [self back];
+    if ([[TaeSession sharedInstance] isLogin]) {
+        self.navigationController.navigationBarHidden = YES;
+        self.navigationController.navigationBarHidden = YES;
+        NSArray *likedArray = [payAttentionBrand allValues];
+        [self.likeBrandManage likeMultiBrand:likedArray andSuccBlock:^{
+            
+        } failBlock:^{
+            
+        }];
+        //    MLOG(@"%@", likedArray);
+        [self back];
+    }
+    else
+    {
+        [[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
+            self.navigationController.navigationBarHidden = NO;
+            [self accreditLogin];
+        } failedCallback:^(NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
+        }];
+    }
 }
+
+#pragma mark 授权登陆
+- (void)accreditLogin
+{
+    TaeUser *temUser = [[TaeSession sharedInstance] getUser];
+    NSString *loginUrl = [NSString stringWithFormat:@"%@?service=outh&tbNick=%@&picUrl=%@&userId=%@", KBaseUrl, temUser.nick, temUser.iconUrl, temUser.userId];
+    NSString *encodeStr = [loginUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict){
+        MLOG(@"%@", successDict);
+        [SVProgressHUD showSuccessWithStatus:@"登陆成功" cover:YES offsetY:kMainScreenHeight/2.0];
+    } failure:^(NSDictionary *failDict, NSError *error) {
+        MLOG(@"%@", failDict);
+        [SVProgressHUD showSuccessWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
+    }];
+}
+
 
 #pragma mark tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

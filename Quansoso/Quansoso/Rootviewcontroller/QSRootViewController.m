@@ -221,6 +221,7 @@ typedef NS_ENUM(NSInteger, cateType) {
         }];
         leftView.backgroundColor = kClearColor;
     }
+    [self updateUI];
     [ViewInteraction viewPresentAnimationFromRight:self.view toView:leftView];
 }
 
@@ -230,7 +231,7 @@ typedef NS_ENUM(NSInteger, cateType) {
     TaeUser *temUser = [[TaeSession sharedInstance] getUser];
     NSString *loginUrl = [NSString stringWithFormat:@"%@?service=outh&tbNick=%@&picUrl=%@&userId=%@", KBaseUrl, temUser.nick, temUser.iconUrl, temUser.userId];
     NSString *encodeStr = [loginUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [NetManager requestWith:nil url:encodeStr method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict){
+    [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict){
         MLOG(@"%@", successDict);
         [SVProgressHUD showSuccessWithStatus:@"登陆成功" cover:YES offsetY:kMainScreenHeight/2.0];
     } failure:^(NSDictionary *failDict, NSError *error) {

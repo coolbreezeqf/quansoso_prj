@@ -21,6 +21,7 @@
 #import "QSCardDetailsViewController.h"
 #import "UIImage+GIF.h"
 #import "SVProgressHUD.h"
+#import <TAESDK/TAESDK.h>
 
 
 #define times kMainScreenWidth/320
@@ -88,14 +89,22 @@
 #pragma mark 网络请求
     [self getDayRecommends];
     
-    [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
-        self.brandArray = aArray;
-        dailyShopIdArray = [[NSMutableArray alloc] init];
-        [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
-    } andFailBlock:^{
-        [self.loadingImgView removeFromSuperview];
-        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
-    } isIndex:YES];
+    if ([[TaeSession sharedInstance] isLogin])
+    {
+        [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
+            self.brandArray = aArray;
+            dailyShopIdArray = [[NSMutableArray alloc] init];
+            [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+        } andFailBlock:^{
+            [self.loadingImgView removeFromSuperview];
+            [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+        } isIndex:YES];
+    }
+    else
+    {
+        
+    }
+    
     
     return self;
 }
@@ -235,12 +244,20 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showQuanTableView.pullToRefreshView stopAnimating];
-            [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
-                self.brandArray = aArray;
-                [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
-            } andFailBlock:^{
-                [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
-            } isIndex:YES];
+            if ([[TaeSession sharedInstance] isLogin])
+            {
+                [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
+                    self.brandArray = aArray;
+                    [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+                } andFailBlock:^{
+                    [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+                } isIndex:YES];
+            }
+            else
+            {
+                self.brandArray = [NSMutableArray new];
+                [SVProgressHUD showErrorWithStatus:@"你还没登陆" cover:YES offsetY:kMainScreenHeight/2.0];
+            }
             [self getDayRecommends];
         });
     }];
@@ -250,12 +267,20 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+            if ([[TaeSession sharedInstance] isLogin])
+            {
                 [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
                     [self.brandArray addObjectsFromArray:aArray];
                     [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
                 } andFailBlock:^{
                     [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
                 }];
+            }
+            else
+            {
+                self.brandArray = [NSMutableArray new];
+                [SVProgressHUD showErrorWithStatus:@"你还没登陆" cover:YES offsetY:kMainScreenHeight/2.0];
+            }
         });
     }];
     

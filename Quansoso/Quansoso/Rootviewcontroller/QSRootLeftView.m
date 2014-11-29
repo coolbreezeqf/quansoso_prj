@@ -58,7 +58,7 @@ CGFloat cellHeight;
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width*2/3, self.width*1/2+40)];
     _topView.backgroundColor = [UIColor clearColor];
     
-    self.headImgView = [[UIImageView alloc] initWithFrame:CGRectMake(30, ViewBottom(_topView)/2-40, 80, 80)];
+    self.headImgView = [[UIImageView alloc] initWithFrame:CGRectMake(kMainScreenWidth/3-75, ViewBottom(_topView)/2-40, 80, 80)];
     [self.headImgView sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]
                         placeholderImage:[UIImage imageNamed:@"QSUserDefualt"]];
     self.headImgView.layer.cornerRadius = 40;
