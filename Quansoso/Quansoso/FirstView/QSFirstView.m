@@ -32,6 +32,10 @@
     self.backgroundColor = RGBCOLOR(245, 240, 232);
     self.brandArray = [NSMutableArray new];
     
+    UIView *stautsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 20)];
+    stautsView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:stautsView];
+    
     UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenWidth/720*478)];
     [headView setImage:[UIImage imageNamed:@"QSIndexTopView"]];
     headView.contentMode = UIViewContentModeScaleAspectFill;
@@ -41,7 +45,7 @@
     
     UITapGestureRecognizer *tapSGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToSearchVC)];
     
-    UIButton *rightMoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(headView.right-45, 40, 36, 24)];
+    UIButton *rightMoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(headView.right-45, 25, 36, 24)];
     [rightMoreBtn setImage:[UIImage imageNamed:@"QSRightMoreBtn"] forState:UIControlStateNormal];
     [rightMoreBtn addTarget:self action:@selector(rightMoreBtn) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:rightMoreBtn];
@@ -67,7 +71,7 @@
     [self.imagebrand addGestureRecognizer:tapSGR];
     [self.viewSearch addGestureRecognizer:self.tapSearchGestureRecognizer];
     
-    self.showQuanTableView = [[UITableView alloc] initWithFrame:self.bounds];
+    self.showQuanTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth, kMainScreenHeight-20)];
     self.showQuanTableView.dataSource = self;
     self.showQuanTableView.delegate = self;
     self.showQuanTableView.backgroundColor = RGBCOLOR(245, 240, 232);
@@ -379,6 +383,7 @@
                 {
                     QSMerchant *model = [self.brandArray objectAtIndex:i+indexPath.row*3];
                     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40), (96/2-40), 80, 80)];
+                    imgView.contentMode = UIViewContentModeScaleAspectFit;
                     [imgView sd_setImageWithURL:[NSURL URLWithString:model.picUrl] placeholderImage:[UIImage imageNamed:@""]];
                     [btn addSubview:imgView];
                     UIImageView *countImgView = [[UIImageView alloc] initWithFrame:CGRectMake(96-12, -6, 18, 18)];

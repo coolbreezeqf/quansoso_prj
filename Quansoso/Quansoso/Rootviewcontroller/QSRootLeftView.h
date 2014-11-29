@@ -21,6 +21,8 @@
 @property(nonatomic, strong) UILabel *logInLabel;
 
 @property(nonatomic ,copy) void(^ fadeBlock)(void);
+@property(nonatomic, copy) void(^ loginBlock)(void);
 
+- (void)useLoginBlock:(void(^)(void))aBlock;
 - (void)useFadeBlock:(void(^)(void))aBlock;
 @end

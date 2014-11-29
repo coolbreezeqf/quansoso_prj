@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <TAESDK/TAESDK.h>
 #import "QSRootViewController.h"
+#import "NetManager.h"
 
 @interface AppDelegate ()
 
@@ -27,6 +28,7 @@
     self.window.rootViewController = self.rootNav;
     [self initTBSDK];
     [self.window makeKeyAndVisible];
+    [self performSelector:@selector(registerRemoteToken) withObject:nil afterDelay:5];
     return YES;
 }
 
@@ -43,7 +45,41 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     [[TaeSDK sharedInstance] handleOpenURL:url];
+    [self.rootvc viewWillAppear:YES];
     return YES;
+}
+
+#pragma mark 注册devicetoken
+- (void)registerRemoteToken
+{
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    MLOG(@"fasfas");
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    if(deviceToken)
+    {
+        NSString *strToken  = [NSString stringWithFormat:@"%@",deviceToken];
+        MLOG(@"device_token = %@",strToken);
+        NSString *oldToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceToken"];
+        if(![oldToken isEqualToString:strToken])//如果不等就上报
+        {
+            NSString *struserid = [[TaeSession sharedInstance] getUser].userId?[[TaeSession sharedInstance] getUser].userId:@"0";
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:strToken,@"DeviceNo",struserid,@"CustomerID", [NSString stringWithFormat:@"%.2f",kSystemVersion],@"OSVersion",@"iphone",@"DeviceName",nil];
+            NSString *devurl = nil;
+            [NetManager requestWith:dict url:devurl method:@"GET" operationKey:[self description] parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+                [[NSUserDefaults standardUserDefaults] setObject:strToken forKey:@"DeviceToken"];
+            } failure:^(NSDictionary *failDict, NSError *error) {
+                
+            }];
+        }
+        
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
