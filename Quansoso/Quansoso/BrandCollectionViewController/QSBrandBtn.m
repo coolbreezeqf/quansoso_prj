@@ -30,6 +30,7 @@
         CGFloat brandWidth = (backView.right-backView.left)-18*2;
         
         self.brandImgView = [[UIImageView alloc] initWithFrame:CGRectMake((backView.right-backView.left-brandWidth)/2, 15, brandWidth, brandWidth)];
+        self.brandImgView.contentMode = UIViewContentModeScaleAspectFit;
         self.brandLikeView.userInteractionEnabled = YES;
         self.brandImgView.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.brandImgView];

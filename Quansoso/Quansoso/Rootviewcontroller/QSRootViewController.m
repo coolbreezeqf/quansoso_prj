@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "NetManager.h"
 #import <TAESDK/TAESDK.h>
+#import "SVProgressHUD.h"
 
 typedef NS_ENUM(NSInteger, cateType) {
     cateTypeIndex = 0,
@@ -118,6 +119,14 @@ typedef NS_ENUM(NSInteger, cateType) {
                 
             }];
         }];
+        [leftView useLoginBlock:^{
+            [[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
+                [self accreditLogin];
+                [self updateUI];
+            } failedCallback:^(NSError *error) {
+                [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
+            }];
+        }];
         __weak QSRootViewController *weakself = self;
         [fbkvo observe:leftView keyPath:@"categoryType" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
             MLOG(@"%@", change);
@@ -155,7 +164,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                             [self accreditLogin];
                             [self updateUI];
                         } failedCallback:^(NSError *error) {
-
+                            [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
                         }];
                     }
                 }
@@ -180,7 +189,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                             [self accreditLogin];
                             [self updateUI];
                         } failedCallback:^(NSError *error) {
-                            
+                            [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
                         }];
                     }
                 }
@@ -220,10 +229,13 @@ typedef NS_ENUM(NSInteger, cateType) {
 {
     TaeUser *temUser = [[TaeSession sharedInstance] getUser];
     NSString *loginUrl = [NSString stringWithFormat:@"%@?service=outh&tbNick=%@&picUrl=%@&userId=%@", KBaseUrl, temUser.nick, temUser.iconUrl, temUser.userId];
-    [NetManager requestWith:nil url:loginUrl method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict){
+    NSString *encodeStr = [loginUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [NetManager requestWith:nil url:encodeStr method:@"POST" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict){
         MLOG(@"%@", successDict);
+        [SVProgressHUD showSuccessWithStatus:@"登陆成功" cover:YES offsetY:kMainScreenHeight/2.0];
     } failure:^(NSDictionary *failDict, NSError *error) {
         MLOG(@"%@", failDict);
+        [SVProgressHUD showSuccessWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
 }
 
@@ -234,11 +246,13 @@ typedef NS_ENUM(NSInteger, cateType) {
     {
         leftView.logInLabel.text = [TaeSession sharedInstance].getUser.nick;
         [leftView.headImgView sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]];
+        leftView.logInLabel.userInteractionEnabled = NO;
     }
     else
     {
         leftView.logInLabel.text = @"登录";
         [leftView.headImgView setImage:[UIImage imageNamed:@"QSUserDefualt"]];
+        leftView.logInLabel.userInteractionEnabled = YES;
     }
 }
 
@@ -246,6 +260,7 @@ typedef NS_ENUM(NSInteger, cateType) {
 {
     leftView.logInLabel.text = @"登录";
     [leftView.headImgView setImage:[UIImage imageNamed:@"QSUserDefualt"]];
+    leftView.logInLabel.userInteractionEnabled = YES;
 }
 
 #pragma mark Default  firstView

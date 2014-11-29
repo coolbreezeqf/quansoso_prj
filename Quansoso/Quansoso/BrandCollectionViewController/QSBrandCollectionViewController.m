@@ -74,7 +74,7 @@
     
     attentionBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-85, 8, 80, 24)];
     [attentionBtn addTarget:self action:@selector(payAttention) forControlEvents:UIControlEventTouchUpInside];
-    [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrand"] forState:UIControlStateNormal];
+    [attentionBtn setImage:[UIImage imageNamed:@"QSUnLikeBtn"] forState:UIControlStateNormal];
 //    [self.navigationController.navigationBar addSubview:attentionBtn];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:attentionBtn];
     
@@ -300,6 +300,14 @@
         [payAttentionBrand removeObjectForKey:[NSString stringWithFormat:@"%d", aBtn.tag]];
     }
     aBtn.isLiked = !aBtn.isLiked;
+    if (payAttentionBrand.count>0)
+    {
+        [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrand"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [attentionBtn setImage:[UIImage imageNamed:@"QSUnLikeBtn"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

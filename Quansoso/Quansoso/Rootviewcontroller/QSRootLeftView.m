@@ -36,6 +36,11 @@ CGFloat cellHeight;
     }
 }
 
+- (void)useLoginBlock:(void (^)(void))aBlock
+{
+    self.loginBlock = aBlock;
+}
+
 - (void)useFadeBlock:(void (^)(void))aBlock
 {
     _fadeBlock = aBlock;
@@ -73,6 +78,9 @@ CGFloat cellHeight;
         self.logInLabel.text = @"登录";
     }
     self.logInLabel.textAlignment = NSTextAlignmentLeft;
+    self.logInLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touch)];
+    [self.logInLabel addGestureRecognizer:tapGesture];
     [_topView addSubview:self.logInLabel];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.topView.bottom-1, self.width*2/3, 0.5)];
@@ -88,6 +96,12 @@ CGFloat cellHeight;
     _tableview.showsVerticalScrollIndicator = NO;
     _tableview.tableHeaderView = _topView;
     [self addSubview:_tableview];
+}
+
+- (void)touch
+{
+    self.fadeBlock();
+    self.loginBlock();
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
