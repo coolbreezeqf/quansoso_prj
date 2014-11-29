@@ -34,6 +34,7 @@
     
     UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenWidth/720*478)];
     [headView setImage:[UIImage imageNamed:@"QSIndexTopView"]];
+    headView.contentMode = UIViewContentModeScaleAspectFill;
     headView.userInteractionEnabled = YES;
     
     self.tapSearchGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToSearchVC)];
@@ -45,12 +46,12 @@
     [rightMoreBtn addTarget:self action:@selector(rightMoreBtn) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:rightMoreBtn];
     
-    self.imagebrand = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-185)/2, 80, 185, 56)];
+    self.imagebrand = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-180)/2, 80, 180, 54)];
     [self.imagebrand setImage:[UIImage imageNamed:@"QSquansosoImg"]];
     self.imagebrand.userInteractionEnabled = YES;
     [headView addSubview:self.imagebrand];
     
-    self.viewSearch = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-240)/2, ViewBottom(_imagebrand)+20, 240, 30)];
+    self.viewSearch = [[UIImageView alloc] initWithFrame:CGRectMake((kMainScreenWidth-300)/2, ViewBottom(_imagebrand)+20, 300, 35)];
     self.viewSearch.userInteractionEnabled = YES;
     [self.viewSearch setImage:[UIImage imageNamed:@"QSSearchBack"]];
     
@@ -352,7 +353,7 @@
             int j = btnCount-3*indexPath.row;
             CGFloat interval = (kMainScreenWidth-298)/6;
 //            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellIdentifer"];
-//            if (cell==nil) {
+            //if (cell==nil) {
             UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellIdentifer"];
 //                for (int i=0; i<3; i++) {
 //                    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 2.5, 96, 96)];
@@ -360,7 +361,7 @@
 //                    btn.backgroundColor = [UIColor whiteColor];
 //                    [cell addSubview:btn];
 //                }
-//            }
+            //}
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundColor = [UIColor clearColor];
             CGRect frame = cell.frame;
