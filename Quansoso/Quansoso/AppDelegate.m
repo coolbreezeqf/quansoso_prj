@@ -36,7 +36,7 @@
 {
     [[TaeSDK sharedInstance] asyncInit:^{
         MLOG(@"TBSDK--初始化成功");
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kTaeSDKInitSuccessMsg object:nil];
     } failedCallback:^(NSError *error) {
         MLOG(@"TBSDK--初始化失败");
     }];
@@ -60,6 +60,11 @@
     MLOG(@"fasfas");
 }
 
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    MLOG(@"registertoken_error");
+}
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     if(deviceToken)
@@ -69,13 +74,14 @@
         NSString *oldToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceToken"];
         if(![oldToken isEqualToString:strToken])//如果不等就上报
         {
-            NSString *struserid = [[TaeSession sharedInstance] getUser].userId?[[TaeSession sharedInstance] getUser].userId:@"0";
-            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:strToken,@"DeviceNo",struserid,@"CustomerID", [NSString stringWithFormat:@"%.2f",kSystemVersion],@"OSVersion",@"iphone",@"DeviceName",nil];
-            NSString *devurl = nil;
+            NSString *struserNick = [[TaeSession sharedInstance] getUser].nick?[[TaeSession sharedInstance] getUser].nick:@"0";
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"upload_token", @"service", strToken,@"token",struserNick,@"tbNick",nil];
+            NSString *devurl = @"http://quansoso.uz.taobao.com/d/cr/rest";
             [NetManager requestWith:dict url:devurl method:@"GET" operationKey:[self description] parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
                 [[NSUserDefaults standardUserDefaults] setObject:strToken forKey:@"DeviceToken"];
+                MLOG(@"%@", successDict);
             } failure:^(NSDictionary *failDict, NSError *error) {
-                
+                MLOG(@"%@", failDict);
             }];
         }
         

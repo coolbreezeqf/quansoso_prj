@@ -68,7 +68,30 @@ typedef NS_ENUM(NSInteger, cateType) {
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rigthBtn];
     self.navigationItem.rightBarButtonItem = barButtonItem;
     [self showFirstView];
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
+        UIImageView *guideView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight+20)];
+        [guideView setImage:[UIImage imageNamed:@"QSGuideView"]];
+        guideView.tag = 10000;
+        guideView.contentMode = UIViewContentModeScaleAspectFill;
+        guideView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *removeGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeGuideView)];
+        [guideView addGestureRecognizer:removeGesture];
+        [self.view addSubview:guideView];
+    }
+    else
+    {
+        MLOG(@"not first");
+    }
+    
 //    self.title = @"首页";
+}
+
+- (void)removeGuideView
+{
+    [[self.view viewWithTag:10000] removeFromSuperview];
 }
 
 #pragma mark 淘宝的系列操作

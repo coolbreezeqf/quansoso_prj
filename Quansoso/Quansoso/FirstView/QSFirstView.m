@@ -22,6 +22,7 @@
 #import "UIImage+GIF.h"
 #import "SVProgressHUD.h"
 #import <TAESDK/TAESDK.h>
+#import "QSAttentionBtn.h"
 
 
 #define times kMainScreenWidth/320
@@ -86,6 +87,13 @@
                     
     [self.showQuanTableView addSubview:self.loadingImgView];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getData) name:kTaeSDKInitSuccessMsg object:nil];
+
+    return self;
+}
+
+- (void)getData
+{
 #pragma mark 网络请求
     [self getDayRecommends];
     
@@ -104,10 +112,8 @@
     {
         
     }
-    
-    
-    return self;
 }
+
 
 - (void)getDayRecommends
 {
@@ -400,35 +406,20 @@
             {
 //                UIButton *btn = (UIButton *)[cell viewWithTag:i];
 //                btn.tag = 100+indexPath.row+i;
-                UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 8, 96, 96)];
-                btn.tag = i+indexPath.row*3+100;
-                btn.backgroundColor = [UIColor whiteColor];
-                [cell addSubview:btn];
                 if (i+indexPath.row*3<self.brandArray.count)
                 {
                     QSMerchant *model = [self.brandArray objectAtIndex:i+indexPath.row*3];
-                    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40), (96/2-40), 80, 80)];
-                    imgView.contentMode = UIViewContentModeScaleAspectFit;
-                    [imgView sd_setImageWithURL:[NSURL URLWithString:model.picUrl] placeholderImage:[UIImage imageNamed:@""]];
-                    [btn addSubview:imgView];
-                    UIImageView *countImgView = [[UIImageView alloc] initWithFrame:CGRectMake(96-12, -6, 18, 18)];
-                    countImgView.layer.cornerRadius = 9;
-                    countImgView.backgroundColor = RGBCOLOR(252, 82, 88);
-                    [btn addSubview:countImgView];
-                    UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
-                    countLabel.textAlignment = NSTextAlignmentCenter;
-                    countLabel.backgroundColor = [UIColor clearColor];
-                    countLabel.font = kFont10;
-                    countLabel.text = @"15";
-                    countLabel.backgroundColor = [UIColor clearColor];
-                    countLabel.textColor = [UIColor whiteColor];
-                    [countImgView addSubview:countLabel];
-                    [btn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
+                    QSAttentionBtn *attentionbtn = [[QSAttentionBtn alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 8, 96, 96) andModel:model];
+                    attentionbtn.tag = i+indexPath.row*3+100;
+                    [attentionbtn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
+                    [cell addSubview:attentionbtn];
                 }
                 else
                 {
+                    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 8, 96, 96)];
                     [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
                     [btn setImage:[UIImage imageNamed:@"QSPlusBtn"] forState:UIControlStateNormal];
+                    [cell addSubview:btn];
                 }
 
             }
@@ -478,9 +469,10 @@
 }
 
 #pragma mark 店铺按钮
-- (void)touchStoreButton:(UIButton *)aBtn
+- (void)touchStoreButton:(QSAttentionBtn *)aBtn
 {
     NSLog(@"%d", aBtn.tag);
+    [aBtn removeRedView];
     QSMerchant *model = [self.brandArray objectAtIndex:aBtn.tag-100];
     QSMerchantDetailsViewController *vc = [[QSMerchantDetailsViewController alloc]
                                            initWithShopId:[model.externalShopId integerValue]];
@@ -493,6 +485,11 @@
 {
     QSBrandCollectionViewController *brandCollectionVC = [[QSBrandCollectionViewController alloc] init];
     [ViewInteraction viewPushViewcontroller:brandCollectionVC];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

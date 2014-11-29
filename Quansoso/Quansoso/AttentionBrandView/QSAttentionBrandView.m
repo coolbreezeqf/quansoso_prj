@@ -149,6 +149,7 @@
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             [weakself.showBrandTableView.pullToRefreshView stopAnimating];
             [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
+                self.brandArray = aArray;
                 [self.showBrandTableView reloadData];
             } andFailBlock:^{
                 [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
@@ -199,7 +200,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (self.brandArray.count>0) {
         NSString *cellIdentifer = @"brandCell";
         QSAttentionBrandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
         if (!cell) {
@@ -212,22 +212,6 @@
         [cell.cancelBtn addTarget:self action:@selector(cancelAttention:) forControlEvents:UIControlEventTouchUpInside];
         cell.cancelBtn.tag = indexPath.row+100;
         return cell;
-//    }
-//    else
-//    {
-//        UITableViewCell *cell = [[UITableViewCell alloc] init];
-//        if (indexPath.row==3) {
-//            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-50, 20, 100, 20)];
-//            label.text = @"暂无数据";
-//            label.font = kFont14;
-//            label.textColor = [UIColor lightGrayColor];
-//            label.textAlignment = NSTextAlignmentCenter;
-//            [cell addSubview:label];
-//        }
-//        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-//        cell.backgroundColor = [UIColor clearColor];
-//        return cell;
-//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

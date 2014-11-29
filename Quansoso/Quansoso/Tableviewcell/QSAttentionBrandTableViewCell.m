@@ -38,7 +38,7 @@
     [self addSubview:bottomLineView];
     
     self.brandImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 60, 60)];
-    self.brandImgView.backgroundColor = [UIColor greenColor];
+    self.brandImgView.contentMode = UIViewContentModeScaleAspectFit;
     self.brandImgView.layer.borderColor = [[UIColor blackColor] CGColor];
     self.brandImgView.layer.borderWidth = 0.5;
     [backView addSubview:self.brandImgView];
@@ -59,6 +59,7 @@
 {
     [self.brandImgView sd_setImageWithURL:[NSURL URLWithString:aModel.picUrl]];
     self.brandNameLabel.text = aModel.name;
+    [self.cancelBtn setImage:[UIImage imageNamed:@"QSBrandLiked"] forState:UIControlStateNormal];
 }
 
 - (void)awakeFromNib {

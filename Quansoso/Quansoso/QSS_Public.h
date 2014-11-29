@@ -9,6 +9,8 @@
 #ifndef Quansoso_QSS_Public_h
 #define Quansoso_QSS_Public_h
 
+#define kTaeSDKInitSuccessMsg @"initSuccess"
+
 #define kMainScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kMainScreenWidth  [UIScreen mainScreen].bounds.size.width
 
