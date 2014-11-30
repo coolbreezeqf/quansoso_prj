@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "QSMerchantCommendView.h"
 @class QSCards;
-
+@class QSActivity;
 @interface QSCardDetailsViewController : BaseViewController<QSMerchantCommendDelegate>
-- (instancetype)initWithCard:(QSCards *)card;
-- (instancetype)initWithCard:(QSCards *)card andShopId:(NSString *)shopid;
+- (instancetype)initWithCard:(QSCards *)card andSellerId:(NSString *)sellerid;
+- (instancetype)initWithActivity:(QSActivity *)activity andSellerId:(NSString *)sellerid;
+- (instancetype)initWithCard:(QSCards *)card shopId:(NSString *)shopid andSellerId:(NSString *)sellerid;
 @end

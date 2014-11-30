@@ -35,6 +35,7 @@
 //	self = nib[0];
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 12.5, 90, 45)];
+		_iconImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:_iconImageView];
         _titleLb = [[UILabel alloc] initWithFrame:CGRectMake(_iconImageView.right+20, _iconImageView.top, kMainScreenWidth - _iconImageView.right - 30, 45)];
         _titleLb.font = kFont15;

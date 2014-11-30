@@ -8,5 +8,6 @@
 
 #import <UIKit/UIKit.h>
 @interface QSMerchantDetailsViewController : BaseViewController
+@property (nonatomic) BOOL isFollow;
 - (instancetype)initWithShopId:(NSInteger)shopid;
 @end

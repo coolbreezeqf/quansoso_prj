@@ -31,6 +31,9 @@
 		ABC4242D19FDD3B000AE7847 /* QSDailyView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC4242C19FDD3B000AE7847 /* QSDailyView.m */; };
 		ABC54D861A086498009071D8 /* QSBrandBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC54D851A086498009071D8 /* QSBrandBtn.m */; };
 		ABC692381A29BD0B0023ABFF /* QSAttentionBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC692371A29BD0B0023ABFF /* QSAttentionBtn.m */; };
+		B006F6D41A29710E00161B74 /* IntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B006F6D11A29710E00161B74 /* IntroduceViewController.m */; };
+		B006F6D51A29710E00161B74 /* IntroduceWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = B006F6D31A29710E00161B74 /* IntroduceWebView.m */; };
+		B006F6D81A299AA900161B74 /* QSActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = B006F6D71A299AA900161B74 /* QSActivity.m */; };
 		B02E0BD219CADAAB009A0306 /* Result.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCD19CADAAB009A0306 /* Result.m */; };
 		B02E0BD319CADAAB009A0306 /* ResultCard.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BCF19CADAAB009A0306 /* ResultCard.m */; };
 		B02E0BD419CADAAB009A0306 /* SearchInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B02E0BD119CADAAB009A0306 /* SearchInfo.m */; };
@@ -178,6 +181,12 @@
 		ABC54D851A086498009071D8 /* QSBrandBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSBrandBtn.m; path = BrandCollectionViewController/QSBrandBtn.m; sourceTree = "<group>"; };
 		ABC692361A29BD0B0023ABFF /* QSAttentionBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSAttentionBtn.h; sourceTree = "<group>"; };
 		ABC692371A29BD0B0023ABFF /* QSAttentionBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSAttentionBtn.m; sourceTree = "<group>"; };
+		B006F6D01A29710E00161B74 /* IntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroduceViewController.h; sourceTree = "<group>"; };
+		B006F6D11A29710E00161B74 /* IntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroduceViewController.m; sourceTree = "<group>"; };
+		B006F6D21A29710E00161B74 /* IntroduceWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroduceWebView.h; sourceTree = "<group>"; };
+		B006F6D31A29710E00161B74 /* IntroduceWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroduceWebView.m; sourceTree = "<group>"; };
+		B006F6D61A299AA900161B74 /* QSActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSActivity.h; sourceTree = "<group>"; };
+		B006F6D71A299AA900161B74 /* QSActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSActivity.m; sourceTree = "<group>"; };
 		B02E0BBD19CA8FDD009A0306 /* DataModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModels.h; sourceTree = "<group>"; };
 		B02E0BCC19CADAAB009A0306 /* Result.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Result.h; sourceTree = "<group>"; };
 		B02E0BCD19CADAAB009A0306 /* Result.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Result.m; sourceTree = "<group>"; };
@@ -475,9 +484,22 @@
 			path = Tableviewcell;
 			sourceTree = "<group>";
 		};
+		B006F6CF1A2970FD00161B74 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				B006F6D01A29710E00161B74 /* IntroduceViewController.h */,
+				B006F6D11A29710E00161B74 /* IntroduceViewController.m */,
+				B006F6D21A29710E00161B74 /* IntroduceWebView.h */,
+				B006F6D31A29710E00161B74 /* IntroduceWebView.m */,
+			);
+			name = WebView;
+			sourceTree = "<group>";
+		};
 		B02E0BB819CA842C009A0306 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B006F6D61A299AA900161B74 /* QSActivity.h */,
+				B006F6D71A299AA900161B74 /* QSActivity.m */,
 				5B3B10F91A107B290020955E /* QSSMerchant.h */,
 				5B3B10FA1A107B290020955E /* QSSMerchant.m */,
 				5B3B10F01A1078EA0020955E /* QSSActivities.h */,
@@ -805,6 +827,7 @@
 		FFE85F1119CABAD300A216BB /* UIParty */ = {
 			isa = PBXGroup;
 			children = (
+				B006F6CF1A2970FD00161B74 /* WebView */,
 				B03624EC19E9184B00ECFE61 /* CardDetails */,
 				AB101E8719E234DD00434DEE /* NetManage */,
 				AB5AE54819DE766E00F6BA7A /* BrandCollectionViewController */,
@@ -922,7 +945,7 @@
 		FF8A928719C433B80010439B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = taobao;
 				TargetAttributes = {
 					FF8A928E19C433B80010439B = {
@@ -1018,6 +1041,7 @@
 				B09EC6071A274DC700066239 /* QSMerchantCommendView.m in Sources */,
 				C2E099BD19E9014B00828DD0 /* QSDayRecommendManage.m in Sources */,
 				B02E0BD319CADAAB009A0306 /* ResultCard.m in Sources */,
+				B006F6D51A29710E00161B74 /* IntroduceWebView.m in Sources */,
 				AB7AE3C019E4C4F7000AE8EF /* QSAttentionBrandTableViewCell.m in Sources */,
 				5B3B10F61A1078EA0020955E /* QSSActivities.m in Sources */,
 				ABC692381A29BD0B0023ABFF /* QSAttentionBtn.m in Sources */,
@@ -1061,6 +1085,7 @@
 				FFBA9E9619C680C800D9CBA2 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				AB219E2E19D7E874001395AC /* QSFirstView.m in Sources */,
 				FFBA9EA019C680E100D9CBA2 /* JSONKit.m in Sources */,
+				B006F6D81A299AA900161B74 /* QSActivity.m in Sources */,
 				B08A5FFE19DFE61A008077E7 /* UILabel+dynamicSizeMe.m in Sources */,
 				FFE85F2E19CABB9300A216BB /* QSSettingView.m in Sources */,
 				FFE85F3419CABBAE00A216BB /* FBKVOController.m in Sources */,
@@ -1068,6 +1093,7 @@
 				B0BEDD761A2074B200721A68 /* QSAboutMeViewController.m in Sources */,
 				AB5AE54419DE736E00F6BA7A /* QSShareAppView.m in Sources */,
 				FFBA9EEC19C688F200D9CBA2 /* UIView+WebCacheOperation.m in Sources */,
+				B006F6D41A29710E00161B74 /* IntroduceViewController.m in Sources */,
 				FFBA9EEA19C688F200D9CBA2 /* UIImageView+HighlightedWebCache.m in Sources */,
 				FFBA9E9219C680C800D9CBA2 /* AFHTTPClient.m in Sources */,
 				FFE85F1E19CABB1300A216BB /* BaseViewController.m in Sources */,
@@ -1186,10 +1212,6 @@
 		FF8A92AD19C433B80010439B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					ARCHS_STANDARD_32_BIT,
-				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1211,10 +1233,6 @@
 		FF8A92AE19C433B80010439B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					ARCHS_STANDARD_32_BIT,
-				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (

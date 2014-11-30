@@ -13,11 +13,15 @@
 #import "QSSActivities.h"
 #import "QSSMerchant.h"
 #import "QSCards.h"
+#import "QSActivity.h"
 #import "QSCardDetailsViewController.h"
 #import "QSCardCell.h"
 #import "SVProgressHUD.h"
 #import "QSshowMerIntrodView.h"
 #import "QSLikeBrandManage.h"
+#import "IntroduceViewController.h"
+#import <TAESDK/TAESDK.h>
+#import "NetManager.h"
 //#import "QSCardDetailsViewController.h"
 #define logoViewWidth 130
 #define logoImgWidth 100
@@ -30,10 +34,12 @@
 	NSInteger _shopId;
     CGFloat _detailMercBtnCenterX;
 	UILabel *tipLabel;
+	UIButton *rightButton;
 }
 //data
 @property (strong, nonatomic) QSSMerchant *merchant;
 @property (strong, nonatomic) NSArray *cardsArray;
+@property (strong, nonatomic) NSArray *activities;
 //UI
 @property (nonatomic,strong) UIView *logoView;
 @property (nonatomic,strong) UIView *merchantToolView;
@@ -85,6 +91,7 @@
 - (instancetype)initWithShopId:(NSInteger)shopid{
     if (self = [super init]) {
         _shopId = shopid;
+		_isFollow = NO;
     }
     return self;
 }
@@ -102,21 +109,33 @@
     _activityView.center = CGPointMake(kMainScreenWidth/2, kMainScreenHeight/2 - 100);
     [self.view addSubview:_activityView];
     [_activityView startAnimating];
+	
+	
     QSMerchantNetManager *netManager = [[QSMerchantNetManager alloc] init];
     __weak QSMerchantDetailsViewController *weakSelf = self;
-    [netManager getMerchantWithShopID:_shopId success:^(QSSMerchant *merchant,NSArray *cardsArray) {
+	if ([[TaeSession sharedInstance] isLogin]) {
+		NSString *nick = [[TaeSession sharedInstance] getUser].nick;
+		[netManager isFollowShopWithShopId:_shopId andNick:nick success:^(bool isfollow) {
+			weakSelf.isFollow = isfollow;
+			[weakSelf setLikeImage];
+		} failure:^{
+			
+		}];
+	}
+	
+    [netManager getMerchantWithShopID:_shopId success:^(QSSMerchant *merchant,NSArray *cardsArray,NSArray *activities) {
         [weakSelf.activityView stopAnimating];
         weakSelf.merchant = merchant;
         weakSelf.cardsArray = cardsArray;
-//        weakSelf.title = merchant.name;
+		weakSelf.activities = activities;
         [weakSelf settitleLabel:merchant.name];
         NSInteger categoryType = 1;
         categoryType = [weakSelf.merchant.ekpCategory integerValue];
+		categoryType = categoryType ? categoryType : 1;
         MLOG(@"------%@--------",weakSelf.merchant.ekpCategory);
         weakSelf.backImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"QSstoreBackImg%i",categoryType]];
         weakSelf.showMerIntrodView.text = weakSelf.merchant.merchantDescription;
         [weakSelf.logoImageView sd_setImageWithURL:[NSURL URLWithString:self.merchant.picUrl] placeholderImage:[UIImage imageNamed:@"QSUserDefualt"]];
-        
         [weakSelf.tableView reloadData];
     } failure:^{
         [weakSelf.activityView stopAnimating];
@@ -131,8 +150,10 @@
 //    self.navigationItem.title = self.merchant.name;
 	self.view.backgroundColor = [UIColor whiteColor];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"QSRightViewItem2"] style:UIBarButtonItemStylePlain target:self action:@selector(privateTheMerchant)];
-    
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"QSBrandUnlike"] style:UIBarButtonItemStylePlain target:self action:@selector(privateTheMerchant)];
+	[self setRightButton:[UIImage imageNamed:@"QSBrandUnlike"] title:nil target:self action:@selector(privateTheMerchant)];
+	
+	
     [self creatLogoView];
     [self creatMerchantToolView];
     
@@ -151,6 +172,32 @@
 	tipLabel.textColor = [UIColor lightGrayColor];
 	tipLabel.center = CGPointMake(self.tableView.width/2, self.tableView.height/2);
 	[self.tableView addSubview:tipLabel];
+}
+
+- (void)setRightButton:(UIImage *)aImg title:(NSString *)aTitle target:(id)aTarget action:(SEL)aSelector{
+	CGRect buttonFrame = CGRectMake(5, 0, 22, 22);
+	rightButton = [[UIButton alloc] initWithFrame:buttonFrame];
+	[rightButton addTarget:aTarget action:aSelector forControlEvents:UIControlEventTouchUpInside];
+	[rightButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+	if(aTitle)
+		{
+		[rightButton setTitle:aTitle forState:UIControlStateNormal];
+		}
+	if(aImg)
+		{
+		[rightButton setBackgroundImage:aImg forState:UIControlStateNormal];
+		}
+	CGRect viewFrame = CGRectMake(kMainScreenWidth-100/2, 0, 22, 22);
+	UIView *view = [[UIView alloc]initWithFrame:viewFrame];
+	[view addSubview:rightButton];
+	if(self.navigationController && self.navigationItem)
+		{
+		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:view];
+		}
+}
+
+- (void)setLikeImage{
+	[rightButton setBackgroundImage:[UIImage imageNamed:_isFollow?@"QSBrandLiked":@"QSBrandUnlike"] forState:UIControlStateNormal] ;
 }
 
 - (void)creatLogoView
@@ -233,11 +280,11 @@
     if (isTest) {
         return 5;
     }
-    if (self.cardsArray && self.cardsArray.count) {
+    if (self.cardsArray && self.activities && self.cardsArray.count+self.activities.count) {
 		if ([tipLabel superview]) {
 			[tipLabel removeFromSuperview];
 		}
-        return self.cardsArray.count;
+        return self.cardsArray.count+self.activities.count;
     }else{
         return 0;
     }
@@ -254,25 +301,45 @@
     if (cell == nil) {
         cell = [[QSCardCell alloc] initWithReuseIdentifier:cellIdentifier];
     }
-    if (indexPath.row < self.cardsArray.count) {
-        QSCards *card = [[QSCards alloc] initWithDictionary:self.cardsArray[indexPath.row]];//self.cardsArray[indexPath.row];
+    if (indexPath.row >= self.activities.count) {
+		int index = indexPath.row - self.activities.count;
+        QSCards *card = [[QSCards alloc] initWithDictionary:self.cardsArray[index]];//self.cardsArray[indexPath.row];
         //MLOG(@"%@",card.denomination);
-        if(!isTest)	[cell setCellUIwithCardType:card.cardType
+        if(!isTest)
+			[cell setCellUIwithCardType:card.cardType
 						   denomination:card.denomination? :@""
 						Money_condition:card.moneyCondition? :@""
 									end:card.endProperty? :@""
 						   discountRate:card.discountRate
-						   outdateState:0];
-    }
+						   outdateState:[card.status integerValue]];
+	}else{
+		QSActivity *activity = [[QSActivity alloc] initWithDictionary:self.activities[indexPath.row]];
+		NSString *cardType = [NSString stringWithFormat:@"%i",[activity.type integerValue]+1];
+		if ([cardType integerValue] == 2) {
+			[cell setCellUIwithCardType:cardType denomination:activity.denomination Money_condition:activity.moneyCondition end:activity.endProperty discountRate:activity.discountRate outdateState:[activity.status intValue]];
+		}else{
+			[cell setCellUIwithCardType:cardType denomination:activity.denomination Money_condition:activity.name end:activity.endProperty discountRate:activity.discountRate outdateState:[activity.status intValue]];
+		}
+	}
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QSCards *card = [[QSCards alloc] initWithDictionary:self.cardsArray[indexPath.row]];
-    //MLOG(@"%@",card);
-    QSCardDetailsViewController *dVC = [[QSCardDetailsViewController alloc] initWithCard:card];
-    [self.navigationController pushViewController:dVC animated:YES];
+	if (indexPath.row < self.activities.count) {
+		QSActivity *activity = [[QSActivity alloc] initWithDictionary:self.activities[indexPath.row]];
+//		QSCardDetailsViewController *dvc = [[QSCardDetailsViewController alloc] initWithActivity:activity];
+		QSCardDetailsViewController *dvc = [[QSCardDetailsViewController alloc] initWithActivity:activity andSellerId:_merchant.sellerId];
+		[self.navigationController pushViewController:dvc animated:YES];
+	}else{
+		QSCards *card = [[QSCards alloc] initWithDictionary:self.cardsArray[indexPath.row]];
+		//MLOG(@"%@",card);
+//		if ([card.cardType integerValue] < 2 || [card.cardType integerValue] > 5) {
+//			QSCardDetailsViewController *dVC = [[QSCardDetailsViewController alloc] initWithCard:card];
+		QSCardDetailsViewController *dVC = [[QSCardDetailsViewController alloc] initWithCard:card andSellerId:_merchant.sellerId];
+			[self.navigationController pushViewController:dVC animated:YES];
+//		}
+	}
 }
 
 
@@ -280,30 +347,81 @@
 //收藏
 - (void)privateTheMerchant
 {
-    [self.likeManager likeBrand:[self.merchant.externalShopId integerValue] andSuccBlock:^{
-        [SVProgressHUD showSuccessWithStatus:@"关注成功" cover:NO offsetY:0];
-    } failBlock:^{
-        [SVProgressHUD showErrorWithStatus:@"关注失败" cover:NO offsetY:0];
-    }];
+	__weak QSMerchantDetailsViewController *weakself = self;
+	if ([[TaeSession sharedInstance] isLogin]) {
+		if (!_isFollow) {
+			[self.likeManager likeBrand:[self.merchant.externalShopId integerValue] andSuccBlock:^{
+				[SVProgressHUD showSuccessWithStatus:@"关注成功" cover:NO offsetY:0];
+				_isFollow = YES;
+				[weakself setLikeImage];
+			} failBlock:^{
+				[SVProgressHUD showErrorWithStatus:@"关注失败" cover:NO offsetY:0];
+			}];
+		}else{
+			[self.likeManager unlikeBrand:[self.merchant.externalShopId integerValue] andSuccBlock:^{
+				_isFollow = NO;
+				[SVProgressHUD showSuccessWithStatus:@"取消关注成功" cover:NO offsetY:0];
+				[weakself setLikeImage];
+			} failBlock:^{
+				
+			}];
+		}
+	}else{
+		[[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
+			[weakself accreditLogin];
+		} failedCallback:^(NSError *error) {
+			[SVProgressHUD showErrorWithStatus:@"授权失败" cover:YES offsetY:kMainScreenHeight/2];
+		}];
+	}
 }
+
+#pragma mark 授权登陆
+- (void)accreditLogin
+{
+	TaeUser *temUser = [[TaeSession sharedInstance] getUser];
+	NSString *loginUrl = [NSString stringWithFormat:@"%@?service=outh&tbNick=%@&picUrl=%@&userId=%@", KBaseUrl, temUser.nick, temUser.iconUrl, temUser.userId];
+	[NetManager requestWith:nil url:loginUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict){
+		MLOG(@"%@", successDict);
+	} failure:^(NSDictionary *failDict, NSError *error) {
+		MLOG(@"%@", failDict);
+	}];
+}
+
 
 //进入店铺
 - (void)touchGoMercButton
 {
-    if (self.merchant.websiteUrl && self.merchant.websiteUrl.length) {
-		NSString *str = [self.merchant.websiteUrl substringFromIndex:[self.merchant.websiteUrl rangeOfString:@"http"].location+4];
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"taobao%@",str]];
-		if ([[UIApplication sharedApplication] canOpenURL:url]) {
-			UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"确认使用淘宝客户端打开店铺" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"打开淘宝客户端" otherButtonTitles:nil];
-			[actionSheet showInView:self.view];
-		} else {
-			url = [NSURL URLWithString:[NSString stringWithFormat:@"http%@",str]];
-			[[UIApplication sharedApplication] openURL:url];
-		}
-
+//    if (self.merchant.websiteUrl && self.merchant.websiteUrl.length) {
+//		NSString *str = [self.merchant.websiteUrl substringFromIndex:[self.merchant.websiteUrl rangeOfString:@"http"].location+4];
+//		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"taobao%@",str]];
+//		if ([[UIApplication sharedApplication] canOpenURL:url]) {
+//			UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"确认使用淘宝客户端打开店铺" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"打开淘宝客户端" otherButtonTitles:nil];
+//			[actionSheet showInView:self.view];
+//		} else {
+//			url = [NSURL URLWithString:[NSString stringWithFormat:@"http%@",str]];
+//			[[UIApplication sharedApplication] openURL:url];
+//		}
+//
+//	}else{
+//		[SVProgressHUD showErrorWithStatus:@"缺少该商家店铺地址" cover:YES offsetY:kMainScreenHeight/2];
+//	}
+	if (self.merchant.websiteUrl && self.merchant.websiteUrl.length) {
+//		IntroduceViewController *webView = [[IntroduceViewController alloc] init];
+//		webView.isSysPush = YES;
+//		[webView setUrl:self.merchant.websiteUrl title:self.merchant.name];
+//		[self.navigationController pushViewController:webView animated:YES];
+		TaeWebViewUISettings *wb = [[TaeWebViewUISettings alloc] init];
+		wb.title = self.merchant.name;
+		wb.titleColor = RGBCOLOR(75, 171, 14);
+		[[TaeSDK sharedInstance] showPage:self isNeedPush:YES pageUrl:self.merchant.websiteUrl webViewUISettings:wb tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
+			
+		} tradeProcessFailedCallback:^(NSError *error) {
+			
+		}];
 	}else{
 		[SVProgressHUD showErrorWithStatus:@"缺少该商家店铺地址" cover:YES offsetY:kMainScreenHeight/2];
 	}
+	
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{

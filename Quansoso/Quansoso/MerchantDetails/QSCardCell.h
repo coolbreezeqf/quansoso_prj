@@ -11,9 +11,9 @@
 typedef NS_ENUM(NSInteger, cardType) {
     cardType_complex = 0,//复合卡券
     cardType_privilege,//优惠券
+	cardType_floor,//阶梯券
     cardType_count,//折扣券
     cardType_mail, //包邮券
-    cardType_floor,//阶梯券
     cardType_treasure,//宝贝卷
     cardType_tao,//淘券
     cardType_prefextTao//精选淘券

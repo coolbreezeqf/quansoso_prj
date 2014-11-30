@@ -10,4 +10,5 @@
 
 @interface QSCardDetailsNetManager: NSObject
 - (void)getCardUseCouponId:(NSString *)couponId andNick:(NSString *)nick success:(void (^)(NSString* describe))succ failure:(void (^)(NSString* describe))failure;
+- (void)getItemsSellerId:(NSString *)sellerId success:(void (^)(NSArray *items))succ failure:(void (^)())failure;
 @end

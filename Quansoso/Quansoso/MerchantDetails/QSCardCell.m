@@ -154,7 +154,7 @@
 
     //赋值
 	NSInteger money = [money_condition integerValue];
-    self.conditionLabel.text = [NSString stringWithFormat:@"满%.2lf元",1.0*money/100];
+    self.conditionLabel.text = [NSString stringWithFormat:@"满%i元",money/100];
     self.endTimeLabel.text = [NSString stringWithFormat:@"截至%@",endTime];
 
     switch (self.type) {
@@ -164,6 +164,7 @@
             self.largeTitleLabel.text = @"包邮";
             self.largeTitleLabel.textColor = RGBCOLOR(15, 182, 144);
             self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg4"];
+			self.conditionLabel.text = money_condition;
         }
             break;
         case cardType_count://折扣
@@ -171,6 +172,7 @@
             self.largeTitleLabel.text = [rate stringByAppendingString:@"%"];
             self.largeTitleLabel.textColor = RGBCOLOR(255, 107, 107);
             self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg3"];
+		self.conditionLabel.text = money_condition;
         }
             break;
         case cardType_treasure://宝贝-满送
@@ -178,6 +180,7 @@
             self.largeTitleLabel.text = @"满送";
             self.largeTitleLabel.textColor = RGBCOLOR(174, 93, 161);
             self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg5"];
+		self.conditionLabel.text = money_condition;
         }
             break;
         case cardType_floor://阶梯卡-满减
@@ -191,7 +194,8 @@
             self.rmbTagLabel.hidden = NO;
             self.rmbTagLabel.textColor = RGBCOLOR(230, 183, 60);
             self.theTitleLabel.textColor = RGBCOLOR(230, 183, 60);
-            self.conditionLabel.text = [self.conditionLabel.text stringByAppendingString:[NSString stringWithFormat:@"减%@元",denom]];
+//            self.conditionLabel.text = [self.conditionLabel.text stringByAppendingString:[NSString stringWithFormat:@"减%@元",denom]];
+//		self.conditionLabel.text = money_condition;
             self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg2"];
 		}break;
 			case cardType_complex:
@@ -224,13 +228,13 @@
             break;
     }
     //过期优惠券处理
-    if (odState == 0) {
+    if (odState == 1) {
         self.dateInfoView.hidden = YES;
         self.willODimageView.hidden = YES;
-    }else if (odState == 1){
+    }else if (odState == 2){
         self.dateInfoView.hidden = YES;
         self.willODimageView.hidden = NO;
-    }else if(odState == 2){
+    }else if(odState == 3){
         self.dateInfoView.hidden = NO;
         self.willODimageView.hidden = YES;
         self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg1_no"];

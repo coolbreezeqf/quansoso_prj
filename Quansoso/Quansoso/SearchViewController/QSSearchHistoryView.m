@@ -13,7 +13,7 @@
 	UILabel *_historyNilTip;
 	NSMutableArray *_historyBlockArr;
 	NSArray *_historyArr;
-	UIButton *_cleanHistoryBt;
+//	UIButton *_cleanHistoryBt;
 }
 
 @end
@@ -92,6 +92,7 @@
 		offsetX += width + 20;
 		[_historyBlockArr addObject:hisBt];
 	}
+/*
 	if (!_cleanHistoryBt) {
 		_cleanHistoryBt	= [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
 		[_cleanHistoryBt setTitle:@"清空历史纪录" forState:UIControlStateNormal];
@@ -102,14 +103,15 @@
 		[self addSubview:_cleanHistoryBt];
 	}
 	_cleanHistoryBt.center = CGPointMake(kMainScreenWidth/2, offsetY+60);
+ */
 }
 
-- (void)clean{
-	[UIView animateWithDuration:0.5 animations:^{
-		[self reloadHistory:nil];
-	}];
-	[_delegate cleanHistory];
-}
+//- (void)clean{
+//	[UIView animateWithDuration:0.5 animations:^{
+//		[self reloadHistory:nil];
+//	}];
+//	[_delegate cleanHistory];
+//}
 
 - (void)search:(id)sender{
 	UIButton *bt = (UIButton *)sender;

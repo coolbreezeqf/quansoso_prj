@@ -18,7 +18,7 @@
     NSString *encodeStr = [likeBrandUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
-
+		aSuccBlock();
     } failure:^(NSDictionary *failDict, NSError *error) {
         aFailBlock();
     }];
@@ -55,9 +55,9 @@
     NSString *encodeStr = [deleteUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
-        
+		aSuccBlock();
     } failure:^(NSDictionary *failDict, NSError *error) {
-        
+		aFailBlock();
     }];
 }
 

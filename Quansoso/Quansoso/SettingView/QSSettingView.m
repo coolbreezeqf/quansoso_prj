@@ -13,6 +13,7 @@
 #import "QSFeedBackViewController.h"
 #import "ViewInteraction.h"
 #import "SVProgressHUD.h"
+#import "SDImageCache.h"
 #define kTitleColor RGBCOLOR(149, 149, 149)
 
 @interface QSSettingView ()<UIActionSheetDelegate>{
@@ -90,9 +91,16 @@
 #pragma mark - action sheet delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
 	if (buttonIndex == 0) {
-#warning clean Cache
-		[SVProgressHUD showSuccessWithStatus:@"清理成功" cover:YES offsetY:kMainScreenHeight/2];
+		dispatch_async(
+					   dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+					   , ^{
+						   [[[SDImageCache alloc] init] clearMemory];
+						   [self performSelectorOnMainThread:@selector(clearCacheSuccess) withObject:nil waitUntilDone:YES];});
 	}
+}
+
+- (void)clearCacheSuccess{
+	[SVProgressHUD showSuccessWithStatus:@"清理成功" cover:YES offsetY:kMainScreenHeight/2];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{

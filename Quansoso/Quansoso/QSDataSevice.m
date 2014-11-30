@@ -46,9 +46,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(QSDataSevice);
 - (void)saveSearchHistoryArr{
 	NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 	[ud synchronize];
-	NSInteger savaNum = 15;
-	if(_searchHistoryArr.count > savaNum){
-		[_searchHistoryArr removeObjectsInRange:NSMakeRange(savaNum, _searchHistoryArr.count-savaNum)];
+	NSInteger saveNum = 10;
+	if(_searchHistoryArr.count > saveNum){
+		[_searchHistoryArr removeObjectsInRange:NSMakeRange(saveNum, _searchHistoryArr.count-saveNum)];
 	}
 	[ud setValue:_searchHistoryArr forKey:@"SearchHistoryArr"];
 }

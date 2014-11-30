@@ -8,6 +8,7 @@
 
 #import "QSCardDetailsViewController.h"
 #import "QSCards.h"
+#import "QSActivity.h"
 #import <TAESDK/TAESDK.h>
 #import "NetManager.h"
 #import "CAlertLabel.h"
@@ -16,10 +17,11 @@
 #import "QSMerchantDetailsViewController.h"
 @interface QSCardDetailsViewController (){
 	NSString *shopId;
+	NSString *sellerId;
 }
 //data
 @property (nonatomic,strong) QSCards *card;
-
+@property (nonatomic,strong) QSActivity *activity;
 //UI
 @property (nonatomic,strong) UILabel *introduceLabel;
 @property (nonatomic,strong) UILabel *merchantName;
@@ -27,12 +29,12 @@
 @property (nonatomic,strong) UIImageView *cardTypeImage;
 @property (nonatomic,strong) UIButton *button;
 @property (nonatomic,strong) QSMerchantCommendView *recommendsView; // 推荐view
+@property (nonatomic,strong) QSCardDetailsNetManager *netManager;
 
 @end
 
 @implementation QSCardDetailsViewController
 - (void)buttonAction{
-	
 	if(![[TaeSession sharedInstance] isLogin]){
 		__weak QSCardDetailsViewController *weakself = self;
 		[[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
@@ -43,8 +45,7 @@
 		return;
 	}else{
 		NSString *nick = [[TaeSession sharedInstance] getUser].nick;
-		QSCardDetailsNetManager *netManager = [[QSCardDetailsNetManager alloc] init];
-		[netManager getCardUseCouponId:_card.sourceId andNick:nick success:^(NSString *describe) {
+		[_netManager getCardUseCouponId:_card.sourceId andNick:nick success:^(NSString *describe) {
 			MLOG(@"%@",describe);
 			[SVProgressHUD showSuccessWithStatus:@"领取成功" cover:YES offsetY:kMainScreenHeight/2];
 		} failure:^(NSString *describe) {
@@ -71,64 +72,89 @@
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
-- (instancetype)initWithCard:(QSCards *)card{
+- (instancetype)initWithCard:(QSCards *)card andSellerId:(NSString *)sellerid{
 	if (self = [super init]) {
 		_card = card;
+		sellerId = sellerid;
 		shopId = nil;
 	}
 	return self;
 }
 
-- (instancetype)initWithCard:(QSCards *)card andShopId:(NSString *)shopid{
+- (instancetype)initWithActivity:(QSActivity *)activity andSellerId:(NSString *)sellerid{
+	if (self = [super init]) {
+		_activity = activity;
+		sellerId = sellerid;
+	}
+	return self;
+}
+
+- (instancetype)initWithCard:(QSCards *)card shopId:(NSString *)shopid andSellerId:(NSString *)sellerid{
 	if (self = [super init]) {
 		_card = card;
+		sellerId = sellerid;
 		shopId = shopid;
 	}
 	return self;
 }
 
-
 - (void)setUI{
 	_merchantName = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, kMainScreenWidth - 40, 30)];
-    _merchantName.backgroundColor = [UIColor clearColor];
-	_merchantName.text = _card.merchant;
-	_merchantName.textColor = [UIColor blueColor];
+	_merchantName.backgroundColor = [UIColor clearColor];
+	_merchantName.textColor = RGBCOLOR(10, 76, 121);
 	_merchantName.font = kFont17;
 	[self.view addSubview:_merchantName];
 	
 	_cardTypeImage = [[UIImageView alloc] initWithFrame:CGRectMake(_merchantName.left, _merchantName.bottom + 10, 60, 60)];
-	_cardTypeImage.image = [UIImage imageNamed:@"cardImage1"];
-	_cardTypeImage.highlightedImage = [UIImage imageNamed:@"cardImage1"];
 	[self.view addSubview:_cardTypeImage];
 	
 	_cardNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cardTypeImage.right + 10, _cardTypeImage.top, kMainScreenWidth - _cardTypeImage.right - 20, 20)];
-    _cardNameLabel.backgroundColor = [UIColor clearColor];
+	_cardNameLabel.backgroundColor = [UIColor clearColor];
 	_cardNameLabel.font = kFont17;
-	_cardNameLabel.text = _card.name;
 	[self.view addSubview:_cardNameLabel];
 	
 	_introduceLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cardTypeImage.right + 10, _cardNameLabel.bottom , _cardNameLabel.width, _cardTypeImage.height)];
-    _introduceLabel.backgroundColor = [UIColor clearColor];
+	_introduceLabel.backgroundColor = [UIColor clearColor];
 	_introduceLabel.font = kFont12;
 	_introduceLabel.textColor = [UIColor grayColor];
-	switch ([_card.cardType integerValue]) {
-		case 1:{
-			[_introduceLabel setNumberOfLines:3];
-			_introduceLabel.text = [NSString stringWithFormat:@"剩%@张 (已领用%@张)\n单笔满%.2lf元可用，每人限领%@张\n截止%@", _card.stocks,_card.sold,[_card.moneyCondition doubleValue]/100, _card.limited, _card.endProperty];
-		}
-			break;
-		case 7:{
-			[_introduceLabel setNumberOfLines:3];
-			_introduceLabel.text = [NSString stringWithFormat:@"剩%@张 (已领用%@张)\n单笔满%.2lf元可用，每人限领%@张\n截止%@", _card.stocks,_card.sold,[_card.moneyCondition doubleValue]/100, _card.limited, _card.endProperty];
-		}break;
-		default:
-			break;
-	}
 	[self.view addSubview:_introduceLabel];
+	
+	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, _introduceLabel.bottom + 5, kMainScreenWidth, kMainScreenHeight - _button.bottom - 5)];
+	_recommendsView.backgroundColor = [UIColor whiteColor];
+	_recommendsView.delegate = self;
+}
+
+- (void)setUIForActivity{
+	[self setUI];
+	NSString *activityImgName = [NSString stringWithFormat:@"cardRightImg%i",[_activity.type integerValue]+1];
+	_cardTypeImage.image = [UIImage imageNamed:activityImgName];
+	_merchantName.text = _activity.merchant;
+	_cardNameLabel.text = _activity.name;
+	_introduceLabel.text = [NSString stringWithFormat:@"截止%@",_activity.endProperty];
+	[_netManager getItemsSellerId:sellerId success:^(NSArray *items) {
+		
+	} failure:^{
+		
+	}];
+
+	[self.view addSubview:_recommendsView];
+}
+
+- (void)setUIForCard{
+
+	[self setUI];
+	_merchantName.text = _card.merchant;
+	_cardNameLabel.text = _card.name;
+
+	_cardTypeImage.image = [UIImage imageNamed:@"cardImage1"];
+	_cardTypeImage.highlightedImage = [UIImage imageNamed:@"cardImage1"];
+
+	[_introduceLabel setNumberOfLines:3];
+	_introduceLabel.text = [NSString stringWithFormat:@"剩%@张 (已领用%@张)\n单笔满%i元可用，每人限领%@张\n截止%@", _card.stocks,_card.sold,[_card.moneyCondition integerValue]/100, _card.limited, _card.endProperty];
 	
 	_button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 88, 28)];
 	_button.center = CGPointMake(kMainScreenWidth/2, _introduceLabel.bottom + 30);
-//	[_button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchDown];
+	[_button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchDown];
 //	_button.backgroundColor = RGBCOLOR(240, 240, 240);
 //	_button.layer.borderColor = [UIColor lightGrayColor].CGColor;
 //	_button.layer.borderWidth = 1;
@@ -138,10 +164,7 @@
 //	[_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[_button setBackgroundImage:[UIImage imageNamed:@"QSLingYong"] forState:UIControlStateNormal];
 	[self.view addSubview:_button];
-	
-	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, _button.bottom + 5, kMainScreenWidth, kMainScreenHeight - _button.bottom - 5)];
-	_recommendsView.backgroundColor = [UIColor whiteColor];
-	_recommendsView.delegate = self;
+	_recommendsView.top = _button.bottom + 5;
 	[self.view addSubview:_recommendsView];
 }
 
@@ -160,9 +183,14 @@
 	self.navigationController.navigationBarHidden = NO;
 	self.view.backgroundColor = RGBCOLOR(238, 238, 238);
 //	self.title = @"领取优惠券";
+	_netManager = [[QSCardDetailsNetManager alloc] init];
     [self settitleLabel:@"领取优惠券"];
 	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
-	[self setUI];
+	if (_activity) {
+		[self setUIForActivity];
+	}else{
+		[self setUIForCard];
+	}
 	
 }
 

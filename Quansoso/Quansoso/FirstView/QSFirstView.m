@@ -463,7 +463,8 @@
 - (void)touchQuanButton:(UITapGestureRecognizer *)TapGestureRecognizer
 {
     QSDayRecommends *model = [self.dailyArray objectAtIndex:TapGestureRecognizer.view.tag-1000];
-    QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:model.card andShopId:model.externalShopId];
+//    QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:model.card andShopId:model.externalShopId];
+	QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:model.card shopId:model.externalShopId andSellerId:model.externalId];
     vc.navigationController.navigationBarHidden = NO;
     [ViewInteraction viewPushViewcontroller:vc];
 }
