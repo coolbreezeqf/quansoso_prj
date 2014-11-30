@@ -10,6 +10,7 @@
 #import <TAESDK/TAESDK.h>
 #import "QSRootViewController.h"
 #import "NetManager.h"
+#import "SVProgressHUD.h"
 
 @interface AppDelegate ()
 
@@ -39,6 +40,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kTaeSDKInitSuccessMsg object:nil];
     } failedCallback:^(NSError *error) {
         MLOG(@"TBSDK--初始化失败");
+        [SVProgressHUD showErrorWithStatus:@"初始化失败" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
 }
 

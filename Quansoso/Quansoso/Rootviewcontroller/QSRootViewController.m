@@ -73,7 +73,14 @@ typedef NS_ENUM(NSInteger, cateType) {
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
         UIImageView *guideView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight+20)];
-        [guideView setImage:[UIImage imageNamed:@"QSGuideView"]];
+        if (kMainScreenHeight<=480)
+        {
+            [guideView setImage:[UIImage imageNamed:@"QSGuide44s"]];
+        }
+        else
+        {
+            [guideView setImage:[UIImage imageNamed:@"QSGuideView"]];
+        }
         guideView.tag = 10000;
         guideView.contentMode = UIViewContentModeScaleAspectFill;
         guideView.userInteractionEnabled = YES;
