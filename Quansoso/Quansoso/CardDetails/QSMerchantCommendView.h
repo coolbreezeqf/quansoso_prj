@@ -11,10 +11,12 @@
 @protocol QSMerchantCommendDelegate <NSObject>
 
 - (void)gotoMoreCard;
-
+- (void)gotoShop;
+- (void)gotoItem:(NSString *)item;
 @end
 
 @interface QSMerchantCommendView : UIView
 @property (nonatomic,strong) NSString *webSiteUrl;
 @property (nonatomic,strong) id<QSMerchantCommendDelegate> delegate;
+- (instancetype)initWithFrame:(CGRect)frame andItems:(NSArray *)items;
 @end

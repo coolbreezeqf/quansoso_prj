@@ -130,7 +130,7 @@
 		[_netManager searchContent:currentText success:^(NSArray *results) {
 			[weakSelf searchEndAddContentUse:results];
 		} failure:^{
-			
+			[SVProgressHUD showErrorWithStatus:@"刷新失败" cover:YES offsetY:kMainScreenHeight/2];
 		}];
 		
 		//停止菊花
@@ -155,7 +155,8 @@
 //		[_activityView stopAnimating];
 		[weakSelf.loadingView removeFromSuperview];
 	} failure:^{
-		
+		[SVProgressHUD showErrorWithStatus:@"网络请求失败" cover:YES offsetY:kMainScreenHeight/2];
+		[weakSelf.loadingView removeFromSuperview];
 	}];
 	[_searchBar resignFirstResponder];
 	[self.view sendSubviewToBack:_historyTable];

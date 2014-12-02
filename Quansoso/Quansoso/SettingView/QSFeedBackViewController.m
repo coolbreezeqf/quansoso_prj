@@ -7,7 +7,7 @@
 //
 
 #import "QSFeedBackViewController.h"
-
+#import "SVProgressHUD.h"
 @interface QSFeedBackViewController ()<UITextViewDelegate>{
 	UITextField *numberTf;
 	UITextView *contentView;
@@ -60,6 +60,7 @@
 
 - (void)sendFeedback{
 	MLOG(@"sendFeedback");
+	[SVProgressHUD showSuccessWithStatus:@"发送成功" cover:YES offsetY:kMainScreenHeight/2];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification{

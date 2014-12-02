@@ -18,10 +18,12 @@
 @interface QSCardDetailsViewController (){
 	NSString *shopId;
 	NSString *sellerId;
+	NSString *webSite;
 }
 //data
 @property (nonatomic,strong) QSCards *card;
 @property (nonatomic,strong) QSActivity *activity;
+@property (nonatomic,strong) NSArray *items;
 //UI
 @property (nonatomic,strong) UILabel *introduceLabel;
 @property (nonatomic,strong) UILabel *merchantName;
@@ -39,19 +41,32 @@
 		__weak QSCardDetailsViewController *weakself = self;
 		[[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
 			[weakself accreditLogin];
+			
 		} failedCallback:^(NSError *error) {
 			[SVProgressHUD showErrorWithStatus:@"授权失败" cover:YES offsetY:kMainScreenHeight/2];
 		}];
 		return;
 	}else{
 		NSString *nick = [[TaeSession sharedInstance] getUser].nick;
+		__weak QSCardDetailsViewController *weakself = self;
 		[_netManager getCardUseCouponId:_card.sourceId andNick:nick success:^(NSString *describe) {
 			MLOG(@"%@",describe);
 			[SVProgressHUD showSuccessWithStatus:@"领取成功" cover:YES offsetY:kMainScreenHeight/2];
+			[_netManager getItemsSellerId:sellerId success:^(NSArray *items) {
+				_items = items;
+				[weakself showRecommendView];
+			} failure:^{
+				[SVProgressHUD showErrorWithStatus:@"未获取到热门商品信息" cover:YES offsetY:kMainScreenHeight/2];
+			}];
 		} failure:^(NSString *describe) {
 			MLOG(@"%@",describe);
 			[SVProgressHUD showErrorWithStatus:describe cover:YES offsetY:kMainScreenHeight/2];
-
+			[_netManager getItemsSellerId:sellerId success:^(NSArray *items) {
+				_items = items;
+				[weakself showRecommendView];
+			} failure:^{
+				[SVProgressHUD showErrorWithStatus:@"未获取到热门商品信息" cover:YES offsetY:kMainScreenHeight/2];
+			}];
 		}];
 	}
 }
@@ -72,19 +87,24 @@
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
-- (instancetype)initWithCard:(QSCards *)card andSellerId:(NSString *)sellerid{
+- (instancetype)initWithCard:(QSCards *)card webSite:(NSString*)site andSellerId:(NSString *)sellerid{
 	if (self = [super init]) {
 		_card = card;
+		_activity = nil;
 		sellerId = sellerid;
 		shopId = nil;
+		webSite = site;
 	}
 	return self;
 }
 
 - (instancetype)initWithActivity:(QSActivity *)activity andSellerId:(NSString *)sellerid{
 	if (self = [super init]) {
+		_card = nil;
 		_activity = activity;
 		sellerId = sellerid;
+		shopId = nil;
+		webSite = nil;
 	}
 	return self;
 }
@@ -92,8 +112,10 @@
 - (instancetype)initWithCard:(QSCards *)card shopId:(NSString *)shopid andSellerId:(NSString *)sellerid{
 	if (self = [super init]) {
 		_card = card;
+		_activity = nil;
 		sellerId = sellerid;
 		shopId = shopid;
+		webSite = nil;
 	}
 	return self;
 }
@@ -118,10 +140,15 @@
 	_introduceLabel.font = kFont12;
 	_introduceLabel.textColor = [UIColor grayColor];
 	[self.view addSubview:_introduceLabel];
-	
-	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, _introduceLabel.bottom + 5, kMainScreenWidth, kMainScreenHeight - _button.bottom - 5)];
+}
+
+- (void)showRecommendView{
+	int height = _button?_button.bottom:_introduceLabel.bottom;
+	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, height + 5, kMainScreenWidth, self.view.height - height - 5) andItems:_items];
 	_recommendsView.backgroundColor = [UIColor whiteColor];
 	_recommendsView.delegate = self;
+	
+	[self.view addSubview:_recommendsView];
 }
 
 - (void)setUIForActivity{
@@ -131,13 +158,14 @@
 	_merchantName.text = _activity.merchant;
 	_cardNameLabel.text = _activity.name;
 	_introduceLabel.text = [NSString stringWithFormat:@"截止%@",_activity.endProperty];
+	
+	__weak QSCardDetailsViewController *weakself = self;
 	[_netManager getItemsSellerId:sellerId success:^(NSArray *items) {
-		
+		_items = items;
+		[weakself showRecommendView];
 	} failure:^{
-		
+		[SVProgressHUD showErrorWithStatus:@"未获取到热门商品信息" cover:YES offsetY:kMainScreenHeight/2];
 	}];
-
-	[self.view addSubview:_recommendsView];
 }
 
 - (void)setUIForCard{
@@ -153,7 +181,7 @@
 	_introduceLabel.text = [NSString stringWithFormat:@"剩%@张 (已领用%@张)\n单笔满%i元可用，每人限领%@张\n截止%@", _card.stocks,_card.sold,[_card.moneyCondition integerValue]/100, _card.limited, _card.endProperty];
 	
 	_button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 88, 28)];
-	_button.center = CGPointMake(kMainScreenWidth/2, _introduceLabel.bottom + 30);
+	_button.center = CGPointMake(kMainScreenWidth/2, _introduceLabel.bottom + 20);
 	[_button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchDown];
 //	_button.backgroundColor = RGBCOLOR(240, 240, 240);
 //	_button.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -164,16 +192,46 @@
 //	[_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[_button setBackgroundImage:[UIImage imageNamed:@"QSLingYong"] forState:UIControlStateNormal];
 	[self.view addSubview:_button];
-	_recommendsView.top = _button.bottom + 5;
-	[self.view addSubview:_recommendsView];
+	
 }
-
+//MerchantCommendView delegate
 - (void)gotoMoreCard{
 	if (shopId) {
 		QSMerchantDetailsViewController *md = [[QSMerchantDetailsViewController alloc] initWithShopId:[shopId integerValue]];
 		[self.navigationController pushViewController:md animated:YES];
 	}else{
 		[self.navigationController popViewControllerAnimated:YES];
+	}
+}
+
+- (void)gotoShop{
+	if (_activity || webSite) {
+		TaeWebViewUISettings *wb = [[TaeWebViewUISettings alloc] init];
+		wb.title = _card?_card.merchant:_activity.merchant;
+		wb.titleColor = RGBCOLOR(75, 171, 14);
+		[[TaeSDK sharedInstance] showPage:self isNeedPush:NO pageUrl:_activity?_activity.site:webSite webViewUISettings:wb tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
+			
+		} tradeProcessFailedCallback:^(NSError *error) {
+			
+		}];
+	}else{
+		[SVProgressHUD showErrorWithStatus:@"缺少店铺地址" cover:YES offsetY:kMainScreenHeight/2];
+	}
+	
+}
+
+- (void)gotoItem:(NSString *)item{
+	if (item && item.length) {
+		TaeWebViewUISettings *wb = [[TaeWebViewUISettings alloc] init];
+		wb.title = _card?_card.merchant:_activity.merchant;
+		wb.titleColor = RGBCOLOR(75, 171, 14);
+		[[TaeSDK sharedInstance] showItemDetail:self isNeedPush:NO webViewUISettings:wb itemId:item itemType:1 params:nil tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
+			
+		} tradeProcessFailedCallback:^(NSError *error) {
+			
+		}];
+	}else{
+		[SVProgressHUD showErrorWithStatus:@"商品信息错误" cover:YES offsetY:kMainScreenHeight/2];
 	}
 }
 

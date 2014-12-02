@@ -329,14 +329,15 @@
 	if (indexPath.row < self.activities.count) {
 		QSActivity *activity = [[QSActivity alloc] initWithDictionary:self.activities[indexPath.row]];
 //		QSCardDetailsViewController *dvc = [[QSCardDetailsViewController alloc] initWithActivity:activity];
-		QSCardDetailsViewController *dvc = [[QSCardDetailsViewController alloc] initWithActivity:activity andSellerId:_merchant.sellerId];
+		QSCardDetailsViewController *dvc = [[QSCardDetailsViewController alloc] initWithActivity:activity andSellerId:_merchant.externalId];
 		[self.navigationController pushViewController:dvc animated:YES];
 	}else{
-		QSCards *card = [[QSCards alloc] initWithDictionary:self.cardsArray[indexPath.row]];
+		NSInteger index = indexPath.row - self.activities.count;
+		QSCards *card = [[QSCards alloc] initWithDictionary:self.cardsArray[index]];
 		//MLOG(@"%@",card);
 //		if ([card.cardType integerValue] < 2 || [card.cardType integerValue] > 5) {
 //			QSCardDetailsViewController *dVC = [[QSCardDetailsViewController alloc] initWithCard:card];
-		QSCardDetailsViewController *dVC = [[QSCardDetailsViewController alloc] initWithCard:card andSellerId:_merchant.sellerId];
+		QSCardDetailsViewController *dVC = [[QSCardDetailsViewController alloc] initWithCard:card webSite:_merchant.websiteUrl andSellerId:_merchant.externalId];
 			[self.navigationController pushViewController:dVC animated:YES];
 //		}
 	}
@@ -421,7 +422,6 @@
 	}else{
 		[SVProgressHUD showErrorWithStatus:@"缺少该商家店铺地址" cover:YES offsetY:kMainScreenHeight/2];
 	}
-	
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{

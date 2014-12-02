@@ -81,6 +81,8 @@
 		B0BFDD3E1A0A32C8002037DA /* QSSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD3D1A0A32C8002037DA /* QSSSearchBar.m */; };
 		B0BFDD411A0A3B65002037DA /* QSSearchHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD401A0A3B65002037DA /* QSSearchHistoryView.m */; };
 		B0BFDD441A0CB23D002037DA /* QSSearchNothingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BFDD431A0CB23D002037DA /* QSSearchNothingView.m */; };
+		B0ED99291A2C9AF900E4C25F /* QSItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ED99281A2C9AF900E4C25F /* QSItem.m */; };
+		B0ED992C1A2CA0FA00E4C25F /* QSItemsCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ED992B1A2CA0FA00E4C25F /* QSItemsCellTableViewCell.m */; };
 		C2E099BD19E9014B00828DD0 /* QSDayRecommendManage.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E099BC19E9014B00828DD0 /* QSDayRecommendManage.m */; };
 		FF8A929519C433B80010439B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A929419C433B80010439B /* main.m */; };
 		FF8A92A919C433B80010439B /* QuansosoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8A92A819C433B80010439B /* QuansosoTests.m */; };
@@ -303,6 +305,10 @@
 		B0BFDD401A0A3B65002037DA /* QSSearchHistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchHistoryView.m; sourceTree = "<group>"; };
 		B0BFDD421A0CB23D002037DA /* QSSearchNothingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSSearchNothingView.h; sourceTree = "<group>"; };
 		B0BFDD431A0CB23D002037DA /* QSSearchNothingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSSearchNothingView.m; sourceTree = "<group>"; };
+		B0ED99271A2C9AF900E4C25F /* QSItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSItem.h; sourceTree = "<group>"; };
+		B0ED99281A2C9AF900E4C25F /* QSItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSItem.m; sourceTree = "<group>"; };
+		B0ED992A1A2CA0FA00E4C25F /* QSItemsCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSItemsCellTableViewCell.h; sourceTree = "<group>"; };
+		B0ED992B1A2CA0FA00E4C25F /* QSItemsCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSItemsCellTableViewCell.m; sourceTree = "<group>"; };
 		C2E099BB19E9014B00828DD0 /* QSDayRecommendManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSDayRecommendManage.h; path = NetManage/QSDayRecommendManage.h; sourceTree = "<group>"; };
 		C2E099BC19E9014B00828DD0 /* QSDayRecommendManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSDayRecommendManage.m; path = NetManage/QSDayRecommendManage.m; sourceTree = "<group>"; };
 		FF8A928F19C433B80010439B /* Quansoso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quansoso.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -662,6 +668,8 @@
 		B02E0BB819CA842C009A0306 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B0ED99271A2C9AF900E4C25F /* QSItem.h */,
+				B0ED99281A2C9AF900E4C25F /* QSItem.m */,
 				B006F6D61A299AA900161B74 /* QSActivity.h */,
 				B006F6D71A299AA900161B74 /* QSActivity.m */,
 				5B3B10F91A107B290020955E /* QSSMerchant.h */,
@@ -703,6 +711,8 @@
 				B031A6411A23599B00012D67 /* QSCardDetailsNetManager.m */,
 				B09EC6051A274DC700066239 /* QSMerchantCommendView.h */,
 				B09EC6061A274DC700066239 /* QSMerchantCommendView.m */,
+				B0ED992A1A2CA0FA00E4C25F /* QSItemsCellTableViewCell.h */,
+				B0ED992B1A2CA0FA00E4C25F /* QSItemsCellTableViewCell.m */,
 			);
 			name = CardDetails;
 			sourceTree = "<group>";
@@ -1188,6 +1198,7 @@
 				FFBA9EE119C688F200D9CBA2 /* SDWebImageDecoder.m in Sources */,
 				FFBA9E9319C680C800D9CBA2 /* AFHTTPRequestOperation.m in Sources */,
 				FFBA9EDD19C688F200D9CBA2 /* MKAnnotationView+WebCache.m in Sources */,
+				B0ED99291A2C9AF900E4C25F /* QSItem.m in Sources */,
 				FFBA9EAA19C6811400D9CBA2 /* ThreadSafeMutableArry.m in Sources */,
 				B03624F219E91B6C00ECFE61 /* QSUser.m in Sources */,
 				FFBA9EB719C6812500D9CBA2 /* DataCenterDeal.mm in Sources */,
@@ -1257,6 +1268,7 @@
 				B08A5FEE19DD8025008077E7 /* CAlertLabel.m in Sources */,
 				FFE85F3519CABBAE00A216BB /* NSData+Base64.m in Sources */,
 				FFBA9EAB19C6811400D9CBA2 /* ThreadSafeMutableDictionary.m in Sources */,
+				B0ED992C1A2CA0FA00E4C25F /* QSItemsCellTableViewCell.m in Sources */,
 				FFBA9EB819C6812500D9CBA2 /* DataOC.mm in Sources */,
 				FFBA9EBA19C6812500D9CBA2 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				AB6D320719D674320016B8CF /* QSCouponView.m in Sources */,
