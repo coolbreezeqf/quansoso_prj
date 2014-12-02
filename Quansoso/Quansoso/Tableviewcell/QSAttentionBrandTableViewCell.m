@@ -44,11 +44,11 @@
     [backView addSubview:self.brandImgView];
     
     self.cancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(kMainScreenWidth-40, cellHeight/2-11, 22, 22)];
-    [self.cancelBtn setImage:[UIImage imageNamed:@"QSBrandLiked"] forState:UIControlStateNormal];
+//    [self.cancelBtn setImage:[UIImage imageNamed:@"QSBrandLiked"] forState:UIControlStateNormal];
     [backView addSubview:self.cancelBtn];
     
     self.brandNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.brandImgView.right+10, cellHeight/2-10, 180, 20)];
-    self.brandNameLabel.text = @"江南布衣官方旗舰店";
+//    self.brandNameLabel.text = @"江南布衣官方旗舰店";
     self.brandNameLabel.font = kFont16;
     self.brandNameLabel.textAlignment = NSTextAlignmentLeft;
     [backView addSubview:self.brandNameLabel];
@@ -60,6 +60,16 @@
     [self.brandImgView sd_setImageWithURL:[NSURL URLWithString:aModel.picUrl]];
     self.brandNameLabel.text = aModel.name;
     [self.cancelBtn setImage:[UIImage imageNamed:@"QSBrandLiked"] forState:UIControlStateNormal];
+}
+
+- (void)showLike
+{
+    [self.cancelBtn setImage:[UIImage imageNamed:@"QSBrandLiked"] forState:UIControlStateNormal];
+}
+
+- (void)showUnlike
+{
+    [self.cancelBtn setImage:[UIImage imageNamed:@"QSBrandUnlike"] forState:UIControlStateNormal];
 }
 
 - (void)awakeFromNib {

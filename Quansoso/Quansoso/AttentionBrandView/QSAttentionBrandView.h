@@ -14,6 +14,7 @@
 @interface QSAttentionBrandView : UIView<UITableViewDataSource, UITableViewDelegate>
 {
     int deleteBrandIndex;
+    NSMutableDictionary *unLikeDict;
 }
 @property(nonatomic, strong) UITableView *showBrandTableView;
 @property(nonatomic, strong) QSAttentionBrandListManage *attentionBrandListManage;

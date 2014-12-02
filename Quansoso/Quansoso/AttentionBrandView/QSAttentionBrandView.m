@@ -24,6 +24,7 @@
     self = [super initWithFrame:frame];
     self.brandArray = [NSMutableArray new];
     self.backgroundColor = [UIColor whiteColor];
+    unLikeDict = [NSMutableDictionary new];
     
     UIView *topview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 60)];
     topview.backgroundColor = [UIColor whiteColor];
@@ -150,6 +151,7 @@
             [weakself.showBrandTableView.pullToRefreshView stopAnimating];
             [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
                 self.brandArray = aArray;
+                unLikeDict = [NSMutableDictionary new];
                 [self.showBrandTableView reloadData];
             } andFailBlock:^{
                 [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
@@ -203,18 +205,29 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        NSString *cellIdentifer = @"brandCell";
-        QSAttentionBrandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
-        if (!cell) {
-            cell = [[QSAttentionBrandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifer];
+    NSString *cellIdentifer = @"brandCell";
+    QSAttentionBrandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer];
+    if (!cell) {
+        cell = [[QSAttentionBrandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifer];
+    }
+    [cell showLike];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    QSMerchant *model = [self.brandArray objectAtIndex:indexPath.row];
+    [cell setCellWithModel:model];
+    cell.isfollow = YES;
+    [cell.cancelBtn addTarget:self action:@selector(cancelAttention:) forControlEvents:UIControlEventTouchUpInside];
+    cell.cancelBtn.tag = indexPath.row+100;
+    NSArray *keyArray = [unLikeDict allKeys];
+    for (int i=0; i<keyArray.count; i++)
+    {
+        NSString *str = [keyArray objectAtIndex:i];
+        if (indexPath.row==[str intValue])
+        {
+            [cell showUnlike];
+            break;
         }
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        QSMerchant *model = [self.brandArray objectAtIndex:indexPath.row];
-        [cell setCellWithModel:model];
-        cell.isfollow = YES;
-        [cell.cancelBtn addTarget:self action:@selector(cancelAttention:) forControlEvents:UIControlEventTouchUpInside];
-        cell.cancelBtn.tag = indexPath.row+100;
-        return cell;
+    }
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -254,6 +267,7 @@
 {
     QSMerchant *model = [self.brandArray objectAtIndex:deleteBrandIndex];
     QSAttentionBrandTableViewCell *cell = (QSAttentionBrandTableViewCell *)[self.showBrandTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:deleteBrandIndex inSection:0]];
+    [unLikeDict removeObjectForKey:[NSString stringWithFormat:@"%d", deleteBrandIndex]];
     [cell.cancelBtn setImage:[UIImage imageNamed:@"QSBrandLiked"] forState:UIControlStateNormal];
     cell.isfollow = YES;
     [self.likeBrandManage likeBrand:[model.externalShopId intValue] andSuccBlock:^{
@@ -271,6 +285,7 @@
         [cell.cancelBtn setImage:[UIImage imageNamed:@"QSBrandUnlike"] forState:UIControlStateNormal];
         cell.isfollow = NO;
         QSMerchant *model = [self.brandArray objectAtIndex:deleteBrandIndex];
+        [unLikeDict setObject:@"" forKey:[NSString stringWithFormat:@"%d", deleteBrandIndex]];
         [self.likeBrandManage unlikeBrand:[model.externalShopId intValue] andSuccBlock:^{
             
         } failBlock:^{

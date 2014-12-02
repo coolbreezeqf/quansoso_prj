@@ -15,6 +15,7 @@
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 #import "WeiboSDK.h"
+#import "UMSocialSinaHandler.h"
 
 @interface AppDelegate ()
 
@@ -47,6 +48,7 @@
     [MobClick startWithAppkey:kUMENG_APPKEY reportPolicy:SENDWIFIONLY channelId:nil];
     [UMSocialData setAppKey:kUMENG_APPKEY];
     [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:@"http://app.hu8hu.com/"];
+    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://app.hu8hu.com/"];
     [MobClick setAppVersion:appVersion];
 }
 

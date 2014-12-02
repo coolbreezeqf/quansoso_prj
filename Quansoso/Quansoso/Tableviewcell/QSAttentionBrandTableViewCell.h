@@ -19,4 +19,8 @@
 - (instancetype)init;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 - (void)setCellWithModel:(QSMerchant *)aModel;
+
+- (void)showLike;
+- (void)showUnlike;
+
 @end

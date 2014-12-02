@@ -41,6 +41,7 @@
 		AB8F00701A22FE1E00C030AA /* QSDayRecommends.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F006F1A22FE1E00C030AA /* QSDayRecommends.m */; };
 		AB8F00731A23027F00C030AA /* QSLikeBrandManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F00721A23027F00C030AA /* QSLikeBrandManage.m */; };
 		AB9512B01A2D5B8000F38876 /* QSBrandBtnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9512AF1A2D5B8000F38876 /* QSBrandBtnTableViewCell.m */; };
+		AB9512B41A2D69D900F38876 /* libSocialSina.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9512B21A2D69D900F38876 /* libSocialSina.a */; };
 		AB9BA09B1A2D419C000E34FE /* QSBrandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9BA09A1A2D419C000E34FE /* QSBrandTableViewCell.m */; };
 		AB9CA98F1A2C86ED00698200 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9CA98C1A2C86ED00698200 /* libWeiboSDK.a */; };
 		AB9CA9901A2C86ED00698200 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB9CA98D1A2C86ED00698200 /* WeiboSDK.bundle */; };
@@ -222,6 +223,8 @@
 		AB8F00721A23027F00C030AA /* QSLikeBrandManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSLikeBrandManage.m; path = NetManage/QSLikeBrandManage.m; sourceTree = "<group>"; };
 		AB9512AE1A2D5B8000F38876 /* QSBrandBtnTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSBrandBtnTableViewCell.h; sourceTree = "<group>"; };
 		AB9512AF1A2D5B8000F38876 /* QSBrandBtnTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSBrandBtnTableViewCell.m; sourceTree = "<group>"; };
+		AB9512B21A2D69D900F38876 /* libSocialSina.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialSina.a; sourceTree = "<group>"; };
+		AB9512B31A2D69D900F38876 /* UMSocialSinaHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSinaHandler.h; sourceTree = "<group>"; };
 		AB9BA0991A2D419C000E34FE /* QSBrandTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSBrandTableViewCell.h; sourceTree = "<group>"; };
 		AB9BA09A1A2D419C000E34FE /* QSBrandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSBrandTableViewCell.m; sourceTree = "<group>"; };
 		AB9CA98C1A2C86ED00698200 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
@@ -429,6 +432,7 @@
 				FFE85F5419CAD2A200A216BB /* CoreGraphics.framework in Frameworks */,
 				FFE85F3C19CAC22C00A216BB /* Accelerate.framework in Frameworks */,
 				FFE85F3A19CAC22300A216BB /* QuartzCore.framework in Frameworks */,
+				AB9512B41A2D69D900F38876 /* libSocialSina.a in Frameworks */,
 				AB17960F1A2C633000604D05 /* libMobClickLibrary.a in Frameworks */,
 				FFEF4EE419C588E7009E6E84 /* CFNetwork.framework in Frameworks */,
 				FFEF4EE219C588C7009E6E84 /* libz.dylib in Frameworks */,
@@ -538,6 +542,7 @@
 		AB1796081A2C633000604D05 /* UMSocial_Sdk_Extra_Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB9512B11A2D69D900F38876 /* Sina */,
 				AB1796091A2C633000604D05 /* Wechat */,
 			);
 			path = UMSocial_Sdk_Extra_Frameworks;
@@ -609,6 +614,15 @@
 				AB4509011A233E71006C7BD8 /* LoadingView.m */,
 			);
 			name = CouponView;
+			sourceTree = "<group>";
+		};
+		AB9512B11A2D69D900F38876 /* Sina */ = {
+			isa = PBXGroup;
+			children = (
+				AB9512B21A2D69D900F38876 /* libSocialSina.a */,
+				AB9512B31A2D69D900F38876 /* UMSocialSinaHandler.h */,
+			);
+			path = Sina;
 			sourceTree = "<group>";
 		};
 		AB9CA98B1A2C86ED00698200 /* libWeiboSDK */ = {
@@ -1407,6 +1421,7 @@
 					"$(PROJECT_DIR)/Quansoso/ThirdParty/UMSocial_Sdk_4.2",
 					"$(PROJECT_DIR)/Quansoso/ThirdParty/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/Quansoso/ThirdParty/libWeiboSDK",
+					"$(PROJECT_DIR)/Quansoso/ThirdParty/UMSocial_Sdk_Extra_Frameworks/Sina",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1435,6 +1450,7 @@
 					"$(PROJECT_DIR)/Quansoso/ThirdParty/UMSocial_Sdk_4.2",
 					"$(PROJECT_DIR)/Quansoso/ThirdParty/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/Quansoso/ThirdParty/libWeiboSDK",
+					"$(PROJECT_DIR)/Quansoso/ThirdParty/UMSocial_Sdk_Extra_Frameworks/Sina",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
