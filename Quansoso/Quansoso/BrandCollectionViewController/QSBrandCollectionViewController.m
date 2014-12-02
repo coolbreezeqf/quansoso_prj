@@ -336,6 +336,14 @@
         [payAttentionBrand setObject:model.externalShopId forKey:[NSString stringWithFormat:@"%d", aRow*3+aIndex]];
     }
     [btn changeLike];
+    if (payAttentionBrand.count>0)
+    {
+        [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrand"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [attentionBtn setImage:[UIImage imageNamed:@"QSUnLikeBtn"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
