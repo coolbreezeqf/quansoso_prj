@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QSMerchant.h"
 
-@interface QSBrandBtn : UIButton
+@interface QSBrandBtn : UIView
 @property(nonatomic, strong) UIImageView *brandLikeView;
 @property(nonatomic, strong) UIImageView *brandImgView;
 @property(nonatomic, assign) BOOL isLiked;
 
 - (instancetype)initWithFrame:(CGRect)frame;
+- (void)setBtnWithModel:(QSMerchant *)aModel;
+- (void)showDislike;
+- (void)showLike;
+- (void)changeLike;
 @end

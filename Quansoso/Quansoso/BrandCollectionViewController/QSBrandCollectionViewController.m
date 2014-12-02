@@ -17,10 +17,11 @@
 #import "SVProgressHUD.h"
 #import <TAESDK/TAESDK.h>
 #import "NetManager.h"
+#import "QSBrandBtnTableViewCell.h"
 
 //#define brandWidth 80;
 //#define brandHeight 80;
-@interface QSBrandCollectionViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface QSBrandCollectionViewController ()<UITableViewDataSource, UITableViewDelegate, QSBrandBtnTableViewCellDelegate>
 {
     UIView *headerView;
     UIButton *attentionBtn;
@@ -294,49 +295,47 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellIdentifier = @"brandCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    QSBrandBtnTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[QSBrandBtnTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.delegate = self;
     }
+    cell.row = indexPath.row;
     cell.backgroundColor = RGBCOLOR(228, 222, 214);
     for (int i=0; i<3; i++)
     {
         QSMerchant *model = [self.brandArray objectAtIndex:indexPath.row*3+i];
-        QSBrandBtn *btn = [[QSBrandBtn alloc] initWithFrame:CGRectMake(brandWidth*i, 0, brandWidth, brandHeight)];
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseBrand:)];
-        [btn addGestureRecognizer:tapGesture];
-        btn.tag = 100+indexPath.row*3+i;
-        btn.isLiked = NO;
-        [btn.brandImgView sd_setImageWithURL:[NSURL URLWithString:model.picUrl] placeholderImage:[UIImage imageNamed:@""]];
-        [cell addSubview:btn];
+        QSBrandBtn *btn = (QSBrandBtn *)[cell viewWithTag:i+1];
+        [btn showDislike];
+        [btn setBtnWithModel:model];
+        NSArray *keyArray = [payAttentionBrand allKeys];
+        for (int j=0; j<keyArray.count; j++)
+        {
+            NSString *key = [keyArray objectAtIndex:j];
+            if (indexPath.row*3+i==[key intValue])
+            {
+                [btn showLike];
+                break;
+            }
+        }
     }
     return cell;
 }
 
-#pragma mark 按钮事件
-- (void)chooseBrand:(UITapGestureRecognizer *)aGestureRecognizer
+- (void)selectCell:(QSBrandBtnTableViewCell *)aCell withRow:(int)aRow andIndex:(int)aIndex
 {
-    QSBrandBtn *aBtn = (QSBrandBtn *)aGestureRecognizer.view;
-    if (aBtn.isLiked==NO)
+    MLOG(@"%d, %d", aRow, aIndex);
+    QSBrandBtn *btn = (QSBrandBtn *)[aCell viewWithTag:aIndex+1];
+    QSMerchant *model = [self.brandArray objectAtIndex:aRow*3+aIndex];
+    if (btn.isLiked)
     {
-        [aBtn.brandLikeView setImage:[UIImage imageNamed:@"QSBrandLiked"]];
-        QSMerchant *model = [self.brandArray objectAtIndex:aBtn.tag-100];
-        [payAttentionBrand setObject:model.externalShopId forKey:[NSString stringWithFormat:@"%d", aBtn.tag]];
+        [payAttentionBrand removeObjectForKey:[NSString stringWithFormat:@"%d", aRow*3+aIndex]];
     }
     else
     {
-        [aBtn.brandLikeView setImage:[UIImage imageNamed:@"QSBrandUnlike"]];
-        [payAttentionBrand removeObjectForKey:[NSString stringWithFormat:@"%d", aBtn.tag]];
+        [payAttentionBrand setObject:model.externalShopId forKey:[NSString stringWithFormat:@"%d", aRow*3+aIndex]];
     }
-    aBtn.isLiked = !aBtn.isLiked;
-    if (payAttentionBrand.count>0)
-    {
-        [attentionBtn setImage:[UIImage imageNamed:@"QSLikeBrand"] forState:UIControlStateNormal];
-    }
-    else
-    {
-        [attentionBtn setImage:[UIImage imageNamed:@"QSUnLikeBtn"] forState:UIControlStateNormal];
-    }
+    [btn changeLike];
 }
 
 - (void)didReceiveMemoryWarning {

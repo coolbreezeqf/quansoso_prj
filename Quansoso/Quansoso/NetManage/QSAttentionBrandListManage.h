@@ -13,5 +13,5 @@
 @property(nonatomic) int nextPage;
 
 - (void)getFirstAttentionBrandListSuccBlock:(void(^)(NSMutableArray *aArray))aSuccBlock andFailBlock:(void(^)(void))aFailBlock isIndex:(BOOL)aBool;
-- (void)getNextAttentionBrandListSuccBlock:(void(^)(NSArray *aArray))aBlock andFailBlock:(void(^)(void))aFailBlock;
+- (void)getNextAttentionBrandListSuccBlock:(void(^)(NSArray *aArray))aBlock andFailBlock:(void(^)(void))aFailBlock voidBlock:(void(^)(void))aVoidBlock;
 @end

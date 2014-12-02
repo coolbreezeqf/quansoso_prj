@@ -12,6 +12,8 @@
 #import "NetManager.h"
 #import <TAESDK/TAESDK.h>
 #import "SVProgressHUD.h"
+#import "UMSocialSnsService.h"
+#import "UMSocialSnsPlatformManager.h"
 
 typedef NS_ENUM(NSInteger, cateType) {
     cateTypeIndex = 0,
@@ -75,11 +77,11 @@ typedef NS_ENUM(NSInteger, cateType) {
         UIImageView *guideView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight+20)];
         if (kMainScreenHeight<=480)
         {
-            [guideView setImage:[UIImage imageNamed:@"QSGuide44s"]];
+            [guideView setImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"QSGuide44s@2x" ofType:@"png"]]];
         }
         else
         {
-            [guideView setImage:[UIImage imageNamed:@"QSGuideView"]];
+            [guideView setImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"QSGuideView@2x" ofType:@"png"]]];
         }
         guideView.tag = 10000;
         guideView.contentMode = UIViewContentModeScaleAspectFill;
@@ -164,7 +166,7 @@ typedef NS_ENUM(NSInteger, cateType) {
             [ViewInteraction viewDissmissAnimationToRight:leftView isRemove:NO completeBlock:^(BOOL isComplete) {
                 
             }];
-            self.navigationController.navigationBarHidden = NO;
+//            self.navigationController.navigationBarHidden = NO;
             switch (cateType) {
                 case cateTypeIndex:
                 {
@@ -178,6 +180,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                 {
                     if ([[TaeSession sharedInstance] isLogin])
                     {
+                        self.navigationController.navigationBarHidden = NO;
                         _currentPage=cateTypeCoupon;
                         [weakself showCouponView];
 //                        self.title = @"我的优惠券";
@@ -203,6 +206,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                 {
                     if ([[TaeSession sharedInstance] isLogin])
                     {
+                        self.navigationController.navigationBarHidden = NO;
                         _currentPage=cateTypeBrand;
                         [weakself showAttentionBrandView];
 //                        self.title = @"我关注的品牌";
@@ -226,10 +230,16 @@ typedef NS_ENUM(NSInteger, cateType) {
                 break;
                 case cateTypeShare:
                 {
-                    _currentPage=cateTypeShare;
-                    [weakself showShareAppView];
-//                    self.title = @"分享app";
-                    [self settitleLabel:@"分享app"];
+//                    _currentPage=cateTypeShare;
+//                    [weakself showShareAppView];
+////                    self.title = @"分享app";
+//                    [self settitleLabel:@"分享app"];
+                    [UMSocialSnsService presentSnsIconSheetView:self
+                                                         appKey:kUMENG_APPKEY
+                                                      shareText:@"券搜搜APP太方便了"
+                                                     shareImage:[UIImage imageNamed:@"iconweixin"]
+                                                shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite, UMShareToSina]
+                                                       delegate:nil];
                 }
                 break;
                 case cateTypeNull:
@@ -239,6 +249,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                 break;
                 case cateTypeSetting:
                 {
+                    self.navigationController.navigationBarHidden = NO;
                     _currentPage=cateTypeSetting;
                     [weakself showSettingView];
 //                    self.title = @"设置";

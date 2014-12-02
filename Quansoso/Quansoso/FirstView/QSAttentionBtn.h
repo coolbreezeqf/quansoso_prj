@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "QSMerchant.h"
 
-@interface QSAttentionBtn : UIButton
-{
-    UIImageView *countImgView;
-    UILabel *countLabel;
-}
+@interface QSAttentionBtn : UIImageView
 
-- (instancetype)initWithFrame:(CGRect)frame andModel:(QSMerchant *)aModel;
+@property(nonatomic, strong) UIImageView *imgView;
+@property(nonatomic, strong) UIImageView *countImgView;
+@property(nonatomic, strong) UILabel *countLabel;
+- (instancetype)initWithFrame:(CGRect)frame;
+//- (void)setImage:(UIImage *)image forState:(UIControlState)state;
 - (void)removeRedView;
+- (void)addRedViewWithCount:(int)aCount;
+- (void)setWithModel:(QSMerchant *)aModel;
 @end

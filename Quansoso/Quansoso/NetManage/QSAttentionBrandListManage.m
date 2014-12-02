@@ -48,7 +48,7 @@ BOOL isIndex;
     }];
 }
 
-- (void)getNextAttentionBrandListSuccBlock:(void(^)(NSArray *))aBlock andFailBlock:(void(^)(void))aFailBlock
+- (void)getNextAttentionBrandListSuccBlock:(void(^)(NSArray *))aBlock andFailBlock:(void(^)(void))aFailBlock voidBlock:(void(^)(void))aVoidBlock
 {
     if (current<totalPage) {
         current++;
@@ -71,6 +71,10 @@ BOOL isIndex;
         } failure:^(NSDictionary *failDict, NSError *error) {
             aFailBlock();
         }];
+    }
+    else
+    {
+        aVoidBlock();
     }
 }
 @end

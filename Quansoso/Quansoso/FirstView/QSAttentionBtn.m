@@ -11,36 +11,64 @@
 
 @implementation QSAttentionBtn
 
-- (instancetype)initWithFrame:(CGRect)frame andModel:(QSMerchant *)aModel
+//- (void)setImage:(UIImage *)image forState:(UIControlState)state
+//{
+//    [self setImage:image forState:state];
+//}
+
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor whiteColor];
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40), (96/2-40), 80, 80)];
-        imgView.contentMode = UIViewContentModeScaleAspectFit;
-        [imgView sd_setImageWithURL:[NSURL URLWithString:aModel.picUrl] placeholderImage:[UIImage imageNamed:@""]];
-        [self addSubview:imgView];
-        countImgView = [[UIImageView alloc] initWithFrame:CGRectMake(96-12, -6, 18, 18)];
-        countImgView.layer.cornerRadius = 9;
-        countImgView.backgroundColor = RGBCOLOR(252, 82, 88);
-        [self addSubview:countImgView];
-        countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
-        countLabel.textAlignment = NSTextAlignmentCenter;
-        countLabel.backgroundColor = [UIColor clearColor];
-        countLabel.font = kFont10;
-        countLabel.text = @"15";
-        countLabel.backgroundColor = [UIColor clearColor];
-        countLabel.textColor = [UIColor whiteColor];
-        [countImgView addSubview:countLabel];
+        self.imgView = [[UIImageView alloc] initWithFrame:CGRectMake((96/2-40), (96/2-40), 80, 80)];
+        self.imgView.contentMode = UIViewContentModeScaleAspectFit;
+        [self addSubview:self.imgView];
     }
     
     return self;
 }
 
+- (void)setWithModel:(QSMerchant *)aModel
+{
+    [self.imgView sd_setImageWithURL:[NSURL URLWithString:aModel.picUrl]];
+}
+
+- (UIImageView *)countImgView
+{
+    if (!_countImgView) {
+        _countImgView = [[UIImageView alloc] initWithFrame:CGRectMake(96-12, -6, 18, 18)];
+        _countImgView.layer.cornerRadius = 9;
+        _countImgView.backgroundColor = RGBCOLOR(252, 82, 88);
+        [self addSubview:_countImgView];
+    }
+    return _countImgView;
+}
+
+- (UILabel *)countLabel
+{
+    if (!_countLabel) {
+        _countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+        _countLabel.textAlignment = NSTextAlignmentCenter;
+        _countLabel.backgroundColor = [UIColor clearColor];
+        _countLabel.font = kFont10;
+        _countLabel.backgroundColor = [UIColor clearColor];
+        _countLabel.textColor = [UIColor whiteColor];
+    }
+    return _countLabel;
+}
+
+- (void)addRedViewWithCount:(int)aCount
+{
+    [self addSubview:self.countImgView];
+    self.countLabel.text = [NSString stringWithFormat:@"%d", aCount];
+    [self.countImgView addSubview:self.countLabel];
+}
+
 - (void)removeRedView
 {
-    if (countImgView) {
-        [countLabel removeFromSuperview];
-        [countImgView removeFromSuperview];
+    if (self.countImgView.superview) {
+        [self.countLabel removeFromSuperview];
+        [self.countImgView removeFromSuperview];
     }
 }
 

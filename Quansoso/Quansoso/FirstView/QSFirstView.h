@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "QSAttentionBrandListManage.h"
 #import "QSDayRecommendManage.h"
+#import "QSBrandTableViewCell.h"
 
-@interface QSFirstView : UIView<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface QSFirstView : UIView<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, QSBrandTableViewCellDelegate>
 {
     NSMutableArray *dailyShopIdArray;
 }

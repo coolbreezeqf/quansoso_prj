@@ -9,6 +9,18 @@
 #ifndef Quansoso_QSS_Public_h
 #define Quansoso_QSS_Public_h
 
+//#define kUMENG_APPKEY  @"5455121dfd98c55f55004fa9"
+//#define kShareWEIXINAPPID @"tech@ekupeng.com"
+//#define kShareWEIXINAPPSECRET  @"baobei1688"
+
+#define kUMENG_APPKEY  @"1642741086"
+#define kShareWEIXINAPPID @"wx2bb198aec2629dba"
+#define kShareWEIXINAPPSECRET  @"985240ac0046d2087ed903eccc854b8f"
+
+#define kAppKey         @"1642741086"
+#define kRedirectURI    @"http://www.sina.com"
+#define kShareSinaSECRET @"92b7b57f9920eef0ac039adc66e7be68"
+
 #define kTaeSDKInitSuccessMsg @"initSuccess"
 
 #define kMainScreenHeight [UIScreen mainScreen].bounds.size.height

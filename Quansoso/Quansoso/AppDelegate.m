@@ -11,6 +11,10 @@
 #import "QSRootViewController.h"
 #import "NetManager.h"
 #import "SVProgressHUD.h"
+#import "MobClick.h"
+#import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
+#import "WeiboSDK.h"
 
 @interface AppDelegate ()
 
@@ -29,9 +33,23 @@
     self.window.rootViewController = self.rootNav;
     [self initTBSDK];
     [self.window makeKeyAndVisible];
+    [self umengregister];
+    [WeiboSDK registerApp:kAppKey];
     [self performSelector:@selector(registerRemoteToken) withObject:nil afterDelay:5];
     return YES;
 }
+
+///注册友盟
+- (void)umengregister
+{
+    NSDictionary *bundleDic = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersion = [bundleDic objectForKey:@"CFBundleShortVersionString"];
+    [MobClick startWithAppkey:kUMENG_APPKEY reportPolicy:SENDWIFIONLY channelId:nil];
+    [UMSocialData setAppKey:kUMENG_APPKEY];
+    [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:@"http://app.hu8hu.com/"];
+    [MobClick setAppVersion:appVersion];
+}
+
 
 - (void)initTBSDK
 {

@@ -280,6 +280,8 @@
                     [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
                 } andFailBlock:^{
                     [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+                } voidBlock:^{
+                    [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
                 }];
             }
             else
@@ -381,51 +383,31 @@
     }
     else
     {
-#warning tableView复用
         if (self.brandArray.count>0)
         {
-            int btnCount = (self.brandArray.count%3==0?self.brandArray.count/3+1:self.brandArray.count/3)*3;
-            int j = btnCount-3*indexPath.row;
-            CGFloat interval = (kMainScreenWidth-298)/6;
-//            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellIdentifer"];
-            //if (cell==nil) {
-            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellIdentifer"];
-//                for (int i=0; i<3; i++) {
-//                    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 2.5, 96, 96)];
-//                    btn.tag = i;
-//                    btn.backgroundColor = [UIColor whiteColor];
-//                    [cell addSubview:btn];
-//                }
-            //}
+            QSBrandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+            if (!cell) {
+                cell = [[QSBrandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+                cell.delegate = self;
+            }
+            cell.row = indexPath.row;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.backgroundColor = [UIColor clearColor];
-            CGRect frame = cell.frame;
-            frame.size.width = kMainScreenWidth;
-            cell.frame = frame;
-            for (int i=0; i<(j>=3?3:j%3); i++)
+            for (int i=0; i<3; i++)
             {
-//                UIButton *btn = (UIButton *)[cell viewWithTag:i];
-//                btn.tag = 100+indexPath.row+i;
+                QSAttentionBtn *btn = (QSAttentionBtn *)[cell viewWithTag:i+1];
+                [btn removeRedView];
                 if (i+indexPath.row*3<self.brandArray.count)
                 {
                     QSMerchant *model = [self.brandArray objectAtIndex:i+indexPath.row*3];
-                    QSAttentionBtn *attentionbtn = [[QSAttentionBtn alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 8, 96, 96) andModel:model];
-                    attentionbtn.tag = i+indexPath.row*3+100;
-                    [attentionbtn addTarget:self action:@selector(touchStoreButton:) forControlEvents:UIControlEventTouchUpInside];
-                    [cell addSubview:attentionbtn];
+                    [btn setWithModel:model];
                 }
                 else
                 {
-                    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*i, 8, 96, 96)];
-                    [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
-                    [btn setImage:[UIImage imageNamed:@"QSPlusBtn"] forState:UIControlStateNormal];
-                    [cell addSubview:btn];
+                    btn.imgView.image = [UIImage imageNamed:@"QSPlusBtn"];
                 }
-
             }
             cell.backgroundColor = [UIColor clearColor];
             return cell;
-
         }
         else
         {
@@ -440,7 +422,7 @@
                 [btn addTarget:self action:@selector(touchPlusButton) forControlEvents:UIControlEventTouchUpInside];
                 [cell addSubview:btn];
             }
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((kMainScreenWidth-298)/2, 105, 300, 15)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(interval*2+(96+5+interval)*0, 105, 300, 15)];
             label.font = kFont12;
             label.backgroundColor = [UIColor clearColor];
             label.textColor = RGBCOLOR(120, 120, 120);
@@ -450,6 +432,19 @@
         }
     }
     return [UITableViewCell new];
+}
+
+- (void)selectCell:(QSBrandTableViewCell *)aCell withRow:(int)aRow andIndex:(int)aIndex
+{
+    int index = aRow*3+aIndex;
+    if (index<self.brandArray.count)
+    {
+        [self touchStoreButton:index];
+    }
+    else
+    {
+        [self touchPlusButton];
+    }
 }
 
 #pragma mark scrollView Delegate
@@ -470,11 +465,9 @@
 }
 
 #pragma mark 店铺按钮
-- (void)touchStoreButton:(QSAttentionBtn *)aBtn
+- (void)touchStoreButton:(int)aindex
 {
-    NSLog(@"%d", aBtn.tag);
-    [aBtn removeRedView];
-    QSMerchant *model = [self.brandArray objectAtIndex:aBtn.tag-100];
+    QSMerchant *model = [self.brandArray objectAtIndex:aindex];
     QSMerchantDetailsViewController *vc = [[QSMerchantDetailsViewController alloc]
                                            initWithShopId:[model.externalShopId integerValue]];
     vc.navigationController.navigationBarHidden = NO;

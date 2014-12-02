@@ -7,6 +7,7 @@
 //
 
 #import "QSBrandBtn.h"
+#import "UIImageView+WebCache.h"
 
 @implementation QSBrandBtn
 
@@ -23,8 +24,6 @@
         [self addSubview:backView];
         
         self.brandLikeView = [[UIImageView alloc] initWithFrame:CGRectMake(backView.right-30, backView.bottom-30, 24, 24)];
-        [self.brandLikeView setImage:[UIImage imageNamed:@"QSBrandUnlike"]];
-        self.brandLikeView.userInteractionEnabled = YES;
         [backView addSubview:self.brandLikeView];
         
         CGFloat brandWidth = (backView.right-backView.left)-18*2;
@@ -36,6 +35,34 @@
         [self addSubview:self.brandImgView];
     }
     return self;
+}
+
+- (void)setBtnWithModel:(QSMerchant *)aModel
+{
+    [self.brandImgView sd_setImageWithURL:[NSURL URLWithString:aModel.picUrl]];
+}
+
+- (void)showDislike
+{
+    [self.brandLikeView setImage:[UIImage imageNamed:@"QSBrandUnlike"]];
+}
+
+- (void)showLike
+{
+    [self.brandLikeView setImage:[UIImage imageNamed:@"QSBrandLiked"]];
+}
+
+- (void)changeLike
+{
+    if (_isLiked)
+    {
+        [self showDislike];
+    }
+    else
+    {
+        [self showLike];
+    }
+    _isLiked = !_isLiked;
 }
 /*
 // Only override drawRect: if you perform custom drawing.
