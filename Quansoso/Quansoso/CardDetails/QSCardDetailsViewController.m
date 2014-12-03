@@ -95,9 +95,9 @@
 	NSInteger money = [_card.denomination integerValue]/100;
 	NSString *shareText;
 	if (_card) {
-		shareText = [NSString stringWithFormat:@"我在#券搜搜#领到%@的超值优惠券，省了%i元，你来试试吧～",merchant,money];
+		shareText = [NSString stringWithFormat:@"我在#券搜搜#领到%@的超值优惠券，省了%i元，你来试试吧～http://quansoso.wx.jaeapp.com/d/download",merchant,money];
 	}else{
-		shareText = [NSString stringWithFormat:@"我在#券搜搜#发现了%@的%@活动，你也来试试吧～",merchant,_activity.name];
+		shareText = [NSString stringWithFormat:@"我在#券搜搜#发现了%@的%@活动，你也来试试吧～http://quansoso.wx.jaeapp.com/d/download",merchant,_activity.name];
 	}
 	[UMSocialSnsService presentSnsIconSheetView:self
 										 appKey:kUMENG_APPKEY

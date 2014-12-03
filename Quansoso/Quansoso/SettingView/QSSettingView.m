@@ -56,7 +56,7 @@
 - (void)share{
     [UMSocialSnsService presentSnsIconSheetView:[self viewController]
                                          appKey:kUMENG_APPKEY
-                                      shareText:@"我在#券搜搜#领取到了超值品牌优惠券，轻松省了几十元，你也来试试吧~"
+                                      shareText:@"我在#券搜搜#领取到了超值品牌优惠券，轻松省了几十元，你也来试试吧~http://quansoso.wx.jaeapp.com/d/download"
                                      shareImage:[UIImage imageNamed:@"icon"]
                                 shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite, UMShareToSina]
                                        delegate:nil];
