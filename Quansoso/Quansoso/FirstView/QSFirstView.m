@@ -238,6 +238,7 @@
 - (void)pushToSearchVC
 {
     QSSearchViewController *searchVC = [[QSSearchViewController alloc] init];
+	searchVC.navigationController.navigationBarHidden = NO;
     [ViewInteraction viewPushViewcontroller:searchVC];
 }
 

@@ -58,6 +58,9 @@ typedef NS_ENUM(NSInteger, cateType) {
     {
         self.navigationController.navigationBarHidden = YES;
     }
+	if(![self.navigationController.visibleViewController isEqual:self]){
+		self.navigationController.navigationBarHidden = NO;
+	}
 }
 
 - (void)viewDidLoad {

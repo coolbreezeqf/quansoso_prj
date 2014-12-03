@@ -17,7 +17,7 @@
 #import "QSMerchantDetailsViewController.h"
 #import "UMSocialSnsService.h"
 #import "UMSocialSnsPlatformManager.h"
-@interface QSCardDetailsViewController (){
+@interface QSCardDetailsViewController ()<UMSocialUIDelegate>{
 	NSString *shopId;
 	NSString *sellerId;
 	NSString *webSite;
@@ -281,18 +281,22 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view.
-	self.navigationController.navigationBarHidden = NO;
 	self.view.backgroundColor = RGBCOLOR(238, 238, 238);
 //	self.title = @"领取优惠券";
 	_netManager = [[QSCardDetailsNetManager alloc] init];
     [self settitleLabel:@"领取优惠券"];
 	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
+	[self setRightButton:[UIImage imageNamed:@"QSRightViewItem3"] title:nil target:self action:@selector(shareAction)];
 	if (_activity) {
 		[self setUIForActivity];
 	}else{
 		[self setUIForCard];
 	}
-	[self setRightButton:[UIImage imageNamed:@"QSRightViewItem3"] title:nil target:self action:@selector(shareAction)];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+	[super viewWillAppear:animated];
+	self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)didReceiveMemoryWarning {
