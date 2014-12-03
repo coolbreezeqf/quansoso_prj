@@ -236,7 +236,7 @@ typedef NS_ENUM(NSInteger, cateType) {
 //                    [self settitleLabel:@"分享app"];
                     [UMSocialSnsService presentSnsIconSheetView:self
                                                          appKey:kUMENG_APPKEY
-                                                      shareText:@"券搜搜APP太方便了"
+                                                      shareText:@"我在#券搜搜#领取到了超值品牌优惠券，轻松省了几十元，你也来试试吧~"
                                                      shareImage:[UIImage imageNamed:@"AppIcon"]
                                                 shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite, UMShareToSina]
                                                        delegate:nil];

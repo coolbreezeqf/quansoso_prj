@@ -13,7 +13,7 @@
 //#define kShareWEIXINAPPID @"tech@ekupeng.com"
 //#define kShareWEIXINAPPSECRET  @"baobei1688"
 
-#define kUMENG_APPKEY  @"1642741086"
+#define kUMENG_APPKEY  @"54214b7efd98c585750058ab"
 #define kShareWEIXINAPPID @"wx2bb198aec2629dba"
 #define kShareWEIXINAPPSECRET  @"985240ac0046d2087ed903eccc854b8f"
 

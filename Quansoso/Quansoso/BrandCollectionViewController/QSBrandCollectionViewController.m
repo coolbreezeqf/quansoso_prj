@@ -211,22 +211,30 @@
     }];
     
     [weakself.showBrandTableView addInfiniteScrollingWithActionHandler:^{
-        int64_t delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^{
-            [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
-            [self.brandListManage getNextBrandListSuccBlock:^(NSArray *aArray) {
-                NSMutableArray *insertIndexPaths = [NSMutableArray new];
-                for (unsigned long i=self.brandArray.count/3; i<self.brandArray.count/3+aArray.count/3; i++) {
-                    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
-                    [insertIndexPaths addObject:indexpath];
-                }
-                [self.brandArray addObjectsFromArray:aArray];
-                [self.showBrandTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
-            } andFailBlock:^{
-                
-            }];
+        if (self.brandArray.count>0&&self.brandArray.count%9==0)
+        {
+            int64_t delayInSeconds = 2.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^{
+                [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
+                [self.brandListManage getNextBrandListSuccBlock:^(NSArray *aArray) {
+                    NSMutableArray *insertIndexPaths = [NSMutableArray new];
+                    for (unsigned long i=self.brandArray.count/3; i<self.brandArray.count/3+aArray.count/3; i++) {
+                        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+                        [insertIndexPaths addObject:indexpath];
+                    }
+                    [self.brandArray addObjectsFromArray:aArray];
+                    [self.showBrandTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+                } andFailBlock:^{
+                    
+                }];
             });
+        }
+        else
+        {
+            [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
+        }
+        
     }];
     
 }

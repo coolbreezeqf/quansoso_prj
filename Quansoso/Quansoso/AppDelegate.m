@@ -29,7 +29,7 @@
     // Override point for customization after application launch.
     self.rootvc = [[QSRootViewController alloc] initWithNibName:nil bundle:nil];
     
-    self.rootNav = [[UINavigationController alloc] initWithRootViewController:self.rootvc];
+    self.rootNav = [[LSNavigationController alloc] initWithRootViewController:self.rootvc];
     self.window.backgroundColor = [UIColor blackColor];
     self.window.rootViewController = self.rootNav;
     [self initTBSDK];
@@ -47,8 +47,8 @@
     NSString *appVersion = [bundleDic objectForKey:@"CFBundleShortVersionString"];
     [MobClick startWithAppkey:kUMENG_APPKEY reportPolicy:SENDWIFIONLY channelId:nil];
     [UMSocialData setAppKey:kUMENG_APPKEY];
-    [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:@"http://app.hu8hu.com/"];
-    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://app.hu8hu.com/"];
+    [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:@"quansoso.uz.taobao.com"];
+    [UMSocialSinaHandler openSSOWithRedirectURL:@"quansoso.uz.taobao.com"];
     [MobClick setAppVersion:appVersion];
 }
 

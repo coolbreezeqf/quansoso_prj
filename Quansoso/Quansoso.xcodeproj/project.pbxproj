@@ -50,6 +50,7 @@
 		ABC4242D19FDD3B000AE7847 /* QSDailyView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC4242C19FDD3B000AE7847 /* QSDailyView.m */; };
 		ABC54D861A086498009071D8 /* QSBrandBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC54D851A086498009071D8 /* QSBrandBtn.m */; };
 		ABC692381A29BD0B0023ABFF /* QSAttentionBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC692371A29BD0B0023ABFF /* QSAttentionBtn.m */; };
+		ABC99DB31A2EC26D00FDD304 /* LSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC99DB21A2EC26D00FDD304 /* LSNavigationController.m */; };
 		B006F6D41A29710E00161B74 /* IntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B006F6D11A29710E00161B74 /* IntroduceViewController.m */; };
 		B006F6D51A29710E00161B74 /* IntroduceWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = B006F6D31A29710E00161B74 /* IntroduceWebView.m */; };
 		B006F6D81A299AA900161B74 /* QSActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = B006F6D71A299AA900161B74 /* QSActivity.m */; };
@@ -242,6 +243,8 @@
 		ABC54D851A086498009071D8 /* QSBrandBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSBrandBtn.m; path = BrandCollectionViewController/QSBrandBtn.m; sourceTree = "<group>"; };
 		ABC692361A29BD0B0023ABFF /* QSAttentionBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSAttentionBtn.h; sourceTree = "<group>"; };
 		ABC692371A29BD0B0023ABFF /* QSAttentionBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSAttentionBtn.m; sourceTree = "<group>"; };
+		ABC99DB11A2EC26D00FDD304 /* LSNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSNavigationController.h; sourceTree = "<group>"; };
+		ABC99DB21A2EC26D00FDD304 /* LSNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSNavigationController.m; sourceTree = "<group>"; };
 		B006F6D01A29710E00161B74 /* IntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroduceViewController.h; sourceTree = "<group>"; };
 		B006F6D11A29710E00161B74 /* IntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroduceViewController.m; sourceTree = "<group>"; };
 		B006F6D21A29710E00161B74 /* IntroduceWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroduceWebView.h; sourceTree = "<group>"; };
@@ -654,6 +657,15 @@
 			path = Tableviewcell;
 			sourceTree = "<group>";
 		};
+		ABC99DB01A2EC26D00FDD304 /* LSNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				ABC99DB11A2EC26D00FDD304 /* LSNavigationController.h */,
+				ABC99DB21A2EC26D00FDD304 /* LSNavigationController.m */,
+			);
+			path = LSNavigationController;
+			sourceTree = "<group>";
+		};
 		B006F6CF1A2970FD00161B74 /* WebView */ = {
 			isa = PBXGroup;
 			children = (
@@ -855,6 +867,7 @@
 		FFBA9E7819C680BE00D9CBA2 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				ABC99DB01A2EC26D00FDD304 /* LSNavigationController */,
 				AB9CA98B1A2C86ED00698200 /* libWeiboSDK */,
 				AB1795E91A2C633000604D05 /* UMAnalytics_Sdk_3.1.8 */,
 				AB1795ED1A2C633000604D05 /* UMSocial_Sdk_4.2 */,
@@ -1283,6 +1296,7 @@
 				B08A5FFE19DFE61A008077E7 /* UILabel+dynamicSizeMe.m in Sources */,
 				FFE85F2E19CABB9300A216BB /* QSSettingView.m in Sources */,
 				FFE85F3419CABBAE00A216BB /* FBKVOController.m in Sources */,
+				ABC99DB31A2EC26D00FDD304 /* LSNavigationController.m in Sources */,
 				AB101E8A19E2350E00434DEE /* QSBrandListManage.m in Sources */,
 				B0BEDD761A2074B200721A68 /* QSAboutMeViewController.m in Sources */,
 				AB5AE54419DE736E00F6BA7A /* QSShareAppView.m in Sources */,

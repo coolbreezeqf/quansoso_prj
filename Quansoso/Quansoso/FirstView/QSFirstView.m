@@ -269,27 +269,34 @@
     }];
 
     [weakself.showQuanTableView addInfiniteScrollingWithActionHandler:^{
-        int64_t delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^{
+        if(self.brandArray.count>0&&self.brandArray.count%9==0)
+        {
+            int64_t delayInSeconds = 2.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^{
+                [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+                if ([[TaeSession sharedInstance] isLogin])
+                {
+                    [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
+                        [self.brandArray addObjectsFromArray:aArray];
+                        [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                    } andFailBlock:^{
+                        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+                    } voidBlock:^{
+                        [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
+                    }];
+                }
+                else
+                {
+                    self.brandArray = [NSMutableArray new];
+                    [SVProgressHUD showErrorWithStatus:@"你还没登陆" cover:YES offsetY:kMainScreenHeight/2.0];
+                }
+            });
+        }
+        else
+        {
             [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
-            if ([[TaeSession sharedInstance] isLogin])
-            {
-                [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
-                    [self.brandArray addObjectsFromArray:aArray];
-                    [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
-                } andFailBlock:^{
-                    [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
-                } voidBlock:^{
-                    [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
-                }];
-            }
-            else
-            {
-                self.brandArray = [NSMutableArray new];
-                [SVProgressHUD showErrorWithStatus:@"你还没登陆" cover:YES offsetY:kMainScreenHeight/2.0];
-            }
-        });
+        }
     }];
     
 }

@@ -161,26 +161,33 @@
 
 
     [weakself.showBrandTableView addInfiniteScrollingWithActionHandler:^{
-        int64_t delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^{
-            [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
-            [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
-                NSMutableArray *insertIndexPaths = [NSMutableArray new];
-                for (unsigned long i=self.brandArray.count; i<self.brandArray.count+aArray.count; i++) {
-                    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
-                    [insertIndexPaths addObject:indexpath];
+        if (self.brandArray.count>0&&self.brandArray.count%20==0)
+        {
+            int64_t delayInSeconds = 2.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^{
+                [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
+                [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
+                    NSMutableArray *insertIndexPaths = [NSMutableArray new];
+                    for (unsigned long i=self.brandArray.count; i<self.brandArray.count+aArray.count; i++) {
+                        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+                        [insertIndexPaths addObject:indexpath];
+                    }
+                    [self.brandArray addObjectsFromArray:aArray];
+                    [self.showBrandTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+                } andFailBlock:^{
+                    [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
                 }
-                [self.brandArray addObjectsFromArray:aArray];
-                [self.showBrandTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
-            } andFailBlock:^{
-                [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
-            }
-             voidBlock:^{
-                 [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
-             }];
-        });
-    }];    
+                                                                        voidBlock:^{
+                                                                            [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
+                                                                        }];
+            });
+        }
+        else
+        {
+            [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
+        }
+    }];
 }
 
 

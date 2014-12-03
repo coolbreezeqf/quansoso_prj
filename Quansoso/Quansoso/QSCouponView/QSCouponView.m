@@ -142,16 +142,23 @@
     }];
     
     [weakself.tableViewShow addInfiniteScrollingWithActionHandler:^{
-        int64_t delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^{
+        if (self.dataArray.count>0&&self.dataArray.count%20==0) {
+            int64_t delayInSeconds = 2.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^{
+                [weakself.tableViewShow.infiniteScrollingView stopAnimating];
+                [self.userCouponListManage getNextUserCouponListSuccBlock:^(NSArray *aArray) {
+                    
+                } andFailBlock:^{
+                    [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+                }];
+            });
+        }
+        else
+        {
             [weakself.tableViewShow.infiniteScrollingView stopAnimating];
-            [self.userCouponListManage getNextUserCouponListSuccBlock:^(NSArray *aArray) {
-                
-            } andFailBlock:^{
-                [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
-            }];
-        });
+        }
+        
     }];
     
 }
