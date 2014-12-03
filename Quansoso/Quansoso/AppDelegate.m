@@ -35,7 +35,7 @@
     [self initTBSDK];
     [self.window makeKeyAndVisible];
     [self umengregister];
-    [WeiboSDK registerApp:kAppKey];
+//    [WeiboSDK registerApp:kAppKey];
     [self performSelector:@selector(registerRemoteToken) withObject:nil afterDelay:5];
     return YES;
 }
@@ -47,9 +47,9 @@
     NSString *appVersion = [bundleDic objectForKey:@"CFBundleShortVersionString"];
     [MobClick startWithAppkey:kUMENG_APPKEY reportPolicy:SENDWIFIONLY channelId:nil];
     [UMSocialData setAppKey:kUMENG_APPKEY];
-    [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:@"quansoso.uz.taobao.com"];
-    [UMSocialSinaHandler openSSOWithRedirectURL:@"quansoso.uz.taobao.com"];
     [MobClick setAppVersion:appVersion];
+    [UMSocialWechatHandler setWXAppId:kShareWEIXINAPPID appSecret:kShareWEIXINAPPSECRET url:@"http://quansoso.uz.taobao.com"];
+    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
 }
 
 

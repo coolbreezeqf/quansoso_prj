@@ -230,14 +230,10 @@ typedef NS_ENUM(NSInteger, cateType) {
                 break;
                 case cateTypeShare:
                 {
-//                    _currentPage=cateTypeShare;
-//                    [weakself showShareAppView];
-////                    self.title = @"分享app";
-//                    [self settitleLabel:@"分享app"];
                     [UMSocialSnsService presentSnsIconSheetView:self
                                                          appKey:kUMENG_APPKEY
                                                       shareText:@"我在#券搜搜#领取到了超值品牌优惠券，轻松省了几十元，你也来试试吧~"
-                                                     shareImage:[UIImage imageNamed:@"AppIcon"]
+                                                     shareImage:[UIImage imageNamed:@"icon"]
                                                 shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite, UMShareToSina]
                                                        delegate:nil];
                 }

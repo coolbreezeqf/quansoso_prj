@@ -14,6 +14,8 @@
 #import "ViewInteraction.h"
 #import "SVProgressHUD.h"
 #import "SDImageCache.h"
+#import "UMSocialSnsService.h"
+#import "UMSocialSnsPlatformManager.h"
 #define kTitleColor RGBCOLOR(149, 149, 149)
 
 @interface QSSettingView ()<UIActionSheetDelegate>{
@@ -52,8 +54,23 @@
 }
 
 - (void)share{
-//	CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"暂无"];
-//	[alert showAlertLabel];
+    [UMSocialSnsService presentSnsIconSheetView:[self viewController]
+                                         appKey:kUMENG_APPKEY
+                                      shareText:@"我在#券搜搜#领取到了超值品牌优惠券，轻松省了几十元，你也来试试吧~"
+                                     shareImage:[UIImage imageNamed:@"icon"]
+                                shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite, UMShareToSina]
+                                       delegate:nil];
+}
+
+//获取viewcontroller
+- (UIViewController *)viewController {
+    for (UIView* next = [self superview]; next; next = next.superview) {
+        UIResponder *nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController class]]) {
+            return (UIViewController *)nextResponder;
+        }
+    }
+    return nil;
 }
 
 - (void)cleanCache{
