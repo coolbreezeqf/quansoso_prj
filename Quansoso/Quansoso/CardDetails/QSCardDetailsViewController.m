@@ -15,10 +15,13 @@
 #import "QSCardDetailsNetManager.h"
 #import "SVProgressHUD.h"
 #import "QSMerchantDetailsViewController.h"
+#import "UMSocialSnsService.h"
+#import "UMSocialSnsPlatformManager.h"
 @interface QSCardDetailsViewController (){
 	NSString *shopId;
 	NSString *sellerId;
 	NSString *webSite;
+	UIButton *rightButton;
 }
 //data
 @property (nonatomic,strong) QSCards *card;
@@ -87,6 +90,23 @@
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)shareAction{
+	NSString *merchant = _card?_card.merchant:_activity.merchant;
+	NSInteger money = [_card.denomination integerValue]/100;
+	NSString *shareText;
+	if (_card) {
+		shareText = [NSString stringWithFormat:@"我在#券搜搜#领到%@的超值优惠券，省了%i元，你来试试吧～",merchant,money];
+	}else{
+		shareText = [NSString stringWithFormat:@"我在#券搜搜#发现了%@的%@活动，你也来试试吧～",merchant,_activity.name];
+	}
+	[UMSocialSnsService presentSnsIconSheetView:self
+										 appKey:kUMENG_APPKEY
+									  shareText:shareText
+									 shareImage:[UIImage imageNamed:@"AppIcon"]
+								shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite, UMShareToSina]
+									   delegate:nil];
+}
+
 - (instancetype)initWithCard:(QSCards *)card webSite:(NSString*)site andSellerId:(NSString *)sellerid{
 	if (self = [super init]) {
 		_card = card;
@@ -120,8 +140,31 @@
 	return self;
 }
 
+- (void)setRightButton:(UIImage *)aImg title:(NSString *)aTitle target:(id)aTarget action:(SEL)aSelector{
+	CGRect buttonFrame = CGRectMake(5, 0, 22, 22);
+	rightButton = [[UIButton alloc] initWithFrame:buttonFrame];
+	[rightButton addTarget:aTarget action:aSelector forControlEvents:UIControlEventTouchUpInside];
+	[rightButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+	if(aTitle)
+		{
+		[rightButton setTitle:aTitle forState:UIControlStateNormal];
+		}
+	if(aImg)
+		{
+		[rightButton setBackgroundImage:aImg forState:UIControlStateNormal];
+		}
+	CGRect viewFrame = CGRectMake(kMainScreenWidth-100/2, 0, 22, 22);
+	UIView *view = [[UIView alloc]initWithFrame:viewFrame];
+	[view addSubview:rightButton];
+	if(self.navigationController && self.navigationItem)
+		{
+		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:view];
+		}
+}
+
+
 - (void)setUI{
-	_merchantName = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, kMainScreenWidth - 40, 30)];
+	_merchantName = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-130, 10, kMainScreenWidth - 40, 30)];
 	_merchantName.backgroundColor = [UIColor clearColor];
 	_merchantName.textColor = RGBCOLOR(10, 76, 121);
 	_merchantName.font = kFont17;
@@ -249,7 +292,7 @@
 	}else{
 		[self setUIForCard];
 	}
-	
+	[self setRightButton:[UIImage imageNamed:@"QSRightViewItem3"] title:nil target:self action:@selector(shareAction)];
 }
 
 - (void)didReceiveMemoryWarning {

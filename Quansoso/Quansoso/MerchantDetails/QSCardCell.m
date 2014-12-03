@@ -158,7 +158,7 @@
     self.endTimeLabel.text = [NSString stringWithFormat:@"截至%@",endTime];
 
     switch (self.type) {
-#warning 其他类型待定
+
         case cardType_mail://包邮
         {
             self.largeTitleLabel.text = @"包邮";

@@ -110,7 +110,7 @@
 			//结束更新
 			[_tableView endUpdates];
 		} failure:^{
-			
+			[SVProgressHUD showErrorWithStatus:@"网络异常，请重试" cover:YES offsetY:kMainScreenHeight/2];
 		}];
 		
 		//停止菊花
@@ -253,9 +253,8 @@
 //	CGRect rect = cell.titleLb.frame;
 //	rect.size.width = kMainScreenWidth - cell.iconImageView.right;
 //	[cell.titleLb setFrame:rect];
-	[cell.iconImageView setImageWithURL:[NSURL URLWithString:result.picUrl]];
+	[cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:result.picUrl]];
 	return cell;
-	
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

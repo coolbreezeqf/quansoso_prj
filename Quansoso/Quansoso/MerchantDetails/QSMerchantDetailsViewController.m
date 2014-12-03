@@ -128,7 +128,8 @@
         weakSelf.merchant = merchant;
         weakSelf.cardsArray = cardsArray;
 		weakSelf.activities = activities;
-        [weakSelf settitleLabel:merchant.name];
+//        [weakSelf settitleLabel:merchant.name];
+		weakSelf.title = merchant.name;
         NSInteger categoryType = 1;
         categoryType = [weakSelf.merchant.ekpCategory integerValue];
 		categoryType = categoryType ? categoryType : 1;
