@@ -34,6 +34,19 @@
     self.backgroundColor = RGBCOLOR(245, 240, 232);
     self.brandArray = [NSMutableArray new];
     
+    if (kMainScreenWidth==320)
+    {
+        pageControlEndX = kMainScreenWidth-10;
+    }
+    else if (kMainScreenWidth==375)
+    {
+        pageControlEndX = kMainScreenWidth-40;
+    }
+    else if (kMainScreenWidth==414)
+    {
+        pageControlEndX = kMainScreenWidth-60;
+    }
+    
     UIView *stautsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 20)];
     stautsView.backgroundColor = [UIColor whiteColor];
     [self addSubview:stautsView];
@@ -95,23 +108,24 @@
 - (void)getData
 {
 #pragma mark 网络请求
-    [self getDayRecommends];
-    
     if ([[TaeSession sharedInstance] isLogin])
     {
         [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
             self.brandArray = aArray;
             dailyShopIdArray = [[NSMutableArray alloc] init];
             [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+            if (self.loadingImgView.superview) {
+                [self.loadingImgView removeFromSuperview];
+            }
         } andFailBlock:^{
-            [self.loadingImgView removeFromSuperview];
+            if (self.loadingImgView.superview) {
+                [self.loadingImgView removeFromSuperview];
+            }
             [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
         } isIndex:YES];
     }
-    else
-    {
-        
-    }
+    
+    [self getDayRecommends];
 }
 
 
@@ -119,12 +133,15 @@
 {
     [self.dayRecommendManage getDayRecommendSuccBlock:^(NSArray *dayRecomendModelArray) {
         self.dailyArray = dayRecomendModelArray;
-        NSArray *indexArray = [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:0], nil];
+        NSArray *indexArray = [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:0], [NSIndexPath indexPathForRow:0 inSection:0],nil];
         [self.showQuanTableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationNone];
-//        [self.activityDayRecommendView stopAnimating];
-        [self.loadingImgView removeFromSuperview];
+        if (self.loadingImgView.superview) {
+            [self.loadingImgView removeFromSuperview];
+        }
     } andFailBlock:^{
-        [self.loadingImgView removeFromSuperview];
+        if (self.loadingImgView.superview) {
+            [self.loadingImgView removeFromSuperview];
+        }
         [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
      
@@ -247,52 +264,49 @@
 {
     __weak QSFirstView *weakself = self;
     [weakself.showQuanTableView addPullToRefreshWithActionHandler:^{
-        int64_t delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^{
-            [weakself.showQuanTableView.pullToRefreshView stopAnimating];
+            [self getDayRecommends];
             if ([[TaeSession sharedInstance] isLogin])
             {
                 [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
                     self.brandArray = aArray;
+                    [weakself.showQuanTableView.pullToRefreshView stopAnimating];
                     [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
                 } andFailBlock:^{
+                    [weakself.showQuanTableView.pullToRefreshView stopAnimating];
                     [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
                 } isIndex:YES];
             }
             else
             {
+                [weakself.showQuanTableView.pullToRefreshView stopAnimating];
                 self.brandArray = [NSMutableArray new];
                 [SVProgressHUD showErrorWithStatus:@"你还没登陆" cover:YES offsetY:kMainScreenHeight/2.0];
             }
-            [self getDayRecommends];
-        });
     }];
 
     [weakself.showQuanTableView addInfiniteScrollingWithActionHandler:^{
         if(self.brandArray.count>0&&self.brandArray.count%9==0)
         {
-            int64_t delayInSeconds = 2.0;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-            dispatch_after(popTime, dispatch_get_main_queue(), ^{
-                [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
                 if ([[TaeSession sharedInstance] isLogin])
                 {
                     [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
                         [self.brandArray addObjectsFromArray:aArray];
-                        [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                        [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+                        [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
                     } andFailBlock:^{
+                        [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
                         [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
                     } voidBlock:^{
+                        [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
                         [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
                     }];
                 }
                 else
                 {
+                    [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
                     self.brandArray = [NSMutableArray new];
                     [SVProgressHUD showErrorWithStatus:@"你还没登陆" cover:YES offsetY:kMainScreenHeight/2.0];
                 }
-            });
         }
         else
         {
@@ -358,26 +372,37 @@
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = [UIColor clearColor];
+        int count = self.dailyArray.count%3==0?self.dailyArray.count/3:self.dailyArray.count/3+1;
         if (indexPath.row==0)
         {
             [cell addSubview:self.labelDaily];
             [cell addSubview:self.pageControl];
+            if (self.dailyArray.count>0)
+            {
+                self.pageControl.numberOfPages=count;
+                CGRect temFrame = self.pageControl.frame;
+                temFrame.size.width = 14*count;
+                temFrame.origin.x = pageControlEndX-temFrame.size.width;
+                self.pageControl.frame = temFrame;
+            }
         }
         else if(indexPath.row==1)
         {
-            self.scrollView.contentSize = CGSizeMake(3*kMainScreenWidth, 136);
+            self.scrollView.contentSize = CGSizeMake(count*kMainScreenWidth, 136);
             CGFloat interval = (kMainScreenWidth-310)/6;
-            for (int i=0; i<9; i++)
+            int btnCount = self.dailyArray.count>0?self.dailyArray.count:3;
+            for (int i=0; i<btnCount; i++)
             {
                 float width = 105;
                 float height = 136;
                 QSDailyView *btn = [[QSDailyView alloc] initWithFrame:CGRectMake((interval*2+(102+interval)*(i%3))+i/3*kMainScreenWidth, 0, width, height)];
                 btn.tag = 1000+i;
-                if (self.dailyArray.count>0) {
+                if (self.dailyArray.count>0)
+                {
                     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchQuanButton:)];
                     [btn addGestureRecognizer:tapGestureRecognizer];
                     QSDayRecommends *model = [self.dailyArray objectAtIndex:i];
-                    [btn setCardWithModel:model.card andName:model.name];
+                    [btn setCardWithModel:model];
                 }
                 [self.scrollView addSubview:btn];
             }
@@ -466,10 +491,20 @@
 - (void)touchQuanButton:(UITapGestureRecognizer *)TapGestureRecognizer
 {
     QSDayRecommends *model = [self.dailyArray objectAtIndex:TapGestureRecognizer.view.tag-1000];
-//    QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:model.card andShopId:model.externalShopId];
-	QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:model.card shopId:model.externalShopId andSellerId:model.externalId];
-    vc.navigationController.navigationBarHidden = NO;
-    [ViewInteraction viewPushViewcontroller:vc];
+    int type = [model.couponType intValue];
+    if (type==1)
+    {
+        QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:model.card shopId:model.externalShopId andSellerId:model.externalId];
+        vc.navigationController.navigationBarHidden = NO;
+        [ViewInteraction viewPushViewcontroller:vc];
+    }
+    else
+    {
+        QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithActivity:model.activity shopId:model.externalShopId andSellerId:model.externalId];
+        vc.navigationController.navigationBarHidden = NO;
+        [ViewInteraction viewPushViewcontroller:vc];
+    }
+    
 }
 
 #pragma mark 店铺按钮

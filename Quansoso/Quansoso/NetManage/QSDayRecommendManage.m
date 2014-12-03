@@ -27,7 +27,7 @@
         }
         aBlock(dayRecommendModelArray);
     } failure:^(NSDictionary *failDict, NSError *error) {
-        
+        aFailBlock();
     }];
 }
 

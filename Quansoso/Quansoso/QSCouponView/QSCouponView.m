@@ -128,31 +128,31 @@
 {
     __weak QSCouponView *weakself = self;
     [weakself.tableViewShow addPullToRefreshWithActionHandler:^{
-        int64_t delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^{
-            [weakself.tableViewShow.pullToRefreshView stopAnimating];
             [self.userCouponListManage getFirstUserCouponListSuccBlock:^(NSArray *aArray) {
                 self.dataArray = [aArray mutableCopy];
+                [weakself.tableViewShow.pullToRefreshView stopAnimating];
                 [self.tableViewShow reloadData];
             } andFailBlock:^{
+                [weakself.tableViewShow.pullToRefreshView stopAnimating];
                 [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
             }];
-        });
     }];
     
     [weakself.tableViewShow addInfiniteScrollingWithActionHandler:^{
         if (self.dataArray.count>0&&self.dataArray.count%20==0) {
-            int64_t delayInSeconds = 2.0;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-            dispatch_after(popTime, dispatch_get_main_queue(), ^{
-                [weakself.tableViewShow.infiniteScrollingView stopAnimating];
                 [self.userCouponListManage getNextUserCouponListSuccBlock:^(NSArray *aArray) {
-                    
+                    NSMutableArray *insertIndexPaths = [NSMutableArray new];
+                    for (unsigned long i=self.dataArray.count; i<self.dataArray.count+aArray.count; i++) {
+                        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+                        [insertIndexPaths addObject:indexpath];
+                    }
+                    [self.dataArray addObjectsFromArray:aArray];
+                    [self.tableViewShow insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+                    [weakself.tableViewShow.infiniteScrollingView stopAnimating];
                 } andFailBlock:^{
+                    [weakself.tableViewShow.infiniteScrollingView stopAnimating];
                     [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
                 }];
-            });
         }
         else
         {

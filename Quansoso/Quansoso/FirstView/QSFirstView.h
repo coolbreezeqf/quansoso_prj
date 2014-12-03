@@ -14,6 +14,7 @@
 @interface QSFirstView : UIView<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, QSBrandTableViewCellDelegate>
 {
     NSMutableArray *dailyShopIdArray;
+    float pageControlEndX;
 }
 @property(nonatomic, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) UIImageView *imagebrand;

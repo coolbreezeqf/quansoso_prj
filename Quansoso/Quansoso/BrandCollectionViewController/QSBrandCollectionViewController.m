@@ -114,6 +114,11 @@
     }];
 }
 
+- (void)reloadTableView
+{
+    [self.showBrandTableView reloadData];
+}
+
 - (void)back
 {
     self.navigationController.navigationBarHidden = YES;
@@ -196,29 +201,24 @@
 {
     __weak QSBrandCollectionViewController *weakself = self;
     [weakself.showBrandTableView addPullToRefreshWithActionHandler:^{
-        int64_t delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^{
-            [weakself.showBrandTableView.pullToRefreshView stopAnimating];
             [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^(NSMutableArray *aArray) {
+                [weakself.showBrandTableView.pullToRefreshView stopAnimating];
                 self.brandArray = aArray;
+//                [self performSelector:@selector(reloadTableView) withObject:nil afterDelay:1];
                 [self.showBrandTableView reloadData];
             } andFailBlock:^{
-                
+                [weakself.showBrandTableView.pullToRefreshView stopAnimating];
+                [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
             }];
             [self.showBrandTableView reloadData];
-        });
     }];
     
     [weakself.showBrandTableView addInfiniteScrollingWithActionHandler:^{
         if (self.brandArray.count>0&&self.brandArray.count%9==0)
         {
-            int64_t delayInSeconds = 2.0;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-            dispatch_after(popTime, dispatch_get_main_queue(), ^{
-                [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
                 [self.brandListManage getNextBrandListSuccBlock:^(NSArray *aArray) {
                     NSMutableArray *insertIndexPaths = [NSMutableArray new];
+                    [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
                     for (unsigned long i=self.brandArray.count/3; i<self.brandArray.count/3+aArray.count/3; i++) {
                         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
                         [insertIndexPaths addObject:indexpath];
@@ -226,9 +226,9 @@
                     [self.brandArray addObjectsFromArray:aArray];
                     [self.showBrandTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
                 } andFailBlock:^{
-                    
+                    [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
+                    [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
                 }];
-            });
         }
         else
         {
@@ -310,20 +310,23 @@
     }
     cell.row = indexPath.row;
     cell.backgroundColor = RGBCOLOR(228, 222, 214);
-    for (int i=0; i<3; i++)
+    if (cell.row<self.brandArray.count)
     {
-        QSMerchant *model = [self.brandArray objectAtIndex:indexPath.row*3+i];
-        QSBrandBtn *btn = (QSBrandBtn *)[cell viewWithTag:i+1];
-        [btn showDislike];
-        [btn setBtnWithModel:model];
-        NSArray *keyArray = [payAttentionBrand allKeys];
-        for (int j=0; j<keyArray.count; j++)
+        for (int i=0; i<3; i++)
         {
-            NSString *key = [keyArray objectAtIndex:j];
-            if (indexPath.row*3+i==[key intValue])
+            QSMerchant *model = [self.brandArray objectAtIndex:indexPath.row*3+i];
+            QSBrandBtn *btn = (QSBrandBtn *)[cell viewWithTag:i+1];
+            [btn showDislike];
+            [btn setBtnWithModel:model];
+            NSArray *keyArray = [payAttentionBrand allKeys];
+            for (int j=0; j<keyArray.count; j++)
             {
-                [btn showLike];
-                break;
+                NSString *key = [keyArray objectAtIndex:j];
+                if (indexPath.row*3+i==[key intValue])
+                {
+                    [btn showLike];
+                    break;
+                }
             }
         }
     }

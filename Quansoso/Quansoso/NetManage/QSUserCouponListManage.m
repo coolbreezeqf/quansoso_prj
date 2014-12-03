@@ -38,7 +38,7 @@ int totalPage;
         totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
         aSuccBlock(mutableArray);
     } failure:^(NSDictionary *failDict, NSError *error) {
-        
+        aFailBlock();
     }];
 
 }
@@ -47,11 +47,11 @@ int totalPage;
 {
     if (current<totalPage) {
         current++;
-        NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=%d&pageSize=10", KBaseUrl,[[TaeSession sharedInstance] getUser].nick, current];
-        [NetManager requestWith:nil url:UserCouponListUrl method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
+        NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=%d&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current, pageSize];
+        NSString *encodeStr = [UserCouponListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
             MLOG(@"%@", successDict);
             NSDictionary *pageDict = [successDict objectForKey:@"page"];
-            totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
             NSArray *array = [pageDict objectForKey:@"resultList"];
             NSMutableArray *mutableArray = [NSMutableArray new];
             for (int i=0; i<array.count; i++)
@@ -62,7 +62,7 @@ int totalPage;
             totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
             aSuccBlock(mutableArray);
         } failure:^(NSDictionary *failDict, NSError *error) {
-            
+            aFailBlock();
         }];
     }
 }

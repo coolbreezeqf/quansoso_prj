@@ -45,12 +45,7 @@
     [self addSubview:self.showBrandTableView];
     
     [self addTableViewTrag];
-    
-//    self.activityIndicatorView = [[UIActivityIndicatorView alloc]
-//                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2, 40, 40)];
-//    self.activityIndicatorView.color = [UIColor blackColor];
-//    [self.activityIndicatorView startAnimating];
-//    [self.showBrandTableView addSubview:self.activityIndicatorView];
+
     [self addSubview:self.loadingView];
     
 #pragma mark 网络请求
@@ -59,7 +54,6 @@
         if (self.brandArray.count==0) {
             [self addSubview:self.failView];
         }
-//        [self.activityIndicatorView stopAnimating];
         [self.loadingView removeFromSuperview];
         [self.showBrandTableView reloadData];
     } andFailBlock:^{
@@ -106,14 +100,12 @@
 - (void)reloadView
 {
     [self.failView removeFromSuperview];
-//    [self.activityIndicatorView startAnimating];
     [self addSubview:self.loadingView];
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
         self.brandArray = [aArray mutableCopy];
         if (self.brandArray.count==0) {
             [self addSubview:self.failView];
         }
-//        [self.activityIndicatorView stopAnimating];
         [self.loadingView removeFromSuperview];
         [self.showBrandTableView reloadData];
     } andFailBlock:^{
@@ -145,30 +137,24 @@
 {
     __weak QSAttentionBrandView *weakself = self;
     [weakself.showBrandTableView addPullToRefreshWithActionHandler:^{
-        int64_t delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^{
-            [weakself.showBrandTableView.pullToRefreshView stopAnimating];
             [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
                 self.brandArray = aArray;
+                [weakself.showBrandTableView.pullToRefreshView stopAnimating];
                 unLikeDict = [NSMutableDictionary new];
                 [self.showBrandTableView reloadData];
             } andFailBlock:^{
+                [weakself.showBrandTableView.pullToRefreshView stopAnimating];
                 [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
             } isIndex:NO];
-             });
     }];
 
 
     [weakself.showBrandTableView addInfiniteScrollingWithActionHandler:^{
         if (self.brandArray.count>0&&self.brandArray.count%20==0)
         {
-            int64_t delayInSeconds = 2.0;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-            dispatch_after(popTime, dispatch_get_main_queue(), ^{
-                [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
                 [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
                     NSMutableArray *insertIndexPaths = [NSMutableArray new];
+                    [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
                     for (unsigned long i=self.brandArray.count; i<self.brandArray.count+aArray.count; i++) {
                         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
                         [insertIndexPaths addObject:indexpath];
@@ -176,12 +162,13 @@
                     [self.brandArray addObjectsFromArray:aArray];
                     [self.showBrandTableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
                 } andFailBlock:^{
+                    [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
                     [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
                 }
                                                                         voidBlock:^{
+                                                                            [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
                                                                             [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
                                                                         }];
-            });
         }
         else
         {

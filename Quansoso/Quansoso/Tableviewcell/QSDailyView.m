@@ -7,6 +7,8 @@
 //
 
 #import "QSDailyView.h"
+#import "QSCards.h"
+#import "QSActivity.h"
 
 #define kWidth self.frame.size.width
 #define kHeight self.frame.size.height
@@ -35,10 +37,6 @@
         [_preferentialLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:30]];
         _preferentialLabel.backgroundColor = [UIColor clearColor];
         _preferentialLabel.textAlignment = NSTextAlignmentCenter;
-//        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"100元"]];
-//        [string addAttribute:NSFontAttributeName value:kFont18 range:NSMakeRange(string.length-1, 1)];
-//        [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(243, 130, 11) range:NSMakeRange(0, string.length)];
-//        self.preferentialLabel.attributedText = string;
     }
     return _preferentialLabel;
 }
@@ -81,34 +79,75 @@
     return _preferentialDetailLabel;
 }
 
-- (void)setCardWithModel:(QSCards *)aCardModel andName:(NSString *)aName
+- (void)setCardWithModel:(QSDayRecommends *)aDayRecommendModel
 {
-    if ([aCardModel.cardType intValue]==1)//优惠券
+    int aCouponType = [aDayRecommendModel.couponType intValue];
+    if (aCouponType==1)//优惠券
     {
-        int price = [aCardModel.denomination intValue]/10;
+        QSCards *aCardModel = aDayRecommendModel.card;
+        int price = [aCardModel.denomination intValue]/100;
         NSMutableAttributedString *string = [[NSMutableAttributedString alloc]
                                              initWithString:[NSString stringWithFormat:@"%d元", price]];
         [string addAttribute:NSFontAttributeName value:kFont18 range:NSMakeRange(string.length-1, 1)];
         [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(243, 130, 11) range:NSMakeRange(0, string.length)];
+
         self.preferentialLabel.attributedText = string;
         self.preferentialDetailLabel.text = @"优惠券";
         self.preferentialTimeLabel.text = [NSString stringWithFormat:@"截止到%@", aCardModel.endProperty];
+        self.brandNameLabel.text = aDayRecommendModel.name;
     }
-    if ([aCardModel.cardType intValue]==2)//折扣
+    else if(aCouponType==2)//活动
     {
-        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"50%"];
-        [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(253, 82, 88) range:NSMakeRange(0, string.length)];
-        self.preferentialLabel.attributedText = string;
-        self.preferentialDetailLabel.text = @"OFF";
+        QSActivity *activityModel = aDayRecommendModel.activity;
+        int activityType = [activityModel.type intValue];
+        if (activityType==1)//满减
+        {
+            int price = [activityModel.denomination intValue]/10;
+            NSMutableAttributedString *string = [[NSMutableAttributedString alloc]
+                                                 initWithString:[NSString stringWithFormat:@"%d元", price]];
+            [string addAttribute:NSFontAttributeName value:kFont18 range:NSMakeRange(string.length-1, 1)];
+            [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(237, 181,68) range:NSMakeRange(0, string.length)];
+            self.preferentialLabel.attributedText = string;
+            self.preferentialDetailLabel.text = [NSString stringWithFormat:@"满%@送", activityModel.moneyCondition];
+        }
+        else if(activityType==2)//打折
+        {
+            NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d%%", [activityModel.discountRate intValue]/100]];
+            [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(253, 82, 88) range:NSMakeRange(0, string.length)];
+            self.preferentialLabel.attributedText = string;
+            self.preferentialDetailLabel.text = @"OFF";
+        }
+        else if(activityType==3)//包邮
+        {
+            NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"包邮"];
+            [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(26, 167, 124) range:NSMakeRange(0, string.length)];
+            self.preferentialLabel.attributedText = string;
+            if (activityModel.moneyCondition && activityModel.moneyCondition>0)
+            {
+                self.preferentialDetailLabel.text = [NSString stringWithFormat:@"满%d元送", [activityModel.moneyCondition intValue]/100];
+            }
+            else
+            {
+                self.preferentialDetailLabel.text = [NSString stringWithFormat:@"满%d件送", [activityModel.quantityCondition intValue]/100];
+            }
+        }
+        else if(activityType==4)//满送
+        {
+            NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"满送"];
+            [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(174, 93, 161) range:NSMakeRange(0, string.length)];
+            self.preferentialLabel.attributedText = string;
+            if (activityModel.moneyCondition && activityModel.moneyCondition>0)
+            {
+                self.preferentialDetailLabel.text = [NSString stringWithFormat:@"满%d元送", [activityModel.moneyCondition intValue]/100];
+            }
+            else
+            {
+                self.preferentialDetailLabel.text = [NSString stringWithFormat:@"满%d件送", [activityModel.quantityCondition intValue]/100];
+            }
+        }
+        self.preferentialTimeLabel.text = [NSString stringWithFormat:@"截止到%@", activityModel.endProperty];
+        self.brandNameLabel.text = activityModel.merchant;
     }
-    if ([aCardModel.cardType intValue]==3)//包邮
-    {
-        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"包邮"];
-        [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(26, 167, 124) range:NSMakeRange(0, string.length)];
-        self.preferentialLabel.attributedText = string;
-        self.preferentialDetailLabel.text = @"满400元";
-    }
-    self.brandNameLabel.text = aName;
 }
 
 @end

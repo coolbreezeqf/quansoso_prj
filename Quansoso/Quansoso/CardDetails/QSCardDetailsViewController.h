@@ -14,4 +14,5 @@
 - (instancetype)initWithCard:(QSCards *)card webSite:(NSString*)site andSellerId:(NSString *)sellerid;
 - (instancetype)initWithActivity:(QSActivity *)activity andSellerId:(NSString *)sellerid;
 - (instancetype)initWithCard:(QSCards *)card shopId:(NSString *)shopid andSellerId:(NSString *)sellerid;
+- (instancetype)initWithActivity:(QSActivity *)activity shopId:(NSString *)shopid andSellerId:(NSString *)sellerid;
 @end

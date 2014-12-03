@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "QSCards.h"
+#import "QSDayRecommends.h"
 
 @interface QSDailyView : UIView
 
@@ -17,5 +17,5 @@
 @property(nonatomic, strong) UILabel *preferentialTimeLabel;
 
 - (instancetype)initWithFrame:(CGRect)frame;
-- (void)setCardWithModel:(QSCards *)aCardModel andName:(NSString *)aName;
+- (void)setCardWithModel:(QSDayRecommends *)aDayRecommendModel;
 @end

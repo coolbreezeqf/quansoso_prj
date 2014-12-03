@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class QSActivity;
 @class QSCards;
 
 @interface QSDayRecommends : NSObject <NSCoding, NSCopying>
@@ -21,6 +22,7 @@
 @property (nonatomic, strong) NSString *externalShopId;
 @property (nonatomic, strong) NSString *couponType;
 @property (nonatomic, strong) NSString *gmtModified;
+@property (nonatomic, strong) QSActivity *activity;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

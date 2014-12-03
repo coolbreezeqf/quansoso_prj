@@ -32,7 +32,7 @@ BOOL isIndex;
     MLOG(@"%@", [TaeSession sharedInstance].getUser);
     NSString *encodeStr = [BrandListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
-        MLOG(@"%@", successDict);
+//        MLOG(@"%@", successDict);
         NSDictionary *pageDict = [successDict objectForKey:@"page"];
         totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
         NSArray *array = [pageDict objectForKey:@"resultList"];
@@ -57,7 +57,7 @@ BOOL isIndex;
         MLOG(@"%@", [TaeSession sharedInstance].getUser);
         NSString *encodeStr = [BrandListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
-            MLOG(@"%@", successDict);
+//            MLOG(@"%@", successDict);
             NSDictionary *pageDict = [successDict objectForKey:@"page"];
             totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
             NSArray *array = [pageDict objectForKey:@"resultList"];

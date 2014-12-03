@@ -7,6 +7,7 @@
 
 #import "QSDayRecommends.h"
 #import "QSCards.h"
+#import "QSActivity.h"
 
 
 NSString *const kQSDayRecommendsName = @"name";
@@ -19,6 +20,7 @@ NSString *const kQSDayRecommendsDate = @"date";
 NSString *const kQSDayRecommendsExternalShopId = @"external_shop_id";
 NSString *const kQSDayRecommendsCouponType = @"coupon_type";
 NSString *const kQSDayRecommendsGmtModified = @"gmt_modified";
+NSString *const kQSDayRecommendsActivity = @"activity";
 
 
 @interface QSDayRecommends ()
@@ -39,6 +41,7 @@ NSString *const kQSDayRecommendsGmtModified = @"gmt_modified";
 @synthesize externalShopId = _externalShopId;
 @synthesize couponType = _couponType;
 @synthesize gmtModified = _gmtModified;
+@synthesize activity = _activity;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -63,6 +66,7 @@ NSString *const kQSDayRecommendsGmtModified = @"gmt_modified";
             self.externalShopId = [self objectOrNilForKey:kQSDayRecommendsExternalShopId fromDictionary:dict];
             self.couponType = [self objectOrNilForKey:kQSDayRecommendsCouponType fromDictionary:dict];
             self.gmtModified = [self objectOrNilForKey:kQSDayRecommendsGmtModified fromDictionary:dict];
+            self.activity = [QSActivity modelObjectWithDictionary:[dict objectForKey:kQSDayRecommendsActivity]];
 
     }
     
@@ -73,6 +77,7 @@ NSString *const kQSDayRecommendsGmtModified = @"gmt_modified";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
+    [mutableDict setValue:[self.activity dictionaryRepresentation] forKey:kQSDayRecommendsActivity];
     [mutableDict setValue:self.name forKey:kQSDayRecommendsName];
     [mutableDict setValue:self.gmtCreated forKey:kQSDayRecommendsGmtCreated];
     [mutableDict setValue:self.picUrl forKey:kQSDayRecommendsPicUrl];

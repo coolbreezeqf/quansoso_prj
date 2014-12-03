@@ -140,6 +140,17 @@
 	return self;
 }
 
+- (instancetype)initWithActivity:(QSActivity *)activity shopId:(NSString *)shopid andSellerId:(NSString *)sellerid{
+    if (self = [super init]) {
+        _card = nil;
+        _activity = activity;
+        sellerId = sellerid;
+        shopId = shopid;
+        webSite = nil;
+    }
+    return self;
+}
+
 - (void)setRightButton:(UIImage *)aImg title:(NSString *)aTitle target:(id)aTarget action:(SEL)aSelector{
 	CGRect buttonFrame = CGRectMake(5, 0, 22, 22);
 	rightButton = [[UIButton alloc] initWithFrame:buttonFrame];
