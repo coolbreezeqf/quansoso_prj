@@ -70,8 +70,8 @@
         lines=3;
     }
     
-    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 8, 16)];
-    [backBtn setImage:[UIImage imageNamed:@"QSBackItem"] forState:UIControlStateNormal];
+    UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     

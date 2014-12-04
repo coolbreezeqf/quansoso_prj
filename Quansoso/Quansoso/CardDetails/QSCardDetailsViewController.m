@@ -228,8 +228,8 @@
 	_merchantName.text = _card.merchant;
 	_cardNameLabel.text = _card.name;
 
-	_cardTypeImage.image = [UIImage imageNamed:@"cardImage1"];
-	_cardTypeImage.highlightedImage = [UIImage imageNamed:@"cardImage1"];
+	_cardTypeImage.image = [UIImage imageNamed:@"cardImage"];
+	_cardTypeImage.highlightedImage = [UIImage imageNamed:@"cardImage"];
 
 	[_introduceLabel setNumberOfLines:3];
 	_introduceLabel.text = [NSString stringWithFormat:@"剩%@张 (已领用%@张)\n单笔满%i元可用，每人限领%@张\n截止%@", _card.stocks,_card.sold,[_card.moneyCondition integerValue]/100, _card.limited, _card.endProperty];
