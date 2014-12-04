@@ -25,7 +25,7 @@ int totalPage;
     NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, pageSize];
     NSString *encodeStr = [UserCouponListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
-        MLOG(@"%@", successDict);
+//        MLOG(@"%@", successDict);
         NSDictionary *pageDict = [successDict objectForKey:@"page"];
         totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
         NSArray *array = [pageDict objectForKey:@"resultList"];
@@ -50,7 +50,7 @@ int totalPage;
         NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=%d&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current, pageSize];
         NSString *encodeStr = [UserCouponListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
-            MLOG(@"%@", successDict);
+//            MLOG(@"%@", successDict);
             NSDictionary *pageDict = [successDict objectForKey:@"page"];
             NSArray *array = [pageDict objectForKey:@"resultList"];
             NSMutableArray *mutableArray = [NSMutableArray new];

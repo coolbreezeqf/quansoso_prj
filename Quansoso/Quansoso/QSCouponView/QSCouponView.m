@@ -129,8 +129,8 @@
     __weak QSCouponView *weakself = self;
     [weakself.tableViewShow addPullToRefreshWithActionHandler:^{
             [self.userCouponListManage getFirstUserCouponListSuccBlock:^(NSArray *aArray) {
-                self.dataArray = [aArray mutableCopy];
                 [weakself.tableViewShow.pullToRefreshView stopAnimating];
+                self.dataArray = [aArray mutableCopy];
                 [self.tableViewShow reloadData];
             } andFailBlock:^{
                 [weakself.tableViewShow.pullToRefreshView stopAnimating];
@@ -141,6 +141,7 @@
     [weakself.tableViewShow addInfiniteScrollingWithActionHandler:^{
         if (self.dataArray.count>0&&self.dataArray.count%20==0) {
                 [self.userCouponListManage getNextUserCouponListSuccBlock:^(NSArray *aArray) {
+                    [weakself.tableViewShow.infiniteScrollingView stopAnimating];
                     NSMutableArray *insertIndexPaths = [NSMutableArray new];
                     for (unsigned long i=self.dataArray.count; i<self.dataArray.count+aArray.count; i++) {
                         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
@@ -148,7 +149,6 @@
                     }
                     [self.dataArray addObjectsFromArray:aArray];
                     [self.tableViewShow insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
-                    [weakself.tableViewShow.infiniteScrollingView stopAnimating];
                 } andFailBlock:^{
                     [weakself.tableViewShow.infiniteScrollingView stopAnimating];
                     [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];

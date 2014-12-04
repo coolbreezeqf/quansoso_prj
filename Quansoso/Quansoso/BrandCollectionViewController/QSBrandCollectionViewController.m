@@ -217,8 +217,8 @@
         if (self.brandArray.count>0&&self.brandArray.count%9==0)
         {
                 [self.brandListManage getNextBrandListSuccBlock:^(NSArray *aArray) {
-                    NSMutableArray *insertIndexPaths = [NSMutableArray new];
                     [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
+                    NSMutableArray *insertIndexPaths = [NSMutableArray new];
                     for (unsigned long i=self.brandArray.count/3; i<self.brandArray.count/3+aArray.count/3; i++) {
                         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
                         [insertIndexPaths addObject:indexpath];

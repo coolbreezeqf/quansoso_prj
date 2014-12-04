@@ -16,7 +16,7 @@
 {
     NSString *dayRecommendUrl = [NSString stringWithFormat:@"%@?service=every_recommend", KBaseUrl];
     [NetManager requestWith:nil url:dayRecommendUrl method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
-        MLOG(@"%@", successDict);
+//        MLOG(@"%@", successDict);
         NSArray *dayRecommendArray = [successDict objectForKey:@"recommends"];
         NSMutableArray *dayRecommendModelArray = [NSMutableArray new];
         for (int i=0; i<dayRecommendArray.count; i++)

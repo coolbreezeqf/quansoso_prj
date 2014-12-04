@@ -268,8 +268,8 @@
             if ([[TaeSession sharedInstance] isLogin])
             {
                 [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
-                    self.brandArray = aArray;
                     [weakself.showQuanTableView.pullToRefreshView stopAnimating];
+                    self.brandArray = aArray;
                     [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
                 } andFailBlock:^{
                     [weakself.showQuanTableView.pullToRefreshView stopAnimating];
@@ -290,8 +290,8 @@
                 if ([[TaeSession sharedInstance] isLogin])
                 {
                     [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
-                        [self.brandArray addObjectsFromArray:aArray];
                         [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+                        [self.brandArray addObjectsFromArray:aArray];
                         [self.showQuanTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
                     } andFailBlock:^{
                         [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
@@ -418,6 +418,7 @@
     {
         if (self.brandArray.count>0)
         {
+            NSMutableDictionary *dict = [[QSDataSevice sharedQSDataSevice] getDict];
             QSBrandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
             if (!cell) {
                 cell = [[QSBrandTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
@@ -433,6 +434,11 @@
                 {
                     QSMerchant *model = [self.brandArray objectAtIndex:i+indexPath.row*3];
                     [btn setWithModel:model];
+                    int count = [[dict objectForKey:model.externalShopId] intValue];
+                    if (count && count>0)
+                    {
+                        [btn addRedViewWithCount:count];
+                    }
                 }
                 else
                 {
@@ -472,7 +478,7 @@
     int index = aRow*3+aIndex;
     if (index<self.brandArray.count)
     {
-        [self touchStoreButton:index];
+        [self touchStoreButton:index andBtn:(QSAttentionBtn *)[aCell viewWithTag:aIndex+1]];
     }
     else
     {
@@ -508,9 +514,13 @@
 }
 
 #pragma mark 店铺按钮
-- (void)touchStoreButton:(int)aindex
+- (void)touchStoreButton:(int)aindex andBtn:(QSAttentionBtn *)aBtn
 {
     QSMerchant *model = [self.brandArray objectAtIndex:aindex];
+    [aBtn removeRedView];
+    NSMutableDictionary *dict = [[QSDataSevice sharedQSDataSevice] getDict];
+    [dict removeObjectForKey:model.externalShopId];
+    [[QSDataSevice sharedQSDataSevice] saveRedDict:dict];
     QSMerchantDetailsViewController *vc = [[QSMerchantDetailsViewController alloc]
                                            initWithShopId:[model.externalShopId integerValue]];
     vc.navigationController.navigationBarHidden = NO;

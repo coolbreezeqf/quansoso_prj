@@ -35,6 +35,7 @@
 @property (nonatomic, strong) NSString *sellerId;
 @property (nonatomic, strong) NSString *externalCategory;
 @property (nonatomic, strong) NSString *externalCid;
+@property(nonatomic, strong) NSString *hasModified;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

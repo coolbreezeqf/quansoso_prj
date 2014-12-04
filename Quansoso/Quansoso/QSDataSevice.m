@@ -19,6 +19,34 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(QSDataSevice);
 	[self saveSearchHistoryArr];
 }
 
+- (void)saveTime:(NSString *)aTime
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud synchronize];
+    [ud setValue:aTime forKey:@"time"];
+}
+
+- (NSString *)getTime
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud synchronize];
+    return [ud stringForKey:@"time"];
+}
+
+- (void)saveRedDict:(NSMutableDictionary *)aDict
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud synchronize];
+    [ud setValue:aDict forKey:@"dict"];
+}
+
+- (NSMutableDictionary *)getDict
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud synchronize];
+    return [[ud dictionaryForKey:@"dict"] mutableCopy];
+}
+
 - (BOOL)pushIntroduceStatus{
 	if (!_pushIntroduceStatus) {
 		NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];

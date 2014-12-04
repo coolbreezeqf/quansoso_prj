@@ -138,8 +138,8 @@
     __weak QSAttentionBrandView *weakself = self;
     [weakself.showBrandTableView addPullToRefreshWithActionHandler:^{
             [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
-                self.brandArray = aArray;
                 [weakself.showBrandTableView.pullToRefreshView stopAnimating];
+                self.brandArray = aArray;
                 unLikeDict = [NSMutableDictionary new];
                 [self.showBrandTableView reloadData];
             } andFailBlock:^{
@@ -153,8 +153,8 @@
         if (self.brandArray.count>0&&self.brandArray.count%20==0)
         {
                 [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
-                    NSMutableArray *insertIndexPaths = [NSMutableArray new];
                     [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
+                    NSMutableArray *insertIndexPaths = [NSMutableArray new];
                     for (unsigned long i=self.brandArray.count; i<self.brandArray.count+aArray.count; i++) {
                         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
                         [insertIndexPaths addObject:indexpath];

@@ -17,4 +17,9 @@
 - (void)saveData;
 - (void)savePushIntroduceStatus;
 
+
+- (void)saveTime:(NSString *)aTime;
+- (NSString *)getTime;
+- (void)saveRedDict:(NSMutableDictionary *)aDict;
+- (NSMutableDictionary *)getDict;
 @end

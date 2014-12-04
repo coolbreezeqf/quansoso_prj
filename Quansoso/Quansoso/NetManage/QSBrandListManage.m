@@ -23,7 +23,7 @@ int totalPage;
     NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=%@&current=%d&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current,pageSize];
     NSString *encodeStr = [BrandListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
-        MLOG(@"%@", successDict);
+//        MLOG(@"%@", successDict);
         NSDictionary *pageDict = [successDict objectForKey:@"page"];
         totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
         NSArray *array = [pageDict objectForKey:@"resultList"];
@@ -46,7 +46,7 @@ int totalPage;
         NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=%@&current=%d&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current,pageSize];
         NSString *encodeStr = [BrandListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
-            MLOG(@"%@", successDict);
+//            MLOG(@"%@", successDict);
             NSDictionary *pageDict = [successDict objectForKey:@"page"];
             totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
             NSArray *array = [pageDict objectForKey:@"resultList"];

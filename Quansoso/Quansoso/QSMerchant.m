@@ -32,6 +32,7 @@ NSString *const kQSMerchantPicUrl = @"pic_url";
 NSString *const kQSMerchantSellerId = @"seller_id";
 NSString *const kQSMerchantExternalCategory = @"external_category";
 NSString *const kQSMerchantExternalCid = @"external_cid";
+NSString *const kQSMerchantHasModified = @"hasModified";
 
 
 @interface QSMerchant ()
@@ -66,6 +67,7 @@ NSString *const kQSMerchantExternalCid = @"external_cid";
 @synthesize sellerId = _sellerId;
 @synthesize externalCategory = _externalCategory;
 @synthesize externalCid = _externalCid;
+@synthesize hasModified = _hasModified;
 
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict
@@ -80,6 +82,7 @@ NSString *const kQSMerchantExternalCid = @"external_cid";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
+        self.hasModified = [self objectOrNilForKey:kQSMerchantHasModified fromDictionary:dict];
             self.merchantDescription = [self objectOrNilForKey:kQSMerchantDescription fromDictionary:dict];
             self.status = [self objectOrNilForKey:kQSMerchantStatus fromDictionary:dict];
             self.websiteUrl = [self objectOrNilForKey:kQSMerchantWebsiteUrl fromDictionary:dict];
@@ -114,6 +117,7 @@ NSString *const kQSMerchantExternalCid = @"external_cid";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
+    [mutableDict setValue:self.hasModified forKey:kQSMerchantHasModified];
     [mutableDict setValue:self.merchantDescription forKey:kQSMerchantDescription];
     [mutableDict setValue:self.status forKey:kQSMerchantStatus];
     [mutableDict setValue:self.websiteUrl forKey:kQSMerchantWebsiteUrl];

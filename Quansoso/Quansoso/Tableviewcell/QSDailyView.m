@@ -94,7 +94,7 @@
         self.preferentialLabel.attributedText = string;
         self.preferentialDetailLabel.text = @"优惠券";
         self.preferentialTimeLabel.text = [NSString stringWithFormat:@"截止到%@", aCardModel.endProperty];
-        self.brandNameLabel.text = aDayRecommendModel.name;
+        self.brandNameLabel.text = [self newString:aDayRecommendModel.name];
     }
     else if(aCouponType==2)//活动
     {
@@ -146,8 +146,34 @@
             }
         }
         self.preferentialTimeLabel.text = [NSString stringWithFormat:@"截止到%@", activityModel.endProperty];
-        self.brandNameLabel.text = activityModel.merchant;
+        self.brandNameLabel.text = [self newString:activityModel.merchant];
     }
+}
+
+- (NSString *)newString:(NSString *)oldStr
+{
+    NSString *str2 = oldStr;
+    NSRange range = [str2 rangeOfString:@"官方旗舰店"];
+    if (range.location != NSNotFound)
+    {
+        str2 = [str2 stringByReplacingCharactersInRange:range withString:@""];
+    }
+    range = [str2 rangeOfString:@"旗舰店"];
+    if (range.location != NSNotFound)
+    {
+        str2 = [str2 stringByReplacingCharactersInRange:range withString:@""];
+    }
+    range = [str2 rangeOfString:@"专营店"];
+    if (range.location != NSNotFound)
+    {
+        str2 = [str2 stringByReplacingCharactersInRange:range withString:@""];
+    }
+    range = [str2 rangeOfString:@"专卖店"];
+    if (range.location != NSNotFound)
+    {
+        str2 = [str2 stringByReplacingCharactersInRange:range withString:@""];
+    }
+    return str2;
 }
 
 @end
