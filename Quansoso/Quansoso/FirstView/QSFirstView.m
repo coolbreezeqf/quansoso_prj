@@ -33,6 +33,7 @@
     self = [super initWithFrame:frame];
     self.backgroundColor = RGBCOLOR(245, 240, 232);
     self.brandArray = [NSMutableArray new];
+    currPage=0;
     
     if (kMainScreenWidth==320)
     {
@@ -377,6 +378,7 @@
         {
             [cell addSubview:self.labelDaily];
             [cell addSubview:self.pageControl];
+            self.pageControl.currentPage = currPage;
             if (self.dailyArray.count>0)
             {
                 self.pageControl.numberOfPages=count;
@@ -489,8 +491,11 @@
 #pragma mark scrollView Delegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    int currPage = fabs(scrollView.contentOffset.x)/scrollView.frame.size.width;
-    self.pageControl.currentPage = currPage;
+    if (scrollView==self.scrollView)
+    {
+        currPage = fabs(scrollView.contentOffset.x)/scrollView.frame.size.width;
+        self.pageControl.currentPage = currPage;
+    }
 }
 
 #pragma mark 优惠券按钮
