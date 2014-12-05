@@ -40,7 +40,7 @@
 	NSString *url = [NSString stringWithFormat:kURLIs_Follow,nick,shopId];
 	NSString *encodeStr = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	[NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict) {
-		BOOL isFollow = [successDict[@"is_floow"] boolValue];
+		BOOL isFollow = [successDict[@"is_follow"] boolValue];
 		succ(isFollow);
 	} failure:^(NSDictionary *failDict, NSError *error) {
 		failure();
