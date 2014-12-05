@@ -14,6 +14,7 @@
 #import "SVProgressHUD.h"
 #import "UMSocialSnsService.h"
 #import "UMSocialSnsPlatformManager.h"
+#import "QSCardDetailsViewController.h"
 
 typedef NS_ENUM(NSInteger, cateType) {
     cateTypeIndex = 0,
@@ -58,7 +59,7 @@ typedef NS_ENUM(NSInteger, cateType) {
     {
         self.navigationController.navigationBarHidden = YES;
     }
-	if(![self.navigationController.visibleViewController isEqual:self]){
+	if([self.navigationController.visibleViewController isKindOfClass:[QSCardDetailsViewController class]]){
 		self.navigationController.navigationBarHidden = NO;
 	}
 }
