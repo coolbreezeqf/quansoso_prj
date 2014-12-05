@@ -171,6 +171,7 @@
     self.scrollView.contentSize = CGSizeMake(count*kMainScreenWidth, 136);
     CGFloat interval = (kMainScreenWidth-310)/6;
     int btnCount = self.dailyArray.count>0?self.dailyArray.count:3;
+    [self.scrollView removeSubviews];
     for (int i=0; i<btnCount; i++)
     {
         float width = 105;
