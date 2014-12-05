@@ -51,14 +51,17 @@ BOOL isIndex;
         for (int i=0; i<array.count; i++)
         {
             QSMerchant *model = [QSMerchant modelObjectWithDictionary:[array objectAtIndex:i]];
-            int count = [[dict objectForKey:model.externalShopId] intValue];
-            if (count && count)
+            if (model.externalShopId && model.externalShopId>0)
             {
-                [dict setObject:[NSString stringWithFormat:@"%d", count+[model.hasModified intValue]] forKey:model.externalShopId];
-            }
-            else
-            {
-                [dict setObject:[NSString stringWithFormat:@"%d", [model.hasModified intValue]] forKey:model.externalShopId];
+                int count = [[dict objectForKey:model.externalShopId] intValue];
+                if (count && count)
+                {
+                    [dict setObject:[NSString stringWithFormat:@"%d", count+[model.hasModified intValue]] forKey:model.externalShopId];
+                }
+                else
+                {
+                    [dict setObject:[NSString stringWithFormat:@"%d", [model.hasModified intValue]] forKey:model.externalShopId];
+                }
             }
             [mutableArray addObject:model];
         }
@@ -97,14 +100,17 @@ BOOL isIndex;
             for (int i=0; i<array.count; i++)
             {
                 QSMerchant *model = [QSMerchant modelObjectWithDictionary:[array objectAtIndex:i]];
-                int count = [[dict objectForKey:model.externalShopId] intValue];
-                if (count && count)
+                if (model.externalShopId && model.externalShopId>0)
                 {
-                    [dict setObject:[NSString stringWithFormat:@"%d", count+[model.hasModified intValue]] forKey:model.externalShopId];
-                }
-                else
-                {
-                    [dict setObject:[NSString stringWithFormat:@"%d", [model.hasModified intValue]] forKey:model.externalShopId];
+                    int count = [[dict objectForKey:model.externalShopId] intValue];
+                    if (count && count)
+                    {
+                        [dict setObject:[NSString stringWithFormat:@"%d", count+[model.hasModified intValue]] forKey:model.externalShopId];
+                    }
+                    else
+                    {
+                        [dict setObject:[NSString stringWithFormat:@"%d", [model.hasModified intValue]] forKey:model.externalShopId];
+                    }
                 }
                 [mutableArray addObject:model];
             }
