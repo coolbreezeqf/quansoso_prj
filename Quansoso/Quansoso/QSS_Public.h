@@ -22,6 +22,7 @@
 #define kShareSinaSECRET @"92b7b57f9920eef0ac039adc66e7be68"
 
 #define kTaeSDKInitSuccessMsg @"initSuccess"
+#define kTaeLoginInSuccessMsg @"loginSuccess"
 
 #define kMainScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kMainScreenWidth  [UIScreen mainScreen].bounds.size.width

@@ -255,7 +255,7 @@
         self.navigationController.navigationBarHidden = YES;
         NSArray *likedArray = [payAttentionBrand allValues];
         [self.likeBrandManage likeMultiBrand:likedArray andSuccBlock:^{
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
         } failBlock:^{
             
         }];
@@ -267,6 +267,7 @@
         [[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
             self.navigationController.navigationBarHidden = NO;
             [self accreditLogin];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
         } failedCallback:^(NSError *error) {
             [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
         }];

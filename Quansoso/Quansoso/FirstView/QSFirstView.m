@@ -152,8 +152,29 @@
     [self.showQuanTableView addSubview:self.loadingImgView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getData) name:kTaeSDKInitSuccessMsg object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadFirstView) name:kTaeLoginInSuccessMsg object:nil];
     return self;
+}
+
+- (void)reloadFirstView
+{
+    [self.showQuanTableView addSubview:self.loadingImgView];
+    [self getDayRecommends];
+    if ([[TaeSession sharedInstance] isLogin])
+    {
+        [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
+            self.brandArray = aArray;
+            [self.showQuanTableView reloadData];
+        } andFailBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+        } isIndex:YES];
+    }
+    else
+    {
+        self.brandArray = [NSMutableArray new];
+        [self.showQuanTableView reloadData];
+    }
+
 }
 
 - (void)reloadPageAndScrollview
@@ -363,6 +384,7 @@
             {
                 [weakself.showQuanTableView.pullToRefreshView stopAnimating];
                 self.brandArray = [NSMutableArray new];
+                [self.showQuanTableView reloadData];
             }
     }];
 

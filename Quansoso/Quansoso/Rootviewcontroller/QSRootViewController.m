@@ -158,6 +158,7 @@ typedef NS_ENUM(NSInteger, cateType) {
         [leftView useLoginBlock:^{
             [[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
                 [self accreditLogin];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
                 [self updateUI];
             } failedCallback:^(NSError *error) {
                 [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
@@ -199,6 +200,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                             [weakself showCouponView];
                             [self settitleLabel:@"我的优惠券"];
                             [self accreditLogin];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
                             [self updateUI];
                         } failedCallback:^(NSError *error) {
                             [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
@@ -225,6 +227,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                             [weakself showAttentionBrandView];
                             [self settitleLabel:@"我关注的品牌"];
                             [self accreditLogin];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
                             [self updateUI];
                         } failedCallback:^(NSError *error) {
                             [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
@@ -300,6 +303,7 @@ typedef NS_ENUM(NSInteger, cateType) {
 
 - (void)updateLogoutUI
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
     leftView.logInLabel.text = @"登录";
     [leftView.headImgView setImage:[UIImage imageNamed:@"QSUserDefualt"]];
     leftView.logInLabel.userInteractionEnabled = YES;
