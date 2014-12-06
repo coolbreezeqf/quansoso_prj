@@ -293,9 +293,9 @@
 	[super viewDidLoad];
 	// Do any additional setup after loading the view.
 	self.view.backgroundColor = RGBCOLOR(238, 238, 238);
-//	self.title = @"领取优惠券";
+	self.title = @"领取优惠券";
 	_netManager = [[QSCardDetailsNetManager alloc] init];
-    [self settitleLabel:@"领取优惠券"];
+//    [self settitleLabel:@"领取优惠券"];
 	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
 	[self setRightButton:[UIImage imageNamed:@"QSRightViewItem3"] title:nil target:self action:@selector(shareAction)];
 	if (_activity) {
