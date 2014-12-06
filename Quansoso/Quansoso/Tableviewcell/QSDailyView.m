@@ -108,7 +108,7 @@
             [string addAttribute:NSFontAttributeName value:kFont18 range:NSMakeRange(string.length-1, 1)];
             [string addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(237, 181,68) range:NSMakeRange(0, string.length)];
             self.preferentialLabel.attributedText = string;
-            self.preferentialDetailLabel.text = [NSString stringWithFormat:@"满%@送", activityModel.moneyCondition];
+            self.preferentialDetailLabel.text = [NSString stringWithFormat:@"满%@减", activityModel.moneyCondition];
         }
         else if(activityType==2)//打折
         {
