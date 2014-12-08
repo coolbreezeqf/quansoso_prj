@@ -429,7 +429,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (self.brandArray.count>0) {
-        int btnCount = (self.brandArray.count%3!=0?self.brandArray.count/3+1:self.brandArray.count/3)*3;
+        int btnCount = (self.brandArray.count/3+1)*3;
         return btnCount/3;
     }
     else
