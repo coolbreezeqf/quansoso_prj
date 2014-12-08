@@ -303,7 +303,7 @@ typedef NS_ENUM(NSInteger, cateType) {
 
 - (void)updateLogoutUI
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginOutSuccessMsg object:nil];
     leftView.logInLabel.text = @"登录";
     [leftView.headImgView setImage:[UIImage imageNamed:@"QSUserDefualt"]];
     leftView.logInLabel.userInteractionEnabled = YES;

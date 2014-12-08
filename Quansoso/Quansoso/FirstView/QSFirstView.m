@@ -152,6 +152,7 @@
     [self.showQuanTableView addSubview:self.loadingImgView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getData) name:kTaeSDKInitSuccessMsg object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadLoginOut) name:kTaeLoginOutSuccessMsg object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadFirstView) name:kTaeLoginInSuccessMsg object:nil];
     return self;
 }
@@ -175,6 +176,13 @@
         [self.showQuanTableView reloadData];
     }
 
+}
+
+- (void)reloadLoginOut
+{
+    [self getDayRecommends];
+    self.brandArray = [NSMutableArray new];
+    [self.showQuanTableView reloadData];
 }
 
 - (void)reloadPageAndScrollview
