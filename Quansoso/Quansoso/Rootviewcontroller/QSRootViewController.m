@@ -289,12 +289,14 @@ typedef NS_ENUM(NSInteger, cateType) {
 {
     if ([[TaeSession sharedInstance] isLogin])
     {
+        [settingView setLogButtonTitle:@"退出登录"];
         leftView.logInLabel.text = [TaeSession sharedInstance].getUser.nick;
         [leftView.headImgView sd_setImageWithURL:[NSURL URLWithString:[[TaeSession sharedInstance] getUser].iconUrl]];
         leftView.logInLabel.userInteractionEnabled = NO;
     }
     else
     {
+        [settingView setLogButtonTitle:@"登录"];
         leftView.logInLabel.text = @"登录";
         [leftView.headImgView setImage:[UIImage imageNamed:@"QSUserDefualt"]];
         leftView.logInLabel.userInteractionEnabled = YES;
@@ -304,6 +306,7 @@ typedef NS_ENUM(NSInteger, cateType) {
 - (void)updateLogoutUI
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginOutSuccessMsg object:nil];
+    [settingView setLogButtonTitle:@"退出登录"];
     leftView.logInLabel.text = @"登录";
     [leftView.headImgView setImage:[UIImage imageNamed:@"QSUserDefualt"]];
     leftView.logInLabel.userInteractionEnabled = YES;
