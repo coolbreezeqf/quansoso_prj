@@ -168,7 +168,7 @@
                                                                         voidBlock:^{
                                                                             [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
                                                                             [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
-                                                                        }];
+                                                                        } isIndex:NO];
         }
         else
         {

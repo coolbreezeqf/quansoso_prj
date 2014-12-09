@@ -12,14 +12,19 @@
 #import "QSMerchant.h"
 #import "QSDataSevice.h"
 
-int current;
-int pageSize;
-int totalPage;
+int currentNine;
+int currentTwenty;
+int pageSizeNine;
+int pageSizeTwenty;
+int totalPageNine;
+int totalPageTwenty;
 BOOL isIndex;
 @implementation QSAttentionBrandListManage
 
 - (void)getFirstAttentionBrandListSuccBlock:(void(^)(NSMutableArray *))aSuccBlock andFailBlock:(void(^)(void))aFailBlock isIndex:(BOOL)aBool
 {
+    pageSizeNine = 9;
+    pageSizeTwenty = 20;
     NSString *time = [[QSDataSevice sharedQSDataSevice] getTime];
     if (!time)
     {
@@ -30,14 +35,17 @@ BOOL isIndex;
     {
         dict = [NSMutableDictionary new];
     }
-    current = 1;
+    int current=1;
+    int pageSize;
     if (aBool==YES)
     {
-        pageSize = 9;
+        currentNine=1;
+        pageSize = pageSizeNine;
     }
     else
     {
-        pageSize = 20;
+        currentTwenty=1;
+        pageSize = pageSizeTwenty;
     }
     NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=my_follow&tbNick=%@&current=%d&pageSize=%d&lastModified=%@", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current,pageSize, time];
     MLOG(@"%@", [TaeSession sharedInstance].getUser);
@@ -45,7 +53,14 @@ BOOL isIndex;
     [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
         MLOG(@"%@", successDict);
         NSDictionary *pageDict = [successDict objectForKey:@"page"];
-        totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
+        if (aBool==YES)
+        {
+            totalPageNine = [[pageDict objectForKey:@"totalPage"] intValue];
+        }
+        else
+        {
+            totalPageTwenty = [[pageDict objectForKey:@"totalPage"] intValue];
+        }
         NSArray *array = [pageDict objectForKey:@"resultList"];
         NSMutableArray *mutableArray = [NSMutableArray new];
         for (int i=0; i<array.count; i++)
@@ -73,11 +88,25 @@ BOOL isIndex;
     }];
 }
 
-- (void)getNextAttentionBrandListSuccBlock:(void(^)(NSArray *))aBlock andFailBlock:(void(^)(void))aFailBlock voidBlock:(void(^)(void))aVoidBlock
+- (void)getNextAttentionBrandListSuccBlock:(void(^)(NSArray *))aBlock andFailBlock:(void(^)(void))aFailBlock voidBlock:(void(^)(void))aVoidBlock isIndex:(BOOL)aBool
 {
+    int totalPage;
+    int current;
+    int pageSize;
+    if (aBool==YES)
+    {
+        totalPage = totalPageNine;
+        current = currentNine;
+        pageSize = pageSizeNine;
+    }
+    else
+    {
+        totalPage = totalPageTwenty;
+        current = currentTwenty;
+        pageSize = pageSizeTwenty;
+    }
     if (current<totalPage) {
         current++;
-//        NSString *BrandListUrl = [NSString stringWithFormat:@"%@?service=merchants&tbNick=j**t&current=%d&pageSize=%d", KBaseUrl, current,pageSize];
         NSString *time = [[QSDataSevice sharedQSDataSevice] getTime];
         if (!time)
         {
@@ -94,7 +123,16 @@ BOOL isIndex;
         [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
 //            MLOG(@"%@", successDict);
             NSDictionary *pageDict = [successDict objectForKey:@"page"];
-            totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
+            if (aBool==YES)
+            {
+                currentNine++;
+                totalPageNine = [[pageDict objectForKey:@"totalPage"] intValue];
+            }
+            else
+            {
+                currentTwenty++;
+                totalPageTwenty = [[pageDict objectForKey:@"totalPage"] intValue];
+            }
             NSArray *array = [pageDict objectForKey:@"resultList"];
             NSMutableArray *mutableArray = [NSMutableArray new];
             for (int i=0; i<array.count; i++)
