@@ -382,9 +382,11 @@
 		}
 	}else{
 		[[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
+			self.navigationController.navigationBarHidden = NO;
 			[weakself accreditLogin];
+			[[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
 		} failedCallback:^(NSError *error) {
-			[SVProgressHUD showErrorWithStatus:@"授权失败" cover:YES offsetY:kMainScreenHeight/2];
+			[SVProgressHUD showErrorWithStatus:@"登录失败" cover:YES offsetY:kMainScreenHeight/2.0];
 		}];
 	}
 }
@@ -394,10 +396,13 @@
 {
 	TaeUser *temUser = [[TaeSession sharedInstance] getUser];
 	NSString *loginUrl = [NSString stringWithFormat:@"%@?service=outh&tbNick=%@&picUrl=%@&userId=%@", KBaseUrl, temUser.nick, temUser.iconUrl, temUser.userId];
-	[NetManager requestWith:nil url:loginUrl method:@"POST" operationKey:nil parameEncoding:AFJSONParameterEncoding succ:^(NSDictionary *successDict){
+	NSString *encodeStr = [loginUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	[NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict){
 		MLOG(@"%@", successDict);
+		[SVProgressHUD showSuccessWithStatus:@"登录成功" cover:YES offsetY:kMainScreenHeight/2.0];
 	} failure:^(NSDictionary *failDict, NSError *error) {
 		MLOG(@"%@", failDict);
+		[SVProgressHUD showSuccessWithStatus:@"登录失败" cover:YES offsetY:kMainScreenHeight/2.0];
 	}];
 }
 
