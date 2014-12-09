@@ -180,7 +180,6 @@
 
 - (void)reloadLoginOut
 {
-    [self getDayRecommends];
     self.brandArray = [NSMutableArray new];
     [self.showQuanTableView reloadData];
 }

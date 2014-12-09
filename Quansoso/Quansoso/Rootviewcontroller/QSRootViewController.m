@@ -307,6 +307,7 @@ typedef NS_ENUM(NSInteger, cateType) {
     leftView.logInLabel.text = @"登录";
     [leftView.headImgView setImage:[UIImage imageNamed:@"QSUserDefualt"]];
     leftView.logInLabel.userInteractionEnabled = YES;
+    leftView.categoryType = cateTypeIndex;
 }
 
 #pragma mark Default  firstView
