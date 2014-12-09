@@ -84,7 +84,7 @@
 		_logoutBt = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 250, 40)];
 		_logoutBt.center = CGPointMake(kMainScreenWidth/2, self.bounds.size.height - 40);
 		[_logoutBt setTitleColor:RGBCOLOR(105, 192, 17) forState:UIControlStateNormal];
-		[_logoutBt setTitle:@"退出登陆" forState:UIControlStateNormal];
+		[_logoutBt setTitle:@"退出登录" forState:UIControlStateNormal];
 		[_logoutBt addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchDown];
 		[_logoutBt setBackgroundImage:[UIImage imageNamed:@"feedbackImg.png"] forState:UIControlStateNormal];
 	}
@@ -92,7 +92,7 @@
 }
 - (void)logout{
 	if (![[TaeSession sharedInstance] isLogin]) {
-		[SVProgressHUD showErrorWithStatus:@"尚未登陆" cover:YES offsetY:kMainScreenHeight/2];
+		[SVProgressHUD showErrorWithStatus:@"尚未登录" cover:YES offsetY:kMainScreenHeight/2];
 
 		return;
 	}

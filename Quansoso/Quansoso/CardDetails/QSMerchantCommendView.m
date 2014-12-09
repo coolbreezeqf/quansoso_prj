@@ -131,7 +131,7 @@
 		tips.textAlignment = NSTextAlignmentCenter;
 		tips.text = @"没有热门商品信息";
 	}
-	[self addSubview:tips];
+	[self.tableView addSubview:tips];
 }
 
 - (void)hiddenTips{
