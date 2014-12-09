@@ -16,6 +16,7 @@
 #import "SDImageCache.h"
 #import "UMSocialSnsService.h"
 #import "UMSocialSnsPlatformManager.h"
+#import "NetManager.h"
 #define kTitleColor RGBCOLOR(149, 149, 149)
 
 @interface QSSettingView ()<UIActionSheetDelegate>{
@@ -27,6 +28,10 @@
 @end
 
 @implementation QSSettingView
+- (void)setLogButtonTitle:(NSString *)title{
+	[_logoutBt setTitle:title forState:UIControlStateNormal];
+}
+
 - (void)useBlock:(void (^)(void))aBlock
 {
     self.myBlock = aBlock;
@@ -84,7 +89,13 @@
 		_logoutBt = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 250, 40)];
 		_logoutBt.center = CGPointMake(kMainScreenWidth/2, self.bounds.size.height - 40);
 		[_logoutBt setTitleColor:RGBCOLOR(105, 192, 17) forState:UIControlStateNormal];
-		[_logoutBt setTitle:@"退出登录" forState:UIControlStateNormal];
+		NSString *title;
+		if(![[TaeSession sharedInstance] isLogin]){
+			title = @"登录";
+		}else{
+			title = @"退出登录";
+		}
+		[_logoutBt setTitle:title forState:UIControlStateNormal];
 		[_logoutBt addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchDown];
 		[_logoutBt setBackgroundImage:[UIImage imageNamed:@"feedbackImg.png"] forState:UIControlStateNormal];
 	}
@@ -92,17 +103,32 @@
 }
 - (void)logout{
 	if (![[TaeSession sharedInstance] isLogin]) {
-		[SVProgressHUD showErrorWithStatus:@"尚未登录" cover:YES offsetY:kMainScreenHeight/2];
-
-		return;
+		[[TaeSDK sharedInstance] showLogin:[self viewController] successCallback:^(TaeSession *session) {
+			[self viewController].navigationController.navigationBarHidden = NO;
+			[self accreditLogin];
+			[[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
+		} failedCallback:^(NSError *error) {
+			[SVProgressHUD showErrorWithStatus:@"登录失败" cover:YES offsetY:kMainScreenHeight/2.0];
+		}];
+	}else{
+		[[TaeSDK sharedInstance] logout];
+		self.myBlock();
+		[SVProgressHUD showSuccessWithStatus:@"退出成功" cover:YES offsetY:kMainScreenHeight/2];
 	}
-	[[TaeSDK sharedInstance] logout];
-//    while([[TaeSession sharedInstance] isLogin]) {
-//		CAlertLabel *alert = [CAlertLabel alertLabelWithAdjustFrameForText:@"退出成功"];
-//		[alert showAlertLabel];
-        self.myBlock();
-        [SVProgressHUD showSuccessWithStatus:@"退出成功" cover:YES offsetY:kMainScreenHeight/2];
-//	}
+}
+#pragma mark 授权登陆
+- (void)accreditLogin
+{
+	TaeUser *temUser = [[TaeSession sharedInstance] getUser];
+	NSString *loginUrl = [NSString stringWithFormat:@"%@?service=outh&tbNick=%@&picUrl=%@&userId=%@", KBaseUrl, temUser.nick, temUser.iconUrl, temUser.userId];
+	NSString *encodeStr = [loginUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	[NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict){
+		MLOG(@"%@", successDict);
+		[SVProgressHUD showSuccessWithStatus:@"登录成功" cover:YES offsetY:kMainScreenHeight/2.0];
+	} failure:^(NSDictionary *failDict, NSError *error) {
+		MLOG(@"%@", failDict);
+		[SVProgressHUD showSuccessWithStatus:@"登录失败" cover:YES offsetY:kMainScreenHeight/2.0];
+	}];
 }
 
 #pragma mark - action sheet delegate

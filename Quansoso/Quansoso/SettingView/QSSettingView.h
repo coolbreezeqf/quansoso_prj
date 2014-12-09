@@ -16,4 +16,5 @@
 - (void)useBlock:(void(^)(void))aBlock;
 
 - (instancetype)initWithFrame:(CGRect)frame;
+- (void)setLogButtonTitle:(NSString *)title;
 @end
