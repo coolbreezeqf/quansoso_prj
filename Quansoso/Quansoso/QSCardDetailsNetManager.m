@@ -10,7 +10,7 @@
 #import "NetManager.h"
 #import <CommonCrypto/CommonDigest.h>
 #define kURLMerchant @"http://quansoso.uz.taobao.com/d/cr/rest"
-#define kURLItems @"http://repository.ekupeng.com/cr/rest?service=ekupeng_item_relate&fields=num_iid,title,nick,pic_url,price"
+#define kURLItems @"http://repository.ekupeng.com/cr/rest?service=ekupeng_item_relate&fields=num_iid,title,nick,pic_url,price,click_url"
 @implementation QSCardDetailsNetManager
 - (void)getCardUseCouponId:(NSString *)couponId andNick:(NSString *)nick success:(void (^)(NSString* describe))succ failure:(void (^)(NSString* describe))failure{
 //	NSDictionary *dic = @{@"nick":nick,@"couponId":couponId,@"service":@"exchange"};

@@ -17,11 +17,14 @@
 #import "QSMerchantDetailsViewController.h"
 #import "UMSocialSnsService.h"
 #import "UMSocialSnsPlatformManager.h"
-@interface QSCardDetailsViewController ()<UMSocialUIDelegate>{
+#import "LoadingView.h"
+@interface QSCardDetailsViewController ()<UMSocialUIDelegate,UIWebViewDelegate,UIScrollViewDelegate>{
 	NSString *shopId;
 	NSString *sellerId;
 	NSString *webSite;
 	UIButton *rightButton;
+	UIView *headView;
+	UIWebView *myWebView;
 }
 //data
 @property (nonatomic,strong) QSCards *card;
@@ -33,6 +36,7 @@
 @property (nonatomic,strong) UILabel *cardNameLabel;
 @property (nonatomic,strong) UIImageView *cardTypeImage;
 @property (nonatomic,strong) UIButton *button;
+@property (nonatomic,strong) LoadingView *loadingView;
 @property (nonatomic,strong) QSMerchantCommendView *recommendsView; // 推荐view
 @property (nonatomic,strong) QSCardDetailsNetManager *netManager;
 
@@ -55,21 +59,13 @@
 		[_netManager getCardUseCouponId:_card.sourceId andNick:nick success:^(NSString *describe) {
 			MLOG(@"%@",describe);
 			[SVProgressHUD showSuccessWithStatus:@"领取成功" cover:YES offsetY:kMainScreenHeight/2];
-			[_netManager getItemsSellerId:sellerId success:^(NSArray *items) {
-				_items = items;
-				[weakself showRecommendView];
-			} failure:^{
-				[SVProgressHUD showErrorWithStatus:@"未获取到热门商品信息" cover:YES offsetY:kMainScreenHeight/2];
-			}];
+			[weakself showRecommendView];
+			_recommendsView.tableView.tableHeaderView = headView;
 		} failure:^(NSString *describe) {
 			MLOG(@"%@",describe);
 			[SVProgressHUD showErrorWithStatus:describe cover:YES offsetY:kMainScreenHeight/2];
-			[_netManager getItemsSellerId:sellerId success:^(NSArray *items) {
-				_items = items;
-				[weakself showRecommendView];
-			} failure:^{
-				[SVProgressHUD showErrorWithStatus:@"未获取到热门商品信息" cover:YES offsetY:kMainScreenHeight/2];
-			}];
+			[weakself showRecommendView];
+			_recommendsView.tableView.tableHeaderView = headView;
 		}];
 	}
 }
@@ -174,79 +170,230 @@
 }
 
 
-- (void)setUI{
-	_merchantName = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-130, 10, kMainScreenWidth - 40, 30)];
+- (UIView *)setUI{
+	_merchantName = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, kMainScreenWidth - 40, 30)];
 	_merchantName.backgroundColor = [UIColor clearColor];
 	_merchantName.textColor = RGBCOLOR(10, 76, 121);
 	_merchantName.font = kFont17;
-	[self.view addSubview:_merchantName];
+//	[self.view addSubview:_merchantName];
 	
 	_cardTypeImage = [[UIImageView alloc] initWithFrame:CGRectMake(_merchantName.left, _merchantName.bottom + 10, 60, 60)];
-	[self.view addSubview:_cardTypeImage];
+//	[self.view addSubview:_cardTypeImage];
 	
 	_cardNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cardTypeImage.right + 10, _cardTypeImage.top, kMainScreenWidth - _cardTypeImage.right - 20, 20)];
 	_cardNameLabel.backgroundColor = [UIColor clearColor];
 	_cardNameLabel.font = kFont17;
-	[self.view addSubview:_cardNameLabel];
+//	[self.view addSubview:_cardNameLabel];
 	
 	_introduceLabel = [[UILabel alloc] initWithFrame:CGRectMake(_cardTypeImage.right + 10, _cardNameLabel.bottom , _cardNameLabel.width, _cardTypeImage.height)];
 	_introduceLabel.backgroundColor = [UIColor clearColor];
 	_introduceLabel.font = kFont12;
 	_introduceLabel.textColor = [UIColor grayColor];
-	[self.view addSubview:_introduceLabel];
+//	[self.view addSubview:_introduceLabel];
+	headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, _introduceLabel.bottom)];
+	headView.backgroundColor = RGBCOLOR(238, 238, 238);
+	[headView addSubview:_merchantName];
+	[headView addSubview:_cardTypeImage];
+	[headView addSubview:_introduceLabel];
+	[headView addSubview:_cardNameLabel];
+	return headView;
 }
 
 - (void)showRecommendView{
-	int height = _button?_button.bottom:_introduceLabel.bottom;
-	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, height + 5, kMainScreenWidth, self.view.height - height - 5) andItems:_items];
+//	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, height + 5, kMainScreenWidth, self.view.height - height - 5) andItems:nil];
+	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, self.view.height) andItems:nil];
 	_recommendsView.backgroundColor = [UIColor whiteColor];
 	_recommendsView.delegate = self;
 	
 	[self.view addSubview:_recommendsView];
+	[_recommendsView addSubview:self.loadingView];
+	__weak QSCardDetailsViewController *weakself = self;
+	[_netManager getItemsSellerId:sellerId success:^(NSArray *items) {
+		[weakself.recommendsView setItemArray:items];
+		[_loadingView removeFromSuperview];
+	} failure:^{
+		[SVProgressHUD showErrorWithStatus:@"未获取到热门商品信息" cover:YES offsetY:kMainScreenHeight/2];
+		[_loadingView removeFromSuperview];
+	}];
 }
+
+- (LoadingView *)loadingView{
+	if(!_loadingView){
+		_loadingView = [[LoadingView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+		_loadingView.center	= CGPointMake(kMainScreenWidth/2, kMainScreenHeight/2);
+	}
+	return _loadingView;
+}
+
 
 - (void)setUIForActivity{
 	[self setUI];
 	NSString *activityImgName = [NSString stringWithFormat:@"cardRightImg%i",[_activity.type integerValue]+1];
 	_cardTypeImage.image = [UIImage imageNamed:activityImgName];
 	_merchantName.text = _activity.merchant;
-	_cardNameLabel.text = _activity.name;
-	_introduceLabel.text = [NSString stringWithFormat:@"截止%@",_activity.endProperty];
+
+	switch ([_activity.type integerValue]+1) {
+		case 2://满减
+		{
+			if (_activity.moneyCondition) {
+				_cardNameLabel.text = [NSString stringWithFormat:@"满%i元减%i元",[_activity.moneyCondition integerValue]/100,[_activity.denomination integerValue]/100];
+			}else{
+				_cardNameLabel.text = [NSString stringWithFormat:@"满%i件减%i元",[_activity.quantityCondition integerValue],[_activity.denomination integerValue]/100];
+			}
+		
+		}
+			break;
+		case 3://折扣
+			_cardNameLabel.text = [NSString stringWithFormat:@"全场%i%%",[_activity.discountRate integerValue]/100];
+			break;
+		case 4://包邮
+		{
+			_cardNameLabel.text = @"全场包邮";
+			if (!_activity.moneyCondition && !_activity.quantityCondition) {
+				_cardNameLabel.text = @"全场包邮";
+			}else if (_activity.quantityCondition){
+				self.cardNameLabel.text = [NSString stringWithFormat:@"满%i件包邮",[_activity.quantityCondition integerValue]];
+			}else{
+				self.cardNameLabel.text = [NSString stringWithFormat:@"满%i元包邮",[_activity.moneyCondition integerValue]/100];
+			}
+		}
+			break;
+		case 5://满送
+		{
+		_cardNameLabel.text = [NSString stringWithFormat:@"满%i元送%i元代金券",[_activity.moneyCondition integerValue]/100,[_activity.denomination integerValue]/100];
+		}
+			break;
+		default:
+			break;
+	}
+//	_cardNameLabel.text = _activity.name;
+	NSString *endDate = [_activity.endProperty substringWithRange:NSMakeRange(0, [_activity.endProperty rangeOfString:@" "].location)];
+	_introduceLabel.text = [NSString stringWithFormat:@"截止%@",endDate];
 	
-	__weak QSCardDetailsViewController *weakself = self;
-	[_netManager getItemsSellerId:sellerId success:^(NSArray *items) {
-		_items = items;
-		[weakself showRecommendView];
-	} failure:^{
-		[SVProgressHUD showErrorWithStatus:@"未获取到热门商品信息" cover:YES offsetY:kMainScreenHeight/2];
-	}];
+	[self showRecommendView];
+	_recommendsView.tableView.tableHeaderView = headView;
 }
 
 - (void)setUIForCard{
+	if([_card.cardType integerValue]!= 7){
+		[self setUI];
+		_merchantName.text = _card.merchant;
+		_cardNameLabel.text = _card.name;
 
-	[self setUI];
-	_merchantName.text = _card.merchant;
-	_cardNameLabel.text = _card.name;
+		_cardTypeImage.image = [UIImage imageNamed:@"cardImage"];
+		_cardTypeImage.highlightedImage = [UIImage imageNamed:@"cardImage"];
 
-	_cardTypeImage.image = [UIImage imageNamed:@"cardImage"];
-	_cardTypeImage.highlightedImage = [UIImage imageNamed:@"cardImage"];
+	//	NSLog(@"%@",NSStringFromRange([_card.endProperty rangeOfString:@" "]));
+		NSString *endDate = [_card.endProperty substringWithRange:NSMakeRange(0, [_card.endProperty rangeOfString:@" "].location)];
+		[_introduceLabel setNumberOfLines:3];
+		_introduceLabel.text = [NSString stringWithFormat:@"剩%@ 张 (已领用%@张)\n单笔满%i元可用，每人限领%@张\n有效期至%@", _card.stocks,_card.sold,[_card.moneyCondition integerValue]/100, _card.limited, endDate];
+		
+		_button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 88, 28)];
+		_button.center = CGPointMake(kMainScreenWidth/2, _introduceLabel.bottom + 20);
+		[_button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchDown];
+		[_button setBackgroundImage:[UIImage imageNamed:@"QSLingYong"] forState:UIControlStateNormal];
+		[headView addSubview:_button];
+		headView.height = _button.bottom+5;
+		[self.view addSubview:headView];
+	}else{
+//		NSString *testURL = @"http://shop.m.taobao.com/shop/coupon.htm?activityId=200316068&sellerId=880592812";
+		NSString *testURL = @"http://shop.m.taobao.com/shop/coupon.htm?activityId=142486854&sellerId=1639298094";
+		NSString *url = @"http://shop.m.taobao.com/shop/coupon.htm?";
 
-	[_introduceLabel setNumberOfLines:3];
-	_introduceLabel.text = [NSString stringWithFormat:@"剩%@张 (已领用%@张)\n单笔满%i元可用，每人限领%@张\n截止%@", _card.stocks,_card.sold,[_card.moneyCondition integerValue]/100, _card.limited, _card.endProperty];
+		if(/* DISABLES CODE */ (0)){
+			/* 使用淘宝的sdk*/
+			TaeWebViewUISettings *wb = [[TaeWebViewUISettings alloc] init];
+			wb.title = _card.merchant;
+			wb.titleColor = RGBCOLOR(75, 171, 14);
+			[[TaeSDK sharedInstance] showPage:self isNeedPush:NO pageUrl:testURL webViewUISettings:wb tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
+				
+			} tradeProcessFailedCallback:^(NSError *error) {
+				
+			}];
+		}else{
+			NSRange range1 = [_card.expression rangeOfString:@"activity_id="];
+			if (range1.length == 0) {
+				[SVProgressHUD showErrorWithStatus:@"信息错误" cover:YES offsetY:kMainScreenHeight/2];
+				[self back];
+				return ;
+			}
+			NSRange range2 = NSMakeRange(range1.location+range1.length, 9);
+			NSString *activityId = [_card.expression substringWithRange:range2];
+			NSString *urlStr = [NSString stringWithFormat:@"%@activityId=%@&sellerId=%@",url,activityId,sellerId];
+			myWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 181)];
+			myWebView.scrollView.scrollEnabled = NO;
+			myWebView.delegate = self;
+			[myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:testURL]]];
+
+			[self.view addSubview:myWebView];
+		}
+	}
+ 
 	
-	_button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 88, 28)];
-	_button.center = CGPointMake(kMainScreenWidth/2, _introduceLabel.bottom + 20);
-	[_button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchDown];
-//	_button.backgroundColor = RGBCOLOR(240, 240, 240);
-//	_button.layer.borderColor = [UIColor lightGrayColor].CGColor;
-//	_button.layer.borderWidth = 1;
-//	//	_button.layer.cornerRadius = 5;
-//	_button.titleLabel.font = kFont13;
-//	[_button setTitle:@"立即领用" forState:UIControlStateNormal];
-//	[_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[_button setBackgroundImage:[UIImage imageNamed:@"QSLingYong"] forState:UIControlStateNormal];
-	[self.view addSubview:_button];
+}
+
+- (void)webAction{
+	[myWebView removeFromSuperview];
+	[self showRecommendView];
+	_recommendsView.tableView.tableHeaderView = myWebView;
+}
+//webview delegate
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+//	NSString *urlString = [[[webView request] URL] absoluteString];
+//	NSString *JsToGetHTMLSource = @"document.getElementsByTagName('html')[0].innerHTML";
+//	NSString *HTMLSource = [webView stringByEvaluatingJavaScriptFromString:JsToGetHTMLSource];
+	[webView.scrollView setContentOffset:CGPointMake(0, 64) animated:YES];
+	[webView stringByEvaluatingJavaScriptFromString:@"var script = document.createElement('script');"
+	 "script.type = 'text/javascript';"
+	 "script.text = \""
+	 "var obj = document.getElementsByTagName('button')[1];"
+	 "obj.onclick = function myFuction2(){"
+	 //"alert(obj.onclick);"
+	 "window.location.href='objc://webAction';"
+	 "}\";"
+	 "document.getElementsByTagName('head')[0].appendChild(script);"];
+	//MLOG(@"%@",[webView stringByEvaluatingJavaScriptFromString:JsToGetHTMLSource]);
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
 	
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView{
+	
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+	NSString *urlString = [[request URL] absoluteString];
+	urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	MLOG(@"urlString=%@",urlString);
+	NSArray *urlComps = [urlString componentsSeparatedByString:@"://"];
+	
+	if([urlComps count] && [[urlComps objectAtIndex:0] isEqualToString:@"objc"])
+	{
+	
+		NSArray *arrFucnameAndParameter = [(NSString*)[urlComps objectAtIndex:1] componentsSeparatedByString:@":/"];
+		NSString *funcStr = [arrFucnameAndParameter objectAtIndex:0];
+	
+		if (1 == [arrFucnameAndParameter count]){
+			// 没有参数
+			if([funcStr isEqualToString:@"webAction"]){
+					/*调用本地函数1*/
+				[self webAction];
+			}
+		}
+		else{
+			//有参数的
+//				if([funcStr isEqualToString:@"getParam1:withParam2:"])
+//				{
+//					[self getParam1:[arrFucnameAndParameter objectAtIndex:1] withParam2:[arrFucnameAndParameter objectAtIndex:2]];
+//				}
+		}
+		return NO;
+	}else{
+		//[self showRecommendView]
+	}
+	return TRUE;
 }
 //MerchantCommendView delegate
 - (void)gotoMoreCard{
@@ -288,6 +435,7 @@
 		[SVProgressHUD showErrorWithStatus:@"商品信息错误" cover:YES offsetY:kMainScreenHeight/2];
 	}
 }
+
 
 - (void)viewDidLoad {
 	[super viewDidLoad];

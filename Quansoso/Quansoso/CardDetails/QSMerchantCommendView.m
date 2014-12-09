@@ -11,9 +11,10 @@
 #import <TAESDK/TAESDK.h>
 #import "QSItem.h"
 #import "QSItemsCellTableViewCell.h"
-@interface QSMerchantCommendView ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,QSItemsCellDelegate>
-@property (nonatomic,strong) NSArray *itemArray; //of item;
-@property (nonatomic,strong) UITableView *tableView;
+@interface QSMerchantCommendView ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,QSItemsCellDelegate>{
+	UILabel *tips;
+	UIView *toolView;
+}
 @end
 
 @implementation QSMerchantCommendView
@@ -26,13 +27,22 @@
 	return self;
 }
 
+- (void)setItemArray:(NSArray *)itemArray{
+	if (!_itemArray) {
+		_itemArray = [[NSArray alloc] initWithArray:itemArray];
+	}
+	if (_itemArray.count) {
+		[_tableView reloadData];
+	}
+}
+
 - (void)setUI{
 	UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, 60, 20)];
 	titleLb.text = @"热门商品";
 	titleLb.textColor = [UIColor blackColor];
 	titleLb.textAlignment = NSTextAlignmentLeft;
 	titleLb.font = kFont15;
-	[self addSubview:titleLb];
+//	[self addSubview:titleLb];
 	
 //gotoShop
 	UILabel *gotoShopLb = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 40, 20)];
@@ -41,16 +51,16 @@
 	gotoShopLb.text = @"进入店铺";
 	gotoShopLb.textColor = [UIColor lightGrayColor];
 	gotoShopLb.font = kFont13;
-	[self addSubview:gotoShopLb];
+//	[self addSubview:gotoShopLb];
 	
 	UIImageView *gotoShopImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 20, 20)];
 	gotoShopImg.image = [UIImage imageNamed:@"QSgoMerc"];
 	gotoShopImg.right = gotoShopLb.left-5;
-	[self addSubview:gotoShopImg];
+//	[self addSubview:gotoShopImg];
 	
 	UIButton *gotoShopBt = [[UIButton alloc] initWithFrame:CGRectMake(gotoShopImg.left, 20, gotoShopLb.right-gotoShopImg.left, 30)];
 	[gotoShopBt addTarget:self action:@selector(gotoShop) forControlEvents:UIControlEventTouchDown];
-	[self addSubview:gotoShopBt];
+//	[self addSubview:gotoShopBt];
 //gotoshop end
 	
 //more
@@ -60,19 +70,30 @@
 	more.text = @"更多优惠";
 	more.textColor = [UIColor lightGrayColor];
 	more.font = kFont13;
-	[self addSubview:more];
+//	[self addSubview:more];
 	
 	UIImageView *moreImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 20, 20)];
 	moreImg.image = [UIImage imageNamed:@"QSMore"];
 	moreImg.right = more.left-5;
-	[self addSubview:moreImg];
+//	[self addSubview:moreImg];
 
 	UIButton *moreButton = [[UIButton alloc] initWithFrame:CGRectMake(moreImg.left, 20, more.right - moreImg.left, 30)];
 	[moreButton addTarget:self action:@selector(more) forControlEvents:UIControlEventTouchDown];
-	[self addSubview:moreButton];
+//	[self addSubview:moreButton];
 //more end
 	
-	_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, titleLb.bottom+5, kMainScreenWidth, self.height-titleLb.bottom+5) style:UITableViewStylePlain];
+	toolView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, titleLb.bottom+5)];
+	toolView.backgroundColor = [UIColor whiteColor];
+	[toolView addSubview:titleLb];
+	[toolView addSubview:gotoShopLb];
+	[toolView addSubview:gotoShopBt];
+	[toolView addSubview:gotoShopImg];
+	[toolView addSubview:more];
+	[toolView addSubview:moreImg];
+	[toolView addSubview:moreButton];
+	
+//	_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, titleLb.bottom+5, kMainScreenWidth, self.height-titleLb.bottom+5) style:UITableViewStylePlain];
+	_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, self.height)];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
 	_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -102,9 +123,38 @@
 	return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
 }
 
+- (void)showTips{
+	if (!tips) {
+		tips = [[UILabel alloc] initWithFrame:CGRectMake(0, self.height/2, kMainScreenWidth, 30)];
+		tips.textColor = [UIColor lightGrayColor];
+		tips.backgroundColor = [UIColor clearColor];
+		tips.textAlignment = NSTextAlignmentCenter;
+		tips.text = @"没有热门商品信息";
+	}
+	[self addSubview:tips];
+}
+
+- (void)hiddenTips{
+	if (tips && [tips superview]) {
+		[tips removeFromSuperview];
+	}
+}
 #pragma mark - tableview
 
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+	return toolView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+	return toolView.height;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+	if (_itemArray.count == 0) {
+		[self showTips];
+	}else{
+		[self hiddenTips];
+	}
 	return (_itemArray.count+1)/2;
 }
 

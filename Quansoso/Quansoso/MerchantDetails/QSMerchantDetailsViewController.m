@@ -306,20 +306,32 @@
 		int index = indexPath.row - self.activities.count;
         QSCards *card = [[QSCards alloc] initWithDictionary:self.cardsArray[index]];//self.cardsArray[indexPath.row];
         //MLOG(@"%@",card.denomination);
-        if(!isTest)
-			[cell setCellUIwithCardType:card.cardType
-						   denomination:card.denomination? :@""
-						Money_condition:card.moneyCondition? :@""
-									end:card.endProperty? :@""
-						   discountRate:card.discountRate
-						   outdateState:[card.status integerValue]];
+		NSString *endDate = card.endProperty?[card.endProperty substringWithRange:NSMakeRange(0, [card.endProperty rangeOfString:@" "].location)]:@"";
+		[cell setCellUIwithCardType:card.cardType
+					   denomination:card.denomination? :@""
+					Money_condition:card.moneyCondition? :@""
+								end:endDate
+					   discountRate:card.discountRate
+					   outdateState:[card.status integerValue]];
 	}else{
 		QSActivity *activity = [[QSActivity alloc] initWithDictionary:self.activities[indexPath.row]];
+		NSString *endDate = activity?[activity.endProperty substringWithRange:NSMakeRange(0, [activity.endProperty rangeOfString:@" "].location)]:@"";
 		NSString *cardType = [NSString stringWithFormat:@"%i",[activity.type integerValue]+1];
-		if ([cardType integerValue] == 2) {
-			[cell setCellUIwithCardType:cardType denomination:activity.denomination Money_condition:activity.moneyCondition end:activity.endProperty discountRate:activity.discountRate outdateState:[activity.status intValue]];
+		if ([cardType integerValue] == cardType_floor) {
+			[cell setCellUIwithCardType:cardType
+						   denomination:activity.denomination
+						Money_condition:activity.moneyCondition
+									end:endDate
+						   discountRate:activity.discountRate
+						   outdateState:[activity.status intValue]];
 		}else{
-			[cell setCellUIwithCardType:cardType denomination:activity.denomination Money_condition:activity.name end:activity.endProperty discountRate:activity.discountRate outdateState:[activity.status intValue]];
+//			NSString *describe =
+			[cell setCellUIwithCardType:cardType
+						   denomination:activity.denomination
+						Money_condition:activity.moneyCondition?:(activity.quantityCondition?:@"0")
+									end:endDate
+						   discountRate:activity.discountRate
+						   outdateState:[activity.status intValue]];
 		}
 	}
     return cell;

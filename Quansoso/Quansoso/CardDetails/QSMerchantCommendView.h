@@ -17,6 +17,9 @@
 
 @interface QSMerchantCommendView : UIView
 @property (nonatomic,strong) NSString *webSiteUrl;
+@property (nonatomic,strong) NSArray *itemArray; //of item;
 @property (nonatomic,strong) id<QSMerchantCommendDelegate> delegate;
+@property (nonatomic,strong) UITableView *tableView;
+
 - (instancetype)initWithFrame:(CGRect)frame andItems:(NSArray *)items;
 @end

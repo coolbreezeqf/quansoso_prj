@@ -155,6 +155,11 @@
     //赋值
 	NSInteger money = [money_condition integerValue];
     self.conditionLabel.text = [NSString stringWithFormat:@"满%i元",money/100];
+	if (money == 0) {
+		self.conditionLabel.text = @"无条件";
+	}else if(money < 100){
+		self.conditionLabel.text = [NSString stringWithFormat:@"满%.2lf元",(double)money/100];
+	}
     self.endTimeLabel.text = [NSString stringWithFormat:@"截至%@",endTime];
 
     switch (self.type) {
@@ -164,15 +169,23 @@
             self.largeTitleLabel.text = @"包邮";
             self.largeTitleLabel.textColor = RGBCOLOR(15, 182, 144);
             self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg4"];
-			self.conditionLabel.text = money_condition;
+	
+			if (money == 0) {
+				self.conditionLabel.text = @"全场包邮";
+			}else if (money < 100){
+				self.conditionLabel.text = [NSString stringWithFormat:@"满%i件包邮",money];
+			}else{
+				self.conditionLabel.text = [NSString stringWithFormat:@"满%i元包邮",money/100];
+			}
         }
             break;
         case cardType_count://折扣
         {
-            self.largeTitleLabel.text = [rate stringByAppendingString:@"%"];
+			rate = [NSString stringWithFormat:@"%i%%",[rate integerValue]/100];
+            self.largeTitleLabel.text = rate;
             self.largeTitleLabel.textColor = RGBCOLOR(255, 107, 107);
             self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg3"];
-		self.conditionLabel.text = money_condition;
+			self.conditionLabel.text = [NSString stringWithFormat:@"全场%@",rate];
         }
             break;
         case cardType_treasure://宝贝-满送
@@ -180,7 +193,7 @@
             self.largeTitleLabel.text = @"满送";
             self.largeTitleLabel.textColor = RGBCOLOR(174, 93, 161);
             self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg5"];
-		self.conditionLabel.text = money_condition;
+			self.conditionLabel.text = [NSString stringWithFormat:@"满%i元送%@元代金券",money/100,denom];
         }
             break;
         case cardType_floor://阶梯卡-满减
@@ -228,10 +241,10 @@
             break;
     }
     //过期优惠券处理
-    if (odState == 1) {
+	if (odState == 1) {	//
         self.dateInfoView.hidden = YES;
         self.willODimageView.hidden = YES;
-    }else if (odState == 2){
+	}else if (odState == 2){	//
         self.dateInfoView.hidden = YES;
         self.willODimageView.hidden = NO;
     }else if(odState == 3){
