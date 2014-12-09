@@ -323,7 +323,7 @@
 			myWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 181)];
 			myWebView.scrollView.scrollEnabled = NO;
 			myWebView.delegate = self;
-			[myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:testURL]]];
+			[myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]]];
 
 			[self.view addSubview:myWebView];
 		}
