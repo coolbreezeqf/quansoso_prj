@@ -106,6 +106,7 @@
 		[[TaeSDK sharedInstance] showLogin:[self viewController] successCallback:^(TaeSession *session) {
 			[self viewController].navigationController.navigationBarHidden = NO;
 			[self accreditLogin];
+            [self setLogButtonTitle:@"退出登录"];
 			[[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
 		} failedCallback:^(NSError *error) {
 			[SVProgressHUD showErrorWithStatus:@"登录失败" cover:YES offsetY:kMainScreenHeight/2.0];
