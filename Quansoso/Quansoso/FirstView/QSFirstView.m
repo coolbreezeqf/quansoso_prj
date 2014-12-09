@@ -416,7 +416,7 @@
                 {
                     [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
                     self.brandArray = [NSMutableArray new];
-                    [SVProgressHUD showErrorWithStatus:@"你还没登陆" cover:YES offsetY:kMainScreenHeight/2.0];
+                    [SVProgressHUD showErrorWithStatus:@"你还没登录" cover:YES offsetY:kMainScreenHeight/2.0];
                 }
         }
         else

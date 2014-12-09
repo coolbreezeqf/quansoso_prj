@@ -161,7 +161,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
                 [self updateUI];
             } failedCallback:^(NSError *error) {
-                [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
+                [SVProgressHUD showErrorWithStatus:@"登录失败" cover:YES offsetY:kMainScreenHeight/2.0];
             }];
         }];
         __weak QSRootViewController *weakself = self;
@@ -203,7 +203,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                             [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
                             [self updateUI];
                         } failedCallback:^(NSError *error) {
-                            [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
+                            [SVProgressHUD showErrorWithStatus:@"登录失败" cover:YES offsetY:kMainScreenHeight/2.0];
                         }];
                     }
                 }
@@ -230,7 +230,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                             [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
                             [self updateUI];
                         } failedCallback:^(NSError *error) {
-                            [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
+                            [SVProgressHUD showErrorWithStatus:@"登录失败" cover:YES offsetY:kMainScreenHeight/2.0];
                         }];
                     }
                 }
@@ -269,7 +269,7 @@ typedef NS_ENUM(NSInteger, cateType) {
     [ViewInteraction viewPresentAnimationFromRight:self.view toView:leftView];
 }
 
-#pragma mark 授权登陆
+#pragma mark 授权登录
 - (void)accreditLogin
 {
     TaeUser *temUser = [[TaeSession sharedInstance] getUser];
@@ -277,14 +277,14 @@ typedef NS_ENUM(NSInteger, cateType) {
     NSString *encodeStr = [loginUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict){
         MLOG(@"%@", successDict);
-        [SVProgressHUD showSuccessWithStatus:@"登陆成功" cover:YES offsetY:kMainScreenHeight/2.0];
+        [SVProgressHUD showSuccessWithStatus:@"登录成功" cover:YES offsetY:kMainScreenHeight/2.0];
     } failure:^(NSDictionary *failDict, NSError *error) {
         MLOG(@"%@", failDict);
-        [SVProgressHUD showSuccessWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
+        [SVProgressHUD showSuccessWithStatus:@"登录失败" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
 }
 
-#pragma mark 登陆刷新UI
+#pragma mark 登录刷新UI
 - (void)updateUI
 {
     if ([[TaeSession sharedInstance] isLogin])

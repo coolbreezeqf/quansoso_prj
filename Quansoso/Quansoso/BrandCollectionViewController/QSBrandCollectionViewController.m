@@ -269,12 +269,12 @@
             [self accreditLogin];
             [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
         } failedCallback:^(NSError *error) {
-            [SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
+            [SVProgressHUD showErrorWithStatus:@"登录失败" cover:YES offsetY:kMainScreenHeight/2.0];
         }];
     }
 }
 
-#pragma mark 授权登陆
+#pragma mark 授权登录
 - (void)accreditLogin
 {
     TaeUser *temUser = [[TaeSession sharedInstance] getUser];
@@ -282,10 +282,10 @@
     NSString *encodeStr = [loginUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict){
         MLOG(@"%@", successDict);
-        [SVProgressHUD showSuccessWithStatus:@"登陆成功" cover:YES offsetY:kMainScreenHeight/2.0];
+        [SVProgressHUD showSuccessWithStatus:@"登录成功" cover:YES offsetY:kMainScreenHeight/2.0];
     } failure:^(NSDictionary *failDict, NSError *error) {
         MLOG(@"%@", failDict);
-        [SVProgressHUD showSuccessWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
+        [SVProgressHUD showSuccessWithStatus:@"登录失败" cover:YES offsetY:kMainScreenHeight/2.0];
     }];
 }
 
