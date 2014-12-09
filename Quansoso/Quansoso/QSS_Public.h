@@ -40,7 +40,11 @@
 
 #else
 #define MLOG(...)
-#define NSLog(...) {}
+//#define NSLog(...) {}
+#endif
+
+#if !defined(DEBUG) && !defined (SD_VERBOSE)
+#define NSLog(...)
 #endif
 
 #define kClearColor [UIColor clearColor]
