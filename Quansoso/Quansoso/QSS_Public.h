@@ -24,6 +24,7 @@
 #define kTaeSDKInitSuccessMsg @"initSuccess"
 #define kTaeLoginInSuccessMsg @"loginSuccess"
 #define kTaeLoginOutSuccessMsg @"logOutSuccess"
+#define kTaePayAttentionSuccessMsg @"paySuccess"
 
 #define kMainScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kMainScreenWidth  [UIScreen mainScreen].bounds.size.width

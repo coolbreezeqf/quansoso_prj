@@ -48,6 +48,8 @@
 
     [self addSubview:self.loadingView];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadView) name:kTaePayAttentionSuccessMsg object:nil];
+    
 #pragma mark 网络请求
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
         self.brandArray = [aArray mutableCopy];
@@ -99,7 +101,9 @@
 
 - (void)reloadView
 {
-    [self.failView removeFromSuperview];
+    if (self.failView.superview) {
+        [self.failView removeFromSuperview];
+    }
     [self addSubview:self.loadingView];
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
         self.brandArray = [aArray mutableCopy];
@@ -286,6 +290,11 @@
             
         }];
     }
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

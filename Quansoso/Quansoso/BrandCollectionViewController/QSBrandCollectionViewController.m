@@ -256,6 +256,7 @@
         NSArray *likedArray = [payAttentionBrand allValues];
         [self.likeBrandManage likeMultiBrand:likedArray andSuccBlock:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kTaePayAttentionSuccessMsg object:nil];
         } failBlock:^{
             
         }];
