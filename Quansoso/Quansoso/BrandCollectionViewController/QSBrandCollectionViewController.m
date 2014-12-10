@@ -45,6 +45,20 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = NO;
+#pragma mark 网络请求
+    [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^(NSMutableArray *aArray) {
+        [self.loadingView removeFromSuperview];
+        self.brandArray = aArray;
+        if (self.brandArray.count==0) {
+            [self.view addSubview:self.failView];
+        }
+        payAttentionBrand = [NSMutableDictionary new];
+        [self.showBrandTableView reloadData];
+    } andFailBlock:^{
+        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+        [self.view addSubview:self.failView];
+        [self.loadingView removeFromSuperview];
+    }];
 }
 
 - (instancetype)init
@@ -99,20 +113,20 @@
 //    [self.view addSubview:self.activityIndicatorView];
     [self.view addSubview:self.loadingView];
     
-#pragma mark 网络请求
-    [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^(NSMutableArray *aArray) {
-//        [self.activityIndicatorView stopAnimating];
-        [self.loadingView removeFromSuperview];
-        self.brandArray = aArray;
-        if (self.brandArray.count==0) {
-            [self.view addSubview:self.failView];
-        }
-        [self.showBrandTableView reloadData];
-    } andFailBlock:^{
-        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
-        [self.view addSubview:self.failView];
-        [self.loadingView removeFromSuperview];
-    }];
+//#pragma mark 网络请求
+//    [self.brandListManage getBrandListPageSize:lines*3 andSuccBlock:^(NSMutableArray *aArray) {
+////        [self.activityIndicatorView stopAnimating];
+//        [self.loadingView removeFromSuperview];
+//        self.brandArray = aArray;
+//        if (self.brandArray.count==0) {
+//            [self.view addSubview:self.failView];
+//        }
+//        [self.showBrandTableView reloadData];
+//    } andFailBlock:^{
+//        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+//        [self.view addSubview:self.failView];
+//        [self.loadingView removeFromSuperview];
+//    }];
 }
 
 - (void)reloadTableView
