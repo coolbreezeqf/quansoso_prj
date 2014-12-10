@@ -255,12 +255,14 @@
         self.navigationController.navigationBarHidden = YES;
         self.navigationController.navigationBarHidden = YES;
         NSArray *likedArray = [payAttentionBrand allValues];
-        [self.likeBrandManage likeMultiBrand:likedArray andSuccBlock:^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kTaePayAttentionSuccessMsg object:nil];
-        } failBlock:^{
-            
-        }];
+        if (likedArray.count>0) {
+            [self.likeBrandManage likeMultiBrand:likedArray andSuccBlock:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:kTaePayAttentionSuccessMsg object:nil];
+            } failBlock:^{
+                
+            }];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
         //    MLOG(@"%@", likedArray);
         [self back];
     }
