@@ -33,6 +33,7 @@
     self = [super initWithFrame:frame];
     self.backgroundColor = RGBCOLOR(245, 240, 232);
     self.brandArray = [NSMutableArray new];
+    isFirst=YES;
     currPage=0;
     
     if (kMainScreenWidth==320)
@@ -376,6 +377,7 @@
     __weak QSFirstView *weakself = self;
     [weakself.showQuanTableView addPullToRefreshWithActionHandler:^{
             [self getDayRecommends];
+        isFirst=YES;
             if ([[TaeSession sharedInstance] isLogin])
             {
                 [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
@@ -396,32 +398,40 @@
     }];
 
     [weakself.showQuanTableView addInfiniteScrollingWithActionHandler:^{
-        if(self.brandArray.count>0&&self.brandArray.count%9==0)
+        if (isFirst==YES)
         {
-                if ([[TaeSession sharedInstance] isLogin])
-                {
-                    [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
-                        [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
-                        [self.brandArray addObjectsFromArray:aArray];
-                        [self.showQuanTableView reloadData];
-                    } andFailBlock:^{
-                        [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
-                        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
-                    } voidBlock:^{
-                        [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
-                        [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
-                    } isIndex:YES];
-                }
-                else
-                {
-                    [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
-                    self.brandArray = [NSMutableArray new];
-                    [SVProgressHUD showErrorWithStatus:@"你还没登录" cover:YES offsetY:kMainScreenHeight/2.0];
-                }
+            [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+            isFirst=NO;
         }
         else
         {
-            [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+            if(self.brandArray.count>0&&self.brandArray.count%9==0)
+            {
+                    if ([[TaeSession sharedInstance] isLogin])
+                    {
+                        [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
+                            [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+                            [self.brandArray addObjectsFromArray:aArray];
+                            [self.showQuanTableView reloadData];
+                        } andFailBlock:^{
+                            [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+                            [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+                        } voidBlock:^{
+                            [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+                            [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
+                        } isIndex:YES];
+                    }
+                    else
+                    {
+                        [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+                        self.brandArray = [NSMutableArray new];
+                        [SVProgressHUD showErrorWithStatus:@"你还没登录" cover:YES offsetY:kMainScreenHeight/2.0];
+                    }
+            }
+            else
+            {
+                [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+            }
         }
     }];
     

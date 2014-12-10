@@ -55,7 +55,7 @@ CGFloat cellHeight;
     [backGroundImg setImage:[UIImage imageNamed:@"QSrightViewBack"]];
     [self addSubview:backGroundImg];
     
-    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width*2/3, self.width*1/2+40)];
+    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width*2/3, self.width*1/3+40)];
     _topView.backgroundColor = [UIColor clearColor];
     
     self.headImgView = [[UIImageView alloc] initWithFrame:CGRectMake(kMainScreenWidth/3-75, ViewBottom(_topView)/2-40, 80, 80)];
@@ -121,13 +121,13 @@ CGFloat cellHeight;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==5) {
-        return cellHeight+20;
-    }
+//    if (indexPath.row==5) {
+//        return cellHeight+20;
+//    }
     if (indexPath.row != 4) {
         return cellHeight;
     }
-    return kMainScreenHeight-(cellHeight*4+cellHeight+20+ViewBottom(_topView));
+    return kMainScreenHeight-(cellHeight*4+cellHeight+ViewBottom(_topView));
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -138,16 +138,16 @@ CGFloat cellHeight;
         UILabel *itemLabel = [[UILabel alloc] init];
         itemLabel.backgroundColor = [UIColor clearColor];
         UIImageView *itemImg = [[UIImageView alloc] init];
-        if (indexPath.row==5)
-        {
-            itemLabel.frame = CGRectMake(kMainScreenWidth/3-15, cellHeight/2-5, 100, 20);
-            itemImg.frame = CGRectMake(itemLabel.left-45, cellHeight/2-3, 16, 16);
-        }
-        else
-        {
+//        if (indexPath.row==5)
+//        {
+//            itemLabel.frame = CGRectMake(kMainScreenWidth/3-15, cellHeight/2-5, 100, 20);
+//            itemImg.frame = CGRectMake(itemLabel.left-45, cellHeight/2-3, 16, 16);
+//        }
+//        else
+//        {
             itemLabel.frame = CGRectMake(kMainScreenWidth/3-15, cellHeight/2-10, 100, 20);
-            itemImg.frame = CGRectMake(itemLabel.left-45, cellHeight/2-8, 16, 16);
-        }
+            itemImg.frame = CGRectMake(itemLabel.left-55, cellHeight/2-8, 16, 16);
+//        }
         itemLabel.text = [tableViewArray objectAtIndex:indexPath.row];
         itemLabel.font = kFont14;
         itemLabel.textColor = RGBCOLOR(126, 165, 97);
@@ -166,7 +166,7 @@ CGFloat cellHeight;
     {
         cell.userInteractionEnabled = NO;
         UIView *lineView = [[UIView alloc]
-                            initWithFrame:CGRectMake(0, kMainScreenHeight-(cellHeight*4+cellHeight+20+_topView.bottom)-1, _tableview.width, 0.5)];
+                            initWithFrame:CGRectMake(0, kMainScreenHeight-(cellHeight*4+cellHeight+_topView.bottom)-1, _tableview.width, 0.5)];
         lineView.backgroundColor = [UIColor blackColor];
         [cell addSubview:lineView];
     }

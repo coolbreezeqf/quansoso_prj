@@ -16,6 +16,7 @@
     NSMutableArray *dailyShopIdArray;
     float pageControlEndX;
     int currPage;
+    BOOL isFirst;
 }
 @property(nonatomic, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) UIImageView *imagebrand;

@@ -20,12 +20,11 @@ int totalPage;
 {
     current = 1;
     pageSize = 20;
-//    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=10", KBaseUrl,[[TaeSession sharedInstance] getUser].nick];
-//    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=易01wAwxxIxcL28uzuD2oLlS7c2DEMds1FAQI7fgfrP3PMg=&current=1&pageSize=%d", KBaseUrl, pageSize];
-    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, pageSize];
+    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=易01wAwxxIxcL28uzuD2oLlS7c2DEMds1FAQI7fgfrP3PMg=&current=1&pageSize=%d", KBaseUrl, pageSize];
+//    NSString *UserCouponLi2stUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, pageSize];
     NSString *encodeStr = [UserCouponListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
-//        MLOG(@"%@", successDict);
+        MLOG(@"%@", successDict);
         NSDictionary *pageDict = [successDict objectForKey:@"page"];
         totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
         NSArray *array = [pageDict objectForKey:@"resultList"];
@@ -47,7 +46,8 @@ int totalPage;
 {
     if (current<totalPage) {
         current++;
-        NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=%d&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current, pageSize];
+        NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=易01wAwxxIxcL28uzuD2oLlS7c2DEMds1FAQI7fgfrP3PMg=&current=%d&pageSize=%d", KBaseUrl, current, pageSize];
+//        NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=%d&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current, pageSize];
         NSString *encodeStr = [UserCouponListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
 //            MLOG(@"%@", successDict);

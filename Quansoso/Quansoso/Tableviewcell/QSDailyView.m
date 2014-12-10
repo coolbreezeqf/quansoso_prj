@@ -93,7 +93,9 @@
 
         self.preferentialLabel.attributedText = string;
         self.preferentialDetailLabel.text = @"优惠券";
-        self.preferentialTimeLabel.text = [NSString stringWithFormat:@"截止到%@", aCardModel.endProperty];
+        NSString  *a = aCardModel.endProperty;
+        NSString *b = [a substringToIndex:10];
+        self.preferentialTimeLabel.text = [NSString stringWithFormat:@"截止到%@", b];
         self.brandNameLabel.text = [self newString:aDayRecommendModel.name];
     }
     else if(aCouponType==2)//活动
@@ -145,7 +147,9 @@
                 self.preferentialDetailLabel.text = [NSString stringWithFormat:@"满%d件送", [activityModel.quantityCondition intValue]/100];
             }
         }
-        self.preferentialTimeLabel.text = [NSString stringWithFormat:@"截止到%@", activityModel.endProperty];
+        NSString  *a = activityModel.endProperty;
+        NSString *b = [a substringToIndex:10];
+        self.preferentialTimeLabel.text = [NSString stringWithFormat:@"截止到%@", b];
         self.brandNameLabel.text = [self newString:activityModel.merchant];
     }
 }

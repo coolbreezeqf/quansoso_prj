@@ -30,11 +30,6 @@
     [self addTableViewTrag];
     [self addSubview:self.tableViewShow];
 
-//    self.activityIndicatorView = [[UIActivityIndicatorView alloc]
-//                                  initWithFrame:CGRectMake(kMainScreenWidth/2-20, kMainScreenHeight/2, 40, 40)];
-//    self.activityIndicatorView.color = [UIColor blackColor];
-//    [self.activityIndicatorView startAnimating];
-//    [self.tableViewShow addSubview:self.activityIndicatorView];
     [self addSubview:self.loadingView];
 #pragma mark 网络请求
     [self.userCouponListManage getFirstUserCouponListSuccBlock:^(NSArray *aArray) {
@@ -42,7 +37,6 @@
         if (self.dataArray.count==0) {
             [self addSubview:self.failView];
         }
-//        [self.activityIndicatorView stopAnimating];
         [self.loadingView removeFromSuperview];
         [self.tableViewShow reloadData];
     } andFailBlock:^{
@@ -177,38 +171,22 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (self.dataArray.count>0)
-//    {
-        NSString *cellIdentifier = @"CouponCell";
-        QSCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!cell) {
-            cell = [[QSCardCell alloc] initWithReuseIdentifier:cellIdentifier];
-        }
-        QSCards *cardModel = [self.dataArray objectAtIndex:indexPath.row];
-        MLOG(@"%@", cardModel);
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell setCellUIwithCardType:cardModel.cardType denomination:cardModel.denomination Money_condition:cardModel.moneyCondition end:cardModel.endProperty discountRate:cardModel.discountRate outdateState:3];
-        return cell;
-//    }
-//    else
-//    {
-//        UITableViewCell *cell = [[UITableViewCell alloc] init];
-//        if (indexPath.row==3) {
-//            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kMainScreenWidth/2-60, 20, 120, 20)];
-//            label.text = @"暂无数据";
-//            label.textColor = [UIColor lightGrayColor];
-//            label.font = kFont14;
-//            label.textAlignment = NSTextAlignmentCenter;
-//            label.backgroundColor = [UIColor clearColor];
-//            [cell addSubview:label];
-//        }
-//        cell.backgroundColor = [UIColor clearColor];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
-//    }
-//    
+    NSString *cellIdentifier = @"CouponCell";
+    QSCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+        cell = [[QSCardCell alloc] initWithReuseIdentifier:cellIdentifier];
+    }
+    QSCards *cardModel = [self.dataArray objectAtIndex:indexPath.row];
+    MLOG(@"%@", cardModel);
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell setCellUIwithCardType:cardModel.cardType denomination:cardModel.denomination Money_condition:cardModel.moneyCondition end:cardModel.endProperty discountRate:cardModel.discountRate outdateState:[cardModel.status integerValue]];
+    return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 
 
 
