@@ -18,6 +18,7 @@
 #import <TAESDK/TAESDK.h>
 #import "NetManager.h"
 #import "QSBrandBtnTableViewCell.h"
+#import "QSMerchantDetailsViewController.h"
 
 //#define brandWidth 80;
 //#define brandHeight 80;
@@ -333,6 +334,14 @@
         }
     }
     return cell;
+}
+
+- (void)selectBrandCell:(QSBrandBtnTableViewCell *)aCell withRow:(int)aRow andIndex:(int)aIndex
+{
+    QSMerchant *model = [self.brandArray objectAtIndex:aRow*3+aIndex];
+    QSMerchantDetailsViewController *vc = [[QSMerchantDetailsViewController alloc]
+                                           initWithShopId:[model.externalShopId intValue]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)selectCell:(QSBrandBtnTableViewCell *)aCell withRow:(int)aRow andIndex:(int)aIndex

@@ -8,6 +8,7 @@
 
 #import "QSBrandBtn.h"
 #import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 
 @implementation QSBrandBtn
 
@@ -23,12 +24,12 @@
         backView.userInteractionEnabled = YES;
         [self addSubview:backView];
         
-        self.brandLikeView = [[UIImageView alloc] initWithFrame:CGRectMake(backView.right-30, backView.bottom-30, 24, 24)];
+        self.brandLikeView = [[UIButton alloc] initWithFrame:CGRectMake(backView.right-30, backView.bottom-30, 24, 24)];
         [backView addSubview:self.brandLikeView];
         
         CGFloat brandWidth = (backView.right-backView.left)-18*2;
         
-        self.brandImgView = [[UIImageView alloc] initWithFrame:CGRectMake((backView.right-backView.left-brandWidth)/2, 15, brandWidth, brandWidth)];
+        self.brandImgView = [[UIButton alloc] initWithFrame:CGRectMake((backView.right-backView.left-brandWidth)/2, 15, brandWidth, brandWidth)];
         self.brandImgView.contentMode = UIViewContentModeScaleAspectFit;
         self.brandLikeView.userInteractionEnabled = YES;
         self.brandImgView.backgroundColor = [UIColor whiteColor];
@@ -39,17 +40,20 @@
 
 - (void)setBtnWithModel:(QSMerchant *)aModel
 {
-    [self.brandImgView sd_setImageWithURL:[NSURL URLWithString:aModel.picUrl]];
+//    [self.brandImgView sd_setImageWithURL:[NSURL URLWithString:aModel.picUrl]];
+    [self.brandImgView sd_setImageWithURL:[NSURL URLWithString:aModel.picUrl] forState:UIControlStateNormal];
 }
 
 - (void)showDislike
 {
-    [self.brandLikeView setImage:[UIImage imageNamed:@"QSBrandUnlike"]];
+//    [self.brandLikeView setImage:[UIImage imageNamed:@"QSBrandUnlike"]];
+    [self.brandLikeView setImage:[UIImage imageNamed:@"QSBrandUnlike"] forState:UIControlStateNormal];
 }
 
 - (void)showLike
 {
-    [self.brandLikeView setImage:[UIImage imageNamed:@"QSBrandLiked"]];
+//    [self.brandLikeView setImage:[UIImage imageNamed:@"QSBrandLiked"]];
+    [self.brandLikeView setImage:[UIImage imageNamed:@"QSBrandLiked"] forState:UIControlStateNormal];
 }
 
 - (void)changeLike

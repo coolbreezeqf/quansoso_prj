@@ -53,7 +53,7 @@
     stautsView.backgroundColor = [UIColor whiteColor];
     [self addSubview:stautsView];
     
-    UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenWidth/720*478)];
+    headView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenWidth/720*478)];
     [headView setImage:[UIImage imageNamed:@"QSIndexTopView"]];
     headView.contentMode = UIViewContentModeScaleAspectFill;
     headView.userInteractionEnabled = YES;
@@ -160,6 +160,7 @@
 
 - (void)reloadFirstView
 {
+    [self.showQuanTableView setContentOffset:CGPointMake(0, headView.bottom-10) animated:YES];
     [self.showQuanTableView addSubview:self.loadingImgView];
     [self getDayRecommends];
     if ([[TaeSession sharedInstance] isLogin])

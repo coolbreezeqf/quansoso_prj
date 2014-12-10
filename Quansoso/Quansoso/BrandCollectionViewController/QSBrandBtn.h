@@ -10,8 +10,8 @@
 #import "QSMerchant.h"
 
 @interface QSBrandBtn : UIView
-@property(nonatomic, strong) UIImageView *brandLikeView;
-@property(nonatomic, strong) UIImageView *brandImgView;
+@property(nonatomic, strong) UIButton *brandLikeView;
+@property(nonatomic, strong) UIButton *brandImgView;
 @property(nonatomic, assign) BOOL isLiked;
 
 - (instancetype)initWithFrame:(CGRect)frame;

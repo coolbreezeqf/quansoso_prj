@@ -17,6 +17,7 @@
     float pageControlEndX;
     int currPage;
     BOOL isFirst;
+    UIImageView *headView;
 }
 @property(nonatomic, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) UIImageView *imagebrand;

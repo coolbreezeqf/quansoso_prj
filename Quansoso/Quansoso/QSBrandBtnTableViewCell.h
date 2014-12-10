@@ -12,6 +12,7 @@
 @protocol QSBrandBtnTableViewCellDelegate <NSObject>
 
 - (void)selectCell:(QSBrandBtnTableViewCell *)aCell withRow:(int)aRow andIndex:(int)aIndex;
+- (void)selectBrandCell:(QSBrandBtnTableViewCell *)aCell withRow:(int)aRow andIndex:(int)aIndex;
 
 @end
 
