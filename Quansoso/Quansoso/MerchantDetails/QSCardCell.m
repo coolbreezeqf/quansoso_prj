@@ -241,13 +241,13 @@
             break;
     }
     //过期优惠券处理
-	if (odState == 1) {	//
+	if (odState == 1) {	//未过期
         self.dateInfoView.hidden = YES;
         self.willODimageView.hidden = YES;
-	}else if (odState == 2){	//
+	}else if (odState == 2){	//即将过期
         self.dateInfoView.hidden = YES;
         self.willODimageView.hidden = NO;
-    }else if(odState == 3){
+	}else if(odState == 3){//已过期
         self.dateInfoView.hidden = NO;
         self.willODimageView.hidden = YES;
         self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg1_no"];

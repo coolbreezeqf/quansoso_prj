@@ -410,36 +410,18 @@
 //进入店铺
 - (void)touchGoMercButton
 {
-//    if (self.merchant.websiteUrl && self.merchant.websiteUrl.length) {
-//		NSString *str = [self.merchant.websiteUrl substringFromIndex:[self.merchant.websiteUrl rangeOfString:@"http"].location+4];
-//		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"taobao%@",str]];
-//		if ([[UIApplication sharedApplication] canOpenURL:url]) {
-//			UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"确认使用淘宝客户端打开店铺" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"打开淘宝客户端" otherButtonTitles:nil];
-//			[actionSheet showInView:self.view];
-//		} else {
-//			url = [NSURL URLWithString:[NSString stringWithFormat:@"http%@",str]];
-//			[[UIApplication sharedApplication] openURL:url];
-//		}
-//
-//	}else{
-//		[SVProgressHUD showErrorWithStatus:@"缺少该商家店铺地址" cover:YES offsetY:kMainScreenHeight/2];
-//	}
-	if (self.merchant.websiteUrl && self.merchant.websiteUrl.length) {
-//		IntroduceViewController *webView = [[IntroduceViewController alloc] init];
-//		webView.isSysPush = YES;
-//		[webView setUrl:self.merchant.websiteUrl title:self.merchant.name];
-//		[self.navigationController pushViewController:webView animated:YES];
-		TaeWebViewUISettings *wb = [[TaeWebViewUISettings alloc] init];
-		wb.title = self.merchant.name;
-		wb.titleColor = RGBCOLOR(75, 171, 14);
-		[[TaeSDK sharedInstance] showPage:self isNeedPush:YES pageUrl:self.merchant.websiteUrl webViewUISettings:wb tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
-			
-		} tradeProcessFailedCallback:^(NSError *error) {
-			
-		}];
-	}else{
-		[SVProgressHUD showErrorWithStatus:@"缺少该商家店铺地址" cover:YES offsetY:kMainScreenHeight/2];
+	if (!self.merchant.websiteUrl || !self.merchant.websiteUrl.length) {
+		NSString *website = [NSString stringWithFormat:@"http://shop%i.taobao.com",_shopId];
+		self.merchant.websiteUrl = website;
 	}
+	TaeWebViewUISettings *wb = [[TaeWebViewUISettings alloc] init];
+	wb.title = self.merchant.name;
+	wb.titleColor = RGBCOLOR(75, 171, 14);
+	[[TaeSDK sharedInstance] showPage:self isNeedPush:YES pageUrl:self.merchant.websiteUrl webViewUISettings:wb tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
+		
+	} tradeProcessFailedCallback:^(NSError *error) {
+		
+	}];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{

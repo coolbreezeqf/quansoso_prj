@@ -32,7 +32,7 @@
 @property (nonatomic,strong) NSArray *items;
 //UI
 @property (nonatomic,strong) UILabel *introduceLabel;
-@property (nonatomic,strong) UILabel *merchantName;
+@property (nonatomic,strong) UIButton *merchantName;
 @property (nonatomic,strong) UILabel *cardNameLabel;
 @property (nonatomic,strong) UIImageView *cardTypeImage;
 @property (nonatomic,strong) UIButton *button;
@@ -170,13 +170,19 @@
 		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:view];
 		}
 }
-
+- (CGFloat)widthOfString:(NSString *)string withFont:(UIFont *)font {
+	NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
+	return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
+}
 
 - (UIView *)setUI{
-	_merchantName = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, kMainScreenWidth - 40, 30)];
+	_merchantName = [[UIButton alloc] initWithFrame:CGRectMake(30, 10, kMainScreenWidth - 40, 30)];
 	_merchantName.backgroundColor = [UIColor clearColor];
-	_merchantName.textColor = RGBCOLOR(10, 76, 121);
-	_merchantName.font = kFont17;
+	_merchantName.titleLabel.textAlignment = NSTextAlignmentLeft;
+	[_merchantName addTarget:self action:@selector(gotoMoreCard) forControlEvents:UIControlEventTouchDown];
+	[_merchantName setTitleColor:RGBCOLOR(10, 76, 121) forState:UIControlStateNormal] ;
+	_merchantName.titleLabel.font = kFont17;
+	
 //	[self.view addSubview:_merchantName];
 	
 	_cardTypeImage = [[UIImageView alloc] initWithFrame:CGRectMake(_merchantName.left, _merchantName.bottom + 10, 60, 60)];
@@ -194,6 +200,25 @@
 //	[self.view addSubview:_introduceLabel];
 	headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, _introduceLabel.bottom)];
 	headView.backgroundColor = RGBCOLOR(238, 238, 238);
+	
+	_button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 88, 28)];
+	_button.center = CGPointMake(kMainScreenWidth/2, _introduceLabel.bottom + 20);
+	[_button setBackgroundImage:[UIImage imageNamed:@"QSLingYong"] forState:UIControlStateNormal];
+	[_button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[_button setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
+	_button.titleLabel.font = kFont13;
+
+	if (_card) {
+		[_button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchDown];
+		[_button setTitle:@"立刻领用" forState:UIControlStateNormal];
+	}else{
+		[_button addTarget:self action:@selector(gotoShop) forControlEvents:UIControlEventTouchUpInside];
+		[_button setTitle:@"进入店铺" forState:UIControlStateNormal];
+	}
+	
+	[headView addSubview:_button];
+	headView.height = _button.bottom+5;
+
 	[headView addSubview:_merchantName];
 	[headView addSubview:_cardTypeImage];
 	[headView addSubview:_introduceLabel];
@@ -232,7 +257,10 @@
 	[self setUI];
 	NSString *activityImgName = [NSString stringWithFormat:@"cardRightImg%i",[_activity.type integerValue]+1];
 	_cardTypeImage.image = [UIImage imageNamed:activityImgName];
-	_merchantName.text = _activity.merchant;
+//	_merchantName.titleLabel.text = _activity.merchant;
+	CGFloat width = [self widthOfString:_activity.merchant withFont:kFont17];
+	_merchantName.width = width;
+	[_merchantName setTitle:_activity.merchant forState:UIControlStateNormal];
 
 	switch ([_activity.type integerValue]+1) {
 		case 2://满减
@@ -279,7 +307,10 @@
 - (void)setUIForCard{
 	if([_card.cardType integerValue]!= 7){
 		[self setUI];
-		_merchantName.text = _card.merchant;
+//		_merchantName.titleLabel.text = _card.merchant;
+		[_merchantName setTitle:_card.merchant forState:UIControlStateNormal];
+		CGFloat width = [self widthOfString:_card.merchant withFont:kFont17];
+		_merchantName.width = width;
 		_cardNameLabel.text = _card.name;
 
 		_cardTypeImage.image = [UIImage imageNamed:@"cardImage"];
@@ -290,12 +321,6 @@
 		[_introduceLabel setNumberOfLines:3];
 		_introduceLabel.text = [NSString stringWithFormat:@"剩%@ 张 (已领用%@张)\n单笔满%i元可用，每人限领%@张\n有效期至%@", _card.stocks,_card.sold,[_card.moneyCondition integerValue]/100, _card.limited, endDate];
 		
-		_button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 88, 28)];
-		_button.center = CGPointMake(kMainScreenWidth/2, _introduceLabel.bottom + 20);
-		[_button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchDown];
-		[_button setBackgroundImage:[UIImage imageNamed:@"QSLingYong"] forState:UIControlStateNormal];
-		[headView addSubview:_button];
-		headView.height = _button.bottom+5;
 		[self.view addSubview:headView];
 	}else{
 //		NSString *testURL = @"http://shop.m.taobao.com/shop/coupon.htm?activityId=200316068&sellerId=880592812";
@@ -443,9 +468,12 @@
 	[super viewDidLoad];
 	// Do any additional setup after loading the view.
 	self.view.backgroundColor = RGBCOLOR(238, 238, 238);
-	self.title = @"领取优惠券";
+	if(_card){
+		self.title = @"领取优惠券";
+	}else{
+		self.title = @"店铺活动";
+	}
 	_netManager = [[QSCardDetailsNetManager alloc] init];
-//    [self settitleLabel:@"领取优惠券"];
 	[self setLeftButton:[UIImage imageNamed:@"back"] title:nil target:self action:@selector(back)];
 	[self setRightButton:[UIImage imageNamed:@"QSRightViewItem3"] title:nil target:self action:@selector(shareAction)];
 	if (_activity) {
