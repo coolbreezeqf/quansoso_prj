@@ -21,8 +21,15 @@
 
 - (instancetype)initWithFrame:(CGRect)frame andItems:(NSArray *)items{
 	if (self = [super initWithFrame:frame]) {
-		[self setUI];
+		[self setUI:1];
 		_itemArray = items;
+	}
+	return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame andType:(NSInteger)type{
+	if (self = [super initWithFrame:frame]) {
+		[self setUI:type];
 	}
 	return self;
 }
@@ -36,37 +43,44 @@
 	}
 }
 
-- (void)setUI{
+- (void)setUI:(NSInteger)type{
 	UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 60, 20)];
 	titleLb.text = @"热门商品";
 	titleLb.textColor = [UIColor blackColor];
 	titleLb.textAlignment = NSTextAlignmentLeft;
 	titleLb.font = kFont15;
 //	[self addSubview:titleLb];
+	int morex = kMainScreenWidth;
+	UIImageView *gotoShopImg;
+	UILabel *gotoShopLb;
+	UIButton *gotoShopBt;
+	if (type == 2) {
+		//gotoShop
+		gotoShopLb = [[UILabel alloc] initWithFrame:CGRectMake(0, titleLb.top, 40, 20)];
+		gotoShopLb.width = [self widthOfString:@"进入店铺" withFont:kFont13];
+		gotoShopLb.right = kMainScreenWidth - 10;
+		gotoShopLb.text = @"进入店铺";
+		gotoShopLb.textColor = [UIColor lightGrayColor];
+		gotoShopLb.font = kFont13;
+	//	[self addSubview:gotoShopLb];
 	
-//gotoShop
-//	UILabel *gotoShopLb = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 40, 20)];
-//	gotoShopLb.width = [self widthOfString:@"进入店铺" withFont:kFont13];
-//	gotoShopLb.right = kMainScreenWidth - 10;
-//	gotoShopLb.text = @"进入店铺";
-//	gotoShopLb.textColor = [UIColor lightGrayColor];
-//	gotoShopLb.font = kFont13;
-////	[self addSubview:gotoShopLb];
-//	
-//	UIImageView *gotoShopImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 20, 20)];
-//	gotoShopImg.image = [UIImage imageNamed:@"QSgoMerc"];
-//	gotoShopImg.right = gotoShopLb.left-5;
-////	[self addSubview:gotoShopImg];
-//	
-//	UIButton *gotoShopBt = [[UIButton alloc] initWithFrame:CGRectMake(gotoShopImg.left, 20, gotoShopLb.right-gotoShopImg.left, 30)];
-//	[gotoShopBt addTarget:self action:@selector(gotoShop) forControlEvents:UIControlEventTouchDown];
-////	[self addSubview:gotoShopBt];
-////gotoshop end
+		gotoShopImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, titleLb.top, 20, 20)];
+		gotoShopImg.image = [UIImage imageNamed:@"QSgoMerc"];
+		gotoShopImg.right = gotoShopLb.left-5;
+	//	[self addSubview:gotoShopImg];
+	
+		gotoShopBt = [[UIButton alloc] initWithFrame:CGRectMake(gotoShopImg.left, titleLb.top, gotoShopLb.right-gotoShopImg.left, 30)];
+		[gotoShopBt addTarget:self action:@selector(gotoShop) forControlEvents:UIControlEventTouchDown];
+		//	[self addSubview:gotoShopBt];
+		////gotoshop end
+		morex = gotoShopBt.left;
+		
+	}
 	
 //more
 	UILabel *more = [[UILabel alloc] initWithFrame:CGRectMake(0, titleLb.top, 40, 20)];
 	more.width = [self widthOfString:@"更多优惠" withFont:kFont13];
-	more.right = kMainScreenWidth-10;
+	more.right = morex-10;
 	more.text = @"更多优惠";
 	more.textColor = [UIColor lightGrayColor];
 	more.font = kFont13;
@@ -85,9 +99,9 @@
 	toolView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, titleLb.bottom+10)];
 	toolView.backgroundColor = [UIColor whiteColor];
 	[toolView addSubview:titleLb];
-//	[toolView addSubview:gotoShopLb];
-//	[toolView addSubview:gotoShopBt];
-//	[toolView addSubview:gotoShopImg];
+	[toolView addSubview:gotoShopLb];
+	[toolView addSubview:gotoShopBt];
+	[toolView addSubview:gotoShopImg];
 	[toolView addSubview:more];
 	[toolView addSubview:moreImg];
 	[toolView addSubview:moreButton];

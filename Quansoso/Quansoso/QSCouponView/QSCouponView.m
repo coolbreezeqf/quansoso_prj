@@ -181,6 +181,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	NSString *endDate = cardModel.endProperty?[cardModel.endProperty substringWithRange:NSMakeRange(0, [cardModel.endProperty rangeOfString:@" "].location)]:@"";
     [cell setCellUIwithCardType:cardModel.cardType denomination:cardModel.denomination Money_condition:cardModel.moneyCondition end:endDate discountRate:cardModel.discountRate outdateState:[cardModel.status integerValue]];
+	[cell couponOnly:cardModel.merchant];
     return cell;
 }
 

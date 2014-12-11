@@ -228,7 +228,7 @@
 
 - (void)showRecommendView{
 //	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, height + 5, kMainScreenWidth, self.view.height - height - 5) andItems:nil];
-	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, self.view.height) andItems:nil];
+	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, self.view.height) andType:_activity?1:2];
 	_recommendsView.backgroundColor = [UIColor whiteColor];
 	_recommendsView.delegate = self;
 	
@@ -433,8 +433,10 @@
 }
 
 - (void)gotoShop{
-	if (_activity || webSite) {
-		TaeWebViewUISettings *wb = [[TaeWebViewUISettings alloc] init];
+	if (!_activity || !webSite) {
+		webSite = [NSString stringWithFormat:@"http://shop%@.taobao.com",shopId];
+	}
+	TaeWebViewUISettings *wb = [[TaeWebViewUISettings alloc] init];
 		wb.title = _card?_card.merchant:_activity.merchant;
 		wb.titleColor = RGBCOLOR(75, 171, 14);
 		[[TaeSDK sharedInstance] showPage:self isNeedPush:NO pageUrl:_activity?_activity.site:webSite webViewUISettings:wb tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
@@ -442,9 +444,7 @@
 		} tradeProcessFailedCallback:^(NSError *error) {
 			
 		}];
-	}else{
-		[SVProgressHUD showErrorWithStatus:@"缺少店铺地址" cover:YES offsetY:kMainScreenHeight/2];
-	}
+
 	
 }
 

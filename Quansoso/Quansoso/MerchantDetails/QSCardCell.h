@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, cardType) {
 };
 
 @interface QSCardCell : UITableViewCell
-
+- (void)couponOnly:(NSString *)merchant;
 //定制的init方法
 - (instancetype)initWithReuseIdentifier:(NSString *)identifier;
 

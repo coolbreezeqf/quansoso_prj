@@ -22,4 +22,9 @@
 @property (nonatomic,strong) UITableView *tableView;
 
 - (instancetype)initWithFrame:(CGRect)frame andItems:(NSArray *)items;
+/**
+ type : 1为活动 2为卡券
+ */
+- (instancetype)initWithFrame:(CGRect)frame andType:(NSInteger)type;
+
 @end

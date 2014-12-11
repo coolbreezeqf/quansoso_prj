@@ -60,7 +60,12 @@
 
 - (void)sendFeedback{
 	MLOG(@"sendFeedback");
-	[SVProgressHUD showSuccessWithStatus:@"发送成功" cover:YES offsetY:kMainScreenHeight/2];
+	if(numberTf.text.length == 0 || contentView.text.length == 0){
+		[SVProgressHUD showErrorWithStatus:@"请填写完整信息" cover:YES offsetY:kMainScreenHeight/2];
+	}else{
+		[SVProgressHUD showSuccessWithStatus:@"发送成功" cover:YES offsetY:kMainScreenHeight/2];
+		[self.navigationController popViewControllerAnimated:YES];
+	}
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification{
@@ -74,11 +79,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-	self.title = @"反馈建议";
+	self.title = @"反馈";
 	self.view.backgroundColor = RGBCOLOR(242, 239, 233);
 	[self setUI];
-	UIButton *sendBt = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+	UIButton *sendBt = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 96, 29)];
 	[sendBt addTarget:self action:@selector(sendFeedback) forControlEvents:UIControlEventTouchDown];
+	sendBt.layer.borderWidth = 1;
+	sendBt.layer.borderColor = RGBCOLOR(105, 192, 17).CGColor;
+	sendBt.layer.cornerRadius = 15;
 	[sendBt setBackgroundImage:[UIImage imageNamed:@"send"] forState:UIControlStateNormal];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:sendBt];
 	//初始化键盘通知

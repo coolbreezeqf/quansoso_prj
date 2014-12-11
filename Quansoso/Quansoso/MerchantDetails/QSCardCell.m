@@ -59,7 +59,7 @@
     _theTitleLabel = theTitleLable;
     [leftImageView addSubview:theTitleLable];
     if(isTest == 1) theTitleLable.text = @"100";
-    
+	
     UILabel *rmbTagLabel = [[UILabel alloc] initWithFrame:CGRectMake(theTitleLable.right+2, theTitleLable.bottom-10, 30, 14)];
     rmbTagLabel.bottom = theTitleLable.bottom-3;
     rmbTagLabel.text = @"元" ;
@@ -73,7 +73,7 @@
     //theDetailLabel.backgroundColor = [UIColor blueColor];
     theDetailLabel.textAlignment = NSTextAlignmentCenter;
     theDetailLabel.textColor = [UIColor lightGrayColor];
-    theDetailLabel.font = kFont12;
+    theDetailLabel.font = kFont11;
     theTitleLable.backgroundColor = [UIColor clearColor];
     _theDetailLabel = theDetailLabel;
     [leftImageView addSubview:theDetailLabel];
@@ -102,7 +102,7 @@
     midView.backgroundColor = [UIColor whiteColor];
     [self addSubview:midView];
     
-    UILabel *conditionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, midView.width, 14)];
+    UILabel *conditionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, midView.width-10, 14)];
     conditionLabel.font = kFont14;
     [midView addSubview:conditionLabel];
     conditionLabel.backgroundColor = [UIColor clearColor];
@@ -155,10 +155,10 @@
     //赋值
 	NSInteger money = [money_condition integerValue];
     self.conditionLabel.text = [NSString stringWithFormat:@"满%i元",money/100];
-	if (money == 0) {
+	if (money < 100) {
 		self.conditionLabel.text = @"无条件";
-	}else if(money < 100){
-		self.conditionLabel.text = [NSString stringWithFormat:@"满%.2lf元",(double)money/100];
+//	}else if(money < 100){
+//		self.conditionLabel.text = [NSString stringWithFormat:@"满%.2lf元",(double)money/100];
 	}
     self.endTimeLabel.text = [NSString stringWithFormat:@"截至%@",endTime];
 
@@ -252,6 +252,11 @@
         self.willODimageView.hidden = YES;
         self.rightIconImageView.image = [UIImage imageNamed:@"cardRightImg1_no"];
     }
+}
+
+- (void)couponOnly:(NSString *)merchant{
+	self.theDetailLabel.text = self.conditionLabel.text;
+	self.conditionLabel.text = merchant;
 }
 
 - (CGFloat)widthOfString:(NSString *)string withFont:(UIFont *)font {
