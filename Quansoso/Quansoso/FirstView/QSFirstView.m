@@ -399,28 +399,30 @@
     }];
 
     [weakself.showQuanTableView addInfiniteScrollingWithActionHandler:^{
-        if (isFirst==YES)
-        {
-            [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
-            isFirst=NO;
-        }
-        else
-        {
             if(self.brandArray.count>0&&self.brandArray.count%9==0)
             {
+                
                     if ([[TaeSession sharedInstance] isLogin])
                     {
-                        [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
+                        if (isFirst==YES)
+                        {
                             [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
-                            [self.brandArray addObjectsFromArray:aArray];
-                            [self.showQuanTableView reloadData];
-                        } andFailBlock:^{
-                            [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
-                            [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
-                        } voidBlock:^{
-                            [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
-                            [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
-                        } isIndex:YES];
+                            isFirst=NO;
+                        }
+                        else
+                        {
+                            [self.attentionBrandListManage getNextAttentionBrandListSuccBlock:^(NSArray *aArray) {
+                                [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+                                [self.brandArray addObjectsFromArray:aArray];
+                                [self.showQuanTableView reloadData];
+                            } andFailBlock:^{
+                                [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+                                [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+                            } voidBlock:^{
+                                [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
+                                [SVProgressHUD showErrorWithStatus:@"已无更多" cover:YES offsetY:kMainScreenHeight/2.0];
+                            } isIndex:YES];
+                        }
                     }
                     else
                     {
@@ -433,7 +435,6 @@
             {
                 [weakself.showQuanTableView.infiniteScrollingView stopAnimating];
             }
-        }
     }];
     
 }

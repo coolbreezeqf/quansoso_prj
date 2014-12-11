@@ -19,10 +19,11 @@
 #import "NetManager.h"
 #import "QSBrandBtnTableViewCell.h"
 #import "QSMerchantDetailsViewController.h"
+#import "QSSearchViewController.h"
 
 //#define brandWidth 80;
 //#define brandHeight 80;
-@interface QSBrandCollectionViewController ()<UITableViewDataSource, UITableViewDelegate, QSBrandBtnTableViewCellDelegate>
+@interface QSBrandCollectionViewController ()<UITableViewDataSource, UITableViewDelegate, QSBrandBtnTableViewCellDelegate, UIAlertViewDelegate>
 {
     UIView *headerView;
     UIButton *attentionBtn;
@@ -31,6 +32,8 @@
     CGFloat brandWidth;
     CGFloat brandHeight;
     NSMutableDictionary *payAttentionBrand;
+    
+    int dragCount;
 }
 @property(nonatomic ,strong) UIActivityIndicatorView *activityIndicatorView;
 @property(nonatomic ,strong) QSBrandListManage *brandListManage;
@@ -38,6 +41,7 @@
 @property(nonatomic, strong) QSLikeBrandManage *likeBrandManage;
 @property(nonatomic, strong) UIView *failView;
 @property(nonatomic, strong) LoadingView *loadingView;
+@property(nonatomic, strong) UIAlertView *alertView;
 @end
 
 @implementation QSBrandCollectionViewController
@@ -70,12 +74,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    dragCount=0;
     self.view.backgroundColor = [UIColor whiteColor];
     brandWidth = kMainScreenWidth/3;
     brandHeight = brandWidth/0.85;
     interval = 1;
     MLOG(@"%f %f", kMainScreenHeight-66, interval+brandHeight);
     payAttentionBrand = [NSMutableDictionary new];
+    self.alertView.delegate = self;
 //    lines = (kMainScreenHeight-66)/(interval+brandHeight);
     if (kMainScreenHeight>500) {
         lines=4;
@@ -211,6 +217,26 @@
     return _brandArray;
 }
 
+- (UIAlertView *)alertView
+{
+    if (!_alertView)
+    {
+        _alertView = [[UIAlertView alloc] initWithTitle:@"亲，还没有找到您喜欢的商家吗？不如试试搜索吧" message:nil delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"去搜索", nil];
+        _alertView.delegate = self;
+    }
+    return _alertView;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        QSSearchViewController *searchVC = [[QSSearchViewController alloc] init];
+        [self.navigationController pushViewController:searchVC animated:YES];
+    }
+}
+
+
+
 #pragma mark 增加上拉下拉
 - (void)addTableViewTrag
 {
@@ -229,10 +255,17 @@
     }];
     
     [weakself.showBrandTableView addInfiniteScrollingWithActionHandler:^{
-        if (self.brandArray.count>0&&self.brandArray.count%9==0)
+        if (dragCount==5)
+        {
+            [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
+            [self.alertView show];
+            dragCount = 0;
+        }
+        else if (self.brandArray.count>0&&self.brandArray.count%9==0)
         {
                 [self.brandListManage getNextBrandListSuccBlock:^(NSArray *aArray) {
                     [weakself.showBrandTableView.infiniteScrollingView stopAnimating];
+                    dragCount++;
                     NSMutableArray *insertIndexPaths = [NSMutableArray new];
                     for (unsigned long i=self.brandArray.count/3; i<self.brandArray.count/3+aArray.count/3; i++) {
                         NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];

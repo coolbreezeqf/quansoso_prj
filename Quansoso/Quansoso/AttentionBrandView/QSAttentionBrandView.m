@@ -46,12 +46,30 @@
     
     [self addTableViewTrag];
 
-    [self addSubview:self.loadingView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadView) name:kTaePayAttentionSuccessMsg object:nil];
     
-#pragma mark 网络请求
+//#pragma mark 网络请求
+//    [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
+//        self.brandArray = [aArray mutableCopy];
+//        if (self.brandArray.count==0) {
+//            [self addSubview:self.failView];
+//        }
+//        [self.loadingView removeFromSuperview];
+//        [self.showBrandTableView reloadData];
+//    } andFailBlock:^{
+//        [self addSubview:self.failView];
+//        [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
+//        [self.loadingView removeFromSuperview];
+//    } isIndex:NO];
+    return self;
+}
+
+- (void)getFistData
+{
+    [self addSubview:self.loadingView];
     [self.attentionBrandListManage getFirstAttentionBrandListSuccBlock:^(NSMutableArray *aArray) {
+        unLikeDict = [NSMutableDictionary new];
         self.brandArray = [aArray mutableCopy];
         if (self.brandArray.count==0) {
             [self addSubview:self.failView];
@@ -63,7 +81,6 @@
         [SVProgressHUD showErrorWithStatus:@"网络请求失败,请稍后重试" cover:YES offsetY:kMainScreenHeight/2.0];
         [self.loadingView removeFromSuperview];
     } isIndex:NO];
-    return self;
 }
 
 - (LoadingView *)loadingView

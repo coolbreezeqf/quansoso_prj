@@ -75,9 +75,10 @@ typedef NS_ENUM(NSInteger, cateType) {
     self.navigationItem.rightBarButtonItem = barButtonItem;
     [self showFirstView];
     
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
+    NSString *appId = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:appId])
     {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:appId];
         UIImageView *guideView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight+20)];
         if (kMainScreenHeight<=480)
         {
@@ -216,6 +217,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                         _currentPage=cateTypeBrand;
                         [weakself showAttentionBrandView];
 //                        self.title = @"我关注的品牌";
+                        [attentionBrandView getFistData];
                         [self settitleLabel:@"我关注的品牌"];
                         MLOG(@"%@", [[TaeSession sharedInstance] getUser]);
                     }
@@ -225,6 +227,7 @@ typedef NS_ENUM(NSInteger, cateType) {
                             self.navigationController.navigationBarHidden = NO;
                             _currentPage=cateTypeBrand;
                             [weakself showAttentionBrandView];
+                            [attentionBrandView getFistData];
                             [self settitleLabel:@"我关注的品牌"];
                             [self accreditLogin];
                             [[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];

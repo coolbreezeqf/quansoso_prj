@@ -26,4 +26,5 @@
 @property(nonatomic, strong) LoadingView *loadingView;
 
 - (instancetype)initWithFrame:(CGRect)frame;
+- (void)getFistData;
 @end
