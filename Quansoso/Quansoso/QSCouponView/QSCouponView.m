@@ -179,7 +179,8 @@
     QSCards *cardModel = [self.dataArray objectAtIndex:indexPath.row];
     MLOG(@"%@", cardModel);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell setCellUIwithCardType:cardModel.cardType denomination:cardModel.denomination Money_condition:cardModel.moneyCondition end:cardModel.endProperty discountRate:cardModel.discountRate outdateState:[cardModel.status integerValue]];
+	NSString *endDate = cardModel.endProperty?[cardModel.endProperty substringWithRange:NSMakeRange(0, [cardModel.endProperty rangeOfString:@" "].location)]:@"";
+    [cell setCellUIwithCardType:cardModel.cardType denomination:cardModel.denomination Money_condition:cardModel.moneyCondition end:endDate discountRate:cardModel.discountRate outdateState:[cardModel.status integerValue]];
     return cell;
 }
 
