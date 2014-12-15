@@ -42,6 +42,7 @@
 		AB8F00731A23027F00C030AA /* QSLikeBrandManage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F00721A23027F00C030AA /* QSLikeBrandManage.m */; };
 		AB9512B01A2D5B8000F38876 /* QSBrandBtnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9512AF1A2D5B8000F38876 /* QSBrandBtnTableViewCell.m */; };
 		AB9512B41A2D69D900F38876 /* libSocialSina.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9512B21A2D69D900F38876 /* libSocialSina.a */; };
+		AB95C29F1A3EC81900CC4259 /* QSMyCardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB95C29E1A3EC81900CC4259 /* QSMyCardModel.m */; };
 		AB9BA09B1A2D419C000E34FE /* QSBrandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9BA09A1A2D419C000E34FE /* QSBrandTableViewCell.m */; };
 		AB9CA98F1A2C86ED00698200 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9CA98C1A2C86ED00698200 /* libWeiboSDK.a */; };
 		AB9CA9901A2C86ED00698200 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB9CA98D1A2C86ED00698200 /* WeiboSDK.bundle */; };
@@ -228,6 +229,8 @@
 		AB9512AF1A2D5B8000F38876 /* QSBrandBtnTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSBrandBtnTableViewCell.m; sourceTree = "<group>"; };
 		AB9512B21A2D69D900F38876 /* libSocialSina.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialSina.a; sourceTree = "<group>"; };
 		AB9512B31A2D69D900F38876 /* UMSocialSinaHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSinaHandler.h; sourceTree = "<group>"; };
+		AB95C29D1A3EC81900CC4259 /* QSMyCardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSMyCardModel.h; sourceTree = "<group>"; };
+		AB95C29E1A3EC81900CC4259 /* QSMyCardModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSMyCardModel.m; sourceTree = "<group>"; };
 		AB9BA0991A2D419C000E34FE /* QSBrandTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSBrandTableViewCell.h; sourceTree = "<group>"; };
 		AB9BA09A1A2D419C000E34FE /* QSBrandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSBrandTableViewCell.m; sourceTree = "<group>"; };
 		AB9CA98C1A2C86ED00698200 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
@@ -710,6 +713,8 @@
 				B08A5FEB19DD7853008077E7 /* SynthesizeSingleton.h */,
 				B03624F019E91B6C00ECFE61 /* QSUser.h */,
 				B03624F119E91B6C00ECFE61 /* QSUser.m */,
+				AB95C29D1A3EC81900CC4259 /* QSMyCardModel.h */,
+				AB95C29E1A3EC81900CC4259 /* QSMyCardModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1212,6 +1217,7 @@
 				FFBA9E9319C680C800D9CBA2 /* AFHTTPRequestOperation.m in Sources */,
 				FFBA9EDD19C688F200D9CBA2 /* MKAnnotationView+WebCache.m in Sources */,
 				B0ED99291A2C9AF900E4C25F /* QSItem.m in Sources */,
+				AB95C29F1A3EC81900CC4259 /* QSMyCardModel.m in Sources */,
 				FFBA9EAA19C6811400D9CBA2 /* ThreadSafeMutableArry.m in Sources */,
 				B03624F219E91B6C00ECFE61 /* QSUser.m in Sources */,
 				FFBA9EB719C6812500D9CBA2 /* DataCenterDeal.mm in Sources */,

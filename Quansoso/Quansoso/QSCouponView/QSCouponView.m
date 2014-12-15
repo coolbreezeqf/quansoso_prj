@@ -11,8 +11,10 @@
 #import "UIImageView+WebCache.h"
 #import <TAESDK/TAESDK.h>
 #import "QSCardCell.h"
-#import "QSCards.h"
+#import "QSMyCardModel.h"
 #import "SVProgressHUD.h"
+#import "QSCardDetailsViewController.h"
+#import "ViewInteraction.h"
 
 @implementation QSCouponView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -176,8 +178,8 @@
     if (!cell) {
         cell = [[QSCardCell alloc] initWithReuseIdentifier:cellIdentifier];
     }
-    QSCards *cardModel = [self.dataArray objectAtIndex:indexPath.row];
-    MLOG(@"%@", cardModel);
+    QSMyCardModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    QSCards *cardModel = model.card;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	NSString *endDate = cardModel.endProperty?[cardModel.endProperty substringWithRange:NSMakeRange(0, [cardModel.endProperty rangeOfString:@" "].location)]:@"";
     [cell setCellUIwithCardType:cardModel.cardType denomination:cardModel.denomination Money_condition:cardModel.moneyCondition end:endDate discountRate:cardModel.discountRate outdateState:[cardModel.status integerValue]];
@@ -187,7 +189,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    QSMyCardModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    QSCards *cardModel = model.card;
+    QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:cardModel shopId:model.shopId andSellerId:nil];
+    [ViewInteraction viewPushViewcontroller:vc];
 }
 
 
