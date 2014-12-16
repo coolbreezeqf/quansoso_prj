@@ -363,6 +363,23 @@
 	[myWebView removeFromSuperview];
 	[self showRecommendView];
 	_recommendsView.tableView.tableHeaderView = myWebView;
+	if(![[TaeSession sharedInstance] isLogin]){
+		__weak QSCardDetailsViewController *weakself = self;
+		[[TaeSDK sharedInstance] showLogin:self.navigationController successCallback:^(TaeSession *session) {
+			self.navigationController.navigationBarHidden = NO;
+			[weakself accreditLogin];
+			[[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
+		} failedCallback:^(NSError *error) {
+			[SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
+		}];		return;
+	}else{
+		NSString *nick = [[TaeSession sharedInstance] getUser].nick;
+		[_netManager lingCard:_card.cardsIdentifier andNick:nick success:^(NSString *describe) {
+			MLOG(@"%@",describe);
+		} failure:^(NSString *describe) {
+			MLOG(@"%@",describe);
+		}];
+	}
 }
 //webview delegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView{

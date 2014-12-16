@@ -11,6 +11,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #define kURLMerchant @"http://quansoso.uz.taobao.com/d/cr/rest"
 #define kURLItems @"http://repository.ekupeng.com/cr/rest?service=ekupeng_item_relate&fields=num_iid,title,nick,pic_url,price,click_url"
+#define kURLLing @"http://repository.ekupeng.com/cr/rest?service=add_exchange&"
 @implementation QSCardDetailsNetManager
 - (void)getCardUseCouponId:(NSString *)couponId andNick:(NSString *)nick success:(void (^)(NSString* describe))succ failure:(void (^)(NSString* describe))failure{
 //	NSDictionary *dic = @{@"nick":nick,@"couponId":couponId,@"service":@"exchange"};
@@ -29,6 +30,25 @@
 		failure(@"error");
 	}];
 }
+
+- (void)lingCard:(NSString *)cardId andNick:(NSString *)nick success:(void (^)(NSString* describe))succ failure:(void (^)(NSString* describe))failure{
+	NSString *url = [NSString stringWithFormat:@"%@tbNick=%@&cardId=%@",kURLLing,nick,cardId];
+	NSString *encodeStr = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	[NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFPropertyListParameterEncoding succ:^(NSDictionary *successDict) {
+		bool result = [successDict[@"isSuccess"] boolValue];
+		NSString *resultStr = successDict[@"describe"];
+		if(result){
+			succ(resultStr);
+		}else{
+			failure(resultStr);
+		}
+	} failure:^(NSDictionary *failDict, NSError *error) {
+		failure(@"error");
+	}];
+}
+
+
+
 - (void)getItemsSellerId:(NSString *)sellerId success:(void (^)(NSArray *items))succ failure:(void (^)())failure{
 	NSString *url = [NSString stringWithFormat:@"%@&sellerId=%@",kURLItems,sellerId];
 	[NetManager requestWith:nil url:url method:@"GET" operationKey:nil parameEncoding:AFPropertyListParameterEncoding succ:^(NSDictionary *successDict) {
