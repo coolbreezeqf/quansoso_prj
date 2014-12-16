@@ -21,7 +21,7 @@ int totalPage;
     current = 1;
     pageSize = 20;
     NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=易01wAwxxIxcL28uzuD2oLlS7c2DEMds1FAQI7fgfrP3PMg=&current=1&pageSize=%d", KBaseUrl, pageSize];
-//    NSString *UserCouponLi2stUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, pageSize];
+//    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, pageSize];
     NSString *encodeStr = [UserCouponListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
 //        MLOG(@"%@", successDict);
@@ -59,7 +59,10 @@ int totalPage;
             NSMutableArray *mutableArray = [NSMutableArray new];
             for (int i=0; i<array.count; i++)
             {
-                QSCards *model = [QSCards modelObjectWithDictionary:[array objectAtIndex:i]];
+                QSMyCardModel *model = [[QSMyCardModel alloc] init];
+                NSDictionary *dict = [array objectAtIndex:i];
+                model.card = [QSCards modelObjectWithDictionary:dict];
+                model.shopId = [dict objectForKeyedSubscript:@"external_shop_id"];
                 [mutableArray addObject:model];
             }
             totalPage = [[pageDict objectForKey:@"totalPage"] intValue];
