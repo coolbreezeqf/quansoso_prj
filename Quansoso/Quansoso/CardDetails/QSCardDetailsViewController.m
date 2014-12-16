@@ -18,6 +18,8 @@
 #import "UMSocialSnsService.h"
 #import "UMSocialSnsPlatformManager.h"
 #import "LoadingView.h"
+#import "QSMerchantNetManager.h"
+#import "QSSMerchant.h"
 @interface QSCardDetailsViewController ()<UMSocialUIDelegate,UIWebViewDelegate,UIScrollViewDelegate>{
 	NSString *shopId;
 	NSString *sellerId;
@@ -235,13 +237,27 @@
 	[self.view addSubview:_recommendsView];
 	[_recommendsView addSubview:self.loadingView];
 	__weak QSCardDetailsViewController *weakself = self;
-	[_netManager getItemsSellerId:sellerId success:^(NSArray *items) {
-		[weakself.recommendsView setItemArray:items];
-		[_loadingView removeFromSuperview];
-	} failure:^{
-		[SVProgressHUD showErrorWithStatus:@"未获取到热门商品信息" cover:YES offsetY:kMainScreenHeight/2];
-		[_loadingView removeFromSuperview];
-	}];
+	if (!sellerId) {
+		QSMerchantNetManager *netmanager = [[QSMerchantNetManager alloc] init];
+		[netmanager getMerchantWithShopID:[shopId integerValue]success:^(QSSMerchant *merchant, NSArray *cardsArray, NSArray *activities) {
+			[weakself.netManager getItemsSellerId:merchant.externalId success:^(NSArray *items) {
+				[weakself.recommendsView setItemArray:items];
+				[_loadingView removeFromSuperview];
+			} failure:^{
+				[SVProgressHUD showErrorWithStatus:@"未获取到热门商品信息" cover:YES offsetY:kMainScreenHeight/2];
+				[_loadingView removeFromSuperview];
+			}];
+		} failure:^{
+			
+		}];
+	}else
+		[_netManager getItemsSellerId:sellerId success:^(NSArray *items) {
+			[weakself.recommendsView setItemArray:items];
+			[_loadingView removeFromSuperview];
+		} failure:^{
+			[SVProgressHUD showErrorWithStatus:@"未获取到热门商品信息" cover:YES offsetY:kMainScreenHeight/2];
+			[_loadingView removeFromSuperview];
+		}];
 }
 
 - (LoadingView *)loadingView{
