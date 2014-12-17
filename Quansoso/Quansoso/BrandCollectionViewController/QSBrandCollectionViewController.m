@@ -261,7 +261,7 @@
             [self.alertView show];
             dragCount = 0;
         }
-        else if (self.brandArray.count>0&&self.brandArray.count%9==0)
+        else if (self.brandArray.count>0&&self.brandArray.count%(lines*3)==0)
         {
                 [self.brandListManage getNextBrandListSuccBlock:^(NSArray *aArray) {
                     [weakself.showBrandTableView.infiniteScrollingView stopAnimating];

@@ -15,6 +15,7 @@
 #import "SVProgressHUD.h"
 #import "QSCardDetailsViewController.h"
 #import "ViewInteraction.h"
+#import "QSMerchantDetailsViewController.h"
 
 @implementation QSCouponView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -190,8 +191,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     QSMyCardModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    QSCards *cardModel = model.card;
-    QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:cardModel shopId:model.shopId andSellerId:nil];
+//    QSCards *cardModel = model.card;
+//    QSCardDetailsViewController *vc = [[QSCardDetailsViewController alloc] initWithCard:cardModel shopId:model.shopId andSellerId:nil];
+    QSMerchantDetailsViewController *vc = [[QSMerchantDetailsViewController alloc] initWithShopId:[model.shopId intValue]];
     [ViewInteraction viewPushViewcontroller:vc];
 }
 
