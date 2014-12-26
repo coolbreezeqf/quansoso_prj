@@ -27,12 +27,12 @@
         self.brandLikeView = [[UIButton alloc] initWithFrame:CGRectMake(backView.right-30, backView.bottom-30, 24, 24)];
         [backView addSubview:self.brandLikeView];
         
-        CGFloat brandWidth = (backView.right-backView.left)-18*2;
+        CGFloat brandWidth = 80;
         
         self.brandImgView = [[UIButton alloc] initWithFrame:CGRectMake((backView.right-backView.left-brandWidth)/2, 15, brandWidth, brandWidth)];
-        self.brandImgView.contentMode = UIViewContentModeScaleAspectFit;
         self.brandLikeView.userInteractionEnabled = YES;
         self.brandImgView.backgroundColor = [UIColor whiteColor];
+        self.brandImgView.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:self.brandImgView];
     }
     return self;
@@ -40,7 +40,6 @@
 
 - (void)setBtnWithModel:(QSMerchant *)aModel
 {
-//    [self.brandImgView sd_setImageWithURL:[NSURL URLWithString:aModel.picUrl]];
     [self.brandImgView sd_setImageWithURL:[NSURL URLWithString:aModel.picUrl] forState:UIControlStateNormal];
 }
 
