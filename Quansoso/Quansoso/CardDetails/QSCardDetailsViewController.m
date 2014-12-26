@@ -199,6 +199,7 @@
 	_introduceLabel.backgroundColor = [UIColor clearColor];
 	_introduceLabel.font = kFont12;
 	_introduceLabel.textColor = [UIColor grayColor];
+	
 //	[self.view addSubview:_introduceLabel];
 	headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, _introduceLabel.bottom)];
 	headView.backgroundColor = RGBCOLOR(238, 238, 238);
@@ -214,8 +215,9 @@
 		[_button addTarget:self action:@selector(buttonAction) forControlEvents:UIControlEventTouchDown];
 		[_button setTitle:@"立刻领用" forState:UIControlStateNormal];
 	}else{
+		_button.top -= 20;
 		[_button addTarget:self action:@selector(gotoShop) forControlEvents:UIControlEventTouchUpInside];
-		[_button setTitle:@"进入店铺" forState:UIControlStateNormal];
+		[_button setTitle:@"立享优惠" forState:UIControlStateNormal];
 	}
 	
 	[headView addSubview:_button];
@@ -230,7 +232,7 @@
 
 - (void)showRecommendView{
 //	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, height + 5, kMainScreenWidth, self.view.height - height - 5) andItems:nil];
-	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, self.view.height) andType:_activity?1:2];
+	_recommendsView = [[QSMerchantCommendView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, self.view.height) andType:2];
 	_recommendsView.backgroundColor = [UIColor whiteColor];
 	_recommendsView.delegate = self;
 	
@@ -315,7 +317,7 @@
 //	_cardNameLabel.text = _activity.name;
 	NSString *endDate = [_activity.endProperty substringWithRange:NSMakeRange(0, [_activity.endProperty rangeOfString:@" "].location)];
 	_introduceLabel.text = [NSString stringWithFormat:@"截止%@",endDate];
-	
+	_introduceLabel.height = 40;
 	[self showRecommendView];
 	_recommendsView.tableView.tableHeaderView = headView;
 }
@@ -385,6 +387,13 @@
 			self.navigationController.navigationBarHidden = NO;
 			[weakself accreditLogin];
 			[[NSNotificationCenter defaultCenter] postNotificationName:kTaeLoginInSuccessMsg object:nil];
+			NSString *nick = [[TaeSession sharedInstance] getUser].nick;
+			[weakself.netManager lingCard:_card.cardsIdentifier andNick:nick success:^(NSString *describe) {
+				MLOG(@"%@",describe);
+			} failure:^(NSString *describe) {
+				MLOG(@"%@",describe);
+			}];
+
 		} failedCallback:^(NSError *error) {
 			[SVProgressHUD showErrorWithStatus:@"登陆失败" cover:YES offsetY:kMainScreenHeight/2.0];
 		}];		return;

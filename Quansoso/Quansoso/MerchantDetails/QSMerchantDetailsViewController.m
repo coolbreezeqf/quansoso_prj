@@ -341,15 +341,17 @@
 {
 	if (indexPath.row < self.activities.count) {
 		QSActivity *activity = [[QSActivity alloc] initWithDictionary:self.activities[indexPath.row]];
-//		QSCardDetailsViewController *dvc = [[QSCardDetailsViewController alloc] initWithActivity:activity];
+		if([activity.status integerValue] == 3){
+			return;
+		}
 		QSCardDetailsViewController *dvc = [[QSCardDetailsViewController alloc] initWithActivity:activity andSellerId:_merchant.externalId];
 		[self.navigationController pushViewController:dvc animated:YES];
 	}else{
 		NSInteger index = indexPath.row - self.activities.count;
 		QSCards *card = [[QSCards alloc] initWithDictionary:self.cardsArray[index]];
-		//MLOG(@"%@",card);
-//		if ([card.cardType integerValue] < 2 || [card.cardType integerValue] > 5) {
-//			QSCardDetailsViewController *dVC = [[QSCardDetailsViewController alloc] initWithCard:card];
+		if ([card.status integerValue] == 3) {
+			return ;
+		}
 		QSCardDetailsViewController *dVC = [[QSCardDetailsViewController alloc] initWithCard:card webSite:_merchant.websiteUrl andSellerId:_merchant.externalId];
 			[self.navigationController pushViewController:dVC animated:YES];
 //		}
