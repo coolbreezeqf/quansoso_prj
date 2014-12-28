@@ -17,9 +17,9 @@
 #import "UMSocialSnsService.h"
 #import "UMSocialSnsPlatformManager.h"
 #import "NetManager.h"
+#import "JSONKit.h"
 #define kTitleColor RGBCOLOR(149, 149, 149)
-
-@interface QSSettingView ()<UIActionSheetDelegate>{
+@interface QSSettingView ()<UIActionSheetDelegate,UIAlertViewDelegate>{
 	NSArray *titles;
 }
 @property (nonatomic,strong) UISwitch *switchView;
@@ -65,6 +65,23 @@
                                      shareImage:[UIImage imageNamed:@"icon"]
                                 shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToWechatFavorite, UMShareToSina]
                                        delegate:nil];
+}
+
+- (void)update{	//检查版本更新
+	NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+	//CFShow((__bridge CFTypeRef)(infoDic));
+	NSString *currentVersion = [infoDic objectForKey:@"CFBundleVersion"];
+	if (![[[QSDataSevice sharedQSDataSevice] lastVersion] isEqualToString:currentVersion]) {
+		//trackViewURL = [releaseInfo objectForKey:@"trackVireUrl"];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"更新" message:@"有新的版本更新，是否前往更新？" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"更新", nil];
+		alert.tag = 10000;
+		[alert show];
+	}
+	else{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"更新" message:@"此版本为最新版本" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+		alert.tag = 10001;
+		[alert show];
+	}
 }
 
 //获取viewcontroller
@@ -147,11 +164,22 @@
 	[SVProgressHUD showSuccessWithStatus:@"清理成功" cover:YES offsetY:kMainScreenHeight/2];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (alertView.tag==10000) {
+		if (buttonIndex==1) {
+			NSString *urlStr = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/videolicious/id%@?mt=8",kAPP_ID];
+			NSURL *url = [NSURL URLWithString:urlStr];
+			[[UIApplication sharedApplication] openURL:url];
+		}
+	}
+}
+
 - (instancetype)initWithFrame:(CGRect)frame{
 	if (self = [super initWithFrame:frame]) {
 		self.backgroundColor = RGBCOLOR(242, 239, 233);
-		titles = @[@"优惠消息推送",@"关注券搜搜微博",@"意见反馈",@"分享app",@"关于我们",@"清处缓存"];
-		_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth, 44*6-1) style:UITableViewStylePlain];
+		titles = @[@"优惠消息推送",@"关注券搜搜微博",@"意见反馈",@"分享app",@"关于我们",@"版本更新",@"清处缓存"];
+		_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth, 44*titles.count-1) style:UITableViewStylePlain];
 		_tableView.backgroundColor = [UIColor whiteColor];
 		_tableView.delegate = self;
 		_tableView.dataSource = self;
@@ -210,17 +238,10 @@
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 			break;
-		case 4:
-		{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		}			break;
-		case 5:
-		{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		}			break;
-		default:
+		default:{
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		}
 			break;
 	}
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -246,6 +267,9 @@
 			[self aboutMe];
 			break;
 		case 5:
+			[self update];
+			break;
+		case 6:
 			[self cleanCache];
 			break;
 		default:

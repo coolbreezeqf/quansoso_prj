@@ -9,7 +9,7 @@
 #import "QSDataSevice.h"
 #import "SynthesizeSingleton.h"
 @interface QSDataSevice ()
-
+@property (nonatomic,strong) NSString *lastVersion;
 @end
 
 @implementation QSDataSevice
@@ -45,6 +45,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(QSDataSevice);
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud synchronize];
     return [[ud dictionaryForKey:@"dict"] mutableCopy];
+}
+
+- (void)saveLastVersion:(NSString *)lastVersion{
+	NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+	[ud synchronize];
+	[ud setValue:lastVersion forKey:@"lastVersion"];
+}
+
+- (NSString*)lastVersion{
+	if (!_lastVersion){
+		NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+		[ud synchronize];
+		_lastVersion = [ud stringForKey:@"lastVersion"];
+	}
+	return _lastVersion;
 }
 
 - (BOOL)pushIntroduceStatus{

@@ -21,6 +21,8 @@
 #define kRedirectURI    @"http://www.sina.com"
 #define kShareSinaSECRET @"92b7b57f9920eef0ac039adc66e7be68"
 
+#define kAPP_ID @"583694727"
+
 #define kTaeSDKInitSuccessMsg @"initSuccess"
 #define kTaeLoginInSuccessMsg @"loginSuccess"
 #define kTaeLoginOutSuccessMsg @"logOutSuccess"

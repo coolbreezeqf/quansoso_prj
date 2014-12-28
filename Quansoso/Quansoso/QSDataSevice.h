@@ -17,6 +17,8 @@
 - (void)saveData;
 - (void)savePushIntroduceStatus;
 
+- (void)saveLastVersion:(NSString *)lastVersion;
+- (NSString*)lastVersion;
 
 - (void)saveTime:(NSString *)aTime;
 - (NSString *)getTime;

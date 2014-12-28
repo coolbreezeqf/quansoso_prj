@@ -37,6 +37,7 @@
     [self umengregister];
 //    [WeiboSDK registerApp:kAppKey];
     [self performSelector:@selector(registerRemoteToken) withObject:nil afterDelay:5];
+	[self getLastVersion];
     return YES;
 }
 
@@ -75,6 +76,22 @@
 - (void)registerRemoteToken
 {
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
+}
+
+- (void)getLastVersion{
+	NSString *URL = [NSString stringWithFormat:@"%@%@",@"http://itunes.apple.com/lookup?id=",kAPP_ID];
+	[NetManager requestWith:nil url:URL method:@"GET" operationKey:nil parameEncoding:AFPropertyListParameterEncoding succ:^(NSDictionary *successDict) {
+		NSDictionary *dic = successDict;
+		NSArray *infoArray = [dic objectForKey:@"results"];
+		if ([infoArray count]) {
+			NSDictionary *releaseInfo = [infoArray objectAtIndex:0];
+			NSString *lastVersion = [releaseInfo objectForKey:@"version"];
+			[[QSDataSevice sharedQSDataSevice] saveLastVersion:lastVersion];
+		}
+	} failure:^(NSDictionary *failDict, NSError *error) {
+		
+	}];
+
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
