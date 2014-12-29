@@ -20,8 +20,8 @@ int totalPage;
 {
     current = 1;
     pageSize = 20;
-    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=易01wAwxxIxcL28uzuD2oLlS7c2DEMds1FAQI7fgfrP3PMg=&current=1&pageSize=%d", KBaseUrl, pageSize];
-//    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, pageSize];
+//    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=易01wAwxxIxcL28uzuD2oLlS7c2DEMds1FAQI7fgfrP3PMg=&current=1&pageSize=%d", KBaseUrl, pageSize];
+    NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, pageSize];
     NSString *encodeStr = [UserCouponListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
 //        MLOG(@"%@", successDict);
@@ -49,7 +49,8 @@ int totalPage;
 {
     if (current<totalPage) {
         current++;
-        NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=易01wAwxxIxcL28uzuD2oLlS7c2DEMds1FAQI7fgfrP3PMg=&current=%d&pageSize=%d", KBaseUrl, current, pageSize];
+//        NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=易01wAwxxIxcL28uzuD2oLlS7c2DEMds1FAQI7fgfrP3PMg=&current=%d&pageSize=%d", KBaseUrl, current, pageSize];
+        NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=1&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, pageSize];
 //        NSString *UserCouponListUrl = [NSString stringWithFormat:@"%@?service=my_exchange&tbNick=%@&current=%d&pageSize=%d", KBaseUrl, [TaeSession sharedInstance].getUser.nick, current, pageSize];
         NSString *encodeStr = [UserCouponListUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         [NetManager requestWith:nil url:encodeStr method:@"GET" operationKey:nil parameEncoding:AFFormURLParameterEncoding succ:^(NSDictionary *successDict) {
