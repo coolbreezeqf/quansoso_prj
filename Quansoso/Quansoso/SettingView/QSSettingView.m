@@ -178,7 +178,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
 	if (self = [super initWithFrame:frame]) {
 		self.backgroundColor = RGBCOLOR(242, 239, 233);
-		titles = @[@"优惠消息推送",@"关注券搜搜微博",@"意见反馈",@"分享app",@"关于我们",@"版本更新",@"清处缓存"];
+		titles = @[@"优惠消息推送",@"关注券搜搜微博",@"意见反馈",@"分享app",@"关于我们",@"版本更新",@"清除缓存"];
 		_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth, 44*titles.count-1) style:UITableViewStylePlain];
 		_tableView.backgroundColor = [UIColor whiteColor];
 		_tableView.delegate = self;
@@ -238,6 +238,25 @@
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 			break;
+		case 5:{
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+			NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+			NSString *currentVersion = [infoDic objectForKey:@"CFBundleVersion"];
+			if (![[[QSDataSevice sharedQSDataSevice] lastVersion] isEqualToString:currentVersion]) {
+				UILabel *newLabel;
+				newLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 15, 40, 18)];
+				newLabel.centerY = 22;
+				newLabel.text = @"New";
+				newLabel.textAlignment = NSTextAlignmentCenter;
+				newLabel.textColor = [UIColor whiteColor];
+				newLabel.font = kFont13;
+				newLabel.backgroundColor = [UIColor redColor];
+				newLabel.layer.cornerRadius = 9;
+				newLabel.clipsToBounds = YES;
+				[cell.contentView addSubview:newLabel];
+			}
+		}break;
 		default:{
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
