@@ -479,14 +479,13 @@
 		webSite = [NSString stringWithFormat:@"http://shop%@.taobao.com",shopId];
 	}
 	TaeWebViewUISettings *wb = [[TaeWebViewUISettings alloc] init];
-		wb.title = _card?_card.merchant:_activity.merchant;
-		wb.titleColor = RGBCOLOR(75, 171, 14);
-		[[TaeSDK sharedInstance] showPage:self isNeedPush:NO pageUrl:_activity?_activity.site:webSite webViewUISettings:wb tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
-			
-		} tradeProcessFailedCallback:^(NSError *error) {
-			
-		}];
-
+	wb.title = _card?_card.merchant:_activity.merchant;
+	wb.titleColor = RGBCOLOR(75, 171, 14);
+	[[TaeSDK sharedInstance] showPage:self isNeedPush:NO pageUrl:_activity?_activity.site:webSite webViewUISettings:wb tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
+		
+	} tradeProcessFailedCallback:^(NSError *error) {
+		
+	}];
 	
 }
 
@@ -495,7 +494,14 @@
 		TaeWebViewUISettings *wb = [[TaeWebViewUISettings alloc] init];
 		wb.title = _card?_card.merchant:_activity.merchant;
 		wb.titleColor = RGBCOLOR(75, 171, 14);
-		[[TaeSDK sharedInstance] showItemDetail:self isNeedPush:NO webViewUISettings:wb itemId:item itemType:1 params:nil tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
+		TaeTaokeParams *tk = [[TaeTaokeParams alloc] init];
+		tk.pid = @"mm_28247283_0_0";
+//		[[TaeSDK sharedInstance] showItemDetail:self isNeedPush:NO webViewUISettings:wb itemId:item itemType:1 params:nil tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
+//			
+//		} tradeProcessFailedCallback:^(NSError *error) {
+//			
+//		}];
+		[[TaeSDK sharedInstance] showTaoKeItemDetail:self isNeedPush:NO webViewUISettings:wb itemId:item itemType:1 params:nil taoKeParams:tk tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
 			
 		} tradeProcessFailedCallback:^(NSError *error) {
 			
