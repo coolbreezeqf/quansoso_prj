@@ -496,6 +496,7 @@
 		wb.titleColor = RGBCOLOR(75, 171, 14);
 		TaeTaokeParams *tk = [[TaeTaokeParams alloc] init];
 		tk.pid = @"mm_28247283_0_0";
+        tk.unionId = @"test";
 //		[[TaeSDK sharedInstance] showItemDetail:self isNeedPush:NO webViewUISettings:wb itemId:item itemType:1 params:nil tradeProcessSuccessCallback:^(TaeTradeProcessResult *tradeProcessResult) {
 //			
 //		} tradeProcessFailedCallback:^(NSError *error) {
