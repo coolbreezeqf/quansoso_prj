@@ -13,4 +13,7 @@
 @property(nonatomic, strong) NSString *pid;
 @property(nonatomic, strong) NSString *unionId;
 
+@property(nonatomic, strong) NSString *subPid;
+
+
 @end

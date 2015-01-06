@@ -13,5 +13,4 @@
 +(void) resetTaeSDKDemo;//删除sdk数据项
 +(BOOL) isNetWorkOK;
 /***********************************/
-
 @end
