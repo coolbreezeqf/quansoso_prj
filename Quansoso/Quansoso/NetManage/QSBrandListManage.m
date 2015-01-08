@@ -30,7 +30,8 @@ int totalPage;
         NSMutableArray *mutableArray = [NSMutableArray new];
         for (int i=0; i<array.count; i++)
         {
-            QSMerchant *model = [QSMerchant modelObjectWithDictionary:[array objectAtIndex:i]];
+            NSDictionary *dict1 = [array objectAtIndex:i];
+            QSMerchant *model = [QSMerchant modelObjectWithDictionary:dict1];
             [mutableArray addObject:model];
         }
         aBlock(mutableArray);
